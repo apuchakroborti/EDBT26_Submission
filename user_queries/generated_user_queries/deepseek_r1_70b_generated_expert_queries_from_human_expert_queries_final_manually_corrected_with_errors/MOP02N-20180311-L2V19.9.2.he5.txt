@@ -1,0 +1,23 @@
+1. File Input and Constants
+   - Specify the input file `MOP02N-20180311-L2V19.9.2.he5` stored in the constant `FILE_NAME`.
+   
+2. Extracting Data
+   - Extract data from the HDF5 dataset RetrievedCOTotalColumn from the sub-group path at `/HDFEOS/SWATHS/MOP02/Data Fields`.
+   - Read the contents into an array called `data`, taking only the first column.
+   - Retrieve the `units` and `_FillValue` attributes associated with this dataset.
+   - Replace the `_FillValue` in the `RetrievedCOTotalColumn`.
+
+3. Extracting Geolocation Data
+   - Extract latitude values from `Latitude`, longitude values from `Longitude` from the group `/HDFEOS/SWATHS/MOP02/Geolocation Fields`
+
+4. Creating a Map
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels from -90 to 90 with interval 45.
+   - Draw meridians from -180 to 180 with interval of 45 and set labels to left and bottom.
+
+5. Scatter Plot
+   - Create a scatter plot with parameters: longitude, latitude, data array `c=data`, marker size `s=1`, colormap `plt.cm.jet`, no edge colors (`edgecolors=None`), and line width `linewidth=0`.
+
+6. Customizing the Map
+   - Add a colorbar to represent the units of the data.
+   - Set the colorbar label using the `units` attribute from the dataset.

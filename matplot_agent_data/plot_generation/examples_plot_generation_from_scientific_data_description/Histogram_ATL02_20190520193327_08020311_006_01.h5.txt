@@ -1,0 +1,19 @@
+Here's a reduced version of the text, keeping implementation details and names of parent groups:
+
+**Extracting Data from HDF5 File**
+
+I need to extract elevation data from an HDF5 file. Here's how I do it:
+
+* Open the file `/Users/apukumarchakroborti/gsu_research/llam_test/ACL_DIRS/ICESat_2/ATL02_20190520193327_08020311_006_01.h5` in read-only mode.
+* Access a dataset located at `/atlas/pce1/background/bg_cnt_50shot_s`.
+* Extract elevation values, units, and long name from the dataset.
+
+**Creating Histogram**
+
+Next, I create a histogram of the elevation data:
+
+* Use 20 bins and black edges for the histogram.
+* Set x-axis label to `longname`, y-axis label to "Frequency", and title to "Distribution of "+`longname`.
+* Display the plot.
+
+Note: The file is automatically closed when the program finishes executing.

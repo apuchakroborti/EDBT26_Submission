@@ -1,0 +1,89 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Import Necessary Libraries:  
+   Import the required libraries for handling OS functions, creating visualizations, numerical computations, map projections, and HDF5 files: `os`, `matplotlib`, `matplotlib.pyplot`, `numpy`, and `mpl_toolkits.basemap`.
+
+2. Define Constants:  
+   Set a constant `FILE_NAME` to the path of the HDF5 file: `ATL17_20201201000814_10360901_005_01.h5`.
+
+3. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access three datasets: `/global_grid_lat` (latitude data), `/global_grid_lon` (longitude data), and `/global_asr` (main data).
+
+4. Read Dataset Attributes:  
+   Extract attributes `units` and `long_name` from the global_asr dataset using `decode('ascii', 'replace')`. Also, retrieve the `_FillValue` attribute.
+
+5. Data Processing and Cleaning:  
+   - Convert the global_asr dataset's `_FillValue` to `numpy NaN`.
+   - Mask the data using `numpy.ma.masked_where` with conditions `numpy.isnan(data)` and `data`.
+
+6. Create Map Projection:  
+   Use a cylindrical projection map with low resolution, setting latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+
+7. Customize Map Features:  
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals of [-90, -60, -30, 0, 30, 60, 90] using `numpy.arange`.
+   - Draw meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180] using `numpy.arange`.
+
+8. Adjust Longitude Values:  
+   Subtract 180 from longitude values before plotting to ensure correct map projection.
+
+9. Plot Data on Map:  
+   Use `pcolormesh` to plot the data with parameters: longitude, latitude, data, and `latlon=True`.
+
+10. Add Colorbar and Title:  
+    - Add a colorbar to the map, positioned at the bottom, labeled with the global_asr dataset's units.
+    - Set the title of the map to include the file basename and the `long_name` attribute from the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user is dealing with an HDF5 file named ATL17_20201201000814_10360901_005_01.h5. They want to open this file and access three datasets: /global_grid_lat, /global_grid_lon, and /global_asr. Also, they need to read specific attributes from the global_asr dataset, like units, long_name, and _FillValue. So I should create a sub-query that focuses on using h5py to open the file, access these datasets by their paths, and extract those attributes.
+
+Next, for NumPy-based Data Preprocessing, the user wants to handle the _FillValue from the dataset. They plan to convert this fill value into NaNs in NumPy and then mask the data where values are NaN or meet certain conditions using np.ma.masked_where. So the sub-query should cover how to process _FillValue, apply masks, and perform any necessary preprocessing steps.
+
+Lastly, the Plotting and Visualization part involves creating a map using matplotlib and basemap. They need a cylindrical projection with specific latitude and longitude bounds. Then, they want to add coastlines, parallels, and meridians at certain intervals. Also, adjusting the longitude by subtracting 180 before plotting is necessary. The data will be plotted using pcolormesh, and they want a colorbar labeled with the dataset's units and a title that includes the file name and long_name attribute.
+
+Putting it all together, each sub-query should target these specific areas without overlapping into other domains. I need to ensure clarity so that each part can be addressed individually.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file named ATL17_20201201000814_10360901_005_01.h5 and access datasets /global_grid_lat, /global_grid_lon, and /global_asr using h5py? How to read attributes units, long_name, and _FillValue from the global_asr dataset?
+
+NumPy Data Preprocessing Sub-query:
+How to convert HDF5 _FillValue to numpy NaN and mask data using numpy.ma.masked_where with conditions isnan(data) and data?
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical projection map with basemap, set latitude bounds from -90 to 90 and longitude bounds from -180 to 180? How to add coastlines, parallels at [-90,-60,-30,0,30,60,90], meridians at [-180,-135,-90,-45,0,45,90,135,180], and adjust longitude by subtracting 180 before plotting? How to plot data with pcolormesh using latlon=True and add a colorbar labeled with units at the bottom?

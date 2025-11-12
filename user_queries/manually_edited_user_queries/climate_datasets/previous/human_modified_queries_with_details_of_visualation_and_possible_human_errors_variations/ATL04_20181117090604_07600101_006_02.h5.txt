@@ -1,0 +1,20 @@
+Here's a step-by-step explanation of the provided code:
+
+The code starts by importing necessary libraries and defining an HDF5 file named "ATL04_20181117090604_07600101_006_02.h5". 
+It then opens the file in read-only mode.
+
+The code accesses several datasets within the HDF5 file, including:
+
+Latitude: `/profile_1/latitude`
+Longitude: `/profile_1/longitude`
+Height (dem_h): `dem_h` from root group profile_1
+
+For each dataset, it retrieves the valid range from the dataset's attributes.
+It read units and long name attributes from the Height dem_h data sets and after reading it decodes using ascii and replace
+
+The code then uses a map projection to plot the data. 
+It creates an equidistant cylindrical projection with a latitude range of -90 to 90 and longitude range of -180 to 180.  
+and draws coastlines, parallels, and meridians on the map. A scatter plot is created using longitude, latitude, and height values.
+
+Finally, the code adds a colorbar and title to the plot, including the file name and long name of the height dataset. 
+The plot is then saved as a PNG image with a filename constructed from the HDF5 file's base name.

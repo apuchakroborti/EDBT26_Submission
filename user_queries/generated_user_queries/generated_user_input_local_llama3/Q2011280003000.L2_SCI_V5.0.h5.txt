@@ -1,0 +1,58 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+This Python code accesses and visualizes a PO.DAAC AQUARIUS SSS L2 Swath file. Here's a step-by-step explanation:
+
+1. Import necessary libraries:
+   - `os`
+   - `h5py`
+   - `matplotlib` and its sub-module `mpl_toolkits.basemap`
+   - `numpy`
+
+2. Define the file name: 
+   - `FILE_NAME = 'Q2011280003000.L2_SCI_V5.0.h5'`
+
+3. Open the HDF5 file in read mode (`mode='r'`):
+   - `with h5py.File(FILE_NAME, mode='r') as f:`
+
+4. Access and process data from the HDF5 file:
+   - `datavar = f['/Aquarius Data/SSS']`
+   - `data = datavar[:,0]`
+   - `units = datavar.attrs['units'].decode()`
+   - `long_name = datavar.attrs['long_name'].decode()`
+   - `fv = datavar.attrs['_FillValue']`
+
+5. Print the fill value:
+   - `print(fv)`
+
+6. Handle the fill value:
+   - `data[data == fv] = np.nan`
+   - `datam = np.ma.masked_array(data, np.isnan(data))`
+
+7. Access and process latitude and longitude data:
+   - `latitude = f['/Navigation/sclat'][:]`
+   - `longitude = f['/Navigation/sclon'][:]`
+
+8. Create a Basemap object:
+   - `m = Basemap(projection='cyl', resolution='l', llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-180, urcrnrlon=180)`
+
+9. Draw coastlines:
+   - `m.drawcoastlines(linewidth=0.5)`
+   - `m.drawparallels(np.arange(-90, 91, 45))`
+   - `m.drawmeridians(np.arange(-180, 180, 45), labels=[True,False,False,True])`
+
+10. Create a scatter plot:
+    - `sc = m.scatter(longitude, latitude, c=datam, s=1, cmap=plt.cm.jet, edgecolors=None, linewidth=0)`
+
+11. Add a color bar:
+    - `cb = m.colorbar()`
+    - `cb.set_label(units)`
+
+12. Set the title:
+    - `plt.title('{0}\n{1}'.format(basename, long_name))`
+
+13. Save the figure to a file:
+    - `fig = plt.gcf()`
+    - `pngfile = FILE_PATH+"{0}.py.png".format(basename)`
+    - `fig.savefig(pngfile)`
+
+I reduced the text by removing some of the details and explanations, while still keeping most of the implementation details.

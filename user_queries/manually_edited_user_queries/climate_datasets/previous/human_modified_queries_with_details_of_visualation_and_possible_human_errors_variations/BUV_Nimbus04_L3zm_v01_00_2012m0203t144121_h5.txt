@@ -1,0 +1,15 @@
+Python code that reads and visualizes ozone data from an HDF5 file. Here's what I've found so far:
+
+It accesses the `/Data_Fields` group and retrieves variables for `ProfileOzone`, `Latitude`, `ProfilePressureLevels`, and `Date`.
+It reads ProfileOzone 3D data as a slice of 0th index of x-axis and all from both y and z axis data from the 3 dimensiontal array
+It read units and long name attribute from the above mention datasets
+it access the fill value data from the profile ozone data and by comparing with fill values it set NaN value
+It also acces 0th index of the Date data
+
+Next, it processes the data by converting the date to a string and applying a log scale to the pressure levels. 
+Then, it creates a contour plot of the ozone data.
+
+The plot is customized with a colorbar, labels, titles, and a text annotation displaying the date. Finally, the code saves the plot as a PNG file.
+
+The script uses an environment variable `HDFEOS_ZOO_DIR` to find the HDF5 file, or looks in the current working directory if it's not set. 
+It then calls the `run` function with the HDF5 file path as an argument.

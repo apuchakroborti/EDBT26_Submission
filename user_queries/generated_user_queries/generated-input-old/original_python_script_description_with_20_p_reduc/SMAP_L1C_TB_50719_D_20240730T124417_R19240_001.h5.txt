@@ -1,0 +1,61 @@
+Here is a rewritten version of the description with 20% less text while keeping as many implementation details as possible:
+
+**Importing modules**
+
+The code imports several Python modules: `os` for interacting with the operating system, `matplotlib.pyplot` as `plt` for creating plots and visualizations, `numpy` as `np` for numerical computations and array operations, `mpl_toolkits.basemap` as `Basemap` for creating map projections and visualizations, and `h5py` for reading and manipulating HDF5 files.
+
+**Defining constants**
+
+The code defines a constant `FILE_NAME`, which is the name of the HDF5 file to be read.
+
+**Opening the HDF5 file**
+
+The code uses the `h5py` library to open the HDF5 file in read-only mode (`mode="r"`). This ensures that the file is properly closed when we're done with it, regardless of whether an exception is thrown or not.
+
+**Reading data from the HDF5 file**
+
+The code reads several datasets from the HDF5 file:
+
+* `name = "/Global_Projection/cell_tb_h_fore"`
+* `data = f[name][:]`
+* `units = f[name].attrs["units"]`
+* `long_name = f[name].attrs["long_name"]`
+* `_FillValue = f[name].attrs["_FillValue"]`
+
+**Data processing**
+
+The code performs some data processing steps:
+
+* `invalid = np.logical_or(data > valid_max, data < valid_min)`
+* `data[invalid] = np.nan`
+* `data = np.ma.masked_where(np.isnan(data), data)`
+
+**Creating a map projection**
+
+The code creates a Basemap object using the `mpl_toolkits.basemap` library:
+
+* `m = Basemap(projection="cyl", resolution="l", ...)`
+
+**Plotting data**
+
+The code plots the data using the Basemap object:
+
+* `m.drawcoastlines(linewidth=0.5)`
+* `m.drawparallels(np.arange(-90, 91, 45))`
+* `m.drawmeridians(np.arange(-180, 180, 45), labels=[True, False, False, True])`
+* `m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, linewidth=0, latlon=True)`
+
+**Adding a colorbar**
+
+The code adds a colorbar to the plot:
+
+* `cb = m.colorbar(location="bottom", pad="10%")`
+* `cb.set_label(units)`
+
+**Saving the plot**
+
+The code saves the plot to a PNG file:
+
+* `basename = os.path.basename(FILE_NAME)`
+* `plt.title("{0}\n{1}".format(basename, long_name), fontsize=7)`
+* `fig.savefig(pngfile)`

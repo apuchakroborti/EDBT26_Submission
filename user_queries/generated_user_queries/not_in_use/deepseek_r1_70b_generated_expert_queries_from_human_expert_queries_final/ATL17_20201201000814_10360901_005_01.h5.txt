@@ -1,0 +1,35 @@
+1. Import Necessary Libraries:  
+   Import the required libraries for handling OS functions, creating visualizations, numerical computations, map projections, and HDF5 files: `os`, `matplotlib`, `matplotlib.pyplot`, `numpy`, and `mpl_toolkits.basemap`.
+
+2. Define Constants:  
+   Set a constant `FILE_NAME` to the path of the HDF5 file: `ATL17_20201201000814_10360901_005_01.h5`.
+
+3. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access three datasets: `/global_grid_lat` (latitude data), `/global_grid_lon` (longitude data), and `/global_asr` (main data).
+
+4. Read Dataset Attributes:  
+   Extract attributes `units` and `long_name` from the main dataset using `decode('ascii', 'replace')`. Also, retrieve the `_FillValue` attribute.
+
+5. Data Processing and Cleaning:  
+   - Convert the main dataset's `_FillValue` to `numpy NaN`.
+   - Mask the data using `numpy.ma.masked_where` with conditions `numpy.isnan(data)` and `data`.
+
+6. Create Map Projection:  
+   Use a cylindrical projection map with low resolution, setting latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+
+7. Customize Map Features:  
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals of [-90, -60, -30, 0, 30, 60, 90] using `numpy.arange`.
+   - Draw meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180] using `numpy.arange`.
+
+8. Adjust Longitude Values:  
+   Subtract 180 from longitude values before plotting to ensure correct map projection.
+
+9. Plot Data on Map:  
+   Use `pcolormesh` to plot the data with parameters: longitude, latitude, data, and `latlon=True`.
+
+10. Add Colorbar and Title:  
+    - Add a colorbar to the map, positioned at the bottom, labeled with the main dataset's units.
+    - Set the title of the map to include the file basename and the `long_name` attribute from the dataset.
+
+This structured approach ensures clarity and technical accuracy for generating the required code.

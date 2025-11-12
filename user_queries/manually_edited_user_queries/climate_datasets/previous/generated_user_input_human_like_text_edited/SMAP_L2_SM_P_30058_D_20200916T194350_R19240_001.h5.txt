@@ -1,0 +1,13 @@
+"I'd like you to explain this Python code step-by-step. 
+
+The code starts by importing necessary libraries: `os`, `h5py`, `matplotlib`, `Basemap`, and `numpy`. It then defines a constant `FILE_NAME` for the HDF5 file to be read.
+
+Next, it opens the HDF5 file using `h5py` and accesses the `/Soil_Moisture_Retrieval_Data/soil_moisture` dataset. It extracts metadata attributes like units, long name, fill value, and valid range from the dataset.
+
+The code identifies invalid data points (outside the valid range or equal to the fill value) and replaces them with NaN using NumPy's logical operations. It then creates a masked array from the data.
+
+It also retrieves latitude and longitude datasets from the HDF5 file.
+
+Using Basemap, the code creates a cylindrical projection map with coastlines, latitude/longitude parallels and meridians, and plots the data as a scatter plot with a colormap. A colorbar is added to the bottom of the map.
+
+Finally, it sets up the plot title and figure, including the file name and long description of the data, and saves the figure as a PNG file based on the input file name."

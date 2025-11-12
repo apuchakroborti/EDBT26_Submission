@@ -1,0 +1,10 @@
+I Have some data of Clothing Stores Retail Sales in U.S.A named in h5 format named '76_h5_data.h5'. 
+There are two datasets in the .h5 file. The first dataset is "Womans Millions of dollars". the second dataset is "Mens millions of Dollars". 
+Write a python script to read data from file "76_h5_data.h5" and create a vertical two-part graph with the top part being a box plot and the bottom part a histogram. 
+The data visualized relates to 'Womens millions of dollars' in retail sales. The plot showcase the distribution of women's clothing retail sales in the U.S. 
+The upper section is an axis-free box plot highlighting key statistical values, while the lower section is a histogram detailing the frequency distribution. 
+Red dashed lines indicate the quartiles, seamlessly connecting both plots to emphasize these measures.The box plot should have no visible axes, and it should be narrower in width. 
+Include numerical labels for key statistics such as the minimum, lower quartile, median, upper quartile, and maximum values, placed just above the box plot. 
+The histogram should have visible axes and a smaller bin size for finer details. Add two continuous red dashed lines at the lower and upper quartiles. 
+These lines should extend seamlessly across both the box plot and the histogram, without any gaps. 
+The entire plot should be tightly laid out with no space between the box plot and the histogram so that the line can have no break.

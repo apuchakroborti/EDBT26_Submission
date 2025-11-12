@@ -1,0 +1,30 @@
+a Python script that reads an HDF5 file and creates a map visualization. Here's how it works:
+
+Reading HDF5 File
+
+The script opens the HDF5 file in read-only mode and assigns it to a variable.
+
+Extracting Data and Attributes
+
+It extracts various datasets and attributes from the HDF5 file, including `/lst`, which contains the data of interest. 
+The script also extracts several attributes like scale factor, add offset, units of measurement, fill value, and long description of the dataset.
+
+Extracting Latitude and Longitude
+
+The script extracts two additional datasets: `/lon` for longitude values and `/lat` for latitude values.
+
+Data Processing
+
+It applies transformations to the data, replacing fill values with NaN, applying scale factor and add offset, and creating a masked array where NaN values are excluded.
+
+Creating Map Visualization
+
+Using `Basemap`, the script creates a cylindrical projection map with low-resolution coastlines. It draws coastlines, parallels, and meridians on the map, and creates a scatter plot of the data using the Jet colormap.
+
+Adding Colorbar and Title
+
+The script adds a colorbar to the map, sets its label to the units of measurement, and sets the title of the plot to include the base name and long description of the dataset.
+
+Saving Plot to File
+
+Finally, it saves the plot to a PNG file.

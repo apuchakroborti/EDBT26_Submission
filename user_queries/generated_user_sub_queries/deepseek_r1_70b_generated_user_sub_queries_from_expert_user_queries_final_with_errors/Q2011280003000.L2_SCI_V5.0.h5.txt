@@ -1,0 +1,96 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that visualizes data from an HDF5 file using the following steps:
+
+1. Import Libraries: Include necessary libraries for handling files, numerical operations, and visualization:
+   - `os` for operating system functions
+   - `datetime` for time-related operations
+   - `h5py` to work with HDF5 files
+   - `numpy as np` for numerical computations
+   - `matplotlib as mpl` and `matplotlib.pyplot as plt` for creating visualizations
+   - `mpl_toolkits.basemap import Basemap` for map projections
+
+2. Define Constants: Set the file name constant:
+   - `FILE_NAME = 'Q2011280003000.L2_SCI_V5.0.h5'`
+
+3. Open HDF5 File: Open the specified HDF5 file in read-only mode using a `with` statement, assigning it to variable `f`.
+
+4. Access Data and Attributes:
+   - Extract the `SSS` dataset from the group `Aquarius Data` into `datavar`.
+   - Slice `datavar` to get 1D data by taking all rows from the 0th column.
+   - Retrieve attributes `units`, `long_name`, and `_FillValue` from `datavar`, decoding byte-encoded strings.
+
+5. Extract Latitude and Longitude:
+   - Access `sclat` as a 1D array for latitude data.
+   - Access `sclon` as a 1D array for longitude data.
+   both from the group `Navigation`
+
+6. Handle Fill Values:
+   - Replace `_FillValue` in the SSS dataset with `NaN` to handle missing data.
+   - Create a masked array for efficient management of invalid data points.
+
+7. Create Map Projection:
+   - Use Basemap's cylindrical projection with latitude limits from -90 to 90 and longitude from -180 to 180.
+
+8. Generate Scatter Plot:
+   - Plot data points on the map using longitude as x and latitude as y coordinates.
+   - Apply the `jet` colormap for data representation.
+
+9. Add Colorbar:
+   - Create a colorbar with a label based on the SSS dataset's units attribute for clarity.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user's query into three specific sub-queries. Let me read through the problem again.
+
+The user wants a Python script that visualizes HDF5 data following several steps. They've outlined each step in detail, from importing libraries to creating the final plot with a colorbar.
+
+First, I'll focus on the HDF5 part. The user is using h5py to access datasets and attributes. They extract 'SSS' from 'Aquarius Data', slice it, and get attributes like units, long_name, and _FillValue. So the sub-query should target accessing these specific elements with h5py.
+
+Next, for NumPy preprocessing, they replace _FillValue with NaN and create a masked array. They also mention using np.where or similar functions. The sub-query needs to cover handling fill values, masking, and any data filtering steps.
+
+Lastly, the visualization part uses Basemap for a cylindrical projection, plotting points with longitude and latitude, applying a colormap, adding coastlines, meridians, parallels, colorbars, and titles. So the sub-query should focus on these aspects using matplotlib and Basemap.
+
+I need to make sure each sub-query is concise and targets only the specified technical domains without overlapping.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+Accessing HDF5 datasets and attributes using `h5py`, such as extracting the `SSS` dataset from `/Aquarius Data`, retrieving its `_FillValue`, `units`, and `long_name` attributes, and accessing latitude (`sclat`) and longitude (`sclon`) arrays from `/Navigation`.
+
+NumPy Data Preprocessing Sub-query:  
+Handling `_FillValue` in NumPy arrays by replacing it with `NaN`, creating masked arrays using `np.ma.masked_where`, and applying preprocessing logic to filter or compute data.
+
+Plotting and Visualization Sub-query:  
+Using `matplotlib` and `mpl_toolkits.basemap` to create a cylindrical map projection, plotting scatter points on the map, adding coastlines, meridians, parallels, colorbars with labels, and titles for geospatial visualization.

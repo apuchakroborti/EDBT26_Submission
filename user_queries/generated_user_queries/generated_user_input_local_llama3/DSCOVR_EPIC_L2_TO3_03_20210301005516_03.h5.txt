@@ -1,0 +1,77 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The first few lines import various libraries:
+```python
+import os
+import h5py
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+import numpy as np
+```
+These libraries are used for file I/O (h5py), data visualization (matplotlib and cartopy), and numerical computations (numpy).
+
+**Opening the HDF5 file**
+
+The code opens an HDF5 file named `DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5` using the h5py library:
+```python
+FILE_NAME = 'DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5'
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+The `mode='r'` argument specifies that we want to open the file in read-only mode.
+
+**Reading data and attributes**
+
+Within the file-opening context manager, the code reads a dataset named `/Ozone` from the file:
+```python
+name = '/Ozone'
+data = f[name][:].astype(np.float64)
+```
+The `f[name]` expression accesses the `/Ozone` dataset within the HDF5 file. The `.astype(np.float64)` method converts the data to a floating-point array with 64-bit precision.
+
+**Plotting on the map**
+
+The code plots the ozone data as a scatter plot using `plt.scatter`:
+```python
+p = plt.scatter(lon, lat, c=data, s=1, cmap=plt.cm.jet,
+                transform=ccrs.PlateCarree())
+```
+This plot uses the longitude and latitude values to create a 2D map. The `c` argument specifies that we want to color the points based on the ozone data.
+
+**Adding grids, coastlines, and degree labels**
+
+The code adds grid lines, coastlines, and degree labels to the map using various cartopy functions:
+```python
+gl = ax.gridlines()
+ax.coastlines()
+gl.xformatter = LONGITUDE_FORMATTER
+gl.yformatter = LATITUDE_FORMATTER
+```
+These features help visualize the map and provide context for the ozone data.
+
+**Creating a colorbar**
+
+The code creates a colorbar using `plt.colorbar`:
+```python
+cb = plt.colorbar(p, fraction=0.022, pad=0.01)
+cb.set_label(units, fontsize=8)
+```
+This colorbar is labeled with the units attribute (`'DU'`) and has a specific size and position.
+
+**Adding title and saving image**
+
+The code adds a title to the plot using `plt.title`:
+```python
+basename = os.path.basename(FILE_NAME)
+plt.title('{0}\n{1}'.format(basename, long_name), fontsize=12)
+```
+This title includes the file name and the long name attribute.
+
+Finally, the code saves the image as a PNG file:
+```python
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This step creates an image file with the same base name as the input HDF5 file, but with a `.py.png` extension.

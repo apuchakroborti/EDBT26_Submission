@@ -1,0 +1,23 @@
+Here is a reduced version of the text, keeping as many implementation details as possible:
+
+This Python script reads and visualizes data from a NASA GES DISC MLS v4 Swath HDF-EOS5 file. Here's a step-by-step breakdown:
+
+1. Import necessary libraries: `os`, `matplotlib` (with submodules), and `h5py`.
+
+2. Define the file name and path: `FILE_NAME` is 'MLS-Aura_L2GP-BrO_v04-23-c03_2016d302.he5', and `path` is '/HDFEOS/SWATHS/BrO'.
+
+3. Open the HDF5 file in read mode: `with h5py.File(FILE_NAME, mode='r') as f:`.
+
+4. Access the BrO data and its attributes: retrieve the 400th row of the dataset (`data = dset[399, :]`), and get missing value, fill value, title, and units attributes from the dataset.
+
+5. Access geolocation data: retrieve pressure and time datasets.
+
+6. Plot the BrO data vs. pressure: plot elements 13-17 of `data` against corresponding elements of `pressure`, with y-axis label set to 'Pressure ({0})' and x-axis label set to '{0} ({1})'.
+
+7. Add a title to the plot: set the plot title to '{0}\n{1} at Time = {2}'.
+
+8. Adjust the plot: invert y-axis, set y-axis scale to logarithmic, remove scientific notation from labels, and format labels as '%g'.
+
+9. Save the plot to a PNG file: save the plot to a file with name constructed based on `basename`.
+
+Note that I removed steps 10-11 (saving the figure) since it's not necessary for the reduced text.

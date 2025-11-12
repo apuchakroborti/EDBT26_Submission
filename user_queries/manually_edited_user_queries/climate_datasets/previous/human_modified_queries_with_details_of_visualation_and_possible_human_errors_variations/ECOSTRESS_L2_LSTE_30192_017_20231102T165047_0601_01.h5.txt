@@ -1,0 +1,29 @@
+a Python code. Here's what it does:
+
+Importing Libraries and Defining File Names
+
+The code starts by importing necessary libraries and defining two file names: `FILE_NAME` for an ECOSTRESS L2 HDF5 file 
+and `FILE_NAME_GEO` for an ECOSTRESS L1B GEO HDF5 file which is located at /Users/apukumarchakroborti/gsu_research/llam_test/ACL_DIRS/LP_DAAC/python_script/ECOSTRESS_L1B_GEO_30192_017_20231102T165047_0601_01.h5.py
+
+Opening HDF5 Files and Accessing Data
+
+It opens both files in read-only mode and accesses the following data:
+
+ `/SDS/LST` dataset (Land Surface Temperature data) with attributes like scale, offset, units, fill value, and long name
+ `/Geolocation/longitude` and `/Geolocation/latitude` datasets (longitude and latitude data)
+
+Data Processing
+It updates the data type to np.float64
+The code processes the LST data by replacing fill values with NaN, 
+The script also extracts several attributes like scale factor, add offset, units of measurement, fill value, and long description of the dataset, 
+the decodes the value of units and long name using decode function.
+It creats a masked array using numpy masked array and checking isnan or not 
+It also updates longitude and latitude data type using astype of numpy float64
+
+Map Visualization
+Using a cylindrical projection of low resolution, the code creates a map visualization using latitude range from -90 to 90 and longitude range from -180 to 180 
+with coastlines, parallels, and meridians drawn. 
+It then scatter plots the LST data using longitude and latitude values, with a colorbar.
+
+Plot Customization
+Finally, it customizes the plot by setting a title using file name and long name attributes and saves the plot to a PNG file.

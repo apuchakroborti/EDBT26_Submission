@@ -1,0 +1,7 @@
+Use 87_h5_data.h5 to plot a sunburst chart.
+- The hierarchy is defined by the 'continent' and 'country' datasets.
+- The size of each segment is determined by the 'pop' dataset (population).
+- The color of each segment is determined by the 'lifeExp' datasets (life expectancy).
+- The color scale is a diverging scale that goes from red to blue ('RdBu').
+- The midpoint of the color scale is the weighted average of the 'lifeExp' values, with the weights being the 'pop' values.
+- Add A color bar as a legend for the 'lifeExp' dataset.

@@ -1,0 +1,21 @@
+Python script. Here's what it does:
+
+The script starts by opening an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+It then accesses several datasets within the file using their sub paths:
+
+"/Data Fields/L2gpValue" (Ozone data)
+"/Latitude" (latitude values)
+"/Pressure" (pressure levels)
+"/Time" (time information) these are located at the root group /Geolocation Fields
+
+all have base path HDFEOS/SWATHS/O3
+
+
+The script reads the data from each dataset it read Ozone data of 0 to 70th index from the x-axis and all data from the y-axis of 2D data 
+It also reads latitude from 0 to 70th index from the 1D data and pressure data from, including units and titles. 
+It also replaces fill values with NaNs and creates a masked array.
+
+Next, it converts the time information from seconds since 1993-01-01 to a string format.
+
+Finally, the script visualizes the Ozone data using a pseudocolor plot, adds a colorbar with units, and sets axis labels and title.

@@ -1,0 +1,42 @@
+Here is the reduced text while keeping implementation details:
+
+**Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+
+* `os`
+* `h5py` for reading and writing HDF5 files
+* `numpy` (as `np`) for numerical computations
+* `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`) for creating plots
+
+**Defining the HDF5 file name and opening it**
+
+The code defines a variable `FILE_NAME` containing the path to an NSIDC ICESat-2 ATL11 L3B version 6 HDF5 file. The file is assumed to be in the current working directory.
+
+The code then opens the HDF5 file using `h5py.File()` with mode `'r'`.
+
+**Accessing and processing dataset variables**
+
+Inside the `with` block, the code accesses several datasets:
+
+1. `/pt1/latitude`
+2. `/pt1/longitude`
+3. `/pt1/h_corr`
+
+The code extracts values from each dataset using `[:]` and checks for `_FillValue`. If present, it replaces those values with NaN.
+
+**Creating a map**
+
+The code uses `Basemap` to create an equidistant cylindrical projection map.
+
+**Plotting data on the map**
+
+The code plots height-corrected data as a scatter plot on the map using longitude and latitude values. The color is determined by the value in `data`.
+
+A color bar (CB) is added with units label set to the HDF5 file's attribute.
+
+**Saving the plot**
+
+The code saves the plot as a PNG image file using `fig.savefig()`.
+
+That's it!

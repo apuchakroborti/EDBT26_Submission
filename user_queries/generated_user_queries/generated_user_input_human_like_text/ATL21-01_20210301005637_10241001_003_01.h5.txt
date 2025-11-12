@@ -1,0 +1,21 @@
+Here is a rewritten version of the description, condensed by about 40% while keeping as many implementation details as possible:
+
+I'm working with a Python script that processes an NSIDC ICESat-2 ATL21 L3B HDF5 file. Here's what it does:
+
+First, it imports necessary libraries: `os`, `matplotlib.pyplot` as `plt`, `numpy` as `np`, `mpl_toolkits.basemap` as `Basemap`, and `h5py`.
+
+It then defines the HDF5 file to work with (`"ATL21-01_20210301005637_10241001_003_01.h5"`).
+
+The script opens the HDF5 file in read-only mode using `h5py` and accesses three datasets: `/grid_lat`, `/grid_lon`, and `/monthly/mean_weighted_mss`. For each dataset, it extracts data values and attributes like units, long name, and fill value.
+
+It handles missing values by replacing them with `NaN` and creates a masked array using `np.ma.masked_where`.
+
+Next, it uses `Basemap` to create a map visualization of the data. It defines a stereographic projection (`"npstere"`), sets the resolution to `"l"`, and specifies the bounding latitude as 60 degrees north. The script draws coastlines, parallels, and meridians on the map and creates a pseudocolor mesh plot of the data using `m.pcolormesh`. Finally, it adds a colorbar to the plot and customizes the title and saves the plot as a PNG image file.
+
+The HDF5 file has the following hierarchy:
+
+* `/grid_lat` (latitude values)
+* `/grid_lon` (longitude values)
+* `/monthly/mean_weighted_mss` (main dataset with data, units, long name, and fill value)
+
+Let me know if you have any questions about this code!

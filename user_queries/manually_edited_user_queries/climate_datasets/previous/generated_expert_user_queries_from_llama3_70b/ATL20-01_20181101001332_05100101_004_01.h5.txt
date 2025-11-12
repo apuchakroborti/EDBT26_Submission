@@ -1,0 +1,59 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+* `os`: for operating system-related functions
+* `matplotlib.pyplot` (aliased as `plt`): for plotting and visualization
+* `numpy` (aliased as `np`): for numerical computations
+* `mpl_toolkits.basemap` (aliased as `Basemap`): for geographic mapping and projection
+* `h5py`: for working with HDF5 files
+
+**Defining the HDF5 File**
+
+The code defines a constant `FILE_NAME` with the name of the HDF5 file to be accessed: `"ATL20-01_20181101001332_05100101_004_01.h5"`.
+
+**Opening the HDF5 File**
+
+The code opens the HDF5 file in read-only mode (`mode="r"`) using `h5py`. The file is opened as a context manager, which ensures that the file is properly closed when the script finishes executing.
+
+**Accessing Datasets**
+
+Within the HDF5 file, the code accesses several datasets:
+
+* `/grid_lat`: a dataset containing latitude values
+* `/grid_lon`: a dataset containing longitude values
+* `/monthly/mean_fb`: a dataset containing data values
+
+The code reads the entire contents of each dataset using slicing (`[:]`).
+
+**Handling Fill Values**
+
+The code handles fill values in the data by:
+
+1. Identifying the `_FillValue` attribute associated with the `datavar` dataset.
+2. Replacing all occurrences of `_FillValue` in the data with `np.nan` (Not a Number).
+3. Creating a masked array using `numpy.ma.masked_where`, which allows for efficient handling of missing values.
+
+**Visualizing the Data**
+
+The code uses `Basemap` to create a map projection and visualize the data:
+
+1. Creates a Basemap object with a Northern Polar Stereographic (NPSTere) projection.
+2. Draws coastlines, parallels, and meridians on the map.
+3. Converts longitude values from 0-360° to -180° to 180° by subtracting 180°.
+4. Uses `pcolormesh` to create a pseudocolor plot of the data on the map.
+
+**Adding Colorbar and Title**
+
+The code adds:
+
+1. A colorbar at the bottom of the plot with a label indicating the units of the data.
+2. A title to the plot, which includes the filename and long name of the dataset.
+
+**Saving the Plot**
+
+Finally, the code saves the plot as a PNG file using `matplotlib`'s `savefig` method. The filename is constructed by appending `.py.png` to the original HDF5 file name.
+
+Overall, this script accesses an HDF5 file, extracts data from it, and visualizes the data on a map projection using Basemap and Matplotlib.

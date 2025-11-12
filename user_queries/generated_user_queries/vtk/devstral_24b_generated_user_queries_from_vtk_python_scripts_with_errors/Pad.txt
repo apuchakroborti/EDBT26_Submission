@@ -1,0 +1,35 @@
+Purpose
+This script is designed to read an image file (specifically a medical image of a head) and then process it in two different ways. It shows these processed images side by side on the screen.
+
+Step-by-Step Explanation
+
+1. Setting Up Colors:
+   - The script starts by setting up some colors that will be used later for displaying the images.
+
+2. Reading the Image File:
+   - It specifies a file named 'Pad_FullHead.mhd' which contains the image of a head.
+   - The script reads this image file into memory so it can work with it.
+
+3. Creating Two Different Processing Pipelines:
+   - Constant Padding: This is like adding an empty border around the original image. In this case, it adds a border of zeros (black pixels) around the image to make it bigger.
+     - The script sets up how big this new bordered image should be.
+   - Mirror Padding: This is another way to add a border, but instead of using black pixels, it mirrors the edge pixels of the original image. So if there's an edge with some gray pixels, those same gray pixels will continue into the border.
+
+4. Preparing the Images for Display:
+   - The script takes both processed images (the one with constant padding and the one with mirror padding) and prepares them to be shown on the screen.
+   - It sets up how these images should look when displayed, including their colors and how they are scaled.
+
+5. Setting Up the Viewing Window:
+   - The script creates a window where both processed images will be displayed side by side.
+   - It divides this window into two parts: one for each image.
+   - Each part of the window has its own background color to make it easier to see the difference between the two images.
+
+6. Displaying the Images:
+   - The script sets up an interactive window where you can view and interact with the images.
+   - It makes sure that both images are shown at the same scale so they're easy to compare.
+   - Finally, it opens this window on your screen and waits for you to close it.
+
+Summary
+In simple terms, this script reads a medical image of a head, processes it in two different ways (adding borders with either black pixels or mirrored edge pixels), prepares these processed images for display, and then shows them side by side in an interactive window. This allows someone to visually compare how the two different border-adding techniques affect the appearance of the image.
+
+The main goal is to help visualize how adding borders can impact the way we see and analyze medical images, especially when dealing with edges and boundaries within those images.

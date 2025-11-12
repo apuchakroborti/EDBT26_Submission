@@ -1,0 +1,141 @@
+ Step-by-Step Description of the Python Script
+
+ 1. Import Libraries
+   - Import `vtkmodules.vtkInteractionStyle`
+   - Import `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import the following from `vtkmodules.vtkFiltersCore`: 
+     - `vtkDataObjectToDataSetFilter`
+     - `vtkFieldDataToAttributeDataFilter`
+     - `vtkTubeFilter`
+   - Import the following from `vtkmodules.vtkFiltersGeneral`:
+     - `vtkAxes`
+     - `vtkMarchingContourFilter`
+   - Import `vtkDataObjectReader` from `vtkmodules.vtkIOLegacy`
+   - Import `vtkGaussianSplatter` from `vtkmodules.vtkImagingHybrid`
+   - Import the following from `vtkmodules.vtkRenderingCore`:
+     - `vtkActor`
+     - `vtkCamera`
+     - `vtkFollower`
+     - `vtkPolyDataMapper`
+     - `vtkRenderWindow`
+     - `vtkRenderWindowInteractor`
+     - `vtkRenderer`
+   - Import `vtkVectorText` from `vtkmodules.vtkRenderingFreeType`
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+ 2. Define Input File and Variables
+   - Set the input file name to `'FinanceFieldData_financial.vtk'`.
+   - Define the variable `size` with a value of `3187`.
+   - Define axis labels:
+     - `xAxis = 'INTEREST_RATE'`
+     - `yAxis = 'MONTHLY_PAYMENT'`
+     - `zAxis = 'MONTHLY_INCOME'`
+   - Define the scalar field name: `scalar = 'TIME_LATE'`.
+
+ 3. Read Input Data
+   - Create a `vtkDataObjectReader` object named `reader`.
+   - Set the file name of the reader to the input file.
+
+ 4. Extract and Process Data
+   - Create a `vtkDataObjectToDataSetFilter` object named `do2ds`.
+     - Connect it to the reader's output.
+     - Set the dataset type to poly data.
+     - Enable default normalization.
+     - Configure point components for x, y, and z axes.
+   - Update the filter to process the data.
+
+ 5. Convert Field Data to Attribute Data
+   - Create a `vtkFieldDataToAttributeDataFilter` object named `fd2ad`.
+     - Connect it to the output of `do2ds`.
+     - Configure it to use the field data as input and produce point data as output.
+     - Enable default normalization.
+     - Set the scalar component from the specified scalar field.
+
+ 6. Create Pipeline for Original Population
+   - Create a `vtkGaussianSplatter` object named `popSplatter`.
+     - Connect it to the output of `fd2ad`.
+     - Set sample dimensions to `(150, 150, 150)`.
+     - Set radius to `0.05`.
+     - Disable scalar warping.
+   - Create a `vtkMarchingContourFilter` object named `popSurface`.
+     - Connect it to the output of `popSplatter`.
+     - Set contour value to `0.01`.
+   - Create a `vtkPolyDataMapper` object named `popMapper`.
+     - Connect it to the output of `popSurface`.
+     - Disable scalar visibility.
+   - Create a `vtkActor` object named `popActor`.
+     - Set its mapper to `popMapper`.
+     - Set opacity to `0.3`.
+     - Set color to gold using `vtkNamedColors`.
+
+ 7. Create Pipeline for Delinquent Population
+   - Create another `vtkGaussianSplatter` object named `lateSplatter`.
+     - Connect it to the output of `fd2ad`.
+     - Set sample dimensions to `(150, 150, 150)`.
+     - Set radius to `0.05`.
+     - Set scale factor to `0.05`.
+   - Create a `vtkMarchingContourFilter` object named `lateSurface`.
+     - Connect it to the output of `lateSplatter`.
+     - Set contour value to `0.01`.
+   - Create a `vtkPolyDataMapper` object named `lateMapper`.
+     - Connect it to the output of `lateSurface`.
+     - Disable scalar visibility.
+   - Create a `vtkActor` object named `lateActor`.
+     - Set its mapper to `lateMapper`.
+     - Set color to tomato using `vtkNamedColors`.
+
+ 8. Create Axes
+   - Update the `popSplatter` filter to get bounds.
+   - Create a `vtkAxes` object named `axes`.
+     - Set origin based on the bounds of the splattered data.
+     - Set scale factor relative to the length of the data.
+   - Create a `vtkTubeFilter` object named `axesTubes`.
+     - Connect it to the output of `axes`.
+     - Set radius and number of sides for the tubes.
+   - Create a `vtkPolyDataMapper` object named `axesMapper`.
+     - Connect it to the output of `axesTubes`.
+   - Create a `vtkActor` object named `axesActor`.
+     - Set its mapper to `axesMapper`.
+
+ 9. Label Axes
+   - Create text actors for each axis using `vtkVectorText`, `vtkPolyDataMapper`, and `vtkFollower`.
+     - For X-axis:
+       - Text: `xAxis`
+       - Position: `(0.35, -0.05, -0.05)`
+     - For Y-axis:
+       - Text: `yAxis`
+       - Position: `(-0.05, 0.35, -0.05)`
+     - For Z-axis:
+       - Text: `zAxis`
+       - Position: `(-0.05, -0.05, 0.35)`
+   - Set scale and color (black) for all text actors.
+
+ 10. Set Up Graphics
+   - Create a `vtkRenderer` object named `renderer`.
+   - Create a `vtkRenderWindow` object named `renderWindow`.
+     - Add the renderer to the window.
+     - Set window name to `'FinanceFieldData'`.
+   - Add all actors (`axesActor`, `lateActor`, `XActor`, `YActor`, `ZActor`, `popActor`) to the renderer.
+   - Set background color to slate gray using `vtkNamedColors`.
+   - Set window size to `(650, 480)`.
+
+ 11. Configure Camera
+   - Create a `vtkCamera` object named `camera`.
+     - Set clipping range, focal point, position, and view up.
+   - Set the camera as active for the renderer.
+   - Set the same camera for all text actors.
+
+ 12. Render and Interact
+   - Create a `vtkRenderWindowInteractor` object named `interactor`.
+     - Set the render window for interaction.
+   - Render the scene and start interaction.
+
+13. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "FinanceFieldData_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

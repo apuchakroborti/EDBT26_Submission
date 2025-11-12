@@ -1,0 +1,80 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that reads and visualizes data from an HDF5 file with the following steps:
+
+1. Import Libraries: Include os, h5py, matplotlib, matplotlib.pyplot, mpl_toolkits.basemap, and numpy.
+
+2. Read HDF5 File: Open the file located at "DeepBlue-SeaWiFS_L2_20101210T135954Z_v004-20130525T172725Z.h5".
+
+3. Access Dataset: Extract the dataset named `aerosol_optical_thickness_550_ocean`.
+
+4. Extract Metadata: Retrieve the long_name and units from the aerosol_optical_thickness_550_ocean dataset, decoding them using decode().
+
+5. Preprocess Data:
+   - Replace -999 values with NaN.
+   - Create a masked array using numpy's masked_array function, masking where data is NaN.
+
+6. Set Up Visualization:
+   - Use an orthographic map projection with mean latitude and longitude.
+   - Add coastlines with 0.5 width.
+   - Draw parallels at -90° to 120 with interval 30°; meridians at -180° to 180°, and 45° intervals.
+
+7. Create Pseudocolor Plot: Use matplotlib's pcmesh with latlon=True, plotting longitude, latitude, and aerosol data.
+
+8. Customize Plot:
+   - Add a colorbar labeled with the dataset's units.
+   - Set the title using the filename and long_name of the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants a Python script that reads and visualizes data from an HDF5 file. They've outlined specific steps, so I need to break it down into the three required sub-queries.
+
+First, the HDF5 Dataset Access part. The user mentions using h5py to open the file and access the dataset. The dataset path is given as 'aerosol_optical_thickness_550_ocean'. Also, they need to extract metadata like long_name and units, which are attributes of the dataset. So the sub-query should focus on how to open the HDF5 file with h5py, access the specific dataset, and retrieve those attributes. I need to make sure to mention the file extension and the dataset path correctly.
+
+Next, the NumPy-based Data Preprocessing. The user wants to replace -999 with NaN and create a masked array. The key here is handling _FillValue, which is common in HDF5 datasets. Using numpy's masked_array function, they'll mask the NaNs. The sub-query should address replacing specific fill values with NaN and masking. Also, mention functions like np.where or np.ma.masked_where if needed, but the user specifically says to use masked_array, so focus on that.
+
+For the Plotting and Visualization part, the user is using Basemap with an orthographic projection. They need to set up the projection with mean lat/lon, add coastlines, draw parallels and meridians with specific intervals. The pseudocolor plot uses pcmesh with latlon=True. The sub-query should cover setting up the projection, adding coastlines, drawing parallels and meridians, and using pcmesh. Also, include adding a colorbar and setting the title, but those are part of the customization, so maybe mention colorbar and title in the sub-query as well.
+
+I need to make sure each sub-query is focused on its domain. For HDF5, it's about accessing the file and dataset. For NumPy, it's about data preprocessing steps. For plotting, it's about the visualization libraries and their specific functions. Avoid mixing domains in the sub-queries. Also, check the user's note to return only the sub-queries without explanations or code. So each sub-query should be a clear, technical question targeting the specific area.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file with .h5 extension, access a dataset at path '/aerosol_optical_thickness_550_ocean', and retrieve decoded metadata attributes like 'long_name' and 'units'?
+
+NumPy Data Preprocessing Sub-query:
+How to replace -999 fill values with NaN in a NumPy array and create a masked array using numpy.ma.masked_array to exclude NaN values for geospatial data processing?
+
+Plotting and Visualization Sub-query:
+How to create an orthographic projection map using mpl_toolkits.basemap, draw coastlines with 0.5 linewidth, set 30° interval parallels (-90° to 120°) and 45° interval meridians (-180° to 180°), and generate a pseudocolor plot with pcmesh, colorbar, and title customization?

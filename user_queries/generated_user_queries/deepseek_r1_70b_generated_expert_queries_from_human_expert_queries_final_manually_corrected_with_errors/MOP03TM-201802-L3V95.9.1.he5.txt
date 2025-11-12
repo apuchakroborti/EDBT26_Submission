@@ -1,0 +1,30 @@
+A Python script that performs the following tasks:
+
+1. Import Libraries: Import the required libraries
+2. Read HDF-EOS File: Open and read the HDF-EOS file named `MOP03TM-201802-L3V95.9.1.he5`.
+
+3. Access Datasets:
+   - Read the dataset located at `RetrievedSurfaceTemperatureDay` from the group `/HDFEOS/GRIDS/MOP03` and parent sub group `Data Fields`
+   - Extract attributes from this dataset, including `long name`, `units`, and `fillValue`. Decode string attributes using the `decode()` method.
+
+4. Data Preprocessing:
+   - Replace values in the `RetrievedSurfaceTemperatureDay` dataset that match `_FillValue` with `NaN`.
+   - Create a masked array using `numpy.ma.masked_array` to mask invalid or missing data points identified by `numpy.isnan`.
+
+5. Retrieve Geolocation Information:
+   - Extract latitude and longitude datasets from `Latitude` and `Longitude` from the group `/HDFEOS/GRIDS/MOP03/Data Fields`, 
+      respectively, into variables named `x` (latitude) and `y` (longitude).
+   - Generate a 2D meshgrid using `numpy.meshgrid` from the latitude and longitude data.
+
+6. Create Basemap:
+   - Set up a cylindrical projection map with low resolution.
+   - Define the map boundaries with latitude ranging from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at -90, 91, 45(start, stop, interval) 
+      and meridians with values at -180, -135, -90, -45, 0, 45, 90, 135, 180. 
+      Set labels for these meridians as left and bottom.
+   - Use `pcolormesh` to plot the data on the map, ensuring `latlon=True`.
+
+7. Visualize Data:
+   - Add a colorbar to the plot.
+   - Label the colorbar using the `units` attribute from the dataset.

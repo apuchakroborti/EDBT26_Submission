@@ -1,0 +1,20 @@
+A Python code. 
+Here's what it does:
+Importing Libraries and Defining Constants
+The code imports necessary libraries and defines a constant `FILE_NAME` for the HDF5 file to be read.
+
+Reading Data from HDF5 File
+It opens the HDF5 file, reads data from `/Soil_Moisture_Retrieval_Data_AM/soil_moisture`, 
+retrieves attributes like units and valid range, creates a mask for invalid data, and replaces it with NaN values.
+
+It then decodes the long name by using decode function with ascii and replace parameters
+It the calculates invalid data using numpy logical or method using comparison with data greater than valid max and less than valid min 
+Then the resulted invalid calculates again with parameters invalid and comparison with data and fill value
+Then it sets numpy NaN values to invalid data
+After that it creates masked array of data using numpy masked array and checking numpy isnan
+
+Reading Geolocation Data
+It reads geolocation data from `/Soil_Moisture_Retrieval_Data_AM/latitude` and `/Soil_Moisture_Retrieval_Data_AM/longitude`.
+
+Creating a Map and Visualizing Data
+The code creates a map using Basemap, draws coastlines and parallels, scatters the data points, and adds a colorbar.

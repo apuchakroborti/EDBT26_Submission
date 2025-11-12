@@ -1,0 +1,43 @@
+Purpose
+This script takes a text file (like a book or an article) and creates a visual representation showing how often each letter appears in that text. It then displays this information using 3D graphics.
+
+Step-by-Step Explanation
+
+1. Importing Tools:
+   - The script starts by importing some tools it needs to work with files, count things, and create graphics.
+   - Think of these imports like bringing in different sets of tools from a toolbox: one for handling text, another for counting letters, and others for creating 3D shapes.
+
+2. Reading the File:
+   - The script opens a file named 'AlphaFrequency_Gettysburg.txt'.
+   - It reads through this file line by line.
+   - As it reads each line, it removes any numbers or special characters, keeping only the letters.
+   - All letters are converted to lowercase so that 'A' and 'a' are treated the same.
+
+3. Counting Letters:
+   - The script keeps track of how many times each letter appears in the text.
+   - It finds out which letter appears most frequently (this is called the maximum frequency).
+
+4. Setting Up Graphics:
+   - Now, it sets up a window where it will display its results using 3D graphics.
+   - This involves creating a virtual space to draw things and setting up tools for interacting with this space.
+
+5. Creating Letters in 3D:
+   - For each letter of the alphabet (from 'A' to 'Z'), the script creates a 3D version of that letter.
+   - It then "extrudes" these letters, which means it gives them depth so they look like blocks instead of flat shapes.
+   - The height of each block is based on how often that letter appears in the text. More frequent letters get taller blocks.
+
+6. Coloring and Positioning:
+   - Each 3D letter block is given a specific color (a shade of blue-green called 'Peacock').
+   - If a letter doesn't appear at all in the text, its block is made invisible.
+   - The script then arranges these blocks in a grid so they fit nicely within the display window.
+
+7. Setting Up the View:
+   - It adjusts the camera angle to give a good view of the 3D letters.
+   - Sets the background color to silver and makes sure everything fits well within the viewing area.
+
+8. Displaying the Result:
+   - Finally, it opens a window showing all these 3D letter blocks.
+   - You can interact with this window by moving around or zooming in/out to see the letters from different angles.
+
+Summary
+In simple terms, this script reads a text file, counts how often each letter appears, and then creates a visual representation of that information using 3D graphics. It shows you which letters are most common by making them taller in the 3D display. The result is an interactive window where you can see and explore these letter frequencies visually.

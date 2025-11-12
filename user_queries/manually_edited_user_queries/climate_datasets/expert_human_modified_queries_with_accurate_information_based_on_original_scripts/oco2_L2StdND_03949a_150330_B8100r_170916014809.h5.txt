@@ -1,0 +1,29 @@
+Step-by-Step Explanation
+The code reads an HDF5 file which is located at oco2_L2StdND_03949a_150330_B8100r_170916014809.h5 and creates a map with data visualization. Here's how it works:
+
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Defining Constants
+A constant `FILE_NAME` is defined as the name of the HDF5 file to be read.
+
+Opening the HDF5 File
+The HDF5 file is opened in read-only mode, and the file object is assigned to `f`.
+
+Reading Data
+Data is read from `/RetrievalResults/xco2` as name then it stores the values to a variable named `data`. 
+The Units and Description of the dataset are also retrieved.
+
+Reading Geolocation Data
+Geolocation data is read from `/RetrievalGeometry/retrieval_latitude` and `/RetrievalGeometry/retrieval_longitude` into NumPy arrays that stored the data into the variables `latitude` and `longitude` respectively
+
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45, 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+
+The program should set scatter function with paramets of lon, lat, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+At the end, I adds a colorbar with parameteres location="bottom", formation="%.1e" with 10% padding
+I also adds label using set_label function with the values of Units 

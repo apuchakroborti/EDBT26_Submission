@@ -1,0 +1,47 @@
+Here's the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The script imports four libraries:
+1. `os`
+2. `matplotlib.pyplot` (as `plt`)
+3. `numpy` (as `np`)
+4. `mpl_toolkits.basemap`
+
+**Defining the HDF5 file name and opening it**
+
+The script defines the HDF5 file name: `"ATL22_20210712003905_02811201_003_01.h5"`. It then opens the file using `h5py` in read-only mode (`"r"`).
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    # ...
+```
+**Accessing datasets and handling FillValue**
+
+The script accesses three datasets: `latvar`, `lonvar`, and `datavar`. It checks for `_FillValue` in the dataset and sets it to NaN using NumPy's `astype`.
+```python
+dataf = data.astype(float)
+dataf[data == _FillValue] = np.nan
+```
+**Creating a map, plotting data, and adding a colorbar**
+
+The script creates an equidistant cylindrical projection of the Earth with a low resolution coastline database. It draws coastlines, parallels, and meridians on the map.
+```python
+m = Basemap(
+    projection="cyl",
+    resolution="l",
+    llcrnrlat=-90,
+    urcrnrlat=90,
+    llcrnrlon=-180,
+    urcrnrlon=180,
+)
+```
+The script plots the values from `data` as colored points on the map using `m.scatter`. It adds a colorbar and sets its label to the units of the dataset.
+
+**Saving the plot**
+
+The script saves the plot as a PNG file.
+```python
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This is the final output: a visual representation of the data from the HDF5 file, with a colorbar and title.

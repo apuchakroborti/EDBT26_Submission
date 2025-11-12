@@ -1,0 +1,23 @@
+A Python code. 
+Here's what it does:
+
+The code starts by importing necessary libraries and defining an HDF5 file named `'SMAP_L4_SM_gph_20200915T193000_Vv7032_001.h5'`.
+
+It then opens the HDF5 file in read-only mode using a context manager, ensuring the file is properly closed when the script finishes executing. 
+Within the context manager, it accesses various datasets and attributes:
+
+`sm_profile` dataset under `/Geophysical Data/`
+Reads entire dataset into an array called `data`
+Reads attributes like `units`, `long name`, `_Fill Value`, `valid max`, and `valid min`
+
+It then decodes the long name by using decode function with ascii and replace parameters
+It the calculates invalid data using numpy logical or uisng comparison with data greater than valid max and less than valid min 
+Then the resulted invalid calculates again with parameters invalid and comparison with data and fill value
+
+The code then processes the `data` array by decoding attribute values, identifying invalid values, and creating a masked array to exclude NaN values.
+
+It also reads two additional datasets: `latitude` under `/cell_lat/` and `longitude` under `/cell_lon/`.
+
+Using these data points, it creates a map visualization specifying latitude range of -90 to 90 and longditude range of -180 to 180 
+with coastlines, parallels, and meridians drawn on the map. 
+The plot is customized with a colorbar and title using the HDF5 file name and long name associated with the `sm_profile` dataset.

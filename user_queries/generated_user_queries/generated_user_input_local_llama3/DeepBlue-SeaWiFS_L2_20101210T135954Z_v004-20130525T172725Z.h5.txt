@@ -1,0 +1,51 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing various libraries:
+
+1. `os`
+2. `matplotlib` (aliased as `mpl`)
+3. `h5py`
+
+**Defining constants and variables**
+
+Next, it defines some constants and variables:
+
+1. `FILE_NAME`: the name of the HDF5 file to read
+2. `DATAFIELD_NAME`: the name of the data field within the HDF5 file that contains aerosol optical thickness at 550 nm over ocean
+3. `data`, `latitude`, and `longitude`: variables that will hold the values from the HDF5 file
+
+**Reading the HDF5 file**
+
+The code then opens the HDF5 file using `h5py`:
+
+1. `with h5py.File(FILE_NAME, mode='r') as f:`: opens the HDF5 file in read-only mode and assigns it to a variable `f`
+
+**Processing data**
+
+Next, it processes the data:
+
+1. `data[data == -999] = np.nan`: replaces values of `-999` with NaN
+2. `data = np.ma.masked_array(data, np.isnan(data))`: creates a masked array where NaN values are masked out
+
+**Creating a map and plotting data**
+
+The code then creates a map using the `Basemap` toolkit:
+
+1. `m = Basemap(projection='ortho', resolution='l', lat_0=lat_m, lon_0 = lon_m)`: creates a Basemap object with an orthographic projection and low-resolution coastline data centered at the mean latitude and longitude
+2. `m.pcolormesh(longitude, latitude, data, latlon=True)`: creates a pseudocolor mesh plot of the data
+
+**Adding a color bar and title**
+
+The code then adds a color bar and title to the plot:
+
+1. `cb = m.colorbar()`: creates a color bar
+2. `plt.title('{0}\n{1}'.format(basename, long_name))`: sets the title of the plot, including the file name and long name
+
+**Saving the plot**
+
+Finally, it saves the plot as a PNG file:
+
+1. `fig = plt.gcf()`: gets the current figure
+2. `fig.savefig(pngfile)`: saves the plot to the specified file

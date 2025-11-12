@@ -1,0 +1,70 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+* `os`: for interacting with the operating system
+* `matplotlib` and `matplotlib.pyplot`: for creating plots and visualizations
+* `mpl_toolkits.basemap`: for creating maps and geographic visualizations
+* `numpy`: for numerical computations
+* `h5py`: for working with HDF5 files
+
+**Defining Constants**
+
+The code defines several constants:
+
+* `FILE_NAME`: the name of the HDF-EOS5 file to be read (`OMI-Aura_L2G-OMSO2G_2017m0123_v003-2017m0124t071057.he5`)
+* `PATH_NAME`: the path within the HDF-EOS5 file where the data is located (`/HDFEOS/GRIDS/OMI Total Column Amount SO2/Data Fields/`)
+* `DATAFIELD_NAME`, `LAT_NAME`, and `LON_NAME`: the names of the datasets within the HDF-EOS5 file that contain the data, latitude, and longitude values, respectively
+
+**Reading Data from HDF-EOS5 File**
+
+The code uses the `h5py` library to read data from the HDF-EOS5 file:
+
+* It opens the file in read-only mode (`mode='r'`) using a context manager (`with` statement)
+* It reads the dataset specified by `DATAFIELD_NAME` into a NumPy array called `data`
+* It reads the latitude and longitude datasets into separate NumPy arrays called `lat` and `lon`
+
+**Getting Attributes**
+
+The code retrieves several attributes from the dataset:
+
+* `title`: the title of the dataset
+* `units`: the units of the data
+* `valid_range`: the valid range of values for the data
+* `_FillValue`: the fill value used in the dataset (i.e., a special value indicating missing or invalid data)
+* `add_offset` and `scale_factor`: attributes used to scale and offset the data
+
+**Handling Fill Value and Valid Range**
+
+The code handles the fill value and valid range by:
+
+* Replacing fill values with NaN (Not a Number) values
+* Scaling and offsetting the data using the `add_offset` and `scale_factor` attributes
+* Masking out-of-range values using NumPy's masked array functionality
+
+**Subsetting Data**
+
+The code subsets the data to a single candidate (i.e., `nCandidate=0`) by:
+
+* Selecting the first slice of the 3D arrays (`data`, `lat`, and `lon`)
+
+**Creating Map Visualization**
+
+The code creates a map visualization using Basemap:
+
+* It defines an equidistant cylindrical projection with a low-resolution coastline database
+* It draws coastlines, parallels, and meridians on the map
+* It scatters the data points on the map using the `scatter` method
+* It adds a colorbar to the plot
+
+**Saving Plot to File**
+
+The code saves the plot to a PNG file:
+
+* It gets the base name of the input file using `os.path.basename`
+* It constructs the output file name by appending `.py.png` to the base name
+* It saves the figure to the output file using `plt.gcf().savefig`
+
+Overall, this code reads data from an HDF-EOS5 file, handles missing values and valid ranges, subsets the data, creates a map visualization, and saves the plot to a PNG file.

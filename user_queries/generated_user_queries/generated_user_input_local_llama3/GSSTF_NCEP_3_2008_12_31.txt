@@ -1,0 +1,68 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+```python
+import datetime
+import os
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+```
+These libraries are used for data manipulation, plotting, and file handling.
+
+**Setting a flag for using NetCDF4**
+
+The code sets a flag `USE_NETCDF4` to `True`, indicating that it will use the NetCDF4 library to read HDF5 files.
+```python
+USE_NETCDF4 = True
+```
+**Defining the `run()` function**
+
+The `run()` function takes a file name as input and performs the following tasks:
+```python
+def run(FILE_NAME):
+    ...
+```
+**Reading the HDF5 file using NetCDF4 (if `USE_NETCDF4` is `True`)**
+
+If `USE_NETCDF4` is `True`, the code uses the NetCDF4 library to read the HDF5 file. It creates a `Dataset` object from the file and navigates through the hierarchy of groups and variables:
+```python
+    if USE_NETCDF4:
+        from netCDF4 import Dataset
+
+        nc = Dataset(FILE_NAME)
+        data_var = nc.groups['HDFEOS'].groups['GRIDS'].groups['NCEP'].variables['SST']
+        data = data_var[:]
+```
+**Processing the data**
+
+The code processes the data by:
+* Decoding string attributes from bytes to UTF-8 (Python 3 only)
+* Applying the fill value (`_FillValue`) to NaN values
+* Creating a masked array for visualization
+
+**Plotting the data using Basemap and Matplotlib**
+
+The code uses Basemap and Matplotlib to create an equidistant cylindrical projection of the data:
+```python
+    m = Basemap(projection='cyl', resolution='l',
+                llcrnrlat=-90, urcrnrlat=90,
+                llcrnrlon=-180, urcrnrlon=180)
+    m.drawcoastlines(linewidth=0.5)
+    m.pcolormesh(longitude, latitude, data, latlon=True)
+    cb = m.colorbar()
+    cb.set_label(data_units)
+```
+**Saving the plot**
+
+The code saves the plot as a PNG file:
+```python
+    plt.title('{0}\n{1}'.format(basename, data_longname))
+    fig = plt.gcf()
+    pngfile = "{0}.py.png".format(basename)    
+    fig.savefig(pngfile)
+```
+I removed some of the less important details and condensed the code to focus on the main implementation. Let me know if you'd like me to make any further changes!

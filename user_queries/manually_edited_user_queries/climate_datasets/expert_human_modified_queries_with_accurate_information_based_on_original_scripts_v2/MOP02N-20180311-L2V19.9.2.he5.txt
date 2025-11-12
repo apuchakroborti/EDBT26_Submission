@@ -1,0 +1,25 @@
+File Input and Constants
+We start by specifying the input file, `MOP02N-20180311-L2V19.9.2.he5`, which is stored in the constant `FILE_NAME`.
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Extracting Data
+we extract data from the path `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn` dataset.
+We read its contents into an array called `data`, taking only the first column. 
+We also retrieve the units and _FillValue attributes associated with this dataset.
+
+It then replace the _FillValue data by numpy nan value
+
+Extracting Geolocation Data
+We extract geolocation data from the `/Latitude` and `/Longitude` datasets from the 
+two too datasets from the paths /HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude and /HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude, 
+which contain latitude and longitude values respectively.
+
+Creating a Map
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45, 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+
+The program should set scatter function with paramets of longitude, latitude, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+Customizing the Map
+We add a colorbar to the map, representing the units of the data, and set label by using set_label function with the value units

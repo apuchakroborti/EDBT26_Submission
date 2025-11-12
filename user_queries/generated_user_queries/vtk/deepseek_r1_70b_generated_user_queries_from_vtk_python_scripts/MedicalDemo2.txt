@@ -1,0 +1,62 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkInteractionStyle`  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`  
+   - `VTK_VERSION_NUMBER` and `vtkVersion` from `vtkmodules.vtkCommonCore`  
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes`, and `vtkStripper` from `vtkmodules.vtkFiltersCore`  
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`  
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`  
+   - `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+
+2. Define Variables:  
+   - `use_flying_edges`: A boolean flag to check if VTK version 8.2 or higher is available.  
+   - `colors`: An instance of `vtkNamedColors` for color definitions.  
+   - `file_name`: The path to the input file (`MedicalDemo2_FullHead.mhd`).  
+   - `a_renderer`, `ren_win`, and `iren`: Instances of `vtkRenderer`, `vtkRenderWindow`, and `vtkRenderWindowInteractor` respectively.
+
+3. Set Colors:  
+   - Set skin color to `[240, 184, 160, 255]`.  
+   - Set backface color to `[255, 229, 200, 255]`.  
+   - Set background color to `[51, 77, 102, 255]`.
+
+4. Initialize Renderer and Window:  
+   - Create a renderer (`a_renderer`) and add it to the render window (`ren_win`).  
+   - Create an interactor (`iren`) and link it to the render window.
+
+5. Read Input File:  
+   - Use `vtkMetaImageReader` to read the input file specified by `file_name`.
+
+6. Extract Skin Surface:  
+   - Use either `vtkFlyingEdges3D` or `vtkMarchingCubes` (depending on VTK version) to extract the skin surface with a contour value of 500.  
+   - Apply `vtkStripper` to optimize the extracted surface for rendering.  
+   - Create a mapper (`skin_mapper`) and actor (`skin`) for the skin surface.  
+   - Set skin properties: diffuse color, specular, specular power, opacity, and backface color.
+
+7. Extract Bone Surface:  
+   - Use either `vtkFlyingEdges3D` or `vtkMarchingCubes` (depending on VTK version) to extract the bone surface with a contour value of 1150.  
+   - Apply `vtkStripper` to optimize the extracted surface for rendering.  
+   - Create a mapper (`bone_mapper`) and actor (`bone`) for the bone surface.  
+   - Set bone properties: diffuse color.
+
+8. Add Outline:  
+   - Use `vtkOutlineFilter` to create an outline of the data.  
+   - Create a mapper (`map_outline`) and actor (`outline`) for the outline.  
+   - Set outline color to black.
+
+9. Set Up Camera:  
+   - Create a camera (`a_camera`) and set its view up, position, and focal point.  
+   - Compute the view plane normal and adjust the camera's azimuth and elevation.  
+   - Dolly the camera to zoom in on the scene.
+
+10. Add Actors to Renderer:  
+    - Add the outline, skin, and bone actors to the renderer (`a_renderer`).  
+    - Set the active camera for the renderer.  
+    - Reset the camera and adjust the clipping planes.
+
+11. Finalize Setup:  
+    - Set the background color of the renderer.  
+    - Set the render window size to 640x480 pixels.  
+    - Set the window title to "MedicalDemo2".
+
+12. Start Interaction:  
+    - Initialize and start the interactor event loop.

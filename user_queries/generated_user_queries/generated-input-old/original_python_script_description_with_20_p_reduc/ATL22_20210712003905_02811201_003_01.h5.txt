@@ -1,0 +1,34 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Step 1: Importing necessary libraries**
+
+The code imports several Python libraries:
+* `os` for interacting with the operating system
+* `matplotlib.pyplot` as `plt` for creating plots and visualizations
+* `numpy` as `np` for numerical computations and data manipulation
+* `mpl_toolkits.basemap` as `Basemap` for creating maps and geographic visualizations
+* `h5py` for reading and manipulating HDF5 files
+
+**Step 2-3: Setting file name and path, and opening the HDF5 file**
+
+The code sets a variable `FILE_NAME` to the path of an HDF5 file in the current working directory. It then opens the HDF5 file in read-only mode using `h5py`.
+
+**Step 4-5: Reading datasets and extracting attributes**
+
+The code reads three datasets from the HDF5 file:
+* `/gt1l/transect_lat` and `/gt1l/transect_lon`, which are extracted into arrays called `latitude` and `longitude`.
+* `/gt1l/inland_water_body_type`, which is assigned to `datavar`. The code extracts several attributes from this dataset, including `units`, `long_name`, and `_FillValue`.
+
+**Step 6: Handling FillValues**
+
+The code converts the `data` array to floating-point numbers and replaces all occurrences of `_FillValue` with NaN values. It then creates a masked array `dataf` where NaN values are excluded.
+
+**Step 7-8: Creating a map and plotting data**
+
+The code uses `Basemap` to create an equidistant cylindrical projection map, specifying various parameters such as the type of projection, resolution, latitude range, and longitude range. It then plots the `dataf` array on the map using `m.scatter()`.
+
+**Step 9-10: Adding a colorbar, title, and saving the plot**
+
+The code adds a colorbar at the bottom of the plot, sets the label for the colorbar, and sets the title of the plot. Finally, it saves the plot to a PNG file with a name derived from the input HDF5 file name.
+
+That's it!

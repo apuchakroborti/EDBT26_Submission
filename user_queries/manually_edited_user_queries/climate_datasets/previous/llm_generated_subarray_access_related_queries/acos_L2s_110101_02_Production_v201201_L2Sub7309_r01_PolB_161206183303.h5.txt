@@ -1,0 +1,46 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+1. `datetime` for date and time manipulation
+2. `os` for operating system-related functions (e.g., getting the current working directory)
+3. `matplotlib` and `matplotlib.pyplot` for plotting and visualization
+4. `mpl_toolkits.basemap` for creating maps
+5. `numpy` for numerical computations
+6. `h5py` for reading HDF5 files
+
+**File Name and HDF5 File Handling**
+
+The code defines a file name `FILE_NAME` which is an HDF5 file containing GESDISC GOSAT ACOS L2 Swath data.
+The code then opens the HDF5 file in read mode (`mode='r'`) using `h5py.File`.
+
+**Dataset Extraction and Attribute Reading**
+
+The code extracts various datasets from the HDF5 file:
+1. `/RetrievalResults/xco2` (CO2 column averaged dry air mole fraction)
+2. `/SoundingGeometry/sounding_latitude_geoid` (latitude)
+3. `/SoundingGeometry/sounding_longitude_geoid` (longitude)
+4. `/SoundingGeometry/sounding_altitude` (altitude)
+5. `/RetrievalHeader/sounding_time_tai93` (time in TAI-93 format)
+
+The code reads the data from each dataset using slicing (`[:]`) and stores it in separate variables.
+Additionally, the code reads attributes from the datasets, specifically the units of measurement for CO2 and altitude.
+
+**Plotting**
+
+The code creates a figure with two subplots:
+1. The first subplot is an orthographic projection map showing the trajectory of the GOSAT instrument using `Basemap`.
+	* It plots the coastline, parallels, and meridians.
+	* It marks the starting point of the trajectory with a red circle and annotates it with "START".
+2. The second subplot shows time vs. CO2 column averaged dry air mole fraction and altitude.
+	* It plots the CO2 data using `plot`.
+	* It creates a twin plot for altitude using `twinx` and plots the altitude data.
+	* It sets labels, titles, and formats for both subplots.
+
+**Title and File Saving**
+
+The code generates a title string that includes the start and end times of the measurement period in TAI-93 format.
+It saves the figure to a PNG file with a name based on the HDF5 file name using `fig.savefig`.
+
+Overall, this code is designed to visualize GESDISC GOSAT ACOS L2 Swath data stored in an HDF5 file. It extracts relevant datasets, reads attributes, and plots the trajectory and CO2/altitude data.

@@ -1,0 +1,56 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+1. `datetime`: for working with dates and times
+2. `os`: for interacting with the operating system (e.g., getting the current working directory)
+3. `matplotlib` and `matplotlib.pyplot`: for creating plots and visualizations
+4. `mpl_toolkits.basemap`: for creating maps and geographic visualizations
+5. `numpy`: for numerical computations
+
+**Defining Constants**
+
+The code defines a constant `USE_NETCDF4`, which determines whether to use the NetCDF4 library or h5py to read HDF-EOS files.
+
+**Defining the `run` Function**
+
+The `run` function takes a file name as input and performs the following steps:
+
+1. **Opening the HDF-EOS File**: Depending on the value of `USE_NETCDF4`, the code either uses NetCDF4 or h5py to open the HDF-EOS file.
+2. If using NetCDF4:
+	* Opens the file using `Dataset`
+	* Navigates through the HDF-EOS group hierarchy to access the `Data Fields` group and the `E` variable
+	* Reads the data from the `E` variable
+	* Retrieves the long name and units of the `E` variable
+3. If not using NetCDF4 (i.e., using h5py):
+	* Opens the file using `h5py.File`
+	* Navigates through the HDF-EOS group hierarchy to access the `Data Fields` group and the `E` dataset
+	* Reads the data from the `E` dataset
+	* Retrieves the long name, units, and fill value of the `E` dataset
+	* Applies the fill value to the data by replacing it with NaN (Not a Number) values
+4. **Constructing Latitude and Longitude Arrays**: Creates latitude and longitude arrays based on the shape of the data array.
+
+**Visualizing the Data**
+
+The code then uses Basemap to create a map visualization:
+
+1. **Creating a Basemap Object**: Creates a Basemap object with an equidistant cylindrical projection.
+2. **Drawing Coastlines and Gridlines**: Draws coastlines, parallels, and meridians on the map.
+3. **Plotting the Data**: Plots the data as a pseudocolor mesh using `pcolormesh`.
+4. **Adding a Colorbar**: Adds a colorbar to the plot with a label indicating the units of the data.
+
+**Saving the Plot**
+
+The code saves the plot to a PNG file:
+
+1. **Getting the Base Name of the Input File**: Retrieves the base name of the input HDF-EOS file.
+2. **Constructing the Output File Name**: Constructs the output file name by appending `.py.png` to the base name.
+3. **Saving the Plot**: Saves the plot to the output file using `fig.savefig`.
+
+**Main Program**
+
+The main program checks if a certain environment variable (`HDFEOS_ZOO_DIR`) is set, and if so, uses it to construct the input file path. Otherwise, it looks for the input file in the current working directory.
+
+Finally, the code calls the `run` function with the input file name as an argument.

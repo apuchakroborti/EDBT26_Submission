@@ -1,0 +1,118 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        1. Import Necessary Libraries:  
+   - Import `os` for operating system functions.  
+   - Import `matplotlib` and `matplotlib.pyplot` for plotting and visualizations.  
+   - Import `numpy` for numerical computations.  
+   - Import `mpl_toolkits.basemap` for map projections.
+
+2. Define Constants:  
+   - Define a constant `FILE_NAME` with the value `'ATL21-01_20210301005637_10241001_003_01.h5'`.
+
+3. Open HDF5 File and Access Datasets:  
+   - Open the HDF5 file in read mode (`'r'`).  
+   - Access three datasets:  
+     - `/grid_lat` for latitude data.  
+     - `/grid_lon` for longitude data.  
+     - `/monthly/mean_weighted_mss` as the main dataset.  
+
+4. Read Dataset Attributes:  
+   - Read `units`, `long_name`, and `_FillValue` attributes from the main dataset.  
+   - Decode text attributes using `decode('ascii', 'replace')`.  
+
+5. Process Main Data:  
+   - Convert the main data to a float type using `.astype(float)`.  
+   - Replace the `_FillValue` with `numpy.NaN`.  
+   - Mask the data using `numpy.ma.masked_where(numpy.isnan(data), data)`.
+
+6. Create Map Visualization:  
+   - Use an NPSTERE (North Polar Stereographic) projection map.  
+   - Set map resolution to low and bounding latitude to 60 degrees, with longitude center (`lon_0`) at 45 degrees.  
+
+7. Customize Map Features:  
+   - Add coastlines with a line width of 0.5.  
+   - Draw parallels at latitudes [-90, 120, 30].  
+   - Draw meridians at longitudes [-180, 180, 45].  
+
+8. Plot Data on the Map:  
+   - Use `pcolormesh` to plot the data with parameters: longitude, latitude, and data.  
+   - Ensure `latlon=True` for geographic coordinates.
+
+9. Add Colorbar and Title:  
+   - Add a colorbar to the map, positioned at the bottom.  
+   - Label the colorbar with the main dataset's `units`.  
+   - Set the title of the visualization to include the file basename and the `long_name` attribute from the main dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+FILE_NAME = 'ATL21-01_20210301005637_10241001_003_01.h5'
+
+with h5py.File(FILE_NAME, 'r') as f:
+    lat = f['/grid_lat'][:]
+    lon = f['/grid_lon'][:]
+    data = f['/monthly/mean_weighted_mss'][:]
+    
+    units = f['/monthly/mean_weighted_mss'].attrs['units']
+    long_name = f['/monthly/mean_weighted_mss'].attrs['long_name']
+    _FillValue = f['/monthly/mean_weighted_mss'].attrs['_FillValue']
+```
+
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+data[np.isnan(data)] = np.ma.masked  # replace _FillValue with NaN and mask it
+```
+
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap, cm
+
+m = Basemap(projection='npstere', boundinglat=60, lon_0=45, resolution='l')
+
+# draw coastlines, meridians and parallels
+m.drawcoastlines(linewidth=0.5)
+m.drawparallels([-90, 120, 30], labels=[True, False, False, True])
+m.drawmeridians([-180, 180, 45], labels=[False, False, True, True])
+
+# plot data on map
+plt.pcolormesh(lon, lat, data, cmap=cm.viridis)
+plt.colorbar(label=units)
+plt.title('{} from {}'.format(long_name, FILE_NAME))
+```

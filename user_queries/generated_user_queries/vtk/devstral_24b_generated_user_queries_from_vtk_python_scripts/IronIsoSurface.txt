@@ -1,0 +1,47 @@
+This Python script creates a 3D visualization of an iron-protein surface using the VTK (Visualization Toolkit) library. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkContourFilter` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkStructuredPointsReader` from `vtkmodules.vtkIOLegacy`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function is defined as `main()`.
+
+3. **Set File Name**:
+   - Define a variable `fileName` with the value `'IronIsoSurface_ironProt.vtk'`.
+
+4. **Create Color Object**:
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+5. **Create Rendering Components**:
+   - Create a renderer (`ren1`) using `vtkRenderer()`.
+   - Create a render window (`renWin`) using `vtkRenderWindow()` and add the renderer to it with `renWin.AddRenderer(ren1)`.
+   - Create an interactor (`iren`) using `vtkRenderWindowInteractor()` and set its render window with `iren.SetRenderWindow(renWin)`.
+
+6. **Create Pipeline**:
+   - Create a reader (`reader`) using `vtkStructuredPointsReader()` and set the file name with `reader.SetFileName(fileName)`.
+   - Create an isosurface filter (`iso`) using `vtkContourFilter()`, set its input connection to the reader's output port, and set the contour value with `iso.SetValue(0, 128)`.
+   - Create a mapper for the isosurface (`isoMapper`) using `vtkPolyDataMapper()` and set its input connection to the isosurface filter's output port. Disable scalar visibility with `isoMapper.ScalarVisibilityOff()`.
+   - Create an actor for the isosurface (`isoActor`) using `vtkActor()`, set its mapper, and set its color property using the colors object.
+
+7. **Create Outline**:
+   - Create an outline filter (`outline`) using `vtkOutlineFilter()` and set its input connection to the reader's output port.
+   - Create a mapper for the outline (`outlineMapper`) using `vtkPolyDataMapper()` and set its input connection to the outline filter's output port.
+   - Create an actor for the outline (`outlineActor`) using `vtkActor()` and set its mapper.
+
+8. **Add Actors to Renderer**:
+   - Add both the outline actor and isosurface actor to the renderer with `ren1.AddActor(outlineActor)` and `ren1.AddActor(isoActor)`.
+   - Set the background color of the renderer using the colors object and set the window size and name.
+
+9. **Render the Image**:
+   - Reset the camera, adjust its azimuth and elevation angles, render the window with `renWin.Render()`, and start the interactor with `iren.Start()`.
+
+10. **Execute Main Function**:
+    - If this script is run as the main module, call the `main()` function.
+
+This script will display a 3D visualization of an iron-protein surface from the specified VTK file when executed.

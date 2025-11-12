@@ -1,0 +1,51 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script creates a 3D visualization window where you can see and interact with some shapes. It's like setting up a virtual art gallery where you can look at different objects from various angles.
+
+### Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing necessary tools (like different colors, shapes, and widgets) that will be used to create the 3D visualization.
+
+2. Defining the Main Function:
+   - This is where all the action happens. Think of it as setting up a stage for a play.
+
+3. Colors Setup:
+   - The script sets up a palette of colors that can be used later, like choosing paint colors before starting to draw.
+
+4. Loading a 3D Model:
+   - It loads a specific 3D model (a bunny shape) from a file named 'OrientationMarkerWidget1_Bunny.vtp'. This is like bringing in a sculpture of a bunny to display in the gallery.
+
+5. Preparing the Bunny for Display:
+   - The script prepares this bunny model to be shown on screen by setting up how it should look (color, shape) and connecting it to the visualization system.
+
+6. Setting Up the Viewing Area:
+   - It creates a window where everything will be displayed. This is like setting up a canvas or a screen.
+   - The background color of this window is set to a slate gray color.
+
+7. Creating an Interactive Widget:
+   - A special tool (widget) is created that allows you to interact with the 3D model. This widget shows up in the corner of the window and helps you understand the orientation (which way is up, down, left, right) of the bunny.
+   - The widget is set to be enabled and interactive so you can click on it.
+
+8. Creating a Special Shape:
+   - A unique shape called a "superquadric" is created. This is like making a custom sculpture that looks different from usual shapes (like spheres or cubes).
+   - The script defines how round this shape should be in different directions, giving it a specific look.
+
+9. Preparing the Custom Shape for Display:
+   - Just like with the bunny, the script sets up this custom shape to be displayed on screen.
+   - It gives the shape a carrot-like color and makes it shiny by setting its reflective properties.
+
+10. Adding the Shapes to the Viewing Area:
+    - Both the bunny model and the custom shape are added to the viewing area (the window).
+    - The camera is adjusted so that everything fits nicely in view.
+
+11. Rendering the Scene:
+    - The script tells the computer to draw everything on the screen, like pressing a button to display your artwork on a canvas.
+    - It sets up an interactive mode where you can move around and look at the shapes from different angles.
+
+12. Starting the Interaction:
+    - Finally, it starts the interaction loop, which keeps the window open and responsive so you can interact with the 3D models as long as you want.
+
+### Summary
+In simple terms, this script sets up a virtual art gallery where you can display and interact with 3D shapes. It loads a bunny model, creates a custom shape, colors them nicely, and then displays everything in an interactive window where you can look around and explore the shapes from different angles.

@@ -1,0 +1,19 @@
+Here's a rewritten version of the description, condensed by 40% while keeping essential implementation details:
+
+"I'd like to understand this Python script step-by-step. Here's what I've got so far:
+
+The script starts with a header section providing information about its purpose, usage, and testing.
+
+It imports several modules: `os` for interacting with the OS, `matplotlib.pyplot` for plotting, `numpy` for numerical computations, `mpl_toolkits.basemap` for creating maps, and `h5py` for working with HDF5 files.
+
+A constant `FILE_NAME` is defined to specify the HDF5 file to be read. The script opens this file in read-only mode using `h5py`.
+
+Three datasets are accessed within the HDF5 file: `/gt1l/transect_lat`, `/gt1l/transect_lon`, and `/gt1l/inland_water_body_type`. Attributes of the third dataset, such as units and long name, are also retrieved.
+
+The script handles fill values by converting data to floating-point numbers and replacing them with NaN. It then creates a masked array using `numpy.ma`.
+
+A map is created using `Basemap` with an equidistant cylindrical projection, low-resolution coastline database, and specific latitude and longitude ranges.
+
+Data is plotted on the map using `m.scatter`, with color mapping based on the data values. A colorbar is added to the plot, and the title includes the HDF5 file name, dataset name, and longer description of the data.
+
+Finally, the script saves the plot to a PNG file using `fig.savefig`. Can you help me understand this code?"

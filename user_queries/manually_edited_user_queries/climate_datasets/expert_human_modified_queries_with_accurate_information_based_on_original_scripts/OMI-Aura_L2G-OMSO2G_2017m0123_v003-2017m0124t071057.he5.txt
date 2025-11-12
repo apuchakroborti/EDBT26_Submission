@@ -1,0 +1,31 @@
+A Python code, I want to write that should contain the below functionalities:
+
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Then, I set up variables for the file name (`OMI-Aura_L2G-OMSO2G_2017m0123_v003-2017m0124t071057.he5`) 
+and it then read ColumnAmountSO2_PBL as data from the full path within the file (`/HDFEOS/GRIDS/OMI Total Column Amount SO2/Data Fields/ColumnAmountSO2_PBL`). 
+After that it reads the `Latitude`, and `Longitude` dataset from the the full paths 
+`/HDFEOS/GRIDS/OMI Total Column Amount SO2/Data Fields/Latitude`
+`/HDFEOS/GRIDS/OMI Total Column Amount SO2/Data Fields/Longitude` respectively
+
+The program retrieved attributes like Title, Units, ValidRange, _FillValue, Offset, and ScaleFactor.
+The program needs to decode the value of Title and Units
+
+After that
+To handle missing values and valid ranges, I replaced _FillValue with NaN, 
+applied the scale factor and offset to the data such as data = data * ScaleFactor + Offset, 
+Then the program also replace the data by numpy NAN which is less than ValidRange[0] and ValidRange[1]
+and it masks values using numpy mask masked_where function with parameters of numpy isnan(data) and data.
+
+The above datasets are 3D data so need to access 0th index from the x-axis and all data from the y and z axis
+
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30 and labels is list of [1, 0, 0, 0], 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [0, 0, 0, 1]
+
+The program should set scatter function with paramets of lon, lat, c=data, s=0.1, cmap, edgecolors=None, and linewidth=0.
+
+At the end, I added a colorbar with the values of Units and a Title 

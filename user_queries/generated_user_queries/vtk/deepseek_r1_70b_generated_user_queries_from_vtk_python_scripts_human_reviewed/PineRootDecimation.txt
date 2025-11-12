@@ -1,0 +1,86 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`.
+   - Import `vtkIdList` from `vtkmodules.vtkCommonCore`.
+   - Import `vtkConnectivityFilter` and `vtkDecimatePro` from `vtkmodules.vtkFiltersCore`.
+   - Import `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`.
+   - Import `vtkMCubesReader` from `vtkmodules.vtkIOGeometry`.
+   - Import `vtkActor`, `vtkDataSetMapper`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define the Main Function:
+
+3. Define Nested Function `NumberOfTriangles(pd)`:
+   - This function counts the number of triangular faces in a `vtkPolyData` object.
+   - Initialize `numOfTriangles` to 0.
+   - Use `pd.GetPolys()` to get all polygon cells.
+   - Iterate through each cell, checking if it has exactly 3 points (indicating a triangle).
+   - Return the total count of triangles.
+
+4. Set Up Visualization Colors:
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+5. Specify Input File:
+   - Set `fileName` to `'PineRootDecimation_pine_root.tri'`.
+
+6. Read Input Data:
+   - Create a `vtkMCubesReader` object named `reader`.
+   - Configure the reader with `SetFileName(fileName)`, disable normal flipping, and update it.
+   - Print the number of triangles before processing using `NumberOfTriangles(reader.GetOutput())`.
+
+7. Apply Decimation Filter:
+   - Create a `vtkDecimatePro` object named `deci`.
+   - Set input to the reader's output.
+   - Configure decimation parameters:
+     - Target reduction: 90% (`SetTargetReduction(0.9)`).
+     - Absolute error: 0.0005 (`SetAbsoluteError(0.0005)`).
+     - Maximum iterations: 6.
+     - Feature angle: 30 degrees (`SetFeatureAngle(30)`).
+     - Enable absolute error and error accumulation.
+   - Update the decimation filter.
+   - Print the number of triangles after decimation.
+
+8. Apply Connectivity Filter:
+   - Create a `vtkConnectivityFilter` object named `connect`.
+   - Set input to the decimated output.
+   - Configure to extract the largest connected region (`SetExtractionModeToLargestRegion()`).
+   - Update the filter.
+   - Print the number of triangles after connectivity filtering.
+
+9. Create Isosurface Actor:
+   - Create a `vtkDataSetMapper` named `isoMapper`, setting input from the connectivity filter's output.
+   - Disable scalar visibility on the mapper.
+   - Create an actor `isoActor`, set its mapper, and color it using `raw_sienna` from `colors`.
+
+10. Create Outline Actor:
+    - Use `vtkOutlineFilter` to generate an outline of the original data.
+    - Create a `vtkPolyDataMapper` named `outlineMapper` for the outline.
+    - Create an actor `outlineActor`, set its mapper, and color it black.
+
+11. Set Up Rendering Components:
+    - Create a renderer (`ren`), render window (`renWin`), and interactor (`iren`).
+    - Add both actors to the renderer.
+    - Set background color to slate gray.
+    - Configure render window size to 512x512 pixels and set the title.
+
+12. Configure Camera View:
+    - Retrieve the active camera from the renderer.
+    - Set focal point, position, clipping range, view angle, and up direction for optimal viewing.
+
+13. Render and Interact:
+    - Initialize the interactor.
+    - Render the scene once.
+    - Start the interaction loop with `iren.Start()`.
+
+14. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "PineRootDecimation_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.
+
+15. Run Main Function:
+    - Execute `main()` when the script is run as the main program.

@@ -1,0 +1,77 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            
+
+Create a script to visualize precipitation rate data from an HDF5 file by following these steps:
+
+1. Import Libraries: Use os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Open HDF5 File: Access the file in read-only mode and extract the `/FS/SLV/precipRateESurface` dataset along with its units and _FillValue attribute.
+
+3. Handle Missing Data: Replace _FillValue entries with NaNs using numpy's masked_where function to mask the data where values are NaN.
+
+4. Retrieve Geolocation Data: Extract latitude from `/FS/Latitude` and longitude from `/FS/Longitude`.
+
+5. Set Up Map Projection: Create a cylindrical projection with low resolution, spanning latitudes from -90 to 90 and longitudes from -180 to 180.
+
+6. Customize Map: Add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90], and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with labels [True, False, False, True] with specific labels.
+
+7. Plot Data: Use a scatter plot with the 'jet' colormap, point size of 1, based on longitude and latitude coordinates.
+
+8. Add Colorbar and Title: Include a colorbar below the plot, labeled with the dataset's units, and set the title to reflect the file and dataset name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me read through their request carefully.
+
+The user wants a script that visualizes precipitation rate data from an HDF5 file. They've outlined eight steps, which include importing libraries, opening the HDF5 file, handling missing data, retrieving geolocation data, setting up a map projection, customizing the map, plotting the data, and adding a colorbar and title.
+
+First, I'll tackle the HDF5 Dataset Access part. The user needs to open an HDF5 file using h5py, extract specific datasets like '/FS/SLV/precipRateESurface', along with its units and _FillValue attribute. So the sub-query should focus on accessing these elements using h5py.
+
+Next is NumPy-based Data Preprocessing. They want to replace _FillValue entries with NaNs using np.ma.masked_where. This involves handling missing data, so the sub-query should cover how to apply this function and any preprocessing steps like min or max filtering if needed.
+
+Lastly, for Map Plotting and Visualization, they're using matplotlib, basemap, or cartopy. The steps include setting up a cylindrical projection, adding coastlines, parallels, meridians, plotting with scatter, colorbar, and title. So the sub-query should focus on these visualization aspects.
+
+I need to make sure each sub-query is clear and targets only its specific domain without overlapping into others.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file in read-only mode and extract the dataset located at '/FS/SLV/precipRateESurface' along with its units and _FillValue attribute.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue entries with NaNs using numpy's masked_where function for data masking, followed by applying preprocessing logic such as min or max filtering.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib and mpl_toolkits.basemap to create a cylindrical projection map with specified geolocation bounds, add coastlines, parallels, meridians, and plot the precipitation data using a scatter plot with 'jet' colormap.

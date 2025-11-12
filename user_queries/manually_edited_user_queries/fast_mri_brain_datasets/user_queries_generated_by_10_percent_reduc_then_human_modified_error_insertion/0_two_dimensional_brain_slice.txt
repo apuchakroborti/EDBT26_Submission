@@ -1,0 +1,17 @@
+This program reads MRI brain data from an HDF5 file, prints information about the data, and visualizes it using Matplotlib.
+
+Defining File Paths
+Two file paths are defined: `FAST_MRI_BRAIN_H5_FILE` which reads data from the location 0_fastMRI_brain_first_10_dcm_to_h5.h5 (the path to the HDF5 file) 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` (the path within the HDF5 file to a specific dataset) which read from FAST_MRI_BRAIN_ROOT root group, 
+sub group is 100099070170/279 and dataset is fastMRI_brain_data.
+
+Reading Data from HDF5 File
+The program opens the HDF5 file in read-only mode. It accesses the dataset at the specified path and reads its contents into a NumPy array called `brain_slice`.
+
+Printing Information about the Data
+The program prints:
+The type of the `brain_slice` object (a NumPy array)
+The shape of the `brain_slice` array (its dimensions)
+
+Plotting the Data:
+The program creates a figure with using Matplotlib. It displays the `brain_slice` data as an image, and applies a gray colormap to enhance feature visibility.

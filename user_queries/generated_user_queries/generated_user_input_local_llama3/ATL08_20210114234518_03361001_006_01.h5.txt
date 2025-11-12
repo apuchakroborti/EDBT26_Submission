@@ -1,0 +1,39 @@
+Here is a reduced version of the text, with about 20% of the original content removed while keeping as many implementation details as possible:
+
+**Importing libraries**
+
+The code imports several Python libraries:
+* `os`: for operating system-related functions
+* `cartopy.crs` (coordinate reference systems): for working with geographic coordinates
+* `matplotlib.pyplot` (imported as `plt`): for creating plots and visualizations
+* `numpy` (imported as `np`): for numerical computations
+
+**Defining constants**
+
+Two constants are defined:
+* `FILE_NAME`: the name of the HDF5 file to be accessed
+* `_FillValue`: a special value indicating missing or invalid data in the dataset
+
+**Opening and accessing datasets**
+
+The code opens the HDF5 file using `h5py` and accesses several datasets:
+* `/gt1l/land_segments/latitude`, `/gt1l/land_segments/longitude`, and `/gt1l/land_segments/dem_h`
+
+These datasets are accessed using the `f["path/to/dataset"]` syntax, where `f` is the HDF5 file object.
+
+**Processing data**
+
+The code processes the data:
+* Sets values equal to `_FillValue` to NaN (Not a Number) and creates a masked array
+
+**Creating an orthographic projection and setting up the plot**
+
+The code creates an orthographic projection using `cartopy.crs.Orthographic` and sets up the plot:
+* Creates a figure and axes object with the orthographic projection
+* Removes global extent, plots elevation values as scatter points, and adds coastlines
+
+**Customizing and saving the plot**
+
+The code customizes the plot by setting labels and adjusting the colorbar size and location. Finally, it saves the plot as a PNG image.
+
+This reduced version still provides an overview of the code's main steps and implementation details, while condensing the text to about 80% of its original length.

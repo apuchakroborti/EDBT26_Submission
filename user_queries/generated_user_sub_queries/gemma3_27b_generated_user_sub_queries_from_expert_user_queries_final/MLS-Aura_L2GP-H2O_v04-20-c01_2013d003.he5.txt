@@ -1,0 +1,71 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that performs the following tasks:
+
+1. Import Libraries: Include `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Read HDF5 File: Open the file `MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5` using `h5py`.
+
+3. Access Datasets:
+   - Extract data from `/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue`, focusing on the x-axis and y=0 index of the 2D array.
+   - Retrieve pressure values from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure`.
+   - Obtain attributes: `Units` from both datasets and `Title` from the Pressure dataset.
+
+4. Extract Geolocation Data:
+   - Fetch latitude data from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Latitude`.
+   - Fetch longitude data from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Longitude`.
+
+5. Visualization Setup:
+   - Create a cylindrical projection map with low resolution, setting latitude from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels using `numpy.arange` for values -90, 91, 45.
+   - Draw meridians similarly with spacing of 45 degree, starting at -180 till 180, and apply labels [True, False, False, True].
+
+6. Scatter Plot:
+   - Use `plt.scatter` with longitude and latitude coordinates, data from L2gpValue, markersize 1, colormap 'jet', no edge colors, and linewidth 0.
+
+7. Colorbar and Labels:
+   - Add a colorbar at the bottom with format "%.1e" and 10% padding.
+   - Set the colorbar label using the `Units` attribute from L2gpValue.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py`, access datasets by path (e.g., `/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue`), retrieve dataset attributes (e.g., `Units`, `Title`), and extract data from specific indices of multi-dimensional arrays within the HDF5 file.
+
+NumPy Data Preprocessing Sub-query:
+How to handle and interpret `_FillValue` within a NumPy array read from an HDF5 file, and how to apply masking techniques using `np.ma.masked_where` or similar functions to exclude or replace these fill values before further processing or visualization.
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical map projection using `mpl_toolkits.basemap` or `cartopy`, configure map boundaries and resolution, draw coastlines, parallels, and meridians, and customize their appearance (linewidth, labels), and how to add a colorbar to a plot with specific formatting and label derived from dataset attributes.

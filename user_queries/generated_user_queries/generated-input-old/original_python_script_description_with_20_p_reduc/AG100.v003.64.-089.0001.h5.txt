@@ -1,0 +1,36 @@
+Here is the reduced text, condensed by about 20% while keeping most implementation details:
+
+**Comments and Header**
+The code starts with a copyright notice, comments explaining its purpose, usage instructions, and testing environment details.
+
+**Imports**
+The script imports several libraries: `os`, `matplotlib` (aliased as `mpl` and `plt`), `basemap`, and `numpy` (aliased as `np`).
+
+**Constants**
+A constant `USE_NETCDF4` is set to `False`, determining whether to use NetCDF4 or HDF5 (via `h5py`) for reading the input file.
+
+**Function: run()**
+The `run()` function takes a single argument, `FILE_NAME`, which is the path to an HDF5 file. It:
+
+1. **NetCDF4 branch**: If `USE_NETCDF4` is `True`, it uses NetCDF4 to read the file, retrieving variables and geolocation data.
+2. **HDF5 branch**: If `USE_NETCDF4` is `False`, it uses HDF5 (via `h5py`) to read the file, retrieving datasets and geolocation data.
+
+**Data Processing**
+The script applies operations to the retrieved data: replacing fill values with NaN, scaling by 0.001, and creating a masked array using `numpy.ma.masked_where`.
+
+**Plotting**
+The script uses Basemap to create a map and plot the data:
+
+1. Creates an equidistant cylindrical projection.
+2. Draws coastlines, parallels, and meridians on the map.
+3. Plots the masked array as a pseudocolor mesh using `m.pcolormesh`.
+4. Adds a colorbar with a label indicating units.
+
+**Plot Customization**
+The script customizes the plot by setting the title, adding a text label with an attribute "Description", and saving the plot as a PNG file.
+
+**Main Script**
+The main script checks if an environment variable `HDFEOS_ZOO_DIR` is set. If it is, it uses that directory to construct the full path to the input file. Otherwise, it assumes the file is in the current working directory. The script then calls the `run()` function with the constructed file name as an argument.
+
+**References**
+The script ends with a reference to the ASTER GED documentation.

@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file and visualizes data on a map. The script should:
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap.
+
+2. Define the constant FILE_NAME as 'ATL09_20181117090604_07600101_006_02.h5'.
+
+3. Open the HDF5 file in read mode and access three datasets:
+   - 'latitude' for latitude data.
+   - 'longitude' for longitude data.
+   - 'apparent_surf_reflec' as the main data.
+   from /profile_1/high_rate
+   
+4. Read attributes 'units' and 'long_name' using decode('ascii', 'replace') from the apparent_surf_reflec dataset.
+
+5. Create a map with an equidistant cylindrical projection, low resolution, latitude from -90 to 90, longitude from -180 to 180.
+
+6. Add coastlines with linewidth 0.5, parallels at [-90, -60, -30, 0, 30, 60, 90, 120] and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+7. Generate a scatter plot using longitude and latitude data, with markers of size 0.1, colormap 'jet', no edge colors, and linewidth 0.
+
+8. Add a colorbar labeled with the main dataset's units and set the title to include the file basename and long_name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user's query into three specific sub-queries. Let me start by understanding what the user is asking for.
+
+The main task is a Python script that processes an HDF5 file and visualizes data on a map. The user has outlined eight steps they want the script to perform. My job is to split this into three focused areas: HDF5 access, NumPy preprocessing, and map plotting with visualization.
+
+First, looking at step 3 of the user's query, it mentions accessing specific datasets from an HDF5 file using h5py. They need to open the file in read mode and extract 'latitude', 'longitude', and 'apparent_surf_reflec' datasets from a particular group path '/profile_1/high_rate'. Also, they want to read attributes like 'units' and 'long_name' from the main dataset.
+
+So for the HDF5 sub-query, I should focus on how to use h5py to open the file, access these specific datasets by their paths, and retrieve the necessary attributes. It's important to specify the exact group path because that's where the data resides.
+
+Next, step 4 involves reading attributes using decode('ascii', 'replace'). This is part of handling metadata within HDF5 files, so it should be included in the first sub-query as well.
+
+Moving on to preprocessing with NumPy. The user doesn't explicitly mention any preprocessing steps like masking or filtering based on min/max values, but since they're dealing with scientific data, it's common to handle _FillValue and apply masks. So I'll include how to use np.where or np.ma.masked_where for masking and applying conditions like min and max.
+
+Now, the visualization part. The user wants a map using an equidistant cylindrical projection with specific settings. They're using matplotlib and basemap. Steps 5-8 outline creating the map, adding coastlines, parallels, meridians, generating a scatter plot, adding a colorbar, and setting titles.
+
+So for the plotting sub-query, I need to focus on using these libraries to set up the projection correctly, draw the required elements, create the scatter plot with specified parameters, add the colorbar with the correct label from the dataset's units, and set the title dynamically using the file name and long_name attribute.
+
+I should make sure each sub-query is concise and targets only the specific technical domain. That way, when someone looks up documentation or examples, they can find relevant information quickly.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to use `h5py` to open an HDF5 file in read mode and access datasets at `/profile_1/high_rate/latitude`, `/profile_1/high_rate/longitude`, and `/profile_1/high_rate/apparent_surf_reflec`. Also, how to read the 'units' and 'long_name' attributes from the `apparent_surf_reflec` dataset using decode('ascii', 'replace').
+
+NumPy Data Preprocessing Sub-query:  
+How to handle `_FillValue` in NumPy arrays, apply masks using `np.where` or `np.ma.masked_where`, and compute or filter data based on min, max, or other preprocessing logic for geospatial data.
+
+Plotting and Visualization Sub-query:  
+How to create a map with an equidistant cylindrical projection using `matplotlib` and `mpl_toolkits.basemap`, configure latitude and longitude ranges, add coastlines, parallels at [-90, -60, -30, 0, 30, 60, 90, 120], and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180]. Also, how to generate a scatter plot with longitude and latitude data using markers of size 0.1, colormap 'jet', no edge colors, and linewidth 0. Finally, how to add a colorbar labeled with the dataset's units and set the title dynamically using the file basename and long_name attribute.

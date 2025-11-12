@@ -1,0 +1,14 @@
+a Python code that accesses and visualizes a NASA HDF-EOS data product. The program reads an HDF5 file named `DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5` containing ozone data.
+
+Here's what the code does:
+
+1. It opens the HDF5 file in read-only mode and reads datasets `/Ozone`, `/Latitude`, and `/Longitude`. 
+The ozone data is stored in a NumPy array `data`, while latitude and longitude are stored in `lat` and `lon` arrays, respectively.
+2. The code also reads attributes like `units` set to `'DU'` and `long_name` set to `'Ozone'`.
+3. It replaces `_FillValue` with `NaN` values and masks them using NumPy's `masked_where` function.
+4. The code calculates the middle latitude and longitude values from the `lat` and `lon` arrays.
+5. It creates an orthographic projection centered at the middle location using Cartopy's `Orthographic` class.
+6. The ozone data is plotted on a map using Matplotlib, with points colored based on ozone data values.
+7. Gridlines, coastlines, and degree labels are added to the plot.
+8. A colorbar is created with a specific width and padding.
+9. Finally, the code adds a title to the plot and saves it as a PNG image file.

@@ -1,0 +1,8 @@
+I want to create a phase diagram of water using Python. The data is in a file called '84_h5_data.h5'.
+
+- First, you should set up the chart with a horizontal axis for temperature and a vertical axis for pressure. These should be marked in Celsius, Kelvin, Pascals, bars and millibars, with conversions where necessary.
+- Next, you should use the data to draw the lines that separate the solid, liquid, and gas phases of water. Use datasets Pressure(gas) and Pressure(liquid) of data to draw the line that separates the solid, liquid, and gas phases. Use datasets  temperature(K) and temperature(K).1 to draw the line that separates the solid and liquid phases.
+- You should also mark two special points: the triple point at 273.16 K and 611.657 Pa, where solid, liquid, and gas coexist, and the critical point at 647.396 K and 22.064 MPa, where there's no difference between liquid and gas.
+- You should draw two vertical red lines to show the freezing and boiling points of water at normal pressure.
+- Make sure to label everything clearly, and color the different regions to show the solid, liquid, and gas phases.
+- Finally, you should add a grid to make the chart easier to read, and ensure the pressure scale is logarithmic, since phase diagrams often cover a wide range of pressures.

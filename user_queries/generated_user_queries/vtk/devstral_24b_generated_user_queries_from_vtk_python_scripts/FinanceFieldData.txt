@@ -1,0 +1,98 @@
+This Python script visualizes multidimensional financial data using VTK (Visualization Toolkit). Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Several classes from `vtkmodules.vtkFiltersCore`, `vtkmodules.vtkFiltersGeneral`, `vtkmodules.vtkIOLegacy`, `vtkmodules.vtkImagingHybrid`, and `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function is defined as `main()`.
+
+3. **Set Input File Name**:
+   - Define a variable `ifn` with the value `'FinanceFieldData_financial.vtk'`.
+
+4. **Initialize Colors**:
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+5. **Read Data**:
+   - Create an instance of `vtkDataObjectReader` named `reader`.
+   - Set the file name for the reader using `reader.SetFileName(ifn)`.
+
+6. **Define Axes and Scalar Variables**:
+   - Define variables:
+     - `size = 3187`
+     - `xAxis = 'INTEREST_RATE'`
+     - `yAxis = 'MONTHLY_PAYMENT'`
+     - `zAxis = 'MONTHLY_INCOME'`
+     - `scalar = 'TIME_LATE'`
+
+7. **Extract Data**:
+   - Create an instance of `vtkDataObjectToDataSetFilter` named `do2ds`.
+   - Set the input connection to the reader's output port.
+   - Configure point components for x, y, and z axes using:
+     ```python
+     do2ds.SetPointComponent(0, xAxis, 0)
+     do2ds.SetPointComponent(1, yAxis, 0, 0, size, 1)
+     do2ds.SetPointComponent(2, zAxis, 0)
+     ```
+   - Update the filter.
+   - Create an instance of `vtkFieldDataToAttributeDataFilter` named `fd2ad`.
+   - Set input connection to the data object to dataset filter's output port.
+   - Configure scalar component using:
+     ```python
+     fd2ad.SetScalarComponent(0, scalar, 0)
+     ```
+
+8. **Construct Pipeline for Original Population**:
+   - Create an instance of `vtkGaussianSplatter` named `popSplatter`.
+   - Set input connection to the field data to attribute data filter's output port.
+   - Configure sample dimensions and radius:
+     ```python
+     popSplatter.SetSampleDimensions(150, 150, 150)
+     popSplatter.SetRadius(0.05)
+     ```
+   - Create an instance of `vtkMarchingContourFilter` named `popSurface`.
+   - Set input connection to the splatter's output port.
+   - Configure contour value:
+     ```python
+     popSurface.SetValue(0, 0.01)
+     ```
+   - Create a mapper and actor for the population surface using `vtkPolyDataMapper` and `vtkActor`.
+
+9. **Construct Pipeline for Delinquent Population**:
+   - Repeat similar steps as above to create instances of `vtkGaussianSplatter`, `vtkMarchingContourFilter`, `vtkPolyDataMapper`, and `vtkActor` named `lateSplatter`, `lateSurface`, `lateMapper`, and `lateActor`.
+
+10. **Create Axes**:
+    - Create an instance of `vtkAxes` named `axes`.
+    - Set origin and scale factor.
+    - Create a tube filter for the axes using `vtkTubeFilter`.
+    - Mapper and actor for the axes are created using `vtkPolyDataMapper` and `vtkActor`.
+
+11. **Label Axes**:
+    - Create instances of `vtkVectorText`, `vtkPolyDataMapper`, and `vtkFollower` to label each axis (X, Y, Z).
+
+12. **Graphics Setup**:
+    - Create a renderer using `vtkRenderer`.
+    - Add the renderer to a render window.
+    - Set window name as `'FinanceFieldData'`.
+
+13. **Add Actors and Configure Renderer**:
+    - Add actors for axes, delinquent population, axis labels, and original population to the renderer.
+    - Set background color using `renderer.SetBackground(colors.GetColor3d('SlateGray'))`.
+    - Set window size.
+
+14. **Configure Camera**:
+    - Create a camera instance using `vtkCamera`.
+    - Configure clipping range, focal point, position, and view up settings for the camera.
+    - Set active camera in renderer and assign it to axis label actors.
+
+15. **Render and Interact**:
+    - Create an interactor using `vtkRenderWindowInteractor`.
+    - Set render window for the interactor.
+    - Render the scene and start interaction with `interactor.Start()`.
+
+16. **Run Main Function**:
+    - If this script is run as the main module, call the `main()` function.
+
+This script sets up a 3D visualization of financial data using VTK, allowing users to interactively explore the dataset through a graphical interface.

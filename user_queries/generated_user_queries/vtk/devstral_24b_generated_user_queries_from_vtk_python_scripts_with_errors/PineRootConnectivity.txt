@@ -1,0 +1,58 @@
+What This Script Does
+This script is designed to process a 3D model file (specifically a pine root model) and display it on your screen. It also has the ability to filter out "noisy" parts of the model that don't connect well with the main structure, making the visualization cleaner.
+
+Step-by-Step Explanation
+
+1. Importing Necessary Tools
+The script starts by importing various tools (modules) it needs to work with 3D models and display them on your screen. Think of these as different specialized tools in a toolbox that help with specific tasks like reading files, processing data, or drawing things.
+
+2. Defining the Main Function (`pine_root_connectivity`)
+This is where most of the action happens. This function takes two inputs:
+- `fileName`: The name of the file containing the 3D model, which is `PineRootConnectivity_pine_root.tri`.
+- `noConnectivity`: A flag that tells the script whether to apply a filter to clean up the noisy parts or not.
+
+Inside this Function:
+
+Counting Triangles
+The first thing it does is define a helper function called `NumberOfTriangles`. This function counts how many triangles are in the 3D model. In simple terms, it's like counting how many small flat surfaces make up the entire shape.
+
+Setting Up Colors and Reading the File
+It sets up some colors for later use (like choosing what color to paint different parts of the model). Then, it reads the 3D model file using a tool called `vtkMCubesReader`.
+
+Applying Connectivity Filter (if needed)
+If the script is told not to apply the connectivity filter (`noConnectivity` is false), it will:
+1. Update the reader to load the data.
+2. Print out how many triangles are in the original model before any filtering.
+
+Then, it applies a special filter called `vtkPolyDataConnectivityFilter`. This filter helps remove small, disconnected parts of the model that might be noisy or irrelevant. After applying this filter, it prints out how many triangles are left after cleaning up the noise.
+
+Setting Up the Visualization
+Next, it sets up how to display the 3D model on your screen:
+1. It creates a mapper (`vtkPolyDataMapper`) which is like a blueprint for drawing the model.
+2. It assigns colors and properties to different parts of the model (like painting the main model in one color and the outline in another).
+3. It sets up an outline filter to draw a black border around the entire model, giving it context.
+
+Creating the Rendering Environment
+It creates a virtual space where the 3D model will be displayed:
+1. A renderer (`vtkRenderer`) which is like a stage for displaying the model.
+2. A render window (`vtkRenderWindow`) which is like a window on your screen showing the stage.
+3. An interactor (`vtkRenderWindowInteractor`) which lets you interact with the 3D model (like rotating or zooming).
+
+Adding Actors to the Renderer
+It adds the main model and its outline to the renderer, sets up the background color, and adjusts the camera position to get a good view of the model.
+
+Displaying the Model
+Finally, it initializes everything and starts displaying the 3D model on your screen. You can now see and interact with the pine root model!
+
+3. Running the Script (`main` function)
+The `main` function is where the script begins when you run it:
+1. It sets up the file name for the 3D model and decides whether to apply the connectivity filter.
+2. It calls the main function `pine_root_connectivity` with these settings.
+
+4. Starting Point
+When you run this script, it starts from the bottom part that says `if __name__ == '__main__':`. This is like saying "when this script is run directly, do the following". And what it does is call the `main()` function to start everything up.
+
+Summary
+In simple terms, this script reads a 3D model file of a pine root, optionally cleans up any noisy or disconnected parts, and then displays the cleaned-up model on your screen with an outline around it. It also prints out how many small flat surfaces (triangles) are in the model before and after cleaning to give you an idea of what was removed.
+
+This explanation should help anyone understand what's happening without needing to know any programming details!

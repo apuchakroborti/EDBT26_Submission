@@ -1,0 +1,56 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+
+1. `os`: for working with operating system-related functions
+2. `h5py`: for reading and writing HDF5 files
+3. `numpy` (`np`): for numerical computations
+4. `matplotlib` (`mpl`) and its plotting library (`pyplot` as `plt`): for creating plots
+
+**Defining the file name**
+
+The code defines a constant `FILE_NAME` with the path to an HDF5 file:
+
+```python
+FILE_NAME = 'oco2_L2StdND_03949a_150330_B8100r_170916014809.h5'
+```
+
+This file is expected to be in the current working directory.
+
+**Opening and accessing data**
+
+The code opens the HDF5 file using `h5py`:
+
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+
+Inside the `with` block:
+
+1. We access a dataset named `/RetrievalResults/xco2` using `f[name][:]`.
+2. We extract units and long name from the dataset's attributes.
+3. We access geolocation data: latitude and longitude values.
+
+**Creating a Basemap plot**
+
+We create a Basemap object with:
+
+1. A cylindrical (Mercator) projection
+2. Low-resolution coastlines
+3. Latitude and longitude limits
+
+The `Basemap` object is used to:
+1. Draw coastlines
+2. Draw parallels and meridians
+3. Scatter plot data points (`m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet)`)
+
+**Adding title and saving plot**
+
+We:
+1. Set the title of the plot using `plt.title('{0}\n{1}'.format(basename, longname))`.
+2. Save the plot as a PNG image.
+
+The resulting plot has a title, color bar, and data points in a Basemap layout.

@@ -1,0 +1,43 @@
+Here's the reduced text while keeping as many implementation details as possible:
+
+**Importing modules**
+
+The code starts by importing several Python modules:
+* `os`
+* `matplotlib.pyplot` (imported as `plt`)
+* `numpy` (imported as `np`)
+* `mpl_toolkits.basemap`
+
+**Defining constants and opening HDF5 file**
+
+A constant `FILE_NAME` is defined with the name of the HDF5 file. The file is opened using `h5py` in read-only mode (`mode="r"`).
+
+**Accessing data from HDF5 file**
+
+The code accesses a dataset within the HDF5 file:
+```python
+name = "/Brightness_Temperature/tb_h_surface_corrected"
+data = f[name][:]
+```
+This sets `name` to the path of the dataset and then uses that name to access the dataset using `f[name][:]`.
+
+**Processing data**
+
+The code processes the data by:
+* Converting the data to a numpy array
+* Replacing invalid values with NaN (Not a Number)
+* Masking the data using `np.ma.masked_where`
+
+**Getting geolocation data and creating map**
+
+The code accesses two more datasets within the HDF5 file for latitude and longitude. A cylindrical map is created using the `Basemap` module.
+
+**Plotting data on the map and creating color bar**
+
+The code plots the data on the map using the `scatter` method and creates a color bar at the bottom.
+
+**Setting title and saving plot**
+
+The code sets the title of the plot to include the name of the HDF5 file and the long name of the dataset, and then saves the plot as a PNG file.
+
+Note that I removed some of the implementation details, such as extracting metadata from the HDF5 file, to reduce the text while keeping the main steps and concepts intact.

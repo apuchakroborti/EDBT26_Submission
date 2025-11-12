@@ -1,0 +1,28 @@
+A Python script that reads ozone data from an HDF5 file and generates a visualization.
+
+1. Read HDF5 File: Open the specified HDF5 file using h5py to access its contents.
+
+2. Extract Datasets:
+   - Retrieve the 3D ProfileOzone data from `ProfileOzone`.
+   - Extract Latitude data from `Latitude`.
+   - Obtain ProfilePressureLevels from `ProfilePressureLevels`.
+   - Fetch Date data from `Date`.
+   All from the group `Data_Fields`
+   
+3. Extract Attributes: From the ProfileOzone, Latitude, and ProfilePressureLevels datasets, extract the 'Units' and 'long name' attributes for labeling purposes.
+
+4. Data Processing:
+   - Slice ProfileOzone to get the 0th index along the x-axis (ProfileOzone[0, :, :]).
+   - Extract the 0th index from Date data.
+   - Replace _FillValue in ProfileOzone with NaN using numpy's masked_where function.
+
+5. Transform Pressure Levels: Apply log10 transformation to ProfilePressureLevels.
+
+6. Create Visualization:
+   - Use contourf to plot latitude vs. transformed pressure levels with ozone data.
+   - Add a colorbar labeled with ozone units.
+   - Set x-axis label to Latitude's long name and units.
+   - Set y-axis label to a combination of Pressure Levels' long name and units.
+   - Set the title to include the HDF5 filename and ProfileOzone's long name.
+
+7. Display Plot: Render the plot using matplotlib's show function.

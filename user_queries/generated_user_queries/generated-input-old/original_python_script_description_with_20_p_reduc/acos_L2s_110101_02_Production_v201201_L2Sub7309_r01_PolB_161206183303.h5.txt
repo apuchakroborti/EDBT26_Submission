@@ -1,0 +1,27 @@
+Here is the reduced description, of about 80% of the original text:
+
+**Importing necessary modules**
+
+The script imports various Python modules: `datetime`, `os`, `matplotlib` and its sub-module `pyplot`, `mpl_toolkits.basemap`, `numpy`, and `h5py`.
+
+**Defining constants and opening the HDF5 file**
+
+A constant `FILE_NAME` is defined, and the HDF5 file is opened in read-only mode using `h5py.File()`.
+
+**Accessing datasets within the HDF5 file**
+
+The script accesses various datasets within the HDF5 file using their full paths. These include CO2 column averaged dry air mole fraction, sounding latitude and longitude, sounding altitude, and sounding time.
+
+**Reading data from datasets and attributes**
+
+The script reads the data from each dataset using slicing (`[:]`) and also reads the units of each dataset using the `.attrs` attribute.
+
+**Plotting**
+
+The script creates two subplots using `matplotlib`. The first subplot is a trajectory plot, and the second subplot plots time vs. CO2 and altitude. The title of each subplot includes the file name and other relevant information.
+
+**Saving the plot**
+
+The script saves the plot to a PNG file named after the input HDF5 file (with `.py.png` extension) using `fig.savefig()`.
+
+I removed some of the implementation details, such as the specific names of the datasets and variables, but kept the overall structure and main points of the original description.

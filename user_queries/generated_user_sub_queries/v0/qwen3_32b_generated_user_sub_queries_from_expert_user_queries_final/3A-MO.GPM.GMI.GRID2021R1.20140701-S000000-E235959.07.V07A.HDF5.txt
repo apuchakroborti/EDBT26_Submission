@@ -1,0 +1,88 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        
+1. Import Libraries: The program begins by importing necessary libraries, including `os`, `matplotlib`, `matplotlib.pyplot`, `numpy`, `mpl_toolkits.basemap`, and `h5py`.
+
+2. Define HDF5 File Constant: Create a constant for the HDF5 file name to be read.
+
+3. Read Data from HDF5:
+   - Open the specified HDF5 file.
+   - Access the 'cloud Water' dataset located at '/Grid/cloudWater'.
+   - Extract the 0th slice along the x-axis, retaining all y and z data.
+   - Retrieve the units of the dataset.
+
+4. Data Processing:
+   - Replace `_FillValue` with NaN using numpy's `where` function based on the 'cloudWater' data.
+   - Apply a mask to the cloudWater data where values are NaN using numpy's `ma.masked_where`.
+
+5. Create Geolocation Data:
+   - Manually construct longitude and latitude arrays since geolocation data is absent in the HDF5 file.
+   - Longitude array: 1440 values from -179.875 to 179.875.
+   - Latitude array: 720 values from -89.875 to 89.875.
+
+6. Set Up Map Visualization:
+   - Initialize a map object with cylindrical projection and low resolution.
+   - Set latitude limits from -90 to 90 and longitude limits from -180 to 180.
+
+7. Draw Map Elements:
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at latitudes [-90, -45, 0, 45, 90] and meridians at longitudes [-180, -135, -90, -45, 0, 45, 90, 135, 180], spaced every 45 degrees.
+   - Label the parallels and meridians appropriately based on the list of [True, False, False, True] .
+
+8. Finalize Visualization:
+   - Add a colorbar with a label set to the dataset's units.
+   - Set the plot title using the HDF5 file name and dataset name without slashes.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants to break down their data science task into three specific sub-queries for a vector database. The main areas are HDF5 access with h5py, NumPy preprocessing, and visualization with matplotlib and basemap.
+
+First, for the HDF5 part. The user is reading a dataset from a specific path in an HDF5 file. They need to access the 'cloudWater' dataset at '/Grid/cloudWater' and get its units. So the sub-query should focus on using h5py to open the file, access the dataset, extract the 0th slice along the x-axis, and retrieve metadata like units. I need to make sure the sub-query is specific to h5py functions and dataset paths.
+
+Next, the NumPy preprocessing. The user is replacing _FillValue with NaN and applying a mask. The sub-query should mention handling _FillValue, using np.where and np.ma.masked_where. Also, they need to compute or filter data, so including min and max might be relevant here. The key is to focus on the exact functions and operations mentioned.
+
+For the visualization part, the user is using Basemap with cylindrical projection, drawing coastlines, parallels, meridians, and adding a colorbar. The sub-query needs to specify using matplotlib and Basemap, setting up the projection, configuring the map elements, and adding labels and titles. Mentioning the specific libraries and functions like Basemap's drawcoastlines, drawparallels, and drawmeridians is important here.
+
+I need to ensure each sub-query is distinct and only covers its respective domain. No overlap between them. Also, avoid any code or explanations, just the technical aspects they need to query the vector database. Let me check each part again to make sure they align with the user's steps and the required focus areas.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file with .h5 extension, access a dataset at path '/Grid/cloudWater', extract the 0th x-axis slice while retaining all y/z data, and retrieve metadata attributes like units from the dataset.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue with NaN in NumPy arrays using np.where, create masked arrays with np.ma.masked_where for NaN values, and apply min/max filtering to cloudWater data arrays.
+
+Plotting and Visualization Sub-query:
+How to use mpl_toolkits.basemap with cylindrical projection to create a map with longitude -180-180 and latitude -90-90 bounds, draw coastlines with linewidth=0.5, add labeled parallels/meridians at 45° intervals, and configure colorbars with dataset unit labels using matplotlib.

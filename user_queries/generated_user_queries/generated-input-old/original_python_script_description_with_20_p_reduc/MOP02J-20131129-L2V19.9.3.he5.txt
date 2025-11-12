@@ -1,0 +1,36 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Comments and Importing Libraries**
+
+The script starts with comments explaining its purpose, usage, and contact information. It then imports several libraries: `os`, `h5py`, `matplotlib` and `matplotlib.pyplot`, `mpl_toolkits.basemap`, and `numpy`.
+
+**Setting File Paths and Names**
+
+Two variables are set: `FILE_PATH` (the directory containing the HDF file) and `FILE_NAME` (the full path to the HDF file).
+
+**Opening and Reading the HDF File**
+
+The script opens the HDF file in read-only mode using `h5py.File()` with a `with` statement to ensure proper closure. Within the block, it:
+
+* Retrieves the `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedSurfaceTemperature` dataset.
+* Extracts data values and attributes (units and fill value).
+* Replaces fill values with NaN.
+
+**Retrieving Geolocation Data**
+
+The script retrieves two datasets: `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude` and `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude`.
+
+**Creating a Map and Plotting the Data**
+
+A Basemap object `m` is created with a cylindrical projection and resolution 'l'. The script:
+
+* Draws coastlines, parallels, and meridians on the map.
+* Creates a scatter plot of the data using `m.scatter()` with longitude and latitude coordinates.
+
+**Adding a Colorbar and Title**
+
+The script creates a colorbar, sets its label to the units of the data, and sets the title of the plot using `plt.title()`.
+
+**Saving the Plot to a File**
+
+Finally, the script saves the plot to a PNG file using `fig.savefig()`.

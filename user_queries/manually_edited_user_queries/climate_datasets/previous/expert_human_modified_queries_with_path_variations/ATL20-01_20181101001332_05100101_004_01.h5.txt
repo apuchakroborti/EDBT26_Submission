@@ -1,0 +1,23 @@
+I have an HDF5 file named "ATL20-01_20181101001332_05100101_004_01.h5" that contains several datasets. 
+I want to read the data, extract attributes, and plot it on a map.
+
+Reading Data
+The file has three main datasets: 
+    "/grid_lat", "/grid_lon", and "/monthly/mean_fb". 
+These contain latitude values, longitude values, and actual data values, respectively. I need to read these entire datasets into memory.
+
+Extracting Attributes
+From the "/monthly/mean_fb" dataset, I want to extract attributes such as units, long name, and fill value.
+
+Handling Fill Values
+It should replace fill values with NaN (Not a Number) to the mean_fb dataset and create a masked array for efficient handling of missing values.
+
+Creating a Map Projection
+Next, It will create a Northern Polar Stereographic (NPST) map projection with a bounding latitude of 60° and central longitude of -45°.
+
+Plotting the Data
+I'll plot the data on the map, adjusting the longitude values by subtracting 180°. Then, I'll add coastlines, parallels, and meridians to the map.
+
+Adding a Colorbar
+Finally, I'll add a colorbar to the plot with units as the label. 
+The resulting plot should show the data from the HDF5 file visualized on a map projection with a colorbar indicating the units of the data.

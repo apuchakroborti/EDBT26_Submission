@@ -1,0 +1,83 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Define Constants:  
+   Define a constant `FILE_NAME` with the value `'ATL22_20210712003905_02811201_003_01.h5'`, which specifies the HDF5 file to be processed.
+
+3. Open the HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access the following datasets:  
+   - `transect_lat` for latitude data.  
+   - `transect_lon` for longitude data.  
+   - `inland_water_body_type` for the main data. from `gt1l` 
+
+   Read the attributes `units`, `long name` (decoded using `decode('ascii', 'replace')`), and `_FillValue`.
+
+4. Data Processing and Cleaning:  
+   Convert the main data to a float type using `.astype(float)`. Replace the `_FillValue` with `numpy.NaN` and mask the data using `numpy.ma.masked_where(numpy.isnan(data), data)`.
+
+5. Create a Map:  
+   Create an equidistant cylindrical projection map with low resolution, 
+   setting latitude and longitude bounds from -90 to 90 and -180 to 180, respectively. 
+   Add coastlines with a line width of 0.5, 
+   parallels at intervals of [-90, -60, -30, 0, 30, 60, 90], 
+   and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+6. Scatter Plot:  
+   Use the `scatter` function to plot the data on the map with parameters: longitude, latitude, `c=data`, marker size `s=0.1`, colormap `plt.cm.jet`, and no edge colors or linewidth.
+
+7. Add Colorbar and Title:  
+   Add a colorbar to the map, positioned at the bottom, labeled with the main dataset's `units`. 
+   Set the title of the plot to include the file basename, dataset path name, and `long_name` from the attributes.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, the user is working with an HDF5 file named 'ATL22_20210712003905_02811201_003_01.h5'. They want to access several datasets: transect_lat, transect_lon, and inland_water_body_type from the gt1l group. Also, they need to read specific attributes like units, long name (with decoding), and _FillValue. So for the HDF5 sub-query, I should focus on how to open this file using h5py, access these datasets by their paths, and retrieve those attributes correctly.
+
+Next, the data processing part involves converting the main dataset to float, replacing _FillValue with NaNs, and masking the data where NaNs are present. This is all about handling missing or invalid data in NumPy arrays. So the sub-query here should cover using astype(float), np.isnan, and masked_where functions.
+
+Lastly, for visualization, they want a map using matplotlib with specific projections, coastlines, meridians, parallels, and a colorbar. The plot should be a scatter plot of longitude and latitude data with certain parameters. So the sub-query needs to address setting up the map with the right projection, adding all the required elements like coastlines and grid lines, and then plotting the data correctly.
+
+I need to make sure each sub-query is clear and targets only its specific domain without overlapping into others.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file named 'ATL22_20210712003905_02811201_003_01.h5' using h5py, access datasets at paths '/gt1l/transect_lat', '/gt1l/transect_lon', and '/gt1l/inland_water_body_type', read attributes 'units', 'long name' (decoded with 'ascii' and 'replace'), and '_FillValue'.
+
+NumPy Data Preprocessing Sub-query:
+How to convert a NumPy array to float type, replace _FillValue with NaN using np.isnan, and apply masking with np.ma.masked_where.
+
+Plotting and Visualization Sub-query:
+How to create an equidistant cylindrical projection map with matplotlib, set latitude bounds from -90 to 90 and longitude bounds from -180 to 180, add coastlines (linewidth=0.5), parallels at [-90, -60, -30, 0, 30, 60, 90], meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180], plot a scatter with longitude and latitude data using plt.scatter (s=0.1, cmap=plt.cm.jet), add a colorbar at the bottom labeled with units, and set the title with file basename, dataset path, and long name attributes.

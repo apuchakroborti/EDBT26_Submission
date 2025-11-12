@@ -1,0 +1,25 @@
+1. Define Constants: Set `FILE_NAME` to "ATL20-01_20181101001332_05100101_004_01.h5".
+
+2. Open HDF5 File: Access the file in read mode and extract datasets `/grid_lat`, `/grid_lon`, and `/monthly/mean_fb`.
+
+3. Extract Attributes: From the mean_fb dataset, decode 'unit' and 'Long Name' using ASCII with replace errors, and retrieve 'FillValue'.
+
+4. Data Processing:
+   - Convert mean_fb data to float.
+   - Replace FillValue with NaN.
+   - Mask data where values are NaN.
+
+5. Create Map Projection: Use npstere with low resolution, boundinglat=60, lon_0=45.
+
+6. Customize Map:
+   - Add coastlines (linewidth=0.5).
+   - Draw parallels from -90 to 120 with interval of 30.
+   - Draw meridians from -180 to 180 with interval of 45.
+
+7. Adjust Longitude: 
+   Before setting pcolormesh the 180 should be subtractted from longitude value and update the longitude existing value 
+   Then it adds pcolormesh with parameters longitude, latitude, data, and latlon=True
+
+8. Add Colorbar and Title:
+    - Position colorbar at the bottom, labeled with dataset units.
+    - Set title using file basename and 'long name' attribute.

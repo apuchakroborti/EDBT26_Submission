@@ -1,0 +1,91 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Import necessary libraries: os, datetime, h5py, numpy as np, matplotlib.pyplot as plt, FormatStrFormatter from matplotlib.ticker, mpl_toolkits.basemap import Basemap.
+2. Open an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+3. Access the following datasets within the file:
+   - Ozone data: "/HDFEOS/SWATHS/O3/Data Fields/L2gpValue"
+   - Latitude values: "/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude"
+   - Pressure levels: "/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure"
+   - Time information: "/HDFEOS/SWATHS/O3/Geolocation Fields/Time"
+
+4. Read ozone data from index 0 to 70 along the x-axis and all y-axis data.
+5. Read latitude data from index 0 to 70.
+6. Read pressure data up to index 55.
+7. Extract units and title information from the ozone, latitude, and longitude datasets and also and decods the value.
+
+8. Preprocess the data:
+   - Replace _FillValue with numpy NaN.
+   - Mask ozone data using masked_array where values are NaN.
+
+9. Calculate start and end times using datetime functions relative to "1993-01-01" plus time in seconds from index 0 and 70, respectively, and format these as strings.
+
+10. Create a pcolormesh plot with parameters: latitude, longitude, and ozone data transposed (data.T).
+
+11. Set x-axis label using latitude title and units, and y-axis label using longitude title and units.
+
+12. Set the plot title to include the data title concatenated with start and end times.
+
+13. Configure the plot:
+    - sets gca to plt
+    - Invert the y-axis.
+    - Set y-scale to log.
+    - Format major ticks to display values with one decimal place.
+
+14. Display the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, I need to break down the user's query into three specific sub-queries as per their instructions. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user is working with an HE5 file and needs to access several datasets. They mentioned opening the file using h5py, accessing ozone data, latitude, pressure, and time information from specific paths. Also, they need to extract units and title metadata. So I'll structure this sub-query to focus on these aspects.
+
+Next, for NumPy-based Data Preprocessing, the user wants to replace _FillValue with NaNs and mask the ozone data where values are NaN. This involves using numpy functions like np.where and np.ma.masked_where. I should make sure the sub-query clearly states these preprocessing steps without including any plotting or file access details.
+
+Lastly, the Plotting and Visualization part requires creating a pcolormesh plot with specific configurations. They mentioned using matplotlib, setting labels, inverting the y-axis, log scale, formatting ticks, adding a colorbar, and displaying the plot. I'll ensure this sub-query captures all these visualization elements accurately.
+
+I need to make sure each sub-query is clear and focused on its respective domain without overlapping with other sections. This way, when someone uses these sub-queries for further research or code retrieval, they can find relevant information efficiently.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" using h5py and access datasets at paths "/HDFEOS/SWATHS/O3/Data Fields/L2gpValue", "/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude", "/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure", and "/HDFEOS/SWATHS/O3/Geolocation Fields/Time"? How to read ozone data from index 0 to 70 along the x-axis and all y-axis data, latitude data from index 0 to 70, and pressure data up to index 55? How to extract units and title information from these datasets?
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue in a NumPy array with NaNs and create a masked array using np.ma.masked_where for ozone data where values are NaN?
+
+Plotting and Visualization Sub-query:
+How to create a pcolormesh plot using matplotlib with latitude, longitude, and ozone data transposed? How to set x-axis label using latitude title and units, y-axis label using longitude title and units, and plot title including data title concatenated with start and end times? How to configure the plot by inverting the y-axis, setting y-scale to log, formatting major ticks to display values with one decimal place, adding a colorbar, and displaying the plot?

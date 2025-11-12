@@ -1,0 +1,43 @@
+Here's the reduced text, focusing on implementation details and keeping the names of parent groups for each dataset:
+
+**Accessing HDF5 File**
+
+Open an HDF5 file named "HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5" located at a specified directory path in read-only mode.
+
+**Retrieving Datasets**
+
+Extract three datasets from the "/HDFEOS/SWATHS/HIRDLS/Data Fields/" group:
+
+1. "O3" dataset, which is assumed to be a single time-step.
+2. "Pressure" dataset.
+3. "Time" dataset.
+
+**Reading Data and Attributes**
+
+Read data from each dataset:
+
+* First row of the "O3" dataset.
+* All rows of the "Pressure" dataset.
+* First 121 elements of the "Time" dataset.
+
+Also, read attributes from each dataset:
+
+* "Units" attribute from the "O3" dataset.
+* "Title" attributes from the "O3", "Pressure", and "Time" datasets.
+
+**Handling Fill Values**
+
+Replace values matching the `_FillValue` attribute in the "O3" dataset with NaN (Not a Number).
+
+**Printing Shapes**
+
+Print the shapes of the "Pressure" and "Time" arrays.
+
+**Creating a Scatter Plot**
+
+Create a scatter plot using the extracted data:
+
+* Label the x-axis as the title of the "Time" dataset.
+* Label the y-axis as the title of the "Pressure" dataset.
+* Combine the two titles for the plot's title.
+* Display the plot.

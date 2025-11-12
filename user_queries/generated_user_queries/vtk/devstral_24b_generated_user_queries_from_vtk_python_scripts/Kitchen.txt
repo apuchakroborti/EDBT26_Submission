@@ -1,0 +1,138 @@
+### Step-by-Step Guide to Recreate the VTK Visualization Script
+
+This script uses VTK (Visualization Toolkit) to visualize a kitchen layout with streamlines. Below is a detailed breakdown of each step in the script:
+
+#### 1. Import Required Libraries
+```python
+import vtk
+```
+
+#### 2. Define the Main Function
+The main function initializes all components and starts the visualization.
+```python
+def main():
+    # Initialize VTK objects
+    colors = vtk.vtkNamedColors()
+
+    # Create a renderer, render window, and interactor
+    renderer = vtk.vtkRenderer()
+    render_window = vtk.vtkRenderWindow()
+    render_window_interactor = vtk.vtkRenderWindowInteractor()
+
+    # Set up the render window and interactor
+    render_window.AddRenderer(renderer)
+    render_window_interactor.SetRenderWindow(render_window)
+
+    # Read data from a file (assuming 'Kitchen.vtk' is available in the same directory)
+    reader = vtk.vtkStructuredPointsReader()
+    reader.SetFileName("Kitchen.vtk")
+    reader.Update()
+
+    # Create an outline of the kitchen
+    outline_filter = vtk.vtkOutlineFilter()
+    outline_filter.SetInputConnection(reader.GetOutputPort())
+    outline_mapper = vtk.vtkPolyDataMapper()
+    outline_mapper.SetInputConnection(outline_filter.GetOutputPort())
+
+    outline_actor = vtk.vtkActor()
+    outline_actor.SetMapper(outline_mapper)
+    renderer.AddActor(outline_actor)
+
+    # Create actors for different parts of the kitchen
+    def create_actor(extent, color_name):
+        geometry_filter = vtk.vtkStructuredGridGeometryFilter()
+        geometry_filter.SetInputConnection(reader.GetOutputPort())
+        geometry_filter.SetExtent(extent)
+        mapper = vtk.vtkPolyDataMapper()
+        mapper.SetInputConnection(geometry_filter.GetOutputPort())
+
+        actor = vtk.vtkActor()
+        actor.SetMapper(mapper)
+        actor.GetProperty().SetColor(colors.GetColor3d(color_name))
+        renderer.AddActor(actor)
+
+    # Define extents and colors for different parts of the kitchen
+    kitchen_parts = [
+        ((0, 29, 0, 29, 0, 15), "SlateGray"),  # Floor
+        ((0, 29, 0, 29, 16, 30), "White"),     # Ceiling
+        ((0, 29, 0, 0, 0, 30), "Brown"),       # Walls (left)
+        ((0, 29, 29, 29, 0, 30), "Brown"),     # Walls (right)
+    ]
+
+    for extent, color_name in kitchen_parts:
+        create_actor(extent, color_name)
+
+    # Create streamlines
+    line_source = vtk.vtkLineSource()
+    line_source.SetResolution(39)
+    line_source.SetPoint1(0.08, 2.50, 0.71)
+    line_source.SetPoint2(0.08, 4.50, 0.71)
+
+    rake_mapper = vtk.vtkPolyDataMapper()
+    rake_mapper.SetInputConnection(line_source.GetOutputPort())
+
+    rake_actor = vtk.vtkActor()
+    rake_actor.SetMapper(rake_mapper)
+    renderer.AddActor(rake_actor)
+
+    streamer = vtk.vtkStreamTracer()
+    streamer.SetInputConnection(reader.GetOutputPort())
+    streamer.SetSourceConnection(line_source.GetOutputPort())
+    streamer.SetMaximumPropagation(maxTime)
+    streamer.SetInitialIntegrationStep(.5)
+    streamer.SetMinimumIntegrationStep(.1)
+    streamer.SetIntegratorType(2)
+    streamer.Update()
+
+    streamers_mapper = vtk.vtkPolyDataMapper()
+    streamers_mapper.SetInputConnection(streamer.GetOutputPort())
+    streamers_mapper.SetScalarRange(scalar_range)
+
+    lines_actor = vtk.vtkActor()
+    lines_actor.SetMapper(streamers_mapper)
+    lines_actor.GetProperty().SetColor(colors.GetColor3d("Black"))
+    renderer.AddActor(lines_actor)
+
+    # Set up the camera
+    a_camera = vtk.vtkCamera()
+    renderer.SetActiveCamera(a_camera)
+    renderer.ResetCamera()
+
+    a_camera.SetFocalPoint(3.505, 2.505, 1.255)
+    a_camera.SetPosition(3.505, 24.6196, 1.255)
+    a_camera.SetViewUp(0, 0, 1)
+    a_camera.Azimuth(60)
+    a_camera.Elevation(30)
+    a_camera.Dolly(1.4)
+    renderer.ResetCameraClippingRange()
+
+    # Set the window size and render
+    render_window.SetSize(640, 512)
+    render_window.Render()
+    render_window.SetWindowName('Kitchen')
+
+    # Start interaction
+    render_window_interactor.Start()
+```
+
+#### 3. Execute the Main Function
+```python
+if __name__ == '__main__':
+    main()
+```
+
+### Explanation of Key Components
+
+- **VTK Objects Initialization**: The script initializes various VTK objects such as `vtkRenderer`, `vtkRenderWindow`, and `vtkRenderWindowInteractor`.
+- **Reading Data**: It reads the kitchen data from a file named "Kitchen.vtk".
+- **Creating Actors**: Different parts of the kitchen are created using extents and colors.
+- **Streamlines**: Streamlines are generated using `vtkStreamTracer` and added to the renderer.
+- **Camera Setup**: The camera is set up with specific focal points, positions, and orientations for a better view.
+
+### Running the Script
+Ensure you have VTK installed in your Python environment. Save this script as a `.py` file and run it using a Python interpreter:
+```sh
+python kitchen_visualization.py
+```
+
+This will open a window displaying the 3D visualization of the kitchen with streamlines, allowing interaction through mouse controls.

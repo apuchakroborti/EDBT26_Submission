@@ -1,0 +1,52 @@
+A Python script that reads an HDF5 file and generates a map plot with the following specifications:
+
+1. Import Libraries:  
+   - Import necessary Libraries
+
+2. Read HDF5 File:  
+   - Access the dataset `SurfReflect_I3_1` from the group `HDFEOS/GRIDS/VNP_Grid_500m_2D/Data Fields`.  
+   - Read the data into a NumPy array and convert it to `np.float64` using `astype(np.float)`.
+
+3. Extract Attributes:  
+   - Extract attributes (`Scale`, `Offset`, `units`, `_FillValue`, `long_name`). Use the `decode()` function for `units` and `long_name`.  
+
+4. Grid Metadata:  
+   - Read the `/HDFEOS INFORMATION/StructMetadata.0` dataset.  
+   - Extract `upper_left_x` and `upper_left_y` using a regex pattern:  
+     ```
+     UpperLeftPointMtrs=\((?P<upper_left_x>[+-]?\d+\.\d+),(?P<upper_left_y>[+-]?\d+\.\d+)\)
+     ```  
+   - Use this data to construct meshgrid coordinates for longitude and latitude.
+
+5. Coordinate Transformation:  
+   - Perform a coordinate transformation from Sinusoidal to WGS84 (Latitude-Longitude) using a projection library.
+
+6. Data Processing:  
+   - Apply the `_FillValue` to the `SurfReflect_I3_1` dataset, setting NaN values where necessary.  
+   - Scale and offset the data:  
+     ```
+     SurfReflect_I3_1 = scale  SurfReflect_I3_1 + offset
+     ```
+
+7. Visualization:  
+   - Create a map using a cylindrical projection with low resolution.  
+   - Set the latitude range from `min(latitude)` to `max(latitude)` and longitude range from `min(longitude)` to `max(longitude)`.  
+   - Add parallels (latitude gridlines):  
+     ```
+     np.arange(floor(min_latitude), ceil(max_latitude), 1)
+     ```  
+     with labels at left only.  
+
+   - Add meridians (longitude gridlines):  
+     ```
+     np.arange(floor(min_longitude), ceil(max_longitude), 2)
+     ```  
+     with labels at bottom only.  
+
+   - Use `pcolormesh` to plot the data:  
+     ```
+     plt.pcolormesh(longitude, latitude, SurfReflect_I3_1, latlon=True)
+     ```
+
+   - Add a colorbar with the label set to the `units` attribute.  
+   - Set the plot title as the concatenation of the base name of the HDF5 file and the `long_name` attribute.

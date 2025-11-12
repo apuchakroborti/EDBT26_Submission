@@ -1,0 +1,38 @@
+a Python code. Here's what it does:
+
+Reading an HDF5 File
+The code reads an HDF5 file named `MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5`.
+
+Accessing Datasets
+It accesses several datasets within the HDF5 file, including:
+
+`/Data Fields/L2gpValue`, containing H2O data
+`/Geolocation Fields/Pressure`, containing pressure values
+
+located in the sub group /HDFEOS/SWATHS/H2O
+
+It read all data from x-axis and 0th index only from the y-axis of 2D data array
+
+The code also retrieves attributes like units and title from these datasets.
+
+Data Subsetting
+It subsets the data by selecting a single value from the `L2gpValue` dataset using `subset=0`.
+
+Geolocation Data
+The code accesses geolocation datasets:
+
+`/HDFEOS/SWATHS/H2O/Geolocation Fields/Latitude`
+`/HDFEOS/SWATHS/H2O/Geolocation Fields/Longitude`
+
+These contain latitude and longitude values, respectively.
+
+Visualization
+The code uses `Basemap` to create a cylindrical map projection with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively, 
+coastlines, and parallels, and meridians. 
+It scatters the data values on the map using longitude and latitude coordinates and adds a colorbar.
+
+Plot Customization
+The code sets a title for the plot using the file name and dataset long name.
+
+Saving the Plot
+Finally, it saves the plot to a PNG file with the same name as the input HDF5 file but with a `.py.png` extension.

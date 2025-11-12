@@ -1,0 +1,66 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a Python script that processes and visualizes HDF data using specific libraries and steps.
+
+1. Imports: Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Read HDF Data: Access the dataset `/HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay` into a variable named `data`. Extract attributes `long_name`, `units`, and `_FillValue`, decoding `long_name` and `units`.
+
+3. Data Preprocessing:
+   - Replace `_FillValue` with `NaN`.
+   - Mask data using `numpy.ma.masked_array` where values are not `NaN`.
+
+4. Geolocation Data: Read latitude and longitude from respective datasets into variables `x` and `y`, then create a meshgrid.
+
+5. Basemap Setup:
+   - Use cylindrical projection with low resolution.
+   - Set boundaries from -90 to 90 for latitude and -180 to 180 for longitude.
+   - Add coastlines, parallels at intervals of 45 degrees, and meridians similarly, labeling the first and last ones.
+
+6. Visualization: 
+   - Use `plt.scatter` with parameters including data, colormap 'jet', no edge colors, and linewidth 0.
+   - Add a colorbar labeled with the units attribute.
+
+7. Cleanup: Include `plt.show()` or save the figure as needed.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py`, access a specific dataset by its path (e.g., `/HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay`), and retrieve dataset attributes like `long_name`, `units`, and `_FillValue`.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a specific value (e.g., `_FillValue`) with `NaN` in a NumPy array, and how to create a masked array using `numpy.ma.masked_where` or similar functions, masking values based on a condition (e.g., values that are not `NaN`).
+
+Plotting and Visualization Sub-query:
+How to create a map projection using `mpl_toolkits.basemap` or `cartopy`, configure the projection type (cylindrical), set map boundaries (latitude and longitude ranges), draw coastlines, parallels, and meridians, and create a scatter plot with a specified colormap, edge colors, and linewidth, including adding a colorbar with a label.

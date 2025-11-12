@@ -1,0 +1,107 @@
+This Python script visualizes airflow within an office environment using VTK (Visualization Toolkit). The visualization includes various elements such as tables, bookshelves, windows, outlets, and inlets. Additionally, it traces streamlines to show the flow of air through the space.
+
+Here's a step-by-step explanation of what the script does:
+
+1. Importing Required Libraries
+The script begins by importing necessary modules from VTK:
+- `vtkStructuredGridOutlineFilter` for outlining the structured grid.
+- `vtkPointSource`, `vtkStreamTracer` for generating and tracing streamlines.
+- Various other VTK classes for rendering, mapping data to graphics, and handling interactivity.
+
+2. Defining the `office` Function
+The main function `office(fileName, center)` takes two arguments:
+- `fileName`: The path to the VTK file containing the office geometry and flow data, the filename is `Office_office.binary.vtk`.
+- `center`: An index specifying which point source (seed) to use for generating streamlines.
+
+Reading the Data
+```python
+reader = vtkStructuredGridReader()
+reader.SetFileName(fileName)
+reader.Update()
+```
+This section reads the structured grid data from the specified VTK file and updates it.
+
+Setting Up Colors
+```python
+colors = vtkNamedColors()
+```
+A `vtkNamedColors` object is created to manage colors used in the visualization.
+
+Creating Actors for Different Office Elements
+The script creates several actors (visual representations) for different parts of the office:
+- Tables, bookshelves, windows, outlets, and inlets are defined using `vtkStructuredGridGeometryFilter`.
+- Each actor is assigned a mapper (`vtkPolyDataMapper`) to map data to graphics.
+- Colors are set for each actor.
+
+Creating Streamlines
+```python
+seeds = vtkPointSource()
+seeds.SetRadius(0.075)
+seeds.SetCenter(seedCenters[center])
+seeds.SetNumberOfPoints(25)
+
+streamers = vtkStreamTracer()
+streamers.SetInputConnection(reader.GetOutputPort())
+streamers.SetSourceConnection(seeds.GetOutputPort())
+streamers.SetMaximumPropagation(500)
+streamers.SetMinimumIntegrationStep(0.1)
+streamers.SetMaximumIntegrationStep(1.0)
+streamers.SetInitialIntegrationStep(0.2)
+streamers.SetIntegratorType(2)
+streamers.Update()
+```
+- A `vtkPointSource` is created to define the seed points for streamlines.
+- The `vtkStreamTracer` traces the flow from these seeds through the structured grid data.
+
+Setting Up Rendering
+```python
+ren = vtkRenderer()
+renWin = vtkRenderWindow()
+renWin.AddRenderer(ren)
+renWin.SetWindowName('Office')
+
+iren = vtkRenderWindowInteractor()
+iren.SetRenderWindow(renWin)
+```
+- A renderer, render window, and interactor are created to handle the visualization.
+- The actors (tables, bookshelves, windows, etc.) and streamlines are added to the renderer.
+
+Configuring Camera
+```python
+aCamera = vtkCamera()
+aCamera.SetClippingRange(0.726079, 36.3039)
+aCamera.SetFocalPoint(2.43584, 2.15046, 1.11104)
+aCamera.SetPosition(-4.76183, -10.4426, 3.17203)
+aCamera.ComputeViewPlaneNormal()
+aCamera.SetViewUp(0.0511273, 0.132773, 0.989827)
+aCamera.SetViewAngle(18.604)
+aCamera.Zoom(1.2)
+
+ren.SetActiveCamera(aCamera)
+```
+- A camera is configured to provide a specific view of the office.
+- The camera's position, focal point, and other parameters are set for optimal visualization.
+
+Rendering
+```python
+renWin.SetSize(640, 400)
+iren.Initialize()
+iren.Start()
+```
+- The render window size is set.
+- The interactor is initialized and started to display the rendered scene interactively.
+
+3. Main Function
+The `main` function sets default values for `fileName` and `center`, then calls the `office` function:
+```python
+def main():
+    fileName, center = 'Office_office.binary.vtk', 3
+    office(fileName, center)
+
+if __name__ == '__main__':
+    main()
+```
+This ensures that when the script is run directly, it will visualize the airflow in the office using the specified VTK file and seed point.
+
+Summary
+The script reads a structured grid from a VTK file, sets up various actors to represent different parts of an office environment, generates streamlines to show airflow, configures rendering settings including camera position, and finally displays the visualization interactively. This provides a detailed visual representation of how air flows through the office space.

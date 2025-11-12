@@ -1,0 +1,57 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Write a code to read h5 data named '76_h5_data.h5' and visualize the "women's millions of dollars" dataset with a composite graph: an axis-free box plot above and a histogram below. Label key statistics on the box plot and detail the frequency distribution in the histogram. Highlight quartiles with continuous red dashed lines across both sections, ensuring no breaks.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries. Let me start by understanding each part of their request.
+
+First, they want to read an HDF5 file named '76_h5_data.h5' and access a dataset called "women's millions of dollars." So for the HDF5 Dataset Access sub-query, I should focus on how to open this file using h5py, navigate through its groups if necessary, and retrieve the specific dataset. Maybe they need help with finding the exact path or handling any attributes associated with it.
+
+Next, the data preprocessing part involves handling _FillValue, which is common in HDF5 files for missing data. They might want to mask these values using NumPy functions like np.where or np.ma.masked_where. Additionally, computing quartiles and other statistics like min, max, median will be essential for the box plot. I should make sure the sub-query covers all these preprocessing steps.
+
+Finally, the visualization requires a composite graph with a box plot above and a histogram below. They want no axes on the box plot, labels for key stats, and dashed red lines showing quartiles across both plots. Using matplotlib's subplots will be necessary here, along with customizing the appearance of each section to meet their specifications.
+
+Putting it all together, I'll structure each sub-query to address these specific areas without overlapping into other domains.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open and access the dataset "women's millions of dollars" from an HDF5 file named '76_h5_data.h5' using h5py?
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue in NumPy, compute quartiles, min, max, median for a dataset, and create masks for visualization?
+
+Plotting and Visualization Sub-query:
+How to create a composite graph with an axis-free box plot above and a histogram below using matplotlib, highlighting quartiles with continuous red dashed lines across both sections?

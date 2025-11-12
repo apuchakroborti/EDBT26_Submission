@@ -1,0 +1,55 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports:
+1. `os` for operating system interactions and file operations.
+2. `matplotlib.pyplot` (as `plt`) for plotting.
+3. `numpy` (as `np`) for numerical computations and data analysis.
+4. `mpl_toolkits.basemap` (as `Basemap`) for creating maps.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read mode (`mode="r"` using `h5py`.
+
+**Accessing datasets within the HDF5 file**
+
+The code accesses three datasets:
+1. `/global_grid_lat`: latitude values.
+2. `/global_grid_lon`: longitude values.
+3. `/global_asr`: actual data (values).
+
+For each dataset, it uses:
+* `f["/path/to/dataset"]` to access the dataset.
+* `dataset[:]` to extract all values.
+
+**Handling FillValue and masking**
+
+The code handles `_FillValue` in `/global_asr`, replacing missing values with `np.nan` and masking them using `np.ma.masked_where`.
+
+**Creating a map with Basemap**
+
+The code creates an equidistant cylindrical projection of the world:
+* `projection="cyl"`: specifies the projection.
+* `resolution="l"`: sets the coastline database resolution.
+
+It draws coastlines, parallels, and meridians on the map using various methods:
+* `m.drawcoastlines(linewidth=0.5)`: draws coastline boundaries.
+* `m.drawparallels(np.arange(-90.0, 120.0, 30.0))`: draws parallel lines at specified latitudes.
+* `m.drawmeridians(np.arange(-180, 180.0, 45.0))`: draws meridian lines at specified longitudes.
+
+**Plotting the data**
+
+The code plots `/global_asr` onto the map using `pcolormesh`:
+* `longitude`, `latitude`, and `data` are passed as arguments.
+* `latlon=True`: specifies that the data is in latitude-longitude coordinates.
+
+**Adding a color bar**
+
+The code adds a color bar to the plot using `m.colorbar(location="bottom")`. The color bar is labeled with the units of the data, retrieved from the HDF5 file's attribute.
+
+**Saving the plot**
+
+The final steps save the plot as an image file:
+* `plt.title("{0}\n{1}".format(basename, long_name))`: sets the title of the plot.
+* `fig.savefig(pngfile)`: saves the plot as an image file.

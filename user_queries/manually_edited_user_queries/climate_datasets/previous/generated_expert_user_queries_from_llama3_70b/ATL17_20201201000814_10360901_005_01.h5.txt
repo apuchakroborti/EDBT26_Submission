@@ -1,0 +1,61 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+
+1. `os`: for interacting with the operating system (e.g., getting the current working directory)
+2. `matplotlib.pyplot` as `plt`: for creating visualizations
+3. `numpy` as `np`: for numerical computations
+4. `mpl_toolkits.basemap` as `Basemap`: for creating maps
+5. `h5py`: for interacting with HDF5 files
+
+**Defining constants and file names**
+
+The code defines several constants:
+
+1. `FILE_NAME`: the name of the HDF5 file to be read, which is "ATL17_20201201000814_10360901_005_01.h5"
+
+**Reading the HDF5 file**
+
+The code opens the HDF5 file in read mode (`mode="r"`) using the `h5py` library. The file is opened as a context manager, ensuring that it is properly closed when the script finishes executing.
+
+Within the `with` block, the code accesses several datasets within the HDF5 file:
+
+1. `/global_grid_lat`: a dataset containing latitude values
+2. `/global_grid_lon`: a dataset containing longitude values
+3. `/global_asr`: a dataset containing data values
+
+For each dataset, the code reads the entire array of values using slicing (`[:]`).
+
+**Extracting metadata**
+
+The code extracts metadata from the `/global_asr` dataset:
+
+1. `units`: the units of the data values
+2. `long_name`: a descriptive name for the data values
+3. `_FillValue`: a special value indicating missing or invalid data
+
+**Handling FillValue and NaN values**
+
+The code replaces all instances of `_FillValue` in the data array with `NaN` (Not a Number) values using NumPy's broadcasting capabilities.
+
+Then, it creates a masked array (`np.ma.masked_where`) to ignore any NaN values when plotting the data.
+
+**Creating a map visualization**
+
+The code uses the `Basemap` library to create an equidistant cylindrical projection of the Earth:
+
+1. It sets up the map projection with various parameters (e.g., resolution, latitude/longitude ranges)
+2. It draws coastlines, parallels, and meridians on the map
+3. It plots the data values as a pseudocolor mesh (`m.pcolormesh`) using the longitude and latitude arrays
+
+**Adding a colorbar and title**
+
+The code adds a colorbar to the plot with a label indicating the units of the data values.
+
+It also sets a title for the plot, which includes the file name and a descriptive name for the data values.
+
+**Saving the plot as a PNG image**
+
+Finally, the code saves the plot as a PNG image using `matplotlib`'s `savefig` method. The file name is constructed by appending ".py.png" to the base name of the HDF5 file.

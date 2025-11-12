@@ -1,0 +1,83 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkInteractionStyle`  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkmodules.vtkCommonColor` (as `vtkNamedColors`)  
+   - `vtkmodules.vtkCommonCore` (for `vtkIdList`)  
+   - `vtkmodules.vtkFiltersCore` (for `vtkPolyDataConnectivityFilter`)  
+   - `vtkmodules.vtkFiltersModeling` (for `vtkOutlineFilter`)  
+   - `vtkmodules.vtkIOGeometry` (for `vtkMCubesReader`)  
+   - `vtkmodules.vtkRenderingCore` (for `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer`).
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define File Name:  
+   - Set the file name to `'PineRootConnectivity_pine_root.tri'`.
+
+3. Set Up Variables:  
+   - Define `noConnectivity` as an integer (initially set to `0`).  
+   - Convert `noConnectivity` to a boolean value (`True` if non-zero, `False` otherwise).
+
+4. Define Function `pine_root_connectivity`:  
+   - Parameters: `fileName` and `noConnectivity`.
+
+5. Create Helper Function `NumberOfTriangles`:  
+   - Purpose: Count the number of triangles in a `vtkPolyData` object.  
+   - Parameters: `pd` (the `vtkPolyData` object).  
+   - Returns: The number of triangles.
+
+6. Initialize Named Colors:  
+   - Use `vtkNamedColors()` to access predefined colors.
+
+7. Create Pipeline:  
+   - Create a reader using `vtkMCubesReader`.  
+   - Set the file name for the reader.  
+   - If `noConnectivity` is `False`, update the reader and print the number of triangles before applying connectivity filter.
+
+8. Apply Connectivity Filter:  
+   - Create a connectivity filter using `vtkPolyDataConnectivityFilter`.  
+   - Set the input to the reader's output.  
+   - Set extraction mode to largest region.  
+   - If `noConnectivity` is `False`, update the filter and print the number of triangles after applying the filter.
+
+9. Create Isosurface Mapper and Actor:  
+   - Create a mapper using `vtkPolyDataMapper`.  
+   - Set input based on whether connectivity filter is applied (`reader.GetOutputPort()` if `noConnectivity` is `True`, otherwise `connect.GetOutputPort()`).  
+   - Disable scalar visibility for the mapper.  
+   - Create an actor using `vtkActor`.  
+   - Set the mapper as the actor's source.  
+   - Set the actor's color to `'raw_sienna'`.
+
+10. Create Outline Filter and Actor:  
+    - Create an outline filter using `vtkOutlineFilter`.  
+    - Set input to the reader's output.  
+    - Create a mapper for the outline.  
+    - Create an actor for the outline.  
+    - Set the outline actor's color to `'Black'`.
+
+11. Set Up Renderer, Render Window, and Interactor:  
+    - Create a renderer using `vtkRenderer`.  
+    - Create a render window using `vtkRenderWindow` and add the renderer to it.  
+    - Create an interactor using `vtkRenderWindowInteractor` and set its render window.
+
+12. Add Actors to Renderer:  
+    - Add the outline actor and isosurface actor to the renderer.  
+    - Set the render window size to `512x512`.  
+    - Set the window title to `'PineRootConnectivity'`.  
+    - Set the background color of the renderer to `'SlateGray'`.
+
+13. Configure Camera:  
+    - Get the active camera from the renderer.  
+    - Set focal point, position, and other camera properties for optimal viewing.
+
+14. Render and Start Interaction:  
+    - Initialize the interactor.  
+    - Render the scene.  
+    - Start the interaction loop with `iren.Start()`.
+
+15. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "PineRootConnectivity_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

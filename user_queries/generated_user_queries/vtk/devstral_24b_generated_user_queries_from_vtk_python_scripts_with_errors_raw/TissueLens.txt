@@ -1,0 +1,44 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### What This Script Does
+This script takes a 3D image (like a CT scan) of a head and creates a special visual effect that makes it look like you're seeing through the skin to the tissues underneath. It's like creating a transparent window on someone's face.
+
+### Step-by-Step Explanation
+
+#### 1. Setting Up
+The script starts by importing some tools (modules) needed for working with 3D images and rendering them on screen. Think of it as gathering all the ingredients you need before starting to cook.
+
+#### 2. Defining Colors
+It sets up a few colors that will be used later:
+- Skin color: A light brownish color.
+- Backface color: A lighter version of the skin color.
+- Background color: A dark blue-gray color.
+
+These colors are like choosing paint colors for different parts of your picture.
+
+#### 3. Reading the Image
+The script reads a file called 'TissueLens_FullHead.mhd', which contains the 3D image data of the head. It's like opening an image file on your computer, but this is a special kind of image that has depth information (like a CT scan).
+
+#### 4. Extracting the Skin
+The script looks for parts in the image where the value is 500. This value represents the skin in the 3D image data. It's like finding all the pixels in an image that match a certain shade of color.
+
+#### 5. Clipping the Skin
+It creates a spherical shape (like a ball) and uses it to cut out a part of the skin surface. Only the part inside this sphere will be shown. This is like using a cookie cutter to cut out a circular piece from dough.
+
+#### 6. Creating the "Lens" Effect
+The script makes another spherical shape that matches the one used for clipping. It then samples the image data within this sphere, creating a lens-like effect where you can see through the skin to the tissues underneath. This is like making a transparent window in your cookie dough.
+
+#### 7. Setting Up the View
+It sets up how you'll view the image:
+- Defines a camera position and angle.
+- Creates a window on the screen where the image will be displayed.
+- Adds the skin and lens to this window so they can be seen.
+
+#### 8. Adjusting the Camera
+The script moves the virtual camera closer to the image, making it look bigger. It also adjusts the clipping planes (like focusing a camera) to make sure everything looks right.
+
+#### 9. Displaying the Image
+Finally, it shows the image on the screen and starts an event loop that lets you interact with it using your mouse or keyboard. This is like opening a photo in a viewer where you can zoom in and out.
+
+### Summary
+In simple terms, this script takes a 3D scan of a head, finds the skin surface, cuts out a circular part, and then creates a transparent window through which you can see inside the head. It sets up everything needed to display this on your screen so you can interact with it.

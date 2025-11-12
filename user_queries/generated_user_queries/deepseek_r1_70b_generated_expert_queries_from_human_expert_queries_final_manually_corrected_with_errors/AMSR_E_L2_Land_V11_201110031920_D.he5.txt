@@ -1,0 +1,27 @@
+A Python script that reads an HDF5 file and generates a map visualization by following these steps:
+
+1. Read HDF5 File: Open the file `AMSR_E_L2_Land_V11_201110031920_D.he5` in read-only mode.
+
+2. Extract Data:
+   - Retrieve main data from the attribute 'SoilMoistureSCA' at `AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+   - Extract latitude data, longitude data from the group `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+
+3. Data Cleaning:
+   - Assign a static `FillValue` of -9999.0.
+   - Replace values matching `FillValue` with numpy NaN.
+   - Mask data using numpy's masked_array where values are not NaN.
+
+4. Create Map:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude range from -90 to 90 and longitude from -170 to 190.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels to every 45 degree from -90 to 90 and left labels.
+   - Draw meridians to every 45 degree from -180 to 180 and bottom labels.
+
+5. Scatter Plot:
+   - Use longitude and latitude data.
+   - Set parameters: marker size (s=0.1), colormap (plt.cm.jet), edgecolors=None, linewidth=0.
+
+6. Add Colorbar and Title:
+   - Include a colorbar labeled with the dataset's units.
+   - Set title to include the file basename and 'SoilMoistureSCA'.

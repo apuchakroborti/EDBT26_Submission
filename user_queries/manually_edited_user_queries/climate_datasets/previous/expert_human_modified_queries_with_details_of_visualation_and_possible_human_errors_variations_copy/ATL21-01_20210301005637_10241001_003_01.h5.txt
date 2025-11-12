@@ -1,0 +1,19 @@
+The code starts by importing necessary libraries for tasks such as operating system-related tasks, plotting and visualization, numerical computations, creating maps, and working with HDF5 files.
+
+It then defines a file name "ATL21-01_20210301005637_10241001_003_01.h5" and opens the HDF5 file in read mode. 
+The code reads data from the file: 
+latitude values from the "/grid_lat" dataset, longitude values from the "/grid_lon" dataset, and data from the "/monthly/mean_weighted_mss" dataset.
+
+The code handles missing values by replacing them with NaN (Not a Number) values and masks the data to ignore NaN values. 
+It then creates a map with specific settings such as projection, resolution, bounding latitude, and longitude of origin. 
+The code adds coastlines, parallels, and meridians to the map.
+
+Next, it plots the data using specific settings such as x-axis, y-axis, color, and lat-lon coordinates. 
+A colorbar is added to the plot with a label set to the units of the data, and the title of the plot includes the file name and long name of the data.
+
+Finally, the code saves the plot as a PNG image with a file name constructed by appending ".py.png" to the original file name and save in the same directory of the file.
+
+Here's what I kept:
+Implementation details such as dataset names (e.g. "/grid_lat", "/grid_lon", "/monthly/mean_weighted_mss") and their parent groups
+Map settings (projection, resolution, bounding latitude, longitude of origin)
+Plot settings (x-axis, y-axis, color, lat-lon coordinates)

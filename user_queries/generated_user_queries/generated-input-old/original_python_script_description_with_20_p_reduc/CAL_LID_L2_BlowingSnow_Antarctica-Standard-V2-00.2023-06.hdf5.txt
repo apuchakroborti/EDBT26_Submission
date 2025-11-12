@@ -1,0 +1,30 @@
+Here is the rewritten description with 20% less text while keeping as many implementation details as possible:
+
+Let's break down this Python code step-by-step:
+
+**Comments and Header**
+The code starts with a block of comments explaining what the script does, how to use it, and metadata about the script itself.
+
+**Importing Libraries**
+The script imports several libraries: `h5py` for HDF5 files, `os` for interacting with the operating system, `cartopy.crs` and `cartopy.mpl.gridliner` for creating maps, `matplotlib.pyplot` (as `plt`) for plots, and `numpy` (as `np`) for numerical computations.
+
+**Defining File Paths and Names**
+The script defines two variables: `FILE_PATH` for the directory where the HDF5 file is located, and `FILE_NAME` for the full path to the HDF5 file.
+
+**Opening the HDF5 File and Reading Data**
+The script opens the HDF5 file in read-only mode using `h5py`. It reads data from the file:
+* `name`: a string specifying the path to the dataset `/Snow_Fields/Blowing_Snow_Depol_Profile`.
+* `data`: an array read from the dataset using `f[name][:].astype(np.float64)`.
+* `units` and `long_name`: strings read from the attributes of the dataset.
+The script also reads geolocation data: `lat` and `lon`.
+
+**Handling Fill Values and Creating a Map Plot**
+The script replaces fill values with NaN and creates a masked array using `np.ma.masked_where`. It uses Cartopy to create an orthographic map projection and plots the data on the map using `plt.scatter`.
+
+**Adding Gridlines, Coastlines, and Customizing the Plot**
+The script adds gridlines and coastlines to the plot, hides top and right grid labels, sets the format for grid labels, and creates a colorbar.
+
+**Adding a Title and Saving the Plot**
+The script adds a title to the plot using the base name of the HDF5 file and the `long_name` string. Finally, it saves the plot to a PNG file constructed from the output file path and name.
+
+That's it!

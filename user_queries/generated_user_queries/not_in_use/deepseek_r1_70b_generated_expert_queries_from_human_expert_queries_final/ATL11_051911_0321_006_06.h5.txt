@@ -1,0 +1,27 @@
+Create a Python script that processes an HDF5 file containing geospatial data. The script should follow these steps:
+
+1. Import Necessary Libraries: Include libraries for OS operations (os), plotting (matplotlib and matplotlib.pyplot), numerical computations (numpy), map projections (mpl_toolkits.basemap), and handling HDF5 files.
+
+2. Define Constants: Set a constant `FILE_NAME` to the path "ICESat_2/ATL11_051911_0321_006_06.h5".
+
+3. Open and Read HDF5 File: Open the file in read mode and access the datasets `/pt1/latitude`, `/pt1/longitude`, and `/pt1/h_corr`. Extract attributes `units` and `long_name` using decoding with 'ascii' and 'replace', and retrieve `_FillValue`.
+
+4. Data Preprocessing:
+   - Convert main data to float.
+   - Replace `_FillValue` with numpy NaN.
+   - Mask data where values are NaN.
+
+5. Create Map Projection: Use an equidistant cylindrical projection with low resolution, setting latitude from -90 to 90 and longitude from -180 to 180.
+
+6. Customize Map:
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals of 30 degrees starting from -90.
+   - Draw meridians every 45 degrees.
+
+7. Generate Scatter Plot: Create a scatter plot using longitude and latitude coordinates, with data as the color variable. Use a marker size of 0.1, jet colormap, no edge colors, and no line widths.
+
+8. Add Colorbar and Title:
+   - Attach a colorbar below the map, labeled with the dataset's units.
+   - Set the title to include the file basename, dataset path, and long_name from attributes.
+
+This structured approach ensures each step is clear for code generation by an LLM.

@@ -1,0 +1,34 @@
+A Python script that reads an HDF5 file and creates a map visualization. 
+Here's how it works:
+At first, it should import libraries such as import os, re, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+Reading HDF5 File
+The script opens the HDF5 file in read-only mode
+
+Extracting Data and Attributes
+It extracts various datasets and attributes from the HDF5 file, 
+including `/lst`, which contains the data of interest.
+Then it updates the data type to np.float64 
+
+The script also extracts several attribute's data such as scale_factor, add_offset, units which is units of measurement, _FillValue, and long_name which is known as desription of the dataset, 
+
+The units and long_name data should be decoded after reading using decode() function
+
+Extracting Latitude and Longitude
+The script extracts two additional datasets: `/lon` for longitude values and `/lat` for latitude values then it updates both of the lon and lat values by using numpy float64.
+
+In the next step, 
+It then _FillValue data should be replaced from the lst data with numpy NaN value,
+then the lst data should be modified such as lst_data = scale_factor * lst_data + offset
+
+After that the lst, latitude, and longitude data should be masked uing numpy masked_array function with parameters each data itself and numpy isnan checking the the data itself
+
+Using an equidistant cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of numpy arrange with values -90, 120, 30 
+and meridians with parameters numpy arrange -180, 180, 45
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+At the end, I added a colorbar with using set_label function with the values of Units 

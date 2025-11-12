@@ -1,0 +1,78 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        I am working with an HDF5 file containing SMAP Level 1C data. 
+The script should begin by importing necessary libraries: os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and mpl_toolkits.basemap import Basemap.
+
+Define a constant `filename` with the value "SMAP_L1C_TB_50719_D_20240730T124417_R19240_001.h5".
+
+The program should read this HDF5 file in read-only mode. 
+Access the main dataset at "/Global_Projection/cell_tb_h_fore" and geolocation datasets at "/Global_Projection/cell_lat" (latitude) and "/Global_Projection/cell_lon" (longitude).
+
+Extract attributes from the cell_tb_h_fore dataset: units, long_name, _FillValue, valid_max, and valid_min. 
+Decode these attributes using 'ascii' encoding with 'replace' as the error handling parameter.
+
+Identify invalid data by combining two conditions using numpy's logical_or: values greater than valid_max or less than valid_min. 
+Update this mask to include values equal to _FillValue. Replace invalid data in cell_tb_h_fore with NaNs and create a masked array using numpy's masked_where function, checking for NaNs.
+
+For visualization, initialize a Basemap object with a cylindrical projection. Set map boundaries from -90 to 90 latitude and -180 to 180 longitude. 
+Add coastlines with a line width of 0.5. Draw parallels at intervals of 45 degrees from  and meridians at the same interval, labeling them as [True, False, False, True].
+
+Create a scatter plot using longitude and latitude coordinates, with data from cell_tb_h_fore, point size 1, colormap 'jet', no edge color, and linewidth 0. 
+Add a colorbar below the plot with 10% padding and label it with the units attribute.
+
+Set the plot title to the concatenation of the filename's basename and long_name, using fontsize 7.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user is working with an HDF5 file from SMAP Level 1C data and wants to process and visualize it. The task is to break down the problem into three sub-queries focusing on HDF5 access, NumPy preprocessing, and visualization.
+
+First, for the HDF5 Dataset Access sub-query. The user needs to read the file using h5py, access specific datasets like /Global_Projection/cell_tb_h_fore, and extract attributes. The key points here are using h5py to open the file, accessing the datasets by their paths, and decoding attributes with 'ascii' encoding. I should make sure the sub-query includes all these elements, like the file extension, dataset paths, and attribute decoding.
+
+Next, the NumPy Data Preprocessing part. The user wants to handle _FillValue, apply masks, and filter data based on valid_min and valid_max. The sub-query should mention using numpy's logical_or to combine conditions, replacing invalid data with NaNs, and creating a masked array. It's important to note the specific functions like np.where and np.ma.masked_where, as well as the parameters for handling NaNs.
+
+Lastly, the Plotting and Visualization sub-query. The user is using Basemap for cylindrical projection, setting boundaries, adding coastlines, drawing parallels and meridians, and creating a scatter plot with a colorbar. The sub-query needs to specify the Basemap setup, the projection type, the intervals for parallels and meridians, the scatter plot parameters, and the colorbar configuration. Also, the title should include the filename's basename and long_name.
+
+I need to ensure each sub-query is focused on its respective domain without overlapping. Check that all technical details from the user's query are covered in each sub-query, using the correct libraries and functions as specified. Avoid any explanations or code, just the sub-queries as per the format.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file with .h5 extension in read-only mode, access datasets at paths "/Global_Projection/cell_tb_h_fore", "/Global_Projection/cell_lat", and "/Global_Projection/cell_lon", and decode attributes (units, long_name, _FillValue, valid_max, valid_min) using 'ascii' encoding with error='replace'?
+
+NumPy Data Preprocessing Sub-query:
+How to create a combined mask using numpy.logical_or for values exceeding valid_max or below valid_min, include _FillValue in the mask, replace invalid data with NaNs, and generate a masked array using np.ma.masked_where with NaN checks?
+
+Plotting and Visualization Sub-query:
+How to configure a cylindrical Basemap projection with -90 to 90 latitude and -180 to 180 longitude boundaries, add coastlines (linewidth=0.5), draw 45°-intervals parallels/meridians with [True, False, False, True] labels, create a scatter plot with longitude/latitude coordinates, cell_tb_h_fore data (size=1, cmap='jet', no edge color), add a colorbar with 10% padding labeled with units, and set a title combining filename's basename and long_name (fontsize=7)?

@@ -1,0 +1,57 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to create a 3D visualization of a human bone from a medical image file. It essentially turns a digital scan into something you can see and interact with on your computer screen.
+
+### Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing various tools (modules) that it needs to work with 3D graphics and rendering.
+   - Think of these imports like gathering all the ingredients and utensils you need for a recipe.
+
+2. Main Function:
+   - This is where the main action happens. It's like the central kitchen where everything gets prepared and cooked.
+
+3. Checking VTK Version:
+   - The script first checks if it has a specific version of a toolkit (VTK) that supports certain features.
+   - Imagine checking if your oven can handle a particular temperature before you start baking.
+
+4. Loading the Image File:
+   - It loads a file named 'HeadBone_FullHead.mhd' which contains the 3D scan data of a human head bone.
+   - This is like taking out the ingredients from the pantry and putting them on your counter.
+
+5. Setting Up Colors:
+   - The script sets up some colors that it will use to display different parts of the visualization.
+   - Think of choosing the colors for your cake decorations.
+
+6. Creating the Rendering Environment:
+   - It creates a virtual space where the 3D model will be displayed, similar to setting up a stage for a play.
+   - This includes creating a window (like a TV screen) and a camera that will show different views of the bone.
+
+7. Building the Pipeline:
+   - The script sets up a series of steps to process the image data into a 3D model.
+   - First, it reads the image file and updates its information.
+   - Then, it decides whether to use a newer or older method (FlyingEdges3D vs MarchingCubes) based on the VTK version.
+
+8. Processing the Image:
+   - It processes the image data to create a 3D surface of the bone.
+   - This is like carving out the shape of your cake from the dough.
+
+9. Mapping and Coloring:
+   - The script maps the processed data onto a 3D model and colors it ivory (a light cream color).
+   - It also creates an outline around the bone for better visualization.
+
+10. Adding Actors to the Scene:
+    - It adds the 3D model and its outline to the virtual stage.
+    - This is like placing your cake on a stand and putting it in front of the camera.
+
+11. Setting Up the Camera:
+    - The script sets up the camera's position, focal point, and view angle to give the best view of the bone.
+    - It adjusts the zoom level so you can see the details clearly.
+
+12. Rendering the Scene:
+    - Finally, it renders (draws) the scene on the screen and starts an interactive window where you can move around and look at the 3D model from different angles.
+    - This is like taking a photo of your beautifully decorated cake from all angles.
+
+### Summary
+In simple terms, this script takes a digital scan of a human bone, processes it to create a 3D model, colors it, adds an outline, sets up a virtual camera to view it, and then displays the whole thing on your screen in an interactive window. It's like turning a medical image into a 3D sculpture that you can examine from all sides.

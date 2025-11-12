@@ -1,0 +1,52 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+This Python script accesses and visualizes an NSIDC ICESat-2 ATL12 L3A version 6 HDF5 file. Here's a step-by-step explanation:
+
+**Importing necessary modules**
+
+The script imports:
+
+* `os`
+* `matplotlib.pyplot` (as `plt`)
+* `numpy` (as `np`)
+* `mpl_toolkits.basemap`
+* `h5py`
+
+**Defining constants and variables**
+
+The script defines:
+
+* `FILE_NAME`: the HDF5 file name
+* `latvar`, `latitude`, `lonvar`, `longitude`, `dset_name`, `datavar`, `data`, `units`, and `long_name` for dataset attributes
+
+**Accessing the HDF5 file**
+
+The script opens the HDF5 file in read mode using `h5py` and ensures proper closure with a `with` statement.
+
+**Accessing datasets and attributes**
+
+The script accesses three datasets:
+
+1. `/gt1l/ssh_segments/latitude`
+2. `/gt1l/ssh_segments/longitude`
+3. `/gt1l/ssh_segments/heights/swh`
+
+It extracts values from each dataset using slicing (`[:]`).
+
+**Drawing a map**
+
+The script creates an equidistant cylindrical projection map with:
+
+* Coastlines
+* Latitude and longitude lines
+* Scatter plot of height values
+
+**Creating a color bar**
+
+The script creates a color bar for the scatter plot.
+
+**Saving the figure**
+
+The script saves the figure as a PNG file using `savefig()`.
+
+This reduced text maintains most implementation details while condensing the original description.

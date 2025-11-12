@@ -1,0 +1,97 @@
+This Python script applies connectivity and decimation filters to remove noisy isosurfaces and reduce data size using VTK (Visualization Toolkit) modules.
+
+### Step-by-Step Description
+
+1. **Import Libraries:**
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkCommonColor`
+   - `vtkIdList` from `vtkCommonCore`
+   - `vtkConnectivityFilter`, `vtkDecimatePro` from `vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkFiltersModeling`
+   - `vtkMCubesReader` from `vtkIOGeometry`
+   - `vtkActor`, `vtkDataSetMapper`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkRenderingCore`
+
+2. **Define the Main Function:**
+   - The main function contains a nested helper function called `NumberOfTriangles`.
+
+3. **Helper Function: NumberOfTriangles**
+   - Takes a parameter `pd` (a vtkPolyData object).
+   - Counts and returns the number of triangles in the polydata.
+
+4. **Initialize Colors:**
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+5. **Set File Name:**
+   - Define `fileName` as `'PineRootDecimation_pine_root.tri'`.
+
+6. **Create Pipeline:**
+   - Instantiate a `vtkMCubesReader` object called `reader`.
+   - Set the file name for the reader.
+   - Disable flipping normals and update the reader.
+   - Print the number of triangles before decimation using the helper function.
+
+7. **Apply Decimation Filter:**
+   - Create an instance of `vtkDecimatePro` named `deci`.
+   - Set input connection from the reader's output port.
+   - Configure decimation parameters:
+     - Target reduction: 0.9
+     - Absolute error: 0.0005
+     - Maximum iterations: 6
+     - Feature angle: 30
+     - Error is absolute: True
+     - Accumulate error: True
+   - Update the decimation filter.
+   - Print the number of triangles after decimation.
+
+8. **Apply Connectivity Filter:**
+   - Create an instance of `vtkConnectivityFilter` named `connect`.
+   - Set input connection from the decimation filter's output port.
+   - Set extraction mode to largest region and update the connectivity filter.
+   - Print the number of triangles after applying the connectivity filter.
+
+9. **Create Mappers and Actors:**
+   - Create a `vtkDataSetMapper` named `isoMapper`.
+     - Set input connection from the connectivity filter's output port.
+     - Disable scalar visibility.
+   - Create a `vtkActor` named `isoActor`.
+     - Set mapper to isoMapper.
+     - Set actor color using `colors.GetColor3d('raw_sienna')`.
+
+10. **Create Outline:**
+    - Instantiate a `vtkOutlineFilter` named `outline`.
+      - Set input connection from the reader's output port.
+    - Create a `vtkPolyDataMapper` named `outlineMapper`.
+      - Set input connection from the outline filter's output port.
+    - Create a `vtkActor` named `outlineActor`.
+      - Set mapper to outlineMapper.
+      - Set actor color using `colors.GetColor3d('Black')`.
+
+11. **Create Renderer, RenderWindow, and Interactor:**
+    - Instantiate a `vtkRenderer` named `ren`.
+    - Create a `vtkRenderWindow` named `renWin`.
+      - Add renderer to the render window.
+    - Create a `vtkRenderWindowInteractor` named `iren`.
+      - Set render window for interactor.
+
+12. **Add Actors and Configure Renderer:**
+    - Add outlineActor and isoActor to the renderer.
+    - Set background color of the renderer using `colors.GetColor3d('SlateGray')`.
+    - Set size of the render window to 512x512 pixels.
+    - Set window name to 'PineRootDecimation'.
+
+13. **Configure Camera:**
+    - Get active camera from the renderer and set its properties:
+      - Focal point: (40.6018, 37.2813, 50.1953)
+      - Position: (40.6018, -280.533, 47.0172)
+      - Clipping range: (26.1073, 1305.36)
+      - View angle: 20.9219
+      - View up direction: (0.0, 0.0, 1.0)
+
+14. **Render and Start Interaction:**
+    - Initialize the render window interactor.
+    - Render the window.
+    - Start interaction.
+
+### Execution:
+- The script is executed if it's run as the main module by calling `main()`.

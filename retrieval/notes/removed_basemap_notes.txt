@@ -1,0 +1,728 @@
+=== CHUNK START ===
+Title: Plot precip with filled contours
+Explanation:
+plot rainfall from NWS using special precipitation
+colormap used by the NWS, and included in basemap.
+create figure and axes instances
+create polar stereographic Basemap instance.
+draw coastlines, state and country boundaries, edge of map.
+draw parallels.
+draw meridians
+draw filled contours.
+add colorbar.
+add title
+
+Code:
+from mpl_toolkits.basemap import Basemap, cm
+# requires netcdf4-python (netcdf4-python.googlecode.com)
+from netCDF4 import Dataset as NetCDFFile
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+# plot rainfall from NWS using special precipitation
+# colormap used by the NWS, and included in basemap.
+
+ncpath = os.path.join(*6 * [".."] + ["examples", "nws_precip_conus_20061222.nc"])
+nc = NetCDFFile(ncpath)
+# data from http://water.weather.gov/precip/
+prcpvar = nc.variables['amountofprecip']
+data = 0.01*prcpvar[:]
+latcorners = nc.variables['lat'][:]
+loncorners = -nc.variables['lon'][:]
+lon_0 = -nc.variables['true_lon'].getValue()
+lat_0 = nc.variables['true_lat'].getValue()
+# create figure and axes instances
+fig = plt.figure(figsize=(8,8))
+ax = fig.add_axes([0.1,0.1,0.8,0.8])
+# create polar stereographic Basemap instance.
+m = Basemap(projection='stere',lon_0=lon_0,lat_0=90.,lat_ts=lat_0,\
+            llcrnrlat=latcorners[0],urcrnrlat=latcorners[2],\
+            llcrnrlon=loncorners[0],urcrnrlon=loncorners[2],\
+            rsphere=6371200.,resolution='l',area_thresh=10000)
+# draw coastlines, state and country boundaries, edge of map.
+m.drawcoastlines()
+m.drawstates()
+m.drawcountries()
+# draw parallels.
+parallels = np.arange(0.,90,10.)
+m.drawparallels(parallels,labels=[1,0,0,0],fontsize=10)
+# draw meridians
+meridians = np.arange(180.,360.,10.)
+m.drawmeridians(meridians,labels=[0,0,0,1],fontsize=10)
+ny = data.shape[0]; nx = data.shape[1]
+lons, lats = m.makegrid(nx, ny) # get lat/lons of ny by nx evenly space grid.
+x, y = m(lons, lats) # compute map proj coordinates.
+# draw filled contours.
+clevs = [0,1,2.5,5,7.5,10,15,20,30,40,50,70,100,150,200,250,300,400,500,600,750]
+cs = m.contourf(x,y,data,clevs,cmap=cm.s3pcpn)
+# add colorbar.
+cbar = m.colorbar(cs,location='bottom',pad="5%")
+cbar.set_label('mm')
+# add title
+plt.title(prcpvar.long_name+' for period ending '+prcpvar.dateofdata)
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot sea-level pressure weather map with labelled highs and lows
+Explanation:
+Summary: Plotting Highs and Lows on a Sea-Level Pressure Map
+Libraries Used
+numpy, matplotlib, datetime: For numerical operations, plotting, and time formatting.
+h5py: Reads atmospheric pressure data from an HDF5 file.
+scipy.ndimage.filters: Applies minimum and maximum filters to detect local extrema.
+mpl_toolkits.basemap: Used to render map projections and geographic features.
+
+Data Loading
+Reads latitude (lat), longitude (lon), and pressure (prmslmsl) from a NetCDF-style HDF5 dataset.
+Pressure values are scaled to hPa by multiplying by 0.01.
+
+Core Logic
+A custom extrema() function uses a sliding window (window=50) to detect local pressure minima and maxima across the grid.
+Basemap with a Miller projection is initialized for world coverage (0°–360° lon, -80° to 80° lat).
+Adds cyclic (wrap-around) longitude to ensure continuity on the global map.
+Pressure contours are plotted using matplotlib.contour.
+
+Map Features
+Coastlines, continents, parallels, and meridians are drawn.
+Pressure contours are labeled.
+High and Low Pressure Labels
+Iterates over detected high and low-pressure points.
+Prevents overlapping labels using Euclidean distance checks.
+Annotates map with "H" in red and "L" in blue, alongside numeric pressure values.
+
+Output
+Saves the map as a high-resolution PNG with the current date embedded in the title.
+
+
+Code:
+"""
+plot H's and L's on a sea-level pressure map
+(uses scipy.ndimage.filters and netcdf4-python)
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+from mpl_toolkits.basemap import Basemap, addcyclic
+from scipy.ndimage.filters import minimum_filter, maximum_filter
+import h5py
+# from netCDF4 import Dataset
+def extrema(mat,mode='wrap',window=10):
+        """find the indices of local extrema (min and max)
+        in the input array."""
+        mn = minimum_filter(mat, size=window, mode=mode)
+        mx = maximum_filter(mat, size=window, mode=mode)
+        # (mat == mx) true if pixel is equal to the local max
+        # (mat == mn) true if pixel is equal to the local in
+        # Return the indices of the maxima, minima
+        return np.nonzero(mat == mn), np.nonzero(mat == mx)
+
+# plot 00 UTC today.
+date = datetime.now().strftime('%Y%m%d')+'00'
+FULL_DATA_PATH = './saved_datasets/plot_sea_level_pressure_weather.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+        # read lats,lons.
+        lats = data['lat'][:]
+        lons1 = data['lon'][:]
+        nlats = len(lats)
+        nlons = len(lons1)
+        # read prmsl, convert to hPa (mb).
+        prmsl = 0.01*data['prmslmsl'][0]
+        # the window parameter controls the number of highs and lows detected.
+        # (higher value, fewer highs and lows)
+        local_min, local_max = extrema(prmsl, mode='wrap', window=50)
+        # create Basemap instance.
+        m = Basemap(llcrnrlon=0,llcrnrlat=-80,urcrnrlon=360,urcrnrlat=80,projection='mill')
+        # add wrap-around point in longitude.
+        prmsl, lons = addcyclic(prmsl, lons1)
+        # contour levels
+        clevs = np.arange(900,1100.,5.)
+        # find x,y of map projection grid.
+        lons, lats = np.meshgrid(lons, lats)
+        x, y = m(lons, lats)
+        # create figure.
+        fig=plt.figure(figsize=(8,4.5))
+        ax = fig.add_axes([0.05,0.05,0.9,0.85])
+        cs = m.contour(x,y,prmsl,clevs,colors='k',linewidths=1.)
+        m.drawcoastlines(linewidth=1.25)
+        m.fillcontinents(color='0.8')
+        m.drawparallels(np.arange(-80,81,20),labels=[1,1,0,0])
+        m.drawmeridians(np.arange(0,360,60),labels=[0,0,0,1])
+        xlows = x[local_min]; xhighs = x[local_max]
+        ylows = y[local_min]; yhighs = y[local_max]
+        lowvals = prmsl[local_min]; highvals = prmsl[local_max]
+        # plot lows as blue L's, with min pressure value underneath.
+        xyplotted = []
+        # don't plot if there is already a L or H within dmin meters.
+        yoffset = 0.022*(m.ymax-m.ymin)
+        dmin = yoffset
+        for x,y,p in zip(xlows, ylows, lowvals):
+                if x < m.xmax and x > m.xmin and y < m.ymax and y > m.ymin:
+                        dist = [np.sqrt((x-x0)**2+(y-y0)**2) for x0,y0 in xyplotted]
+                        if not dist or min(dist) > dmin:
+                                plt.text(x,y,'L',fontsize=14,fontweight='bold', ha='center',va='center',color='b')
+                                plt.text(x,y-yoffset,repr(int(p)),fontsize=9, ha='center',va='top',color='b', 
+                                                bbox = dict(boxstyle="square",ec='None',fc=(1,1,1,0.5)))
+                                xyplotted.append((x,y))
+        # plot highs as red H's, with max pressure value underneath.
+        xyplotted = []
+        for x,y,p in zip(xhighs, yhighs, highvals):
+                if x < m.xmax and x > m.xmin and y < m.ymax and y > m.ymin:
+                        dist = [np.sqrt((x-x0)**2+(y-y0)**2) for x0,y0 in xyplotted]
+                        if not dist or min(dist) > dmin:
+                                plt.text(x,y,'H',fontsize=14,fontweight='bold', ha='center',va='center',color='r')
+                                plt.text(x,y-yoffset,repr(int(p)),fontsize=9, ha='center',va='top',color='r',
+                                        bbox = dict(boxstyle="square",ec='None',fc=(1,1,1,0.5)))
+                                xyplotted.append((x,y))
+        plt.title('Mean Sea-Level Pressure (with Highs and Lows) %s' % date)
+        # plt.show()
+
+        import os
+        output_path = os.path.join(os.path.dirname("./output"), f'data_processing_plot_sea_level_pressure_weather_map_with_labelled_highs_and_lows.png')
+        plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot hurricane tracks from a shapefile
+Explanation:
+draw Atlantic Hurricane Tracks for storms that reached Cat 4 or 5.
+part of the track for which storm is cat 4 or 5 is shown red.
+Lambert Conformal Conic map.
+find names of storms that reached Cat 4.
+plot tracks of those storms.
+draw coastlines, meridians and parallels.
+
+Code:
+"""
+draw Atlantic Hurricane Tracks for storms that reached Cat 4 or 5.
+part of the track for which storm is cat 4 or 5 is shown red.
+ESRI shapefile data from http://nationalatlas.gov/mld/huralll.html
+"""
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+# Lambert Conformal Conic map.
+m = Basemap(llcrnrlon=-100.,llcrnrlat=0.,urcrnrlon=-20.,urcrnrlat=57.,
+            projection='lcc',lat_1=20.,lat_2=40.,lon_0=-60.,
+            resolution ='l',area_thresh=1000.)
+# read shapefile.
+shp_path = os.path.join(*6 * [".."] + ["examples", "huralll020"])
+shp_info = m.readshapefile(shp_path,'hurrtracks',drawbounds=False)
+# find names of storms that reached Cat 4.
+names = []
+for shapedict in m.hurrtracks_info:
+    cat = shapedict['CATEGORY']
+    name = shapedict['NAME']
+    if cat in ['H4','H5'] and name not in names:
+        # only use named storms.
+        if name != 'NOT NAMED':  names.append(name)
+# plot tracks of those storms.
+for shapedict,shape in zip(m.hurrtracks_info,m.hurrtracks):
+    name = shapedict['NAME']
+    cat = shapedict['CATEGORY']
+    if name in names:
+        xx,yy = zip(*shape)
+        # show part of track where storm > Cat 4 as thick red.
+        if cat in ['H4','H5']: 
+            m.plot(xx,yy,linewidth=1.5,color='r')
+        elif cat in ['H1','H2','H3']:
+            m.plot(xx,yy,color='k')
+# draw coastlines, meridians and parallels.
+m.drawcoastlines()
+m.drawcountries()
+m.drawmapboundary(fill_color='#99ffff')
+m.fillcontinents(color='#cc9966',lake_color='#99ffff')
+m.drawparallels(np.arange(10,70,20),labels=[1,1,0,0])
+m.drawmeridians(np.arange(-100,0,20),labels=[0,0,0,1])
+plt.title('Atlantic Hurricane Tracks (Storms Reaching Category 4, 1851-2004)')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot etopo5 topography/bathymetry data as an image (without shading from a specified light source) without shadding.
+Explanation:
+The code reads topographic and bathymetric data from an HDF5 file containing ETOPO5 dataset variables for elevation and geographic coordinates. 
+It adjusts the longitude data to a standard -180 to 180 degree range using the Basemap utility `shiftgrid` to ensure proper geographic referencing. 
+A Lambert Conformal Conic projection map is then configured over a specified region covering part of North America, utilizing WGS84 ellipsoid parameters for accuracy. 
+The elevation data is reprojected onto a regular 5 km grid native to the map projection using `transform_scalar`, which interpolates the data appropriately. 
+This gridded data is visualized as an image overlay with a perceptually uniform colormap (`GMT_haxby`). The map includes detailed geographic features such as coastlines, country borders, 
+and state boundaries, as well as labeled parallels and meridians for geographic context. A colorbar is added to provide a scale for elevation values. 
+Finally, the plot is saved as a high-resolution PNG file in the same directory as the input dataset. The code integrates NumPy for numerical operations, 
+Matplotlib for plotting, and h5py for reading hierarchical scientific data, combining geospatial data processing and visualization techniques commonly used in earth sciences and geospatial analysis.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap, shiftgrid, cm
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+
+FULL_DATA_PATH = './saved_datasets/plot_etopo5_topography_bathymetry_data.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as file:
+    topoin = file['/root/ROSE'][:]
+    lons = file['/root/ETOPO05_X'][:]
+    lats = file['/root/ETOPO05_Y'][:]
+    # shift data so lons go from -180 to 180 instead of 20 to 380.
+    topoin,lons = shiftgrid(180.,topoin,lons,start=False)
+
+    # plot topography/bathymetry as an image.
+
+    # create the figure and axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # setup of basemap ('lcc' = lambert conformal conic).
+    # use major and minor sphere radii from WGS84 ellipsoid.
+    m = Basemap(llcrnrlon=-145.5,llcrnrlat=1.,urcrnrlon=-2.566,urcrnrlat=46.352,\
+                rsphere=(6378137.00,6356752.3142),\
+                resolution='l',area_thresh=1000.,projection='lcc',\
+                lat_1=50.,lon_0=-107.,ax=ax)
+    # transform to nx x ny regularly spaced 5km native projection grid
+    nx = int((m.xmax-m.xmin)/5000.)+1; ny = int((m.ymax-m.ymin)/5000.)+1
+    topodat = m.transform_scalar(topoin,lons,lats,nx,ny)
+    # plot image over map with imshow.
+    im = m.imshow(topodat,cm.GMT_haxby)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    # draw parallels and meridians.
+    # label on left and bottom of map.
+    parallels = np.arange(0.,80,20.)
+    m.drawparallels(parallels,labels=[1,0,0,1])
+    meridians = np.arange(10.,360.,30.)
+    m.drawmeridians(meridians,labels=[1,0,0,1])
+    # add colorbar
+    cb = m.colorbar(im,"right", size="5%", pad='2%')
+    ax.set_title('ETOPO5 Topography - Lambert Conformal Conic')
+    # plt.show()
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'without_shading_plot_etopo5_topography_bathymetry_data_as_an_image.png')
+    plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot etopo5 topography/bathymetry data as an image (with shading from a specified light source) with shadding.
+Explanation:
+This Python script performs topographic and bathymetric data visualization using the ETOPO5 dataset stored in an HDF5 file. 
+It begins by importing essential scientific and mapping libraries including `numpy`, `matplotlib`, `h5py`, and `Basemap` from `mpl_toolkits`. 
+The script accesses a dataset from the specified HDF5 file, extracting topographic data along with the corresponding longitude and latitude arrays. 
+The longitude data is adjusted using the `shiftgrid` function to range from -180° to 180°, aligning with standard global map projections. 
+A Lambert Conformal Conic (`'lcc'`) projection is used to initialize a Basemap instance that defines a specific geographic bounding box and resolution suitable for North America.
+
+The map projection is transformed into a native grid resolution of 5 kilometers, and the topographic data is interpolated onto this grid using `transform_scalar`. 
+The processed data is visualized on a map with `imshow`, using the `GMT_haxby` colormap. 
+The map includes coastlines, countries, states, parallels, meridians, and a colorbar for elevation interpretation, all rendered on an `Axes` object embedded within a figure.
+
+The second part of the script generates a shaded relief version of the same data. It creates a new figure and axes, and uses a `LightSource` object to apply hillshading, 
+producing an RGB image that simulates light and shadow on the terrain. The image is then rendered using the same Basemap instance and plotted similarly, 
+including geographic boundaries. Finally, the shaded relief image is saved to disk as a high-resolution PNG file in the same directory as the input HDF5 dataset. 
+This code effectively demonstrates how to process, project, and visualize large-scale elevation data in both standard and shaded formats using scientific Python tools.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap, shiftgrid, cm
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+FULL_DATA_PATH = './saved_datasets/plot_etopo5_topography_bathymetry_data.h5'
+
+with h5py.File(FULL_DATA_PATH, 'r') as file:
+    topoin = file['/root/ROSE'][:]
+    lons = file['/root/ETOPO05_X'][:]
+    lats = file['/root/ETOPO05_Y'][:]
+
+    # shift data so lons go from -180 to 180 instead of 20 to 380.
+    topoin,lons = shiftgrid(180.,topoin,lons,start=False)
+
+    # plot topography/bathymetry as an image.
+    # create the figure and axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # setup of basemap ('lcc' = lambert conformal conic).
+    # use major and minor sphere radii from WGS84 ellipsoid.
+    m = Basemap(llcrnrlon=-145.5,llcrnrlat=1.,urcrnrlon=-2.566,urcrnrlat=46.352,\
+                rsphere=(6378137.00,6356752.3142),\
+                resolution='l',area_thresh=1000.,projection='lcc',\
+                lat_1=50.,lon_0=-107.,ax=ax)
+    # transform to nx x ny regularly spaced 5km native projection grid
+    nx = int((m.xmax-m.xmin)/5000.)+1; ny = int((m.ymax-m.ymin)/5000.)+1
+    topodat = m.transform_scalar(topoin,lons,lats,nx,ny)
+    # plot image over map with imshow.
+    im = m.imshow(topodat,cm.GMT_haxby)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    # draw parallels and meridians.
+    # label on left and bottom of map.
+    parallels = np.arange(0.,80,20.)
+    m.drawparallels(parallels,labels=[1,0,0,1])
+    meridians = np.arange(10.,360.,30.)
+    m.drawmeridians(meridians,labels=[1,0,0,1])
+    # add colorbar
+    cb = m.colorbar(im,"right", size="5%", pad='2%')
+    ax.set_title('ETOPO5 Topography - Lambert Conformal Conic')
+    plt.show()
+
+    # make a shaded relief plot.
+
+    # create new figure, axes instance.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # attach new axes image to existing Basemap instance.
+    m.ax = ax
+    # create light source object.
+    from matplotlib.colors import LightSource
+    ls = LightSource(azdeg = 90, altdeg = 20)
+    # convert data to rgb array including shading from light source.
+    # (must specify color map)
+    rgb = ls.shade(topodat, cm.GMT_haxby)
+    im = m.imshow(rgb)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    ax.set_title('Shaded ETOPO5 Topography - Lambert Conformal Conic')
+    # plt.show()
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'with_shading_data_processing_plot_etopo5_topography_bathymetry_data_as_an_image.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Pseudo-color plot of SST and sea ice analysis.
+Explanation:
+Summary (Human Expert View + Technical Metadata)
+
+Data Source:
+Reads an HDF5 file located at ./saved_datasets/pseudo_color_plot_sst_sea_ice.h5.
+
+Libraries Used:
+h5py for HDF5 data access
+numpy for numerical operations
+matplotlib.pyplot for plotting
+mpl_toolkits.basemap.Basemap for map rendering
+datetime and os for timestamp and output handling
+
+Variables Extracted:
+sst: Sea Surface Temperature
+ice: Sea Ice Concentration
+lat, lon: Grid box center coordinates
+timevar: Full time range (not visualized here)
+timeindex = 348: Specific time slice used
+
+Coordinate Transformation:
+Latitude and longitude bounds are extended symmetrically to represent cell edges rather than centers using np.diff and np.append.
+
+Basemap Setup:
+Projection: 'kav7' (Kavrayskiy VII projection)
+resolution=None: Coastlines not rendered for faster performance
+drawmapboundary: Fills background with color '0.3' for land areas
+
+Data Plotting:
+Uses pcolormesh to overlay sst and ice data with different colormaps (jet and gist_gray)
+Latitude/longitude meshgrid is passed with latlon=True for geospatial accuracy
+Adds parallels (every 30°) and meridians (every 60°) without labels
+Adds colorbar below the plot
+
+Output:
+Title includes the datetime(2007,12,15,0) value
+
+Image saved at:
+./saved_datasets/data_processing_pseudo_color_plot_of_SST_and_sea_ice_analysis.png
+using plt.savefig(dpi=300)
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+date = datetime(2007,12,15,0) # date to plot.
+import h5py
+
+FULL_DATA_PATH = "./saved_datasets/pseudo_color_plot_sst_sea_ice.h5"
+with h5py.File(FULL_DATA_PATH, 'r') as file:   
+    timevar = file['time'][:]
+    timeindex = 348
+    sst = file['sst'][timeindex, :].squeeze()
+   
+    ice = file['icec'][timeindex,:].squeeze()
+    
+    # read lats and lons (representing centers of grid boxes).
+    lats = file['lat'][:]
+    lons = file['lon'][:]
+    
+    latstep, lonstep = np.diff(lats[:2]), np.diff(lons[:2])
+    lats = np.append(lats - 0.5 * latstep, lats[-1] + 0.5 * latstep)
+    lons = np.append(lons - 0.5 * lonstep, lons[-1] + 0.5 * lonstep)
+    lons, lats = np.meshgrid(lons,lats)
+    # create figure, axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.05,0.05,0.9,0.9])
+    # create Basemap instance.
+    # coastlines not used, so resolution set to None to skip
+    # continent processing (this speeds things up a bit)
+    m = Basemap(projection='kav7',lon_0=0,resolution=None)
+    # draw line around map projection limb.
+    # color background of map projection region.
+    # missing values over land will show up this color.
+    m.drawmapboundary(fill_color='0.3')
+    # plot sst, then ice with pcolor
+    im1 = m.pcolormesh(lons, lats, sst, shading='flat',cmap=plt.cm.jet,latlon=True)
+    im2 = m.pcolormesh(lons, lats, ice, shading='flat',cmap=plt.cm.gist_gray,latlon=True)
+    # draw parallels and meridians, but don't bother labelling them.
+    m.drawparallels(np.arange(-90.,99.,30.))
+    m.drawmeridians(np.arange(-180.,180.,60.))
+    # add colorbar
+    cb = m.colorbar(im1,"bottom", size="5%", pad="2%")
+    # add a title.
+    ax.set_title('SST and ICE analysis for %s'%date)
+    # plt.show()
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_pseudo_color_plot_of_SST_and_sea_ice_analysis.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+
+=== CHUNK START ===
+Title: Plotting wind vectors.
+Explanation: 
+Functionality Overview
+Libraries Used: numpy, matplotlib, h5py, datetime, Basemap (with shiftgrid)
+Data Source: HDF5 file containing meteorological variables.
+Date Reference: March 14, 1993, 00:00 hours.
+
+Data Handling
+Latitudes and Longitudes: Extracted from 'lat' and 'lon' datasets.
+Latitudes are reversed for south-to-north orientation.
+
+Meteorological Variables:
+Pressure_msl (Sea level pressure), converted to hPa.
+u-component_of_wind_height_above_ground and v-component_of_wind_height_above_ground (10m wind vectors).
+Cyclic Extension: Data arrays are extended by one column to make them cyclic in longitude for proper visualization.
+
+Map Projection and Plotting
+Projection: Orthographic (lat_0=60, lon_0=-60) with coarse resolution.
+Meshgrid: Constructed from longitudes and latitudes.
+Contour Plot: Pressure values plotted as both line contours and filled contours.
+
+Wind Vectors:
+Wind grids are shifted to longitude range -180 to 180 using shiftgrid.
+Transformed to map projection grid using transform_vector.
+Displayed using quiver, with a quiver key showing vector scale.
+
+Plot Finalization
+Map Features: Coastlines, parallels, meridians.
+Colorbar: For pressure with label in hPa.
+Title: Includes timestamp from the input date.
+Output: Saved as data_processing_plotting_wind_vector.png in the same directory as the input HDF5 file.
+
+Code:
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+from mpl_toolkits.basemap import Basemap, shiftgrid
+import h5py
+
+yyyy=1993; mm=3; dd=14; hh=0
+date = datetime.datetime(yyyy,mm,dd,hh)
+FULL_DATA_PATH = './saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+    # read lats,lons
+    # reverse latitudes so they go from south to north.
+    latitudes = data['lat'][:]
+    latitudes = latitudes[::-1]
+    longitudes = data['lon'][:].tolist()
+    # get sea level pressure and 10-m wind data.
+    # mult slp by 0.01 to put in units of hPa.
+    slpin = 0.01*data['Pressure_msl'][:].squeeze()
+    uin = data['u-component_of_wind_height_above_ground'][:].squeeze()
+    vin = data['v-component_of_wind_height_above_ground'][:].squeeze()
+    # add cyclic points manually (could use addcyclic function)
+    slp = np.zeros((slpin.shape[0],slpin.shape[1]+1),np.float64)
+    slp[:,0:-1] = slpin[::-1]; slp[:,-1] = slpin[::-1,0]
+    u = np.zeros((uin.shape[0],uin.shape[1]+1),np.float64)
+    u[:,0:-1] = uin[::-1]; u[:,-1] = uin[::-1,0]
+    v = np.zeros((vin.shape[0],vin.shape[1]+1),np.float64)
+    v[:,0:-1] = vin[::-1]; v[:,-1] = vin[::-1,0]
+    longitudes.append(360.); longitudes = np.array(longitudes)
+    # make 2-d grid of lons, lats
+    lons, lats = np.meshgrid(longitudes,latitudes)
+    # make orthographic basemap.
+    m = Basemap(resolution='c',projection='ortho',lat_0=60.,lon_0=-60.)
+    # create figure, add axes
+    fig1 = plt.figure(figsize=(8,10))
+    ax = fig1.add_axes([0.1,0.1,0.8,0.8])
+    # set desired contour levels.
+    clevs = np.arange(960,1061,5)
+    # compute native x,y coordinates of grid.
+    x, y = m(lons, lats)
+    # define parallels and meridians to draw.
+    parallels = np.arange(-80.,90,20.)
+    meridians = np.arange(0.,360.,20.)
+    # plot SLP contours.
+    CS1 = m.contour(x,y,slp,clevs,linewidths=0.5,colors='k')
+    CS2 = m.contourf(x,y,slp,clevs,cmap=plt.cm.RdBu_r)
+    # plot wind vectors on projection grid.
+    # first, shift grid so it goes from -180 to 180 (instead of 0 to 360
+    # in longitude).  Otherwise, interpolation is messed up.
+    ugrid,newlons = shiftgrid(180.,u,longitudes,start=False)
+    vgrid,newlons = shiftgrid(180.,v,longitudes,start=False)
+    # # transform vectors to projection grid.
+    uproj,vproj,xx,yy = m.transform_vector(ugrid,vgrid,newlons,latitudes,31,31,returnxy=True,masked=True)
+    # now plot.
+    Q = m.quiver(xx,yy,uproj,vproj,scale=700)
+    # make quiver key.
+    qk = plt.quiverkey(Q, 0.1, 0.1, 20, '20 m/s', labelpos='W')
+    # draw coastlines, parallels, meridians.
+    m.drawcoastlines(linewidth=1.5)
+    m.drawparallels(parallels)
+    m.drawmeridians(meridians)
+    # add colorbar
+    cb = m.colorbar(CS2,"bottom", size="5%", pad="2%")
+    cb.set_label('hPa')
+    # set plot title
+    ax.set_title('SLP and Wind Vectors '+str(date))
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_plotting_wind_vector.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plotting wind barbs.
+Explanation: 
+High-Level Summary
+Purpose: Visualize sea-level pressure (SLP) contours and 10-meter wind barbs on an orthographic projection using data from a pre-saved HDF5 file.
+Inputs: An .h5 file containing latitude, longitude, sea-level pressure, and u/v wind components.
+Outputs: A high-resolution PNG image showing contours and wind vectors.
+
+Technical Workflow for Regeneration
+Imports Required Libraries:
+numpy, matplotlib.pyplot, datetime for data manipulation and plotting.
+Basemap and shiftgrid from mpl_toolkits.basemap for mapping and grid transformation.
+h5py for reading HDF5 datasets.
+
+Set Date Reference:
+date = datetime.datetime(1993, 3, 14, 0)
+Load HDF5 Dataset:
+
+Read lat, lon, and meteorological variables:
+Pressure_msl (converted to hPa)
+u-component_of_wind_height_above_ground
+v-component_of_wind_height_above_ground
+Reverse latitudes (south to north).
+Add cyclic points manually to each data grid for continuity at 360°.
+
+Grid Setup:
+Use np.meshgrid() to create 2D longitude and latitude arrays.
+Shift u and v wind grids to center on 180° using shiftgrid().
+
+Basemap Initialization:
+Set an orthographic projection centered at lat 60°, lon -60°.
+Define contour levels (960 hPa to 1060 hPa, in 5 hPa increments).
+Use transform_vector() to interpolate wind components to the map's projection grid.
+
+Plotting Routine:
+Draw:
+SLP contours using contour() and contourf()
+Wind barbs using barbs()
+Coastlines, parallels, meridians for geographical context
+Add a colorbar labeled in hPa
+Title the plot with the associated datetime
+
+Save Output:
+Output the figure as a .png in the same folder as the input HDF5 file.
+
+File Dependencies
+Input HDF5 Path: ./saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5
+Output Image Path: Saved as data_processing_plotting_wind_barbs1.png in the same directory.
+
+Code:
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+from mpl_toolkits.basemap import Basemap, shiftgrid
+import h5py
+
+yyyy=1993; mm=3; dd=14; hh=0
+date = datetime.datetime(yyyy,mm,dd,hh)
+
+FULL_DATA_PATH = './saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+    # read lats,lons
+    # reverse latitudes so they go from south to north.
+    latitudes = data['lat'][:]
+    latitudes = latitudes[::-1]
+    longitudes = data['lon'][:].tolist()
+    # get sea level pressure and 10-m wind data.
+    # mult slp by 0.01 to put in units of hPa.
+    slpin = 0.01*data['Pressure_msl'][:].squeeze()
+    uin = data['u-component_of_wind_height_above_ground'][:].squeeze()
+    vin = data['v-component_of_wind_height_above_ground'][:].squeeze()
+    
+    # add cyclic points manually (could use addcyclic function)
+    slp = np.zeros((slpin.shape[0],slpin.shape[1]+1),np.float64)
+    slp[:,0:-1] = slpin[::-1]; slp[:,-1] = slpin[::-1,0]
+    u = np.zeros((uin.shape[0],uin.shape[1]+1),np.float64)
+    u[:,0:-1] = uin[::-1]; u[:,-1] = uin[::-1,0]
+    v = np.zeros((vin.shape[0],vin.shape[1]+1),np.float64)
+    v[:,0:-1] = vin[::-1]; v[:,-1] = vin[::-1,0]
+    longitudes.append(360.); longitudes = np.array(longitudes)
+    
+    # make 2-d grid of lons, lats
+    lons, lats = np.meshgrid(longitudes,latitudes)
+    
+    # make orthographic basemap.
+    m = Basemap(resolution='c',projection='ortho',lat_0=60.,lon_0=-60.)
+    
+    # set desired contour levels.
+    clevs = np.arange(960,1061,5)
+    # compute native x,y coordinates of grid.        
+    x, y = m(lons, lats)
+
+    # define parallels and meridians to draw.
+    parallels = np.arange(-80.,90,20.)
+    meridians = np.arange(0.,360.,20.)
+    
+    ugrid,newlons = shiftgrid(180.,u,longitudes,start=False)
+    vgrid,newlons = shiftgrid(180.,v,longitudes,start=False)
+    
+    # transform vectors to projection grid.
+    uproj,vproj,xx,yy = m.transform_vector(ugrid,vgrid,newlons,latitudes,31,31,returnxy=True,masked=True)
+    
+    # create 2nd figure, add axes
+    fig2 = plt.figure(figsize=(8,10))
+    ax = fig2.add_axes([0.1,0.1,0.8,0.8])
+    # plot SLP contours
+    CS1 = m.contour(x,y,slp,clevs,linewidths=0.5,colors='k')
+    CS2 = m.contourf(x,y,slp,clevs,cmap=plt.cm.RdBu_r)
+    # plot wind barbs over map.
+    barbs = m.barbs(xx,yy,uproj,vproj,length=5,barbcolor='k',flagcolor='r',linewidth=0.5)
+    # draw coastlines, parallels, meridians.
+    m.drawcoastlines(linewidth=1.5)
+    m.drawparallels(parallels)
+    m.drawmeridians(meridians)
+    # add colorbar
+    cb = m.colorbar(CS2,"bottom", size="5%", pad="2%")
+    cb.set_label('hPa')
+    # set plot title.
+    ax.set_title('SLP and Wind Barbs '+str(date))
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_plotting_wind_barbs1.png')
+    plt.savefig(output_path, dpi=300)
+=== CHUNK END ===

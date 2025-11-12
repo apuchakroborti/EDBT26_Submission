@@ -1,0 +1,53 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing modules**
+
+The code imports several Python modules:
+* `os`
+* `matplotlib` and `matplotlib.pyplot`
+* `numpy`
+* `mpl_toolkits.basemap`
+
+**Setting font size**
+
+The code sets the font size to 9 using `matplotlib`'s `rcParams`.
+
+**Defining the file name**
+
+The code defines a constant `FILE_NAME` with the path and name of the HDF5 file.
+
+**Opening the HDF5 file**
+
+The code uses `h5py` to open the HDF5 file in read-only mode (`mode="r"`).
+
+**Accessing data from the file**
+
+The code accesses three datasets:
+* `/S2/solarAzimuthAngle`
+	+ Extracts data and retrieves units.
+	+ Replaces fill values with NaN and masks NaN values.
+* `/S2/Latitude` and `/S2/Longitude`
+	+ Extracts data.
+
+**Creating a map**
+
+The code uses `Basemap` to create a cylindrical map:
+* Resolution: "l" (low)
+* Latitude range: -90° to 90°
+* Longitude range: -180° to 180°
+
+**Plotting data**
+
+The code plots the solar azimuth angle data as a scatter plot on the map:
+* Uses `m.scatter` with longitude, latitude, and color (`data`) values.
+
+**Adding a color bar**
+
+The code adds a color bar to the plot using `m.colorbar`.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file:
+* Uses `plt.gcf()` to get the current figure.
+* Sets the title of the plot.
+* Saves the plot to a file named `{basename}.py.png`.

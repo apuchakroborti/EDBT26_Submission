@@ -1,0 +1,31 @@
+A Python script. It reads an HDF-EOS5 file which is located at HIRDLS-Aura_L3ZFCNO2_v07-00-20-c01_2005d022-2008d077.he5, 
+extracts specific datasets, manipulates the data, and creates a contour plot.
+
+Read datasets
+The script starts by opening the HDF-EOS5 file and reading various datasets: 
+    `NO2Ascending` (a 3D dataset containing NO2 data), 
+    `Latitude` (a 1D dataset containing latitude values), 
+    `Pressure` (a 1D dataset containing pressure values), 
+    `Time` (a scalar dataset containing the time of measurement), from the sub group path of /ZAS/HIRDLS/Data Fields 
+    and `nCoeffs` (a scalar dataset containing the number of coefficients). from the sub group path /ZAS/HIRDLS
+    The above all datasets from the root group HDFEOS
+
+It reads data using slicing such as 0th row from the first and fourth dimensions, and all of the data from the 2nd and 3rd dimensions of 4D data
+It reads 0th index of the time and nCoeffs data 
+
+Read Attributes
+The script then reads attributes such as units, titles from NO2Ascending, Latitude, and Pressure datasets.
+After that it read the fill values attributes from the NO2Ascending dataset.
+
+Then by comparing the NO2Ascending data with fill values it relaces the data with numpy nan value
+
+It creates plot with parameters of NO2Ascending and pressure data
+
+The plot's x label is set by combining both NO2Ascending title and units data 
+The plot's y label is set by combining both pressure title and units data
+
+It performs some data manipulation, including converting the date stored in `Time`, replacing fill values with NaN values, 
+and creating a masked array for the `NO2Ascending` dataset.
+
+Finally, the script creates a contour plot of the `NO2Ascending` dataset using latitude on the x-axis and pressure on the y-axis, adds a colorbar, 
+labels the axes, and saves the plot as a PNG file.

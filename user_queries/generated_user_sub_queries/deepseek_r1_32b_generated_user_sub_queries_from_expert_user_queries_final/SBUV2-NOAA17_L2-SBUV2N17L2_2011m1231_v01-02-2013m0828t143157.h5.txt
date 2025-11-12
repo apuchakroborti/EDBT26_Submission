@@ -1,0 +1,86 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes and visualizes ozone profile data from an HDF5 file by following these steps:
+
+1. Import Libraries: Include necessary libraries such as os, datetime, h5py, numpy (as np), matplotlib (as mpl), matplotlib.pyplot (as plt), FormatStrFormatter from matplotlib.ticker, and Basemap from mpl_toolkits.basemap.
+
+2. Define Constants: Set the FILE_NAME constant to the path of the HDF5 file: "SBUV2-NOAA17_L2-SBUV2N17L2_2011m1231_v01-02-2013m0828t143157.h5".
+
+3. Read Data: Open the HDF5 file and extract datasets:
+   - `/SCIENCE_DATA/ProfileO3Retrieved` for 2D ozone profiles.
+   - `/GEOLOCATION_DATA/Latitude` for 1D latitude values.
+   - `/ANCILLARY_DATA/PressureLevels` for 1D pressure levels.
+   - `nTimes` for time in seconds since 1993-01-01.
+
+4. Access Attributes: Retrieve attributes like units, valid_min, valid_max, _FillValue, and long_name. Decode these attributes using the decode function.
+
+5. Process Data:
+   - Replace invalid ozone values (below valid_min, above valid_max, or equal to _FillValue) with NaN.
+   - Create a masked array using the ozone data and NaN conditions.
+
+6. Sort and Convert:
+   - Sort latitude values in ascending order.
+   - Convert time values from seconds to datetime objects.
+
+7. Plot Data: Generate a contour plot with latitude on the x-axis and pressure levels on the y-axis, using ozone data for color mapping. Label the colorbar with ozone units.
+
+8. Customize Plot:
+   - Set axis labels and add a title.
+   - Annotate the plot with start and end times.
+   - Invert the y-axis, apply a log scale, and remove scientific notation from tick labels.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the user's request carefully.
+
+The user provided a detailed Python script outline for processing and visualizing ozone profile data from an HDF5 file. They want me to split this task into three focused areas: accessing the HDF5 dataset, preprocessing with NumPy, and plotting with visualization libraries.
+
+First, I'll tackle the HDF5 Dataset Access part. The user mentions using h5py to open the file and extract specific datasets like ProfileO3Retrieved, Latitude, PressureLevels, and nTimes. They also need to access attributes such as units, valid_min, etc., which are stored in the dataset's metadata. So my sub-query should cover opening the HDF5 file, accessing these datasets by their paths, and retrieving the necessary attributes.
+
+Next is the NumPy-based Data Preprocessing. The user wants to replace invalid ozone values with NaNs using conditions based on valid_min, valid_max, and _FillValue. They also need to create a masked array for further processing. Additionally, sorting latitude values and converting time from seconds to datetime objects are part of this step. So the sub-query should focus on handling these preprocessing tasks using NumPy functions.
+
+Lastly, the Plotting and Visualization section involves creating a contour plot with specific axes (latitude vs. pressure), customizing the plot with labels, colorbars, annotations, and adjusting the y-axis properties like inversion and log scale. The user also wants to avoid scientific notation in tick labels. Therefore, the sub-query should address how to use matplotlib or basemap for this visualization.
+
+I need to ensure each sub-query is clear and targets only its specific domain without overlapping with others. Let me structure them accordingly.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using h5py, access datasets like /SCIENCE_DATA/ProfileO3Retrieved, /GEOLOCATION_DATA/Latitude, and /ANCILLARY_DATA/PressureLevels, retrieve attributes such as units, valid_min, valid_max, _FillValue, and long_name, and decode these attributes.
+
+NumPy Data Preprocessing Sub-query:
+How to replace invalid ozone values (below valid_min, above valid_max, or equal to _FillValue) with NaN using NumPy, create a masked array for the ozone data, sort latitude values in ascending order, and convert time values from seconds since 1993-01-01 to datetime objects.
+
+Plotting and Visualization Sub-query:
+How to generate a contour plot of ozone profiles using matplotlib or basemap, customize the plot with labels, colorbar, title, annotations for start and end times, invert the y-axis, apply log scale, remove scientific notation from tick labels, and configure projections.

@@ -1,0 +1,69 @@
+This Python script reads a structured points dataset stored in a .vtk file and constructs a 3D model. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `VTK_VERSION_NUMBER`, `vtkVersion` from `vtkmodules.vtkCommonCore`
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes`, `vtkPolyDataConnectivityFilter` from `vtkmodules.vtkFiltersCore`
+   - `vtkStructuredPointsReader` from `vtkmodules.vtkIOLegacy`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Check if VTK version is >= 8.2 to use `vtkFlyingEdges3D`
+   - Create a `vtkNamedColors` object named `colors`
+   - Set colors for 'SkinColor', 'BackfaceColor', and 'BkgColor'
+   - Define variables: `file_name = 'ExtractLargestIsosurface_brain.vtk'`, `threshold = 50`, `largest_surface = True`
+
+3. **Load Data**:
+   - Create a `vtkStructuredPointsReader` object named `reader`
+   - Set the file name for the reader
+
+4. **Create a 3D Model**:
+   - If using flying edges (VTK >= 8.2), try to create a `vtkFlyingEdges3D` object named `mc`. If not, use `vtkMarchingCubes`
+   - Set input connection from reader to `mc`
+   - Enable normals and gradients computation
+   - Set threshold value
+
+5. **Extract Largest Region**:
+   - Create a `vtkPolyDataConnectivityFilter` object named `confilter`
+   - Set input connection from `mc` to `confilter`
+   - Set extraction mode to largest region
+
+6. **Create Mapper**:
+   - Create a `vtkPolyDataMapper` object named `mapper`
+   - If extracting largest surface, set input connection from `confilter` to `mapper`. Otherwise, use `mc`'s output
+   - Disable scalar visibility
+
+7. **Visualize**:
+   - Create a `vtkActor` object named `actor`
+   - Set actor's property color using 'SkinColor'
+   - Create a `vtkProperty` object named `back_prop` for backface color
+   - Set backface property to `actor`
+   - Assign mapper to actor
+
+8. **Setup Renderer**:
+   - Create a `vtkRenderer` object named `renderer`
+   - Add actor to renderer
+   - Set background color using 'SlateGray'
+   - Configure camera view, position, and focal point
+   - Reset camera and adjust azimuth/elevation angles
+
+9. **Create Render Window**:
+   - Create a `vtkRenderWindow` object named `ren_win`
+   - Add renderer to render window
+   - Set window size (640x480) and name ('ExtractLargestIsosurface')
+
+10. **Interactor Setup**:
+    - Create a `vtkRenderWindowInteractor` object named `iren`
+    - Set render window for interactor
+    - Render the scene, initialize, and start interaction
+
+11. **VTK Version Check Function**:
+    - Define `vtk_version_ok(major, minor, build)` to check if VTK version meets or exceeds specified version
+    - Calculate needed version number from major, minor, and build inputs
+    - Get actual VTK version number (either directly or via `vtkVersion` object)
+    - Compare versions and return True/False
+
+12. **Run Main Function**:
+    - If script is run as main module, execute the `main()` function

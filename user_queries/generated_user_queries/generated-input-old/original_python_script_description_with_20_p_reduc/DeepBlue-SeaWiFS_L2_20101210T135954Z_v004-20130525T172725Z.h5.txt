@@ -1,0 +1,29 @@
+Here is a reduced version of the text, keeping as many implementation details as possible:
+
+**Importing modules**
+
+The code imports various Python modules: `os`, `matplotlib` and its sub-module `pyplot`, `mpl_toolkits.basemap`, `numpy`, and `h5py`.
+
+**Defining constants**
+
+Two constants are defined: `FILE_NAME` for the HDF5 file name, and `DATAFIELD_NAME` for the dataset name within the HDF5 file.
+
+**Opening the HDF5 file and reading datasets**
+
+The code opens the HDF5 file in read-only mode using `h5py` and reads three datasets: `data`, `latitude`, and `longitude`. It also reads two attributes from the `data` dataset: `long_name` and `units`.
+
+**Data manipulation**
+
+The code replaces values equal to -999 with NaN and creates a masked array using NumPy's `ma` module.
+
+**Creating a map and plotting data**
+
+An orthographic projection map is created using `Basemap`, and the `data` array is plotted on the map using `pcolormesh`. Coastlines, parallels, and meridians are drawn on the map.
+
+**Adding a colorbar and title**
+
+A colorbar with a label including the units of the data is added to the plot. A title is set for the plot, including the filename and long name of the dataset.
+
+**Saving the plot**
+
+The plot is saved as a PNG file using `matplotlib`'s `savefig` method, with a filename constructed by appending `.py.png` to the base name of the HDF5 file.

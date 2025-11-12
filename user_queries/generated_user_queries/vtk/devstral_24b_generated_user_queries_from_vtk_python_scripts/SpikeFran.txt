@@ -1,0 +1,157 @@
+This Python script demonstrates the use of glyphing in VTK (Visualization Toolkit) to visualize a 3D dataset. Here's a step-by-step description:
+
+### Imports
+1. **VTK Interaction Style Module**:
+   ```python
+   import vtkmodules.vtkInteractionStyle
+   ```
+2. **VTK Rendering OpenGL2 Module**:
+   ```python
+   import vtkmodules.vtkRenderingOpenGL2
+   ```
+3. **Specific VTK Modules for Colors and Transforms**:
+   ```python
+   from vtkmodules.vtkCommonColor import vtkNamedColors
+   from vtkmodules.vtkCommonTransforms import vtkTransform
+   ```
+4. **VTK Filters Core Module**:
+   ```python
+   from vtkmodules.vtkFiltersCore import (
+       vtkGlyph3D,
+       vtkMaskPoints,
+       vtkPolyDataNormals
+   )
+   ```
+5. **VTK Filters General Module**:
+   ```python
+   from vtkmodules.vtkFiltersGeneral import vtkTransformPolyDataFilter
+   ```
+6. **VTK Filters Sources Module**:
+   ```python
+   from vtkmodules.vtkFiltersSources import vtkConeSource
+   ```
+7. **VTK I/O Legacy Module**:
+   ```python
+   from vtkmodules.vtkIOLegacy import vtkPolyDataReader
+   ```
+8. **VTK Rendering Core Module**:
+   ```python
+   from vtkmodules.vtkRenderingCore import (
+       vtkActor,
+       vtkPolyDataMapper,
+       vtkRenderWindow,
+       vtkRenderWindowInteractor,
+       vtkRenderer
+   )
+   ```
+
+### Main Function
+
+1. **Define File Name**:
+   ```python
+   fileName = 'SpikeFran_fran_cut.vtk'
+   ```
+2. **Create Named Colors Object**:
+   ```python
+   colors = vtkNamedColors()
+   ```
+3. **Read VTK PolyData File**:
+   ```python
+   fran = vtkPolyDataReader()
+   fran.SetFileName(fileName)
+   ```
+4. **Generate Surface Normals and Flip Them**:
+   ```python
+   normals = vtkPolyDataNormals()
+   normals.SetInputConnection(fran.GetOutputPort())
+   normals.FlipNormalsOn()
+   ```
+5. **Create Mapper for Fran's Data**:
+   ```python
+   franMapper = vtkPolyDataMapper()
+   franMapper.SetInputConnection(normals.GetOutputPort())
+   ```
+6. **Create Actor for Fran's Data and Set Color**:
+   ```python
+   franActor = vtkActor()
+   franActor.SetMapper(franMapper)
+   franActor.GetProperty().SetColor(colors.GetColor3d('Flesh'))
+   ```
+
+7. **Subsample the Dataset Using Mask Points Filter**:
+   ```python
+   ptMask = vtkMaskPoints()
+   ptMask.SetInputConnection(normals.GetOutputPort())
+   ptMask.SetOnRatio(10)
+   ptMask.RandomModeOn()
+   ```
+8. **Create a Cone Source for Glyphs and Transform It**:
+   ```python
+   cone = vtkConeSource()
+   cone.SetResolution(6)
+
+   transform = vtkTransform()
+   transform.Translate(0.5, 0.0, 0.0)
+
+   transformF = vtkTransformPolyDataFilter()
+   transformF.SetInputConnection(cone.GetOutputPort())
+   transformF.SetTransform(transform)
+   ```
+9. **Create Glyph3D Filter to Apply Glyphs**:
+   ```python
+   glyph = vtkGlyph3D()
+   glyph.SetInputConnection(ptMask.GetOutputPort())
+   glyph.SetSourceConnection(transformF.GetOutputPort())
+   glyph.SetVectorModeToUseNormal()
+   glyph.SetScaleModeToScaleByVector()
+   glyph.SetScaleFactor(0.004)
+   ```
+10. **Create Mapper for Glyphs**:
+    ```python
+    spikeMapper = vtkPolyDataMapper()
+    spikeMapper.SetInputConnection(glyph.GetOutputPort())
+    ```
+11. **Create Actor for Glyphs and Set Color**:
+    ```python
+    spikeActor = vtkActor()
+    spikeActor.SetMapper(spikeMapper)
+    spikeActor.GetProperty().SetColor(colors.GetColor3d('Emerald_Green'))
+    ```
+
+12. **Setup Rendering Environment**:
+    ```python
+    ren1 = vtkRenderer()
+    renWin = vtkRenderWindow()
+    renWin.AddRenderer(ren1)
+
+    iren = vtkRenderWindowInteractor()
+    iren.SetRenderWindow(renWin)
+    ```
+13. **Add Actors to the Renderer and Set Background**:
+    ```python
+    ren1.AddActor(franActor)
+    ren1.AddActor(spikeActor)
+
+    renWin.SetSize(640, 480)
+    renWin.SetWindowName('SpikeFran')
+
+    ren1.SetBackground(colors.GetColor3d('SlateGray'))
+    ```
+14. **Render the Scene**:
+    ```python
+    renWin.Render()
+
+    ren1.GetActiveCamera().Zoom(1.4)
+    ren1.GetActiveCamera().Azimuth(110)
+    renWin.Render()
+    iren.Start()
+    ```
+
+### Execution
+The script is executed if it's run as the main module:
+```python
+if __name__ == '__main__':
+    main()
+```
+
+This completes the step-by-step description of the Python script.

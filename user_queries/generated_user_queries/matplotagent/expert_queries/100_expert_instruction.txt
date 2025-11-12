@@ -1,0 +1,18 @@
+Use a h5 file named "100_h5_data.h5" to create a polar plot visualizing electron transitions in an atom, with the plot representing only the top half of a circle (semi-circle). 
+The file has datasets 'Series', 'Wavelength', 'l position', and 'p position'. Sort the data by the 'Series' and group the transitions accordingly. 
+
+1. The plot should be a semi-circle representing the top half of a polar coordinate system. 
+    The radius of the semi-circle should be divided into 6 concentric regions, each representing an energy level, numbered from 1 to 6 starting from the center. 
+    Black lines should separate these regions to clearly distinguish the different energy levels.
+2. Label the left side of the semi-circle with energy level indicators '1n' through '6n', with '1n' closest to the center and '6n' at the outer edge. 
+    These labels should be aligned with the divisions between the regions.
+3. Label the right side of the semi-circle with the energy values '0 eV', '10.2 eV', '12.09 eV', '12.75 eV', '13.06 eV', '13.22 eV', with '0 eV' closest to the center and '13.22 eV' at the outer edge. 
+    These labels should be aligned with the corresponding energy level divisions.
+4. Electron transitions should be represented by arrows within the semi-circle. 
+    Each arrow should start at the radial position corresponding to the 'l position' (lower energy level) and point towards the radial position corresponding to the 'p position' (higher energy level). 
+    Arrows should be evenly distributed across the semi-circle, with equal angular spacing between them to ensure clarity and avoid overlap.
+5. Annotate each arrow with the wavelength of the transition, placing the label at the head of the arrow, just outside the semi-circle.
+6. Group the transitions by series, such as 'Lyman Series', 'Balmer Series', 'Paschen Series', etc., and use different colors for each series. 
+    Highlight each series by filling the angular range it occupies with a lighter shade of the same color.
+7. Ensure the plot is clear, with no overlapping text or arrows, and all labels and annotations are easily readable.
+8. The plot should not display any radial gridlines, radial ticks, or angle labels, and should have a title "Electron Transitions for an Atom" at the top.

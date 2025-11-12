@@ -1,0 +1,33 @@
+By reading an HDF5 file named `oco2_L2StdND_03949a_150330_B8100r_170916014809.h5` and generates a data visualization map. The script should perform the following steps:
+
+1. Import Libraries: Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy`, `matplotlib`, `matplotlib.pyplot`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Define Constants: Set the constant `FILE_NAME` to the specified HDF5 file name.
+
+3. Open HDF5 File: Open the file in read-only mode and assign it to a variable `f`.
+
+4. Read Data:
+   - Extract data from `/RetrievalResults/xco2` into a variable named `data`.
+   - Retrieve the units and description of this dataset.
+
+5. Read Geolocation Data:
+   - Read latitude values from `/RetrievalGeometry/retrieval_latitude` into a NumPy array called `latitude`.
+   - Read longitude values from `/RetrievalGeometry/retrieval_longitude` into a NumPy array called `longitude`.
+
+6. Set Up Map Projection:
+   - Use a cylindrical projection with low resolution.
+   - Define latitude and longitude ranges from -90 to 90 and -180 to 180, respectively.
+
+7. Customize Map Features:
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels using NumPy arange with values [-90, 0, 91] and meridians with values [-180, 0, 180], both at intervals of 45 degrees.
+   - Label the map with `labels=[True, False, False, True]`.
+
+8. Create Scatter Plot:
+   - Use the scatter function with parameters: longitude (`lon`), latitude (`lat`), data (`c=data`), marker size (`s=1`), colormap (`cmap=plt.cm.jet`), and no edge colors or line width.
+
+9. Add Colorbar and Labels:
+   - Include a colorbar at the bottom of the plot with format `%.1e` and 10% padding.
+   - Set the label for the data using the retrieved units.
+
+10. Display Plot: Render the final visualization.

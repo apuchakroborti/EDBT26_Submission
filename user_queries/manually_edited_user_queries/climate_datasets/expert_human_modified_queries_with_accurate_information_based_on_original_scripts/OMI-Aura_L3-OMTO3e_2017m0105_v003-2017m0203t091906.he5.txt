@@ -1,0 +1,25 @@
+Python code
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Then initially, It should define two constants: `FILE_NAME` for the input file name which is located at OMI-Aura_L3-OMTO3e_2017m0105_v003-2017m0203t091906.he5 
+and `DATAFIELD_NAME` with value /HDFEOS/GRIDS/OMI Column Amount O3/Data Fields/ColumnAmountO3 
+the dataset ColumnAmountO3 as data containing column amount of ozone (O3) data that can be accessed by the ColumnAmountO3 full path from the file.
+
+Next, I open the file in read mode and access the dataset using the defined path. 
+I then read the entire dataset into memory and handle _FillValue by replacing them with `NaN` 
+and it then masked the data using numpy masked_where function with parameters of numpy isnan checking with data and data itself
+
+There is no geolocation data for this so, need to created longitude from -179.875 to 179.875 of 1440 values
+and latitude of -89.875 to 89.875 of 720 values
+
+I also retrieve two attributes from the dataset: `title` and `units`, which I decode from bytes to UTF-8.
+Since there's no geolocation data in the file, I construct it manually using NumPy arrays for longitude and latitude.
+
+It then Using Basemap creates the cylindrical projection map with the resolution as low and latitude values from -90 to 90 and longitude values -180 and 180 
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30 and labels is list of [1, 0, 0, 0], 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [0, 0, 0, 1]
+
+I then plot the data using `pcolormesh` with parameters longitude, latitude, data, latlon=True, and cmap='jet' 
+
+It also specified colorbar with set_labels with parameter valye of Units.

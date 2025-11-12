@@ -1,0 +1,50 @@
+### What This Script Does
+This script creates a 3D visualization of a frog's brain. It reads data from a file, processes it to highlight specific tissues (like blood, brain, etc.), and then displays two versions of the frog's brain: one with smoothing applied for a cleaner look, and one without smoothing.
+
+### Step-by-Step Explanation
+
+#### 1. Setting Up
+The script starts by importing various tools and modules that will help it read data files, process images, and create visualizations.
+
+#### 2. Main Function
+The main function is where the magic happens:
+- Input: It takes a folder path (`data_folder`) named `FrogBrain_frogtissue.mhd` and a type of tissue to highlight (`tissue`).
+- Check File: First, it checks if the file exists in the given folder.
+- Create Actors: It creates two actors (think of them as characters in a play):
+  - One for the unsmoothed brain.
+  - Another for the smoothed brain.
+
+#### 3. Creating the Smoothed Brain Actor
+This part is about creating a smooth version of the frog's brain:
+- Read Data: It reads the data from the file.
+- Select Tissue: It selects only the tissue you want to highlight (e.g., brain).
+- Apply Smoothing: It applies a smoothing effect to make the 3D model look cleaner and more polished.
+- Create Surface: It creates a surface for the smoothed tissue.
+- Finalize Actor: It finalizes the actor with all these settings.
+
+#### 4. Creating the Unsmooth Brain Actor
+This part is similar but without the extra smoothing:
+- Read Data: Reads the data from the file again.
+- Select Tissue: Selects only the tissue you want to highlight.
+- Create Surface: Creates a surface for the unsmoothed tissue.
+- Finalize Actor: Finalizes the actor with these settings.
+
+#### 5. Setting Up Colors
+The script sets up colors for different tissues:
+- It creates a color map where each type of tissue (like blood, brain, etc.) is assigned a specific color.
+
+#### 6. Mapping Tissues to Numbers
+It maps each type of tissue to a number so the script can easily reference them when processing the data.
+
+#### 7. Checking VTK Version
+The script checks if it has the right version of a tool called VTK (which helps with 3D visualization) to make sure everything runs smoothly.
+
+#### 8. Running the Script
+Finally, the script runs the main function with default values for the folder path and tissue type.
+
+### Visualization
+- Display: It sets up a window to display the two versions of the brain side by side.
+- Start Interaction: It starts an interactive session where you can view and interact with the 3D model.
+
+### Summary
+In simple terms, this script reads data about a frog's brain, processes it to highlight specific tissues, applies smoothing to one version for better visualization, and then displays both versions in a window. This helps scientists or anyone interested see detailed 3D models of different parts of the frog's brain.

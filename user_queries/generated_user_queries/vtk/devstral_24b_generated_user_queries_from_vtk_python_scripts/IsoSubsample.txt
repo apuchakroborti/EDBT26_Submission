@@ -1,0 +1,117 @@
+This Python script demonstrates aliasing that occurs when a high-frequency signal is subsampled. It uses the VTK library to create visualizations of a skull with and without smoothing before subsampling.
+
+### Step-by-Step Description
+
+1. **Import Libraries:**
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkImageMarchingCubes` from `vtkmodules.vtkFiltersGeneral`
+   - `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`
+   - `vtkImageShrink3D` from `vtkmodules.vtkImagingCore`
+   - `vtkImageGaussianSmooth` from `vtkmodules.vtkImagingGeneral`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function:**
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+3. **File Name:**
+   - Define `file_name` as `'IsoSubsample_FullHead.mhd'`.
+
+4. **Read the Image:**
+   - Create an instance of `vtkImageReader2Factory` named `reader_factory`.
+   - Use `reader_factory.CreateImageReader2(file_name)` to create a reader object.
+   - Set the file name for the reader using `reader.SetFileName(file_name)`.
+   - Update the reader with `reader.Update()`.
+
+5. **Smoothed Pipeline:**
+   - Create an instance of `vtkImageGaussianSmooth` named `smooth`.
+     - Set dimensionality to 3: `smooth.SetDimensionality(3)`
+     - Connect input from reader: `smooth.SetInputConnection(reader.GetOutputPort())`
+     - Set standard deviations: `smooth.SetStandardDeviations(1.75, 1.75, 0.0)`
+     - Set radius factor: `smooth.SetRadiusFactor(2)`
+
+   - Create an instance of `vtkImageShrink3D` named `subsample_smoothed`.
+     - Connect input from smooth: `subsample_smoothed.SetInputConnection(smooth.GetOutputPort())`
+     - Set shrink factors: `subsample_smoothed.SetShrinkFactors(4, 4, 1)`
+
+   - Create an instance of `vtkImageMarchingCubes` named `iso_smoothed`.
+     - Connect input from smooth: `iso_smoothed.SetInputConnection(smooth.GetOutputPort())`
+     - Set value: `iso_smoothed.SetValue(0, 1150)`
+
+   - Create a mapper for the smoothed isosurface:
+     - Instance of `vtkPolyDataMapper` named `iso_smoothed_mapper`.
+       - Connect input from iso_smoothed: `iso_smoothed_mapper.SetInputConnection(iso_smoothed.GetOutputPort())`
+       - Turn off scalar visibility: `iso_smoothed_mapper.ScalarVisibilityOff()`
+
+   - Create an actor for the smoothed isosurface:
+     - Instance of `vtkActor` named `iso_smoothed_actor`.
+       - Set mapper: `iso_smoothed_actor.SetMapper(iso_smoothed_mapper)`
+       - Set color to "Ivory": `iso_smoothed_actor.GetProperty().SetColor(colors.GetColor3d("Ivory"))`
+
+6. **Unsmoothed Pipeline:**
+   - Create an instance of `vtkImageShrink3D` named `subsample`.
+     - Connect input from reader: `subsample.SetInputConnection(reader.GetOutputPort())`
+     - Set shrink factors: `subsample.SetShrinkFactors(4, 4, 1)`
+
+   - Create an instance of `vtkImageMarchingCubes` named `iso`.
+     - Connect input from subsample: `iso.SetInputConnection(subsample.GetOutputPort())`
+     - Set value: `iso.SetValue(0, 1150)`
+
+   - Create a mapper for the unsmoothed isosurface:
+     - Instance of `vtkPolyDataMapper` named `iso_mapper`.
+       - Connect input from iso: `iso_mapper.SetInputConnection(iso.GetOutputPort())`
+       - Turn off scalar visibility: `iso_mapper.ScalarVisibilityOff()`
+
+   - Create an actor for the unsmoothed isosurface:
+     - Instance of `vtkActor` named `iso_actor`.
+       - Set mapper: `iso_actor.SetMapper(iso_mapper)`
+       - Set color to "Ivory": `iso_actor.GetProperty().SetColor(colors.GetColor3d("Ivory"))`
+
+7. **Rendering Pipeline:**
+   - Define viewports:
+     - `left_viewport = [0.0, 0.0, 0.5, 1.0]`
+     - `right_viewport = [0.5, 0.0, 1.0, 1.0]`
+
+   - Create renderers for each viewport:
+     - Instance of `vtkRenderer` named `renderer_left`.
+       - Set viewport: `renderer_left.SetViewport(left_viewport)`
+     - Instance of `vtkRenderer` named `renderer_right`.
+       - Set viewport: `renderer_right.SetViewport(right_viewport)`
+
+   - Create a render window and add the renderers:
+     - Instance of `vtkRenderWindow` named `render_window`.
+       - Add renderers: `render_window.AddRenderer(renderer_left)` and `render_window.AddRenderer(renderer_right)`
+
+   - Create an interactor for the render window:
+     - Instance of `vtkRenderWindowInteractor` named `render_window_interactor`.
+       - Set render window: `render_window_interactor.SetRenderWindow(render_window)`
+
+   - Add actors to their respective renderers:
+     - `renderer_left.AddActor(iso_actor)`
+     - `renderer_right.AddActor(iso_smoothed_actor)`
+
+   - Configure the camera for the left renderer:
+     - Set focal point, position, and view up: `renderer_left.GetActiveCamera().SetFocalPoint(0.0, 0.0, 0.0)`, `renderer_left.GetActiveCamera().SetPosition(0.0, -1.0, 0.0)`, `renderer_left.GetActiveCamera().SetViewUp(0.0, 0.0, -1.0)`
+     - Reset camera: `renderer_left.ResetCamera()`
+     - Adjust azimuth and elevation: `renderer_left.GetActiveCamera().Azimuth(-20.0)`, `renderer_left.GetActiveCamera().Elevation(20.0)`
+     - Reset clipping range: `renderer_left.ResetCameraClippingRange()`
+
+   - Set background colors for renderers:
+     - `renderer_left.SetBackground(colors.GetColor3d("SlateGray"))`
+     - `renderer_right.SetBackground(colors.GetColor3d("LightSlateGray"))`
+
+   - Set the active camera for the right renderer: `renderer_right.SetActiveCamera(renderer_left.GetActiveCamera())`
+
+8. **Render and Interact:**
+   - Set window size and name:
+     - `render_window.SetSize(640, 480)`
+     - `render_window.SetWindowName('IsoSubsample')`
+   - Render the scene: `render_window.Render()`
+   - Start interaction: `render_window_interactor.Start()`
+
+9. **Entry Point:**
+   - If this script is run as the main module, call the `main()` function.
+
+### File Path
+- The file name used in the script is `'IsoSubsample_FullHead.mhd'`.

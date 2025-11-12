@@ -1,0 +1,40 @@
+Here's the text reduced by 20% while keeping implementation details:
+
+**Access and Visualize ECOSTRESS L2 HDF5 File in Python**
+
+This Python code is used to access and visualize an LP DAAC ECOSTRESS L2 HDF5 file.
+
+1. **Import necessary modules**:
+   - `os`, `matplotlib.pyplot as plt`, `numpy as np`, and `mpl_toolkits.basemap` are imported for operating system dependent functionality, visualization, numerical computation, and map creation respectively.
+
+2. **Define file names**:
+   - `FILE_NAME` and `FILE_NAME_GEO` are defined as the names of the ECOSTRESS L2 HDF5 file and the ECOSTRESS L1B GEO HDF5 file respectively.
+
+3. **Open HDF5 files in read mode**:
+   - The code opens both HDF5 files using the `h5py.File()` function.
+
+4. **Access data from the HDF5 file**:
+   - It accesses the LST (Land Surface Temperature) data and stores it in the `data` variable.
+   - It also reads attributes of the LST dataset, such as scale factor, add offset, units, fill value, and long name.
+
+5. **Apply fill value and scale factor to the data**:
+   - It replaces the fill value with NaN (Not a Number) to indicate missing values.
+   - It applies the scale factor and add offset to the data.
+
+6. **Create a Basemap**:
+   - The code creates a map using the `Basemap` class from `mpl_toolkits.basemap`. This map is projected in cylindrical coordinates with a resolution of "l" (low).
+
+7. **Draw coastlines and grid lines on the map**:
+   - It draws coastlines using `m.drawcoastlines()` and grid lines using `m.drawparallels()` and `m.drawmeridians()`.
+
+8. **Plot data points on the map**:
+   - It plots LST data points on the map using `m.scatter()`, with the color of each point corresponding to its LST value.
+
+9. **Create a colorbar for the plot**:
+    - The code creates a colorbar for the plot using `cb = m.colorbar()` and sets its label to the units of the LST data.
+
+10. **Set title and save the figure**:
+   - It sets the title of the plot to include the name of the HDF5 file and the long name of the LST dataset.
+   - The code saves the figure as a PNG image using `fig.savefig(pngfile)`.
+
+This is the step-by-step explanation of the Python code.

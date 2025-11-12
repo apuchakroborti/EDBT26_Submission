@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file by following these structured steps:
+
+1. Import Libraries: 
+   Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl`), `matplotlib.pyplot` (as `plt`), and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Open HDF5 File: Open the file "SMAP_L1B_TB_50719_D_20240730T124417_R19240_001.h5" in read-only mode.
+
+3. Access Datasets: Extract datasets from the Brightness_Temperature group, specifically `tb_h_surface_corrected` (brightness temperature), `tb_lat` (latitude), and `tb_lon` (longitude).
+
+4. Retrieve Attributes: For `tb_h_surface_corrected`, get attributes like units, long_name, _FillValue, valid_max, and valid_min. 
+   Decode these attributes using 'ascii' encoding with 'replace' error handling.
+
+5. Preprocess Data:
+   - Identify invalid data points where values exceed valid_max or are below valid_min.
+   - Update invalid points to include those equal to _FillValue.
+   - Replace invalid data in `tb_h_surface_corrected` with NaNs.
+   - Create a masked array using `numpy.ma.masked_where` based on NaN values.
+
+6. Create Map Visualization:
+   - Initialize a Basemap with cylindrical projection and set boundaries from -90 to 90 latitude and -180 to 180 longitude.
+   - Add coastlines with linewidth 0.5.
+   - Draw parallels at intervals of [-90, -45, 0, 45, 90] and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180] with specific labels [True, False, False, True].
+   - Plot data points using `plt.scatter` with parameters: longitude (x), latitude (y), data (c), point size 1, colormap 'jet', no edge color, and linewidth 0.
+
+7. Enhance Visualization:
+   - Add a colorbar with the label set to the units of the brightness temperature data.
+   - Set the plot title to include the base name of the HDF5 file and the long_name attribute of the dataset, using fontsize 7.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user's query into three specific sub-queries. Let me read through their request carefully.
+
+The user wants a Python script that processes an HDF5 file in several steps. They've outlined each step from importing libraries to visualizing the data. My task is to split this into three focused areas: HDF5 access, NumPy preprocessing, and map plotting.
+
+First, for the HDF5 part, I need to focus on using h5py. The user wants to open a specific file, access certain datasets in the Brightness_Temperature group, and retrieve attributes with proper decoding. So my sub-query should cover opening the file, accessing those datasets, and handling attributes correctly.
+
+Next, the NumPy preprocessing step involves identifying invalid data points based on valid ranges and _FillValue. The user wants to replace invalid data with NaNs and create a masked array. I'll need to structure this sub-query around using np.where or similar functions for masking and replacing values.
+
+Lastly, the visualization part uses Basemap from mpl_toolkits. The user provided specific parameters like projection type, boundaries, coastlines, parallels, meridians, and plotting with scatter. My sub-query should encapsulate setting up the map and plotting the data as described.
+
+I need to ensure each sub-query is concise and targets only the relevant technical domain so that documentation can be easily retrieved. I'll avoid any extra explanations or code, just the focused queries.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How do I use `h5py` to open an HDF5 file named "SMAP_L1B_TB_50719_D_20240730T124417_R19240_001.h5" in read-only mode and access datasets such as `tb_h_surface_corrected`, `tb_lat`, and `tb_lon` from the group `/Brightness_Temperature`? Additionally, how do I retrieve attributes like units, long_name, _FillValue, valid_max, and valid_min from `tb_h_surface_corrected` and decode them using 'ascii' encoding with 'replace' error handling?
+
+NumPy Data Preprocessing Sub-query:  
+How can I use NumPy to identify invalid data points in the `tb_h_surface_corrected` dataset where values exceed valid_max or are below valid_min, update invalid points to include those equal to _FillValue, replace invalid data with NaNs, and create a masked array using `numpy.ma.masked_where` based on NaN values?
+
+Plotting and Visualization Sub-query:  
+How do I use `Basemap` from `mpl_toolkits.basemap` to initialize a cylindrical projection map with boundaries from -90 to 90 latitude and -180 to 180 longitude, add coastlines with linewidth 0.5, draw parallels at intervals of [-90, -45, 0, 45, 90] and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180] with specific labels [True, False, False, True], and plot data points using `plt.scatter` with longitude (x), latitude (y), data (c), point size 1, colormap 'jet', no edge color, and linewidth 0?

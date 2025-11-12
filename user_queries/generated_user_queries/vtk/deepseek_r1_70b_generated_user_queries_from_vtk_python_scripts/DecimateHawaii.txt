@@ -1,0 +1,56 @@
+### Step-by-Step Description of the Python Script
+
+#### 1. Import Required Libraries
+The script begins by importing specific modules from `vtkmodules`:
+- `vtkNamedColors` from `vtkCommonColor`
+- `vtkDecimatePro` and `vtkPolyDataNormals` from `vtkFiltersCore`
+- `vtkPolyDataReader` from `vtkIOLegacy`
+- Rendering components: `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkRenderingCore`
+
+#### 2. Define the Main Function
+The main function initializes:
+- A `vtkNamedColors` object named `colors` for color management.
+- A file path variable `fileName` set to `'DecimateHawaii_honolulu.vtk'`.
+
+#### 3. Read Input Data
+A `vtkPolyDataReader` named `hawaii` is created and configured to read from the specified file.
+
+#### 4. Decimation Process
+An instance of `vtkDecimatePro` named `deci` is set up:
+- Input is connected to the reader's output.
+- Target reduction is set to 90% to reduce the polygon count significantly.
+- Topology preservation is enabled to prevent mesh cracks.
+
+#### 5. Compute Normals for Decimated Data
+A `vtkPolyDataNormals` object named `decimatedNormals` processes the decimated data:
+- Input is connected to the decimation output.
+- Normals are flipped, and a feature angle of 60 degrees is set for smoothing.
+
+#### 6. Create Mappers
+Two mappers are created:
+- `originalMapper` uses the original data from the reader (`hawaii.GetOutputPort()`).
+- `decimatedMapper` uses the normals from the decimated data (`decimatedNormals.GetOutputPort()`).
+
+#### 7. Set Up Actors
+Actors are configured:
+- `decimatedActor` is set to wireframe representation with color 'Sienna'.
+- `originalActor` uses solid representation with the same color.
+
+#### 8. Configure Rendering
+Two renderers are created:
+- `renderer1` (left viewport) and `renderer2` (right viewport).
+- Both added to a `renderWindow` of size 800x400 pixels, titled 'DecimateHawaii'.
+
+#### 9. Add Actors to Renderers
+- `originalActor` is added to `renderer1`.
+- `decimatedActor` is added to `renderer2`.
+
+#### 10. Set Background Colors and Cameras
+- `renderer1` background set to 'Wheat'.
+- `renderer2` background set to 'Papaya_Whip'.
+- A shared camera is configured with elevation and dolly settings for both renderers.
+
+#### 11. Render and Interact
+The render window is rendered, and the interactor starts to handle user interactions.
+
+This structured approach ensures the script can be accurately reproduced, displaying original and decimated meshes side by side.

@@ -1,0 +1,13 @@
+It starts by loading an HDF5 file located at `fastMRI_brain_first_10_dcm_to_h5.h5` in read-only mode.
+
+The code then accesses a dataset within the HDF5 file located at `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`, 
+which represents 16 slices, 32 rows, and 512 columns. 
+
+Two masks are created: one where values are greater than 10% of the maximum value, 
+and another where values are less than 15% of the maximum value. 
+The two masks are combined using element-wise addition, and then thresholded to create a final mask.
+
+The code visualizes the mask using a gray colormap and slice of 20th column from 3D array that means it reads all values from x axis,
+and z axis but only select the 20th slice from y axis, displaying a slice of the mask. 
+
+In summary, this code loads an HDF5 file containing MRI data, reshapes the data into 3D, applies masking, and visualizes the results.

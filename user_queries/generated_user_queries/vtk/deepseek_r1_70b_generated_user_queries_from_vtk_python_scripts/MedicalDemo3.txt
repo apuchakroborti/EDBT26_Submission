@@ -1,0 +1,104 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Libraries:
+   - Import `vtkmodules.vtkInteractionStyle`
+   - Import `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import multiple classes from `vtkmodules.vtkCommonCore`, including `VTK_VERSION_NUMBER`, `vtkLookupTable`, and `vtkVersion`
+   - Import several filters from `vtkmodules.vtkFiltersCore`: `vtkFlyingEdges3D`, `vtkMarchingCubes`, and `vtkStripper`
+   - Import `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - Import `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - Import `vtkImageMapToColors` from `vtkmodules.vtkImagingCore`
+   - Import several rendering-related classes from `vtkmodules.vtkRenderingCore`: `vtkActor`, `vtkCamera`, `vtkImageActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer`
+
+2. Main Function:
+   - Check the VTK version using `vtk_version_ok(8, 2, 0)` to determine if `vtkFlyingEdges3D` can be used.
+   - Create a `vtkNamedColors` object named `colors`.
+   - Define the file path as `'MedicalDemo3_FullHead.mhd'`.
+   - Set custom colors in the `colors` object:
+     - SkinColor: `[240, 184, 160, 255]`
+     - BkgColor: `[51, 77, 102, 255]`
+
+3. Create Rendering Components:
+   - Create a renderer (`a_renderer`), render window (`ren_win`), and interactor (`iren`).
+   - Set the background color of the renderer using `BkgColor` and set the window size to 640x480 pixels.
+
+4. Read Input Data:
+   - Use `vtkMetaImageReader` to read the file specified by `file_name`.
+   - Update the reader to process the data.
+
+5. Extract Skin Isosurface:
+   - Create an isosurface extractor (`skin_extractor`) using either `vtkFlyingEdges3D` (if VTK version >= 8.2) or `vtkMarchingCubes`.
+   - Set the contour value to 500 for skin extraction.
+   - Use `vtkStripper` to optimize the output geometry.
+   - Create a mapper (`skin_mapper`) and actor (`skin`) for the skin data.
+   - Configure the skin actor's appearance:
+     - Diffuse color: `SkinColor`
+     - Specular: 0.3
+     - Specular power: 20
+
+6. Extract Bone Isosurface:
+   - Create an isosurface extractor (`bone_extractor`) using either `vtkFlyingEdges3D` (if VTK version >= 8.2) or `vtkMarchingCubes`.
+   - Set the contour value to 1150 for bone extraction.
+   - Use `vtkStripper` to optimize the output geometry.
+   - Create a mapper (`bone_mapper`) and actor (`bone`) for the bone data.
+   - Configure the bone actor's appearance:
+     - Diffuse color: `Ivory`
+
+7. Create Outline:
+   - Use `vtkOutlineFilter` to create an outline of the dataset.
+   - Create a mapper (`map_outline`) and actor (`outline`) for the outline.
+   - Set the outline color to black.
+
+8. Create Lookup Tables:
+   - Create three lookup tables:
+     - `bw_lut`: Black/white lookup table with range 0-2000.
+     - `hue_lut`: Hue-based lookup table with full hue range and saturation/value set to 1.
+     - `sat_lut`: Saturation-based lookup table with fixed hue (0.6) and varying saturation.
+
+9. Create Orthogonal Planes:
+   - Sagittal Plane:
+     - Use `vtkImageMapToColors` with `bw_lut`.
+     - Create an actor (`sagittal`) to display the sagittal plane.
+     - Set display extent: `(128, 128, 0, 255, 0, 92)`.
+   - Axial Plane:
+     - Use `vtkImageMapToColors` with `hue_lut`.
+     - Create an actor (`axial`) to display the axial plane.
+     - Set display extent: `(0, 255, 128, 128, 0, 92)`.
+   - Coronal Plane:
+     - Use `vtkImageMapToColors` with `sat_lut`.
+     - Create an actor (`coronal`) to display the coronal plane.
+     - Set display extent: `(0, 255, 128, 128, 0, 92)`.
+
+10. Set Up Camera:
+    - Create a camera (`a_camera`) and configure it:
+      - View up: `(0, 0, -1)`
+      - Position: `(0, -1, 0)`
+      - Focal point: `(0, 0, 0)`
+      - Compute view plane normal.
+      - Adjust azimuth (30.0 degrees) and elevation (30.0 degrees).
+
+11. Add Actors to Renderer:
+    - Add the following actors to `a_renderer`:
+      - Outline
+      - Sagittal plane
+      - Axial plane
+      - Coronal plane
+      - Skin
+      - Bone
+
+12. Configure Actor Visibility and Appearance:
+    - Hide the bone actor using `bone.VisibilityOff()`.
+    - Set skin opacity to 0.5 for semi-transparency.
+
+13. Finalize Rendering:
+    - Set the active camera in the renderer.
+    - Call `ren_win.Render()` to render the scene.
+    - Reset the camera and adjust the clipping range.
+    - Start interaction with `iren.Initialize()` and `iren.Start()`.
+
+14. VTK Version Check Function:
+    - Define a helper function `vtk_version_ok(major, minor, build)` to check if the VTK version meets or exceeds the specified version.
+
+15. Run Main Function:
+    - Execute the main function when the script is run as the primary program (`if __name__ == '__main__':`).

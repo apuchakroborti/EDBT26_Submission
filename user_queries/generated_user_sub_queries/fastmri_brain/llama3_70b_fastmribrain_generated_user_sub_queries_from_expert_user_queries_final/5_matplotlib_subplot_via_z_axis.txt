@@ -1,0 +1,70 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            The code starts by defining file paths: 
+`FAST_MRI_BRAIN_H5_FILE` located at 5_fastMRI_brain_first_10_dcm_to_h5.h5 for an HDF5 file containing brain MRI data 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` where the path is located at `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data` to access the brain MRI data within the HDF5 file.
+
+It then loads the HDF5 file in read mode and extracts the brain MRI data from the file. 
+The extracted 2D dataset, representing a slice of the brain MRI volume, is assigned to `brain_vol`.
+
+The code reshapes the 2D dataset into a 3D array, where each slice of the brain MRI volume is represented by a 2D array. 
+This is done to group every 512 columns into slices.
+
+Next, it plots the coronal plane of the brain MRI volume using matplotlib. 
+It defines the number of rows and columns for the plot, calculates the step size to iterate over the slices, 
+and creates a figure with subplots. Each slice is rotated by 270 degrees using scipy.ndimage and displayed in a subplot with the axis turned off.
+
+It sets the values of fig and axs from subplots of fig_rows, fig_cols, and fig_size of values 15 and 31
+
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing by step_size,
+set imshow by slicing data from the z axis,
+
+Finally, the code displays the plot. The goal is to load brain MRI data from an HDF5 file, reshape it into a 3D array, 
+and visualize the coronal plane of the brain MRI volume.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+Here are the 3 sub-queries:
+
+HDF5 Dataset Access Sub-query:
+Access HDF5 file with h5py, read dataset from path FAST_MRI_BRAIN_H5_FILE_DATA_PATH within file FAST_MRI_BRAIN_H5_FILE.
+
+NumPy Data Preprocessing Sub-query:
+Reshape 2D dataset into 3D array by grouping every 512 columns into slices, no fill values or masking required.
+
+Plotting and Visualization Sub-query:
+Create figure with multiple subplots using matplotlib, display coronal plane of brain MRI volume by iterating over slices, rotate each slice by 270 degrees.

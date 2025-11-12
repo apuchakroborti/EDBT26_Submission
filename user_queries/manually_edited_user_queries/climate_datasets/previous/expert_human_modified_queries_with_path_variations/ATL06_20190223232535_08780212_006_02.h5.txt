@@ -1,0 +1,14 @@
+It starts by reading data from an HDF5 file named in the constant `FILE_NAME`. 
+The file contains several datasets:
+    from root gorup gt1l and the sub paths are `land_ice_segments/latitude`, `land_ice_segments/longitude`, 
+    and `land_ice_segments/h_li` which contain latitude values, longitude values, and land ice height data respectively. 
+
+The code then handles fill values in the `h_li` dataset by replacing them with NaN (Not a Number) 
+and creating a masked array to exclude these values from further processing.
+
+Next, it creates an equidistant cylindrical projection map with with a latitude range of -90 to 90 and longitude range of -180 to 180. 
+The map includes coastlines, parallels, and meridians.
+
+The code then plots the land ice height data on the map using scatter plot, where each point's color corresponds to its value. 
+
+A colorbar is also created for the plot, labeled with the units of the data.

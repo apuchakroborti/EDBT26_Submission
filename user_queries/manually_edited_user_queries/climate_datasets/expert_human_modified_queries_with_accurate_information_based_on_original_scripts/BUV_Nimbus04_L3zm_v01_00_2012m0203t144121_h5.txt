@@ -1,0 +1,26 @@
+Python code that reads and visualizes ozone data from an HDF5 file. 
+
+At first it imports some libraries such as datetime, os, matplotlib, matplotlib.pyplot, mpl_toolkits.basemap, numpy
+
+Then it reads datasets and attributes
+/Data_Fields/ProfileOzone which is profileozone data
+/Data_Fields/Latitude which latitude
+/Data_Fields/ProfilePressureLevels which is ProfilePressureLevels
+/Data_Fields/Date which contains date
+
+It reads ProfileOzone 3D data as a slice of 0th index of x-axis and all from both y and z axis data from the 3 dimensiontal array
+It also access 0th index of the Date data
+
+It read units and long_name attribute with decoding from the profileozone, latitude, and longitude datasets
+
+It access the _FillValue data from the profile ozone data and by comparing with _FillValue it set NaN value
+and masked the profileozone data using numpy masked_where function with parameters of numpy isnan of data and data itself
+
+Then the program should convert the ProfilePressureLevels data using numpy log10 function
+then the contourf is set with parameters latitude, updated ProfilePressureLevels, and ProfileOzone's T data
+After that it add a colorbar with label with the value of ProfileOzone data's units
+
+plot xlabel is latitude_longname and latitude_units
+plot y label is the combined string of ProfilePressureLevels's long_name and ProfilePressureLevels's units
+
+The plot's title is the combined string of data file basename and ProfileOzone data's long_name 

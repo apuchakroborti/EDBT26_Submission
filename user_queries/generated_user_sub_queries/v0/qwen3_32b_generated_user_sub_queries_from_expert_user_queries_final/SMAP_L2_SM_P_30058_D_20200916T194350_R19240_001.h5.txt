@@ -1,0 +1,92 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that reads soil moisture data from an HDF5 file and visualizes it using Basemap. The script should perform the following steps:
+
+1. Import necessary libraries: os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and mpl_toolkits.basemap import Basemap.
+
+2. Read the HDF5 file containing datasets:
+   - `/Soil_Moisture_Retrieval_Data/soil_moisture` (soil moisture data)
+   - `/Soil_Moisture_Retrieval_Data/latitude`
+   - `/Soil_Moisture_Retrieval_Data/longitude`
+
+3. Extract metadata from the soil_moisture dataset:
+   - units
+   - long_name (decode using ASCII and replace 'parameters')
+   - _FillValue
+   - valid_max
+   - valid_min
+
+4. Identify invalid data:
+   - Use numpy logical_or to compare soil_moisture against valid_max and valid_min
+   - Update the mask with comparisons against _FillValue
+   - Set NaN values for invalid data using numpy.where
+
+5. Create a masked array of soil_moisture data using numpy.masked_where, checking for NaNs and invalid data.
+
+6. Visualize the data:
+   - Create a Basemap object with cylindrical projection
+   - Set map boundaries (lat: -90 to 90, lon: -180 to 180)
+   - Add coastlines (linewidth=0.5)
+   - Draw parallels at intervals of 45 degrees
+   - Draw meridians at intervals of 45 degrees with labels on the east and west edges
+   - Create a scatter plot using longitude and latitude coordinates, with soil_moisture data as the color variable (cmap=plt.cm.jet, s=1, edgecolor=None)
+
+7. Add a colorbar:
+   - Position it at the bottom with 10% padding
+   - Label it with the units from metadata
+
+8. Set the plot title to include the base name of the HDF5 file and the decoded long_name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants a Python script that reads soil moisture data from an HDF5 file and visualizes it using Basemap. They've outlined specific steps, so I need to break this down into three sub-queries as per the instructions.
+
+First, the HDF5 Dataset Access part. The user is using h5py, so I need to focus on accessing the datasets mentioned: soil_moisture, latitude, longitude. Also, extracting metadata like units, long_name (which needs decoding and replacing 'parameters'), _FillValue, valid_max, and valid_min. The sub-query should ask about how to access these datasets and their metadata using h5py, including handling the dataset paths and decoding the long_name.
+
+Next, the NumPy Data Preprocessing. The user wants to identify invalid data using logical_or to compare against valid_max and valid_min, then update the mask with _FillValue. They also want to set NaNs using numpy.where and create a masked array with masked_where. The sub-query here should focus on handling _FillValue, applying masks, and preprocessing steps with NumPy functions.
+
+Lastly, the Plotting and Visualization. The user is using Basemap with a cylindrical projection, setting boundaries, adding coastlines, drawing parallels and meridians, scatter plot with color mapping, colorbar positioning, and title. The sub-query needs to address using Basemap for projection, configuring map elements, scatter plot setup, colorbar with metadata units, and setting the title with the file name and decoded long_name.
+
+I need to make sure each sub-query is specific to its domain: h5py for HDF5 access, NumPy for preprocessing, and Basemap for visualization. Avoid any overlap and ensure each part is clearly separated as per the user's instructions. Also, check that the sub-queries don't include code but rather ask about the methods or steps involved in each part.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to read datasets from an HDF5 file at paths `/Soil_Moisture_Retrieval_Data/soil_moisture`, `/Soil_Moisture_Retrieval_Data/latitude`, and `/Soil_Moisture_Retrieval_Data/longitude`, including extracting metadata attributes like `units`, `long_name` (with ASCII decoding and string replacement), `_FillValue`, `valid_max`, and `valid_min`?
+
+NumPy Data Preprocessing Sub-query:
+How to identify invalid data in a NumPy array by comparing values against `_FillValue`, `valid_max`, and `valid_min` using `np.logical_or`, apply masking with `np.ma.masked_where`, and replace invalid values with NaN using `np.where`?
+
+Plotting and Visualization Sub-query:
+How to use `mpl_toolkits.basemap.Basemap` to create a cylindrical projection map with boundaries (-90 to 90 latitude, -180 to 180 longitude), add coastlines, draw parallels/meridians at 45° intervals, create a scatter plot with longitude/latitude coordinates and soil moisture data as color (using `cmap=plt.cm.jet`), add a bottom-positioned colorbar with metadata units, and set a title combining the HDF5 filename and decoded `long_name`?

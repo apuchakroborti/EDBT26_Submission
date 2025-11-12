@@ -1,0 +1,17 @@
+Need to write Python code that reads an HDF5 file and creates a map visualization. Here's what I've found so far:
+
+The code starts by importing necessary libraries, including `os`, `matplotlib`, `numpy`, `mpl_toolkits.basemap`, and `h5py`.
+
+It then sets the font size to 9 using `matplotlib`'s `rcParams` dictionary.
+
+The code defines constants and variables, such as the HDF5 file name (`FILE_NAME`) and a dataset path within the file (`name`, e.g., "/S2/solarAzimuthAngle").
+
+Next, it reads the HDF5 file using `h5py` and extracts several datasets: `data` (at `/S2/solarAzimuthAngle`), `units` (from the dataset attributes), and `_FillValue` (also from the attributes). It replaces any values in `data` equal to `_FillValue` with `NaN` and creates a masked array.
+
+The code also extracts geolocation data: `latitude` and `longitude` datasets at paths `/S2/Latitude` and `/S2/Longitude`, respectively.
+
+It then creates a `Basemap` instance with settings like cylindrical projection, low resolution, and specific corner latitudes and longitudes. The code draws coastlines, parallels, and meridians using the `Basemap` instance.
+
+The main plot is created by scattering `data` values at corresponding `latitude` and `longitude` coordinates, customized with a jet colormap, point size 1, and no edges or lines.
+
+Finally, the code creates a colorbar with the units of the `data` dataset and saves the plot to a PNG file constructed from the HDF5 file base name and ".py.png".

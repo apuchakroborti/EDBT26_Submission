@@ -1,0 +1,44 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code imports:
+- `os`: for operating system dependent functionality
+- `matplotlib.pyplot as plt`: for creating visualizations
+- `numpy as np`: for efficient numerical computation
+- `mpl_toolkits.basemap as Basemap`: for geospatial operations and map projection
+- `h5py`: to interact with HDF5 files
+
+**Defining the file name and opening the HDF5 file**
+
+The file name is defined: "SMAP_L3_SM_P_20200916_R19240_001.h5". The file is opened in read mode (`mode="r"`).
+
+**Accessing and processing the soil moisture data**
+
+Inside the `with` block:
+- `name = "/Soil_Moisture_Retrieval_Data_AM/soil_moisture"`: defines the path to the soil moisture dataset
+- `data = f[name][:]`: reads the entire soil moisture dataset
+- `units = f[name].attrs["units"]`: accesses the units attribute of the dataset
+
+**Handling invalid data and replacing with NaN**
+
+The code checks for invalid values:
+- `invalid = np.logical_or(data > valid_max, data < valid_min)` : checks if any values are outside the valid range
+- `data[invalid] = np.nan` : replaces invalid values with NaN
+- `data = np.ma.masked_where(np.isnan(data), data)` : masks the dataset where NaN values exist
+
+**Creating a map and plotting the soil moisture data**
+
+The code:
+- Creates a cylindrical map projection using Basemap: `m = Basemap(projection="cyl", resolution="l", llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-180, urcrnrlon=180)`
+- Draws coastlines and grid lines on the map
+- Plots the soil moisture data on the map: `m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, linewidth=0)`
+
+**Creating a color bar and saving the plot**
+
+The code:
+- Creates a color bar for the plot: `cb = m.colorbar(location="bottom", pad="10%")`
+- Sets the label of the color bar: `cb.set_label(units)`
+- Saves the plot to a PNG file: `fig.savefig(pngfile)`
+
+This script can be used to visualize soil moisture data from a SMAP L3 HDF5 file.

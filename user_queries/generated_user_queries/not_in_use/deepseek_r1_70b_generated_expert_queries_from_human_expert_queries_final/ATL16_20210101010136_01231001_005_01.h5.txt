@@ -1,0 +1,26 @@
+1. Import necessary libraries: os for system operations, matplotlib and pyplot for plotting, numpy for numerical computations, mpl_toolkits.basemap for map projections.
+
+2. Define a constant FILE_NAME pointing to the HDF5 file "ATL16_20210101010136_01231001_005_01.h5".
+
+3. Open the HDF5 file in read mode and access three datasets: global_grid_lat (latitude), global_grid_lon (longitude), and global_asr (main data).
+
+4. Extract attributes from the main dataset:
+   - units using decode('ascii', 'replace')
+   - long_name using decode('ascii', 'replace')
+   - _FillValue
+
+5. Convert main data to float type.
+
+6. Replace _FillValue in the main data with numpy NaN and mask data where values are NaN using numpy's masked_where.
+
+7. Create a map using cylindrical projection, low resolution, with latitude from -90 to 90 and longitude from -180 to 180.
+
+8. Add coastlines with line width 0.5, parallels at intervals of 30 degrees starting from -90, and meridians every 45 degrees.
+
+9. Adjust longitude values by subtracting 180 before plotting.
+
+10. Use pcolormesh to plot data with latlon=True, using the adjusted longitude and latitude coordinates.
+
+11. Add a colorbar below the map labeled with the main dataset's units.
+
+12. Set the title of the map to include the HDF5 file's basename and the long_name attribute from the dataset.

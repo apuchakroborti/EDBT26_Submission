@@ -1,0 +1,49 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            To create a violin plot using Seaborn, you should use data from a h5 file named "99_h5_data.h5" 
+which includes datasets `total_bill`, `tip`, `sex`, `smoker`, `day`, `time`, and `size`. 
+The plot should focus on comparing the 'Total_Bill' amounts for different 'Day' values (days of the week), 
+with a distinction between 'smoker' and 'non-smoker' categories. Implement split violins for this purpose, 
+and within each violin, use quartiles to represent the data distribution. The color scheme should be green for smokers and grey for non-smokers. Adopt a dark style theme for the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to access datasets named 'total_bill', 'tip', 'sex', 'smoker', 'day', 'time', and 'size' from an h5 file using `h5py`. How to retrieve data from specific dataset paths within the HDF5 file.
+
+NumPy Data Preprocessing Sub-query:
+How to handle missing or invalid values (e.g., `_FillValue`) within the retrieved NumPy arrays. How to apply masks to filter data based on conditions related to 'smoker' and 'day' variables.
+
+Plotting and Visualization Sub-query:
+How to create split violin plots using Seaborn to compare 'Total_Bill' for different 'Day' values, distinguishing between 'smoker' and 'non-smoker' categories. How to customize the plot with specific colors (green for smokers, grey for non-smokers), quartiles, and a dark style theme.

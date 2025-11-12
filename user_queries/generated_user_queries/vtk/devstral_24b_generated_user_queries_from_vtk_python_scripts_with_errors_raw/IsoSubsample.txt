@@ -1,0 +1,48 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to show how high-frequency details can get lost or distorted when we reduce the resolution of an image. It demonstrates this using two different methods on a 3D image of a skull.
+
+### Step-by-Step Explanation
+
+1. Setting Up:
+   - The script starts by importing some tools and libraries that help with handling images, colors, and rendering (displaying) them on screen.
+
+2. Reading the Image:
+   - It reads an image file named 'IsoSubsample_FullHead.mhd'. This is like opening a picture of a skull in 3D.
+
+3. Creating Two Processing Pipelines:
+   - The script sets up two different ways to process this image, which we'll call "smoothed" and "unsmoothed".
+
+4. Smoothed Pipeline:
+   - First, it applies a smoothing filter to the image. This is like blurring the picture slightly to reduce sharp details.
+   - Then, it reduces the resolution of the smoothed image by 4 times in two dimensions (like making the picture smaller).
+   - Next, it creates an "isosurface" from this smoothed and reduced image. An isosurface is a 3D shape that represents a specific value within the volume data.
+   - Finally, it sets up how to display this processed image on screen.
+
+5. Unsmoothed Pipeline:
+   - It directly reduces the resolution of the original image by 4 times in two dimensions (without smoothing).
+   - Then, it creates an isosurface from this unsmoothed and reduced image.
+   - Finally, it sets up how to display this processed image on screen.
+
+6. Setting Up the Display:
+   - The script prepares a window that will show both images side by side.
+   - It sets up two separate viewing areas (like dividing a TV screen into left and right halves).
+   - Each area is assigned one of the processed images: the unsmoothed image on the left, and the smoothed image on the right.
+
+7. Configuring the View:
+   - It adjusts the camera angles for both views to make sure we see the 3D shapes properly.
+   - It sets different background colors for each viewing area so they're easy to tell apart.
+   - Finally, it sizes the window and gives it a title: "IsoSubsample".
+
+8. Displaying Everything:
+   - The script opens up a window showing both images side by side.
+   - You can interact with this window using your mouse or keyboard.
+
+### What It Shows
+When you run this script, you'll see two 3D skull images side by side:
+- On the left: A version that was reduced in resolution without smoothing first. This might look distorted because high-frequency details (sharp edges) got mixed up.
+- On the right: A version that was smoothed before reducing its resolution. This looks cleaner and less distorted.
+
+### Why It's Useful
+This script helps visualize what happens when you reduce the resolution of detailed images. It shows why it's important to smooth or filter high-frequency details first, otherwise, you get artifacts (unwanted distortions) in your final image.

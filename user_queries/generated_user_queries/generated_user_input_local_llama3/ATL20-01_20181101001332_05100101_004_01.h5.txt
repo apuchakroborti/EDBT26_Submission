@@ -1,0 +1,67 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing various Python libraries:
+```python
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.basemap import Basemap
+import h5py
+```
+These libraries are used for file I/O, plotting, numerical computations, and working with HDF5 files.
+
+**Accessing dataset variables**
+
+The code then accesses various datasets within the HDF5 file:
+```python
+latvar = f["/grid_lat"]
+latitude = latvar[:]
+lonvar = f["/grid_lon"]
+longitude = lonvar[:]
+dset_name = "/monthly/mean_fb"
+datavar = f[dset_name]
+data = datavar[:]
+```
+Here, we're accessing three datasets: `/grid_lat`, `/grid_lon`, and `/monthly/mean_fb`.
+
+**Handling FillValue and masking**
+
+The code then handles the `_FillValue` attribute in the FB dataset:
+```python
+data[data == _FillValue] = np.nan
+data = np.ma.masked_where(np.isnan(data), data)
+```
+Here, we replace any values equal to `_FillValue` with `NaN` (Not a Number) and then mask the entire array using NumPy's masked arrays.
+
+**Creating a Basemap**
+
+The code creates a Basemap object for plotting:
+```python
+m = Basemap(projection="npstere", resolution="l", boundinglat=60, lon_0=-45)
+```
+This sets up a polar stereographic projection (NPSTERE) with a resolution of `l` (low), and a bounding latitude of 60° and longitude of -45°.
+
+**Plotting the data**
+
+The code then plots the FB data using the Basemap:
+```python
+m.drawcoastlines(linewidth=0.5)
+m.drawparallels(np.arange(-90.0, 120.0, 30.0))
+m.drawmeridians(np.arange(-180, 180.0, 45.0))
+longitude = longitude - 180
+m.pcolormesh(longitude, latitude, data, latlon=True)
+cb = m.colorbar(location="bottom")
+```
+Here, we plot the FB data using `pcolormesh` and add a color bar to the plot.
+
+**Saving the plot**
+
+The code then saves the plot as a PNG file:
+```python
+fig = plt.gcf()
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+Here, we save the plot to a PNG file.

@@ -1,0 +1,42 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing modules**
+
+The code imports several Python modules: `os`, `matplotlib.pyplot` (aliased as `plt`), `numpy` (aliased as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Defining constants**
+
+The code defines a constant, `FILE_NAME`, which is the name of the HDF5 file to be read.
+
+**Reading the HDF5 file**
+
+The code opens the HDF5 file in read mode (`'r'`) using `h5py` and accesses several datasets and attributes within the file:
+
+* `/Geophysical_Data/sm_profile`: a dataset containing the main data of interest.
+* Attributes associated with the `sm_profile` dataset, such as `units`, `long_name`, `_FillValue`, `valid_max`, and `valid_min`.
+
+**Data processing**
+
+The code processes the `sm_profile` data by:
+
+* Reading the entire dataset into memory using `f[name][:]`.
+* Creating a mask for invalid data and setting it to NaN.
+* Creating a masked array using `np.ma.masked_where()`.
+
+**Getting geolocation data**
+
+The code accesses two more datasets: `/cell_lat` and `/cell_lon`, which contain latitude and longitude values, respectively.
+
+**Plotting the data**
+
+The code uses Matplotlib and Basemap to create a map by:
+
+* Creating a Basemap object with a cylindrical projection (`'cyl'`) and setting the resolution to `'l'`.
+* Defining the latitudinal and longitudinal limits of the map.
+* Drawing coastlines, parallels, and meridians on the map.
+* Scattering the longitude and latitude values on the map, coloring them according to the `sm_profile` data using a jet colormap (`plt.cm.jet`).
+* Adding a colorbar at the bottom of the plot with a label showing the units.
+
+**Saving the plot**
+
+Finally, the code saves the plot to a PNG file with the same base name as the HDF5 file, but with a `.py.png` extension.

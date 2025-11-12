@@ -1,0 +1,44 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The first three lines import Python modules:
+1. `os`: The operating system module for interacting with the file system.
+2. `h5py`: A library for working with HDF5 files.
+
+**Defining constants and opening the HDF5 file**
+
+The next two lines define constants:
+1. `FILE_NAME`: The name of the HDF5 file to be accessed.
+2. `DATAFIELD_NAME`: The path within the HDF5 file to access a specific dataset (data field).
+
+We open the HDF5 file using the `h5py` library:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+Within the `with` block, we read data from the HDF5 file.
+
+**Reading and processing data**
+
+1. We access the dataset specified by `DATAFIELD_NAME`: `dset = f[DATAFIELD_NAME]`.
+2. We read all the data from this dataset using slicing: `data = dset[:]`.
+3. We create a meshgrid of longitude and latitude values:
+```python
+lon, lat = np.meshgrid(x, y)
+```
+4. We concatenate these arrays with the original `data` array to create a single NumPy array:
+```python
+a = np.array([lon.flatten(), lat.flatten(), data.flatten()])
+```
+
+**Saving the data to a CSV file**
+
+1. We extract the base name of the HDF5 file: `basename = os.path.basename(FILE_NAME)`.
+2. We save the processed data to a CSV file:
+```python
+np.savetxt('{0}.csv.py.csv'.format(basename), a.T, delimiter=',', 
+           header='lon,lat,omi_no2')
+```
+
+Note that I removed some of the explanatory text and focused on the key implementation details. Let me know if you'd like me to make any further changes!

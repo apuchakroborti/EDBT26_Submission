@@ -1,0 +1,43 @@
+Purpose
+This script creates a 3D visualization (like a fancy picture) of a protein molecule. It reads data from a file and then uses that data to show how the protein looks in three dimensions on your screen.
+
+Step-by-Step Explanation
+
+1. Importing Tools:
+   - The script starts by importing various tools it needs to do its job. These are like different ingredients you'd need for cooking a meal. Each tool has a specific purpose, such as reading data from files or creating colors.
+
+2. Setting Up the Scene:
+   - Imagine you're setting up a stage for a play. The script creates an empty space (like a blank canvas) where it will later draw the protein.
+   - It sets up a window and a renderer, which is like having a projector and a screen ready to show the 3D image.
+
+3. Reading Data:
+   - Now, the script needs data about the protein. It reads this information from a file called 'SimpleRayCast_ironProt.vtk'. Think of it as opening a recipe book to get instructions on how to cook something.
+
+4. Creating Color and Opacity Maps:
+   - The script defines how different parts of the protein should look in terms of color and transparency (opacity).
+   - It creates rules for what colors will be used at different points in the data, like saying "this part should be red" or "that part should be blue".
+   - It also decides which parts should be more transparent or opaque. For example, some parts might be almost see-through while others are solid.
+
+5. Setting Up Properties:
+   - The script sets up properties for how the protein will look when it's rendered (drawn) on the screen.
+   - This includes things like making sure the colors blend smoothly and that the surface of the protein looks shiny or matte.
+
+6. Creating the Mapper:
+   - A mapper is like a guide that knows how to take the data from the file and turn it into something you can see on your screen.
+   - The script tells this mapper where to get its data (from the reader) and what rules to follow for colors and transparency.
+
+7. Creating the Volume:
+   - Now, the script creates a "volume" which is like a container that holds all the information about how the protein should look.
+   - It combines the mapper (the guide) with the properties (how it looks) into this volume.
+
+8. Adding to the Scene:
+   - The script adds this volume to the renderer, so now the protein will be part of what gets shown on the screen.
+   - It sets up some background colors and adjusts the camera angle to get a good view of the protein.
+
+9. Displaying Everything:
+   - Finally, it tells the window how big to be (600x600 pixels) and gives it a name ("SimpleRayCast").
+   - The script then renders everything, which means it draws the protein on the screen.
+   - It starts an interactive mode so you can move around and look at the protein from different angles.
+
+Summary
+In simple terms, this script takes data about a protein molecule, decides how to color and shade it, and then creates a 3D image that you can see and interact with on your computer screen. It's like creating a virtual model of something very small so you can study it more easily.

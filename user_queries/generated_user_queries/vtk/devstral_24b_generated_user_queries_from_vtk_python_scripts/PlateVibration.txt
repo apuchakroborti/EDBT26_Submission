@@ -1,0 +1,76 @@
+This Python script creates a visualization of beam displacement from the VTK Textbook (Figure 6-14(a)). Here's a step-by-step description:
+
+### Imports
+The following Python libraries are imported:
+- `vtkmodules.vtkInteractionStyle`
+- `vtkmodules.vtkRenderingOpenGL2`
+- `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+- `vtkPolyDataNormals`, `vtkVectorDot` from `vtkmodules.vtkFiltersCore`
+- `vtkWarpVector` from `vtkmodules.vtkFiltersGeneral`
+- `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+- `vtkPolyDataReader` from `vtkmodules.vtkIOLegacy`
+- `vtkActor`, `vtkDataSetMapper`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+### Main Function
+The main function is defined as follows:
+
+1. **File Name Definition**
+   - The variable `file_name` is set to `'PlateVibration_plate.vtk'`.
+
+2. **Color Setup**
+   - An instance of `vtkNamedColors` is created and assigned to the variable `colors`.
+   - Colors are set using:
+     ```python
+     colors.SetColor('PlateColor', [255, 160, 140, 255])
+     colors.SetColor('BkgColor', [65, 99, 149, 255])
+     ```
+
+3. **Reading the VTK File**
+   - A `vtkPolyDataReader` object named `plate` is created.
+   - The file name for the reader is set to `file_name`.
+   - The reader updates its data and retrieves bounds from the output.
+   - Vectors are named 'mode2'.
+
+4. **Processing the Data**
+   - A `vtkPolyDataNormals` object named `normals` is created with the plate's output as input.
+   - A `vtkWarpVector` object named `warp` is created, taking normals' output and setting a scale factor of 0.5.
+   - A `vtkVectorDot` object named `color` takes warp's output.
+
+5. **Creating the Plate Actor**
+   - A `vtkDataSetMapper` object named `plateMapper` is created with warp's output as input.
+   - A `vtkActor` object named `plateActor` is created, setting its mapper to `plateMapper`.
+   - The actor's color property is set using 'PlateColor'.
+   - The plate actor is rotated by -90 degrees on the X-axis.
+
+6. **Creating the Outline**
+   - A `vtkOutlineFilter` object named `outline` takes the plate's output as input.
+   - A `vtkPolyDataMapper` object named `spikeMapper` is created with outline's output as input.
+   - An `vtkActor` object named `outlineActor` is created, setting its mapper to `spikeMapper`.
+   - The outline actor is rotated by -90 degrees on the X-axis and colored white.
+
+7. **Setting Up Rendering**
+   - A `vtkRenderer` object named `ren` is created.
+   - A `vtkRenderWindow` object named `renWin` is created, adding the renderer to it.
+   - A `vtkRenderWindowInteractor` object named `iren` is created and set with `renWin`.
+
+8. **Adding Actors and Setting Render Properties**
+   - The plate actor and outline actor are added to the renderer.
+   - The render window size is set to 500x500 pixels, and its name is set to 'PlateVibration'.
+   - The background color of the renderer is set using 'BkgColor'.
+
+9. **Camera Setup**
+   - The camera position is set to (-3.7, 13, 15.5).
+   - The clipping range for the camera is reset.
+
+10. **Rendering and Interaction**
+    - The render window renders the scene.
+    - The interactor starts, allowing user interaction with the rendered image.
+
+### Execution
+The script executes the `main()` function if it's run as the main module:
+```python
+if __name__ == '__main__':
+    main()
+```
+
+This completes the step-by-step description of the Python script.

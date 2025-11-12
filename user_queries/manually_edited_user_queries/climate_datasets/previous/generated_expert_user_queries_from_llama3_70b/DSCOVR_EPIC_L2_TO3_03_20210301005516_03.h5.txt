@@ -1,0 +1,56 @@
+Here's a step-by-step explanation of the Python code:
+
+**Step 1: Import necessary libraries**
+
+The code starts by importing various Python libraries:
+* `os`: for file system operations
+* `h5py`: for working with HDF5 files
+* `matplotlib` and `matplotlib.pyplot`: for plotting and visualization
+* `cartopy.crs`: for geographic projections and mapping
+* `numpy`: for numerical computations
+
+**Step 2: Define constants and file name**
+
+The code defines a constant `FILE_NAME` with the value `'DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5'`, which is the name of the HDF5 file to be processed.
+
+**Step 3: Open the HDF5 file**
+
+The code opens the HDF5 file in read mode (`mode='r'`) using `h5py.File`. The file object is assigned to the variable `f`.
+
+**Step 4: Read data and attributes**
+
+The code reads data from the `/Ozone` dataset in the HDF5 file using `f[name][:].astype(np.float64)`, where `name` is the path to the dataset. It also reads attributes such as units (`units = 'DU'`) and long name (`long_name = 'Ozone'`).
+
+**Step 5: Read geolocation data**
+
+The code reads latitude and longitude data from the `/Latitude` and `/Longitude` datasets, respectively.
+
+**Step 6: Handle FillValue**
+
+The code sets a constant `_FillValue` to `-999.0`, which represents missing or invalid values in the data. It then replaces these values with `NaN` (Not a Number) using NumPy's `nan` function and masks them using `np.ma.masked_where`.
+
+**Step 7: Find middle location**
+
+The code finds the middle latitude and longitude values by taking the mean of the latitude and longitude arrays.
+
+**Step 8: Create an orthographic projection**
+
+The code creates an orthographic projection using Cartopy's `Orthographic` class, centered at the middle latitude and longitude values.
+
+**Step 9: Plot data on a map**
+
+The code plots the ozone data on a map using Matplotlib's `scatter` function, with the x-axis representing longitude, y-axis representing latitude, and color representing the ozone values. The plot is transformed to the Plate Carree projection.
+
+**Step 10: Add gridlines, coastlines, and labels**
+
+The code adds gridlines, coastlines, and degree labels to the map using Cartopy's `gridlines` and `coastlines` functions.
+
+**Step 11: Create a colorbar**
+
+The code creates a colorbar using Matplotlib's `colorbar` function, with the label set to the units of the ozone data (`'DU'`).
+
+**Step 12: Add title and save image**
+
+The code adds a title to the plot using the file name and long name of the dataset. Finally, it saves the image as a PNG file using Matplotlib's `savefig` function.
+
+From the program's perspective, this code is designed to visualize ozone data from an HDF5 file, specifically a LaRC ASDC DSCOVR_EPIC L2 Swath file. The code reads the data and attributes from the file, handles missing values, and plots the data on a map using an orthographic projection.

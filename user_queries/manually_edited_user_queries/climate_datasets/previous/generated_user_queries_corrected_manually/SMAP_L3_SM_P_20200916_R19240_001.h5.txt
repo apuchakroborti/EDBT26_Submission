@@ -1,0 +1,18 @@
+a Python code. Here's what it does:
+
+**Importing Libraries and Defining Constants**
+
+The code imports necessary libraries and defines a constant `FILE_NAME` for the HDF5 file to be read.
+
+**Reading Data from HDF5 File**
+
+It opens the HDF5 file, reads data from `/Soil_Moisture_Retrieval_Data_AM/soil_moisture`, retrieves attributes like units and valid range, creates a mask for invalid data, and replaces it with NaN values.
+
+**Reading Geolocation Data**
+
+It reads geolocation data from `/Soil_Moisture_Retrieval_Data_AM/latitude` and `/Soil_Moisture_Retrieval_Data_AM/longitude`.
+
+**Creating a Map and Visualizing Data**
+
+The code creates a map using Basemap, draws coastlines and parallels, scatters the data points, and adds a colorbar. 
+Finally, it saves the plot as a PNG file with a title based on the HDF5 file name and dataset long name.

@@ -1,0 +1,36 @@
+A Python script that processes and visualizes data from an HDF5 file using specific libraries and steps:
+
+1. Import Libraries: Include os, numpy as np, mpl_toolkits.basemap import Basemap, and matplotlib.pyplot as plt.
+
+2. Define File: Use the HDF5 file 'SMAP_L4_SM_gph_20200915T193000_Vv7032_001.h5'.
+
+3. Open File: Access the file in read-only mode.
+
+4. Read Datasets:
+   - Extract `sm_profile` from the group `Geophysical_Data` into an array called `data`.
+   - Read latitude from `/cell_lat/` and longitude from `/cell_lon/`.
+
+5. Extract Attributes: From `sm_profile`, retrieve units, long_name, _FillValue, valid_max, and valid_min.
+
+6. Decode Parameters: Use ascii decoding for units and long_name.
+
+7. Identify Invalid Data:
+   - Use numpy's logical_or to find data beyond valid_max or below valid_min.
+   - Update with data equal to _FillValue.
+
+8. Set NaN Values: Replace invalid data with numpy NaNs.
+
+9. Create Masked Array: Apply numpy masked_where using isnan(data) and the data itself.
+
+10. Map Setup:
+    - Use Basemap for an equidistant cylindrical projection, low resolution.
+    - Draw coastlines with linewidth 0.5.
+    - Set parallels at from the result of nummpy array (start, stop, interval) with parameters [-180, 91, 45] 
+    and meridians at from the values of nummpy array (start, stop, interval) [-180, 180, 45].
+
+11. Data Visualization:
+    - Scatter plot with longitude, latitude, data, s=1, cmap=jet, no edgecolor or linewidth.
+
+12. Colorbar and Title:
+    - Add colorbar labeled with units from sm_profile.
+    - Set title as the concatenation of the HDF5 file's basename and sm_profile's long_name, font size 10.

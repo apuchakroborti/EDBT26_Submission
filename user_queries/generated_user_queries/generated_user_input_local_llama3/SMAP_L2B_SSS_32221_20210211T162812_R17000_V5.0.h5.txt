@@ -1,0 +1,94 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports various Python libraries:
+* `os` for interacting with the operating system.
+* `matplotlib` (aliased as `mpl`) and its module `pyplot` (aliased as `plt`) for plotting.
+* `Basemap` for creating maps.
+* `numpy` (aliased as `np`) for numerical computations.
+
+**Importing HDF5 library**
+
+The code imports the `h5py` library:
+```python
+import h5py
+```
+
+**Defining file name and opening HDF5 file**
+
+The code defines a file name (`FILE_NAME`) and opens an HDF5 file using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+
+**Accessing dataset variables**
+
+Inside the `with` block, the code accesses several datasets within the HDF5 file:
+```python
+latvar = f['/lat']
+latitude = latvar[:]
+...
+```
+Here's what each line does:
+
+* Access the `/lat` dataset and extract its values as a NumPy array.
+
+**Handling FillValue**
+
+The code handles the `FillValue` attribute in the dataset:
+```python
+data[data == _FillValue] = np.nan
+data = np.ma.masked_where(np.isnan(data), data)
+```
+Here's what each line does:
+
+* Replace `FillValue` with NaN values in the data, then mask out any NaN values.
+
+**Creating a map**
+
+The code creates an equidistant cylindrical projection using the Basemap library:
+```python
+m = Basemap(projection='cyl', resolution='l',
+            llcrnrlat=-90, urcrnrlat=90,
+            llcrnrlon=-180, urcrnrlon=180)
+...
+```
+Here's what each line does:
+
+* Create a Basemap object with the specified projection and resolution.
+* Draw coastlines, parallels, and meridians on the map.
+
+**Plotting data**
+
+The code plots the data on the map:
+```python
+m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet,
+          edgecolors=None, linewidth=0)
+...
+```
+Here's what each line does:
+
+* Plot the data as a scatter plot on the map.
+
+**Adding labels and title**
+
+The code adds labels and a title to the plot:
+```python
+plt.title('{0}\n{1}'.format(basename, long_name))
+...
+```
+Here's what each line does:
+
+* Set the title of the plot with the file name and long name.
+
+**Saving the plot**
+
+The code saves the plot as a PNG image:
+```python
+fig.savefig(pngfile)
+```
+Here's what each line does:
+
+* Save the plot to a PNG file with the specified name.

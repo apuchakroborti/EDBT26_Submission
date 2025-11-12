@@ -1,0 +1,74 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries necessary for the script to function:
+
+1. `os`: Used for file operations and environment variable manipulation.
+2. `matplotlib` and `matplotlib.pyplot`: Used for creating visualizations and plotting data.
+3. `mpl_toolkits.basemap`: Used for creating maps and geospatial visualizations.
+4. `numpy`: Used for numerical computations and array operations.
+
+**Defining the `run` Function**
+
+The `run` function is defined, which takes a single argument `FILE_NAME`. This function is responsible for:
+
+1. Reading an HDF5 file (AG100.v003.64.-089.0001.h5) using either NetCDF4 or h5py libraries.
+2. Extracting data from the file, including:
+	* Emissivity data (Mean) for Band 10.
+	* Geolocation data (Latitude and Longitude).
+	* Attribute data (Description).
+3. Applying fill values and scaling to the emissivity data.
+4. Creating a map visualization using Basemap.
+
+**NetCDF4 vs h5py**
+
+The script uses two different libraries to read HDF5 files: NetCDF4 and h5py. The `USE_NETCDF4` variable determines which library is used. If set to `True`, NetCDF4 is used; otherwise, h5py is used.
+
+**Reading Data with NetCDF4**
+
+If using NetCDF4:
+
+1. Open the HDF5 file using `Dataset`.
+2. Extract the Emissivity data (Mean) for Band 10 from the 'Emissivity' group.
+3. Retrieve geolocation data (Latitude and Longitude) from the 'Geolocation' group.
+4. Read attribute data (Description) from the Emissivity variable.
+
+**Reading Data with h5py**
+
+If using h5py:
+
+1. Open the HDF5 file in read mode (`mode='r'`) using `h5py.File`.
+2. Extract the Emissivity data (Mean) for Band 10 from the '/Emissivity/Mean' dataset.
+3. Retrieve geolocation data (Latitude and Longitude) from the '/Geolocation/Latitude' and '/Geolocation/Longitude' datasets.
+4. Read attribute data (Description) from the Emissivity dataset.
+
+**Data Processing**
+
+The script applies fill values and scaling to the emissivity data:
+
+1. Replace -9999 values with NaN (Not a Number).
+2. Scale the data by multiplying it by 0.001.
+
+**Map Visualization**
+
+Using Basemap, the script creates a map visualization:
+
+1. Define an equidistant cylindrical projection.
+2. Draw coastlines and parallels/meridians.
+3. Create a pseudocolor mesh plot of the emissivity data using `pcolormesh`.
+4. Add a colorbar with a label.
+
+**Plot Customization**
+
+The script customizes the plot:
+
+1. Set the title to include the file name and long name (Mean Emissivity for Band 10).
+2. Add a text description at the bottom of the plot.
+3. Save the figure as a PNG file using `fig.savefig`.
+
+**Main Script**
+
+The main script checks if the environment variable `HDFEOS_ZOO_DIR` is set, and if so, uses it to construct the full path to the input HDF5 file. Otherwise, it looks for the file in the current working directory.
+
+Finally, the script calls the `run` function with the constructed file name as an argument.

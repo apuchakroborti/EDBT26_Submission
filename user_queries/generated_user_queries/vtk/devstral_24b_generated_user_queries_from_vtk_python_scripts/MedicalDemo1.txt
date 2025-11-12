@@ -1,0 +1,62 @@
+This Python script is designed to visualize a 3D model of skin extracted from a CT dataset of the head using VTK (Visualization Toolkit). Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `VTK_VERSION_NUMBER`, `vtkVersion` from `vtkmodules.vtkCommonCore`
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function initializes and sets up the VTK visualization pipeline.
+
+3. **Check VTK Version**:
+   - Use the `vtk_version_ok` function to check if the VTK version is at least 8.2.0, which determines whether to use `vtkFlyingEdges3D`.
+
+4. **Set Colors**:
+   - Define colors for skin (`SkinColor`), backface (`BackfaceColor`), and background (`BkgColor`) using `vtkNamedColors`.
+
+5. **Create Renderer, Window, and Interactor**:
+   - Create a renderer (`a_renderer`), render window (`ren_win`), and interactor (`iren`).
+
+6. **Read the Dataset**:
+   - Use `vtkMetaImageReader` to read the dataset from the file named 'MedicalDemo1_FullHead.mhd'.
+
+7. **Extract Isosurface**:
+   - Depending on the VTK version, either use `vtkFlyingEdges3D` or `vtkMarchingCubes` to extract an isosurface representing the skin at a value of 500.
+
+8. **Map and Display Skin**:
+   - Create a mapper (`skin_mapper`) for the extracted skin surface.
+   - Create an actor (`skin`) with the mapper and set its properties, including diffuse color.
+
+9. **Create Outline**:
+   - Use `vtkOutlineFilter` to create an outline of the dataset.
+   - Map the outline using `vtkPolyDataMapper`.
+   - Create an actor (`outline`) for the outline and set its color.
+
+10. **Set Up Camera**:
+    - Initialize a camera (`a_camera`) with specific view settings (position, focal point, etc.).
+    - Adjust the camera's azimuth and elevation angles.
+
+11. **Add Actors to Renderer**:
+    - Add both the skin actor and outline actor to the renderer.
+    - Set the active camera and reset its position.
+    - Adjust the camera's zoom level using `Dolly()`.
+
+12. **Set Background Color and Window Size**:
+    - Set the background color of the renderer and specify the size of the render window.
+
+13. **Adjust Clipping Planes**:
+    - Reset the clipping range for the camera to ensure proper rendering.
+
+14. **Initialize and Start Event Loop**:
+    - Initialize and start the interactor's event loop with `iren.Initialize()` and `iren.Start()`.
+
+15. **Define VTK Version Check Function**:
+    - The function `vtk_version_ok` checks if the current VTK version meets or exceeds a specified version.
+
+16. **Run Main Function**:
+    - If this script is run as the main module, execute the `main()` function to start the visualization process.

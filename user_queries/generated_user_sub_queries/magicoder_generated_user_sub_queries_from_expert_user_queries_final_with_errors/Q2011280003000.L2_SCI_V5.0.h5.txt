@@ -1,0 +1,91 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that visualizes data from an HDF5 file using the following steps:
+
+1. Import Libraries: Include necessary libraries for handling files, numerical operations, and visualization:
+   
+2. Define Constants: Set the file name constant:
+   - `FILE_NAME = 'Q2011280003000.L2_SCI_V5.0.h5'`
+
+3. Open HDF5 File: Open the specified HDF5 file in read-only mode using a `with` statement, assigning it to variable `f`.
+
+4. Access Data and Attributes:
+   - Extract the `SSS` dataset from the group `Aquarius Data` into `datavar`.
+   - Slice `datavar` to get 1D data by taking all rows from the 0th column.
+   - Retrieve attributes `units`, `long_name`, and `_FillValue` from `datavar`, decoding byte-encoded strings.
+
+5. Extract Latitude and Longitude:
+   - Access `sclat` as a 1D array for latitude data.
+   - Access `sclon` as a 1D array for longitude data.
+   both from the group `Navigation`
+
+6. Handle Fill Values:
+   - Replace `_FillValue` in the SSS dataset with `NaN` to handle missing data.
+   - Create a masked array for efficient management of invalid data points.
+
+7. Create Map Projection:
+   - Use Basemap's cylindrical projection with latitude limits from -90 to 90 and longitude from -180 to 180.
+
+8. Generate Scatter Plot:
+   - Plot data points on the map using longitude as x and latitude as y coordinates.
+   - Apply the `jet` colormap for data representation.
+
+9. Add Colorbar:
+   - Create a colorbar with a label based on the SSS dataset's units attribute for clarity.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+FILE_NAME = 'Q2011280003000.L2_SCI_V5.0.h5'
+with h5py.File(FILE_NAME, 'r') as f:
+    datavar = f['/Aquarius Data/SSS']
+    sclat = f['/Navigation/sclat']
+    sclon = f['/Navigation/sclon']
+```
+NumPy Data Preprocessing Sub-query:
+```python
+datavar[datavar == datavar._FillValue] = np.nan
+masked_array = np.ma.masked_where(np.isnan(datavar), datavar)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+map = Basemap(projection='cyl', llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-180, urcrnrlon=180)
+plt.scatter(sclon, sclat, c=masked_array, cmap='jet')
+cbar = plt.colorbar()
+cbar.set_label(datavar.attrs['units'])
+```

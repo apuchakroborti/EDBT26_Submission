@@ -1,0 +1,44 @@
+=== CHUNK START ===
+Title: Opening and Closing files: 
+
+Explanation:
+If you call File.close(), or leave a with h5py.File(...) block, the file will be closed and any objects (such as groups or datasets) you have from that file will become unusable. 
+This is equivalent to what HDF5 calls ‘strong’ closing.
+If a file object goes out of scope in your Python code, the file will only be closed when there are no remaining objects belonging to it. This is what HDF5 calls ‘weak’ closing.
+
+Code:
+import h5py
+with h5py.File('f1.h5', 'r') as f1:
+    ds = f1['dataset']
+
+# ERROR - can't access dataset, because f1 is closed:
+ds[0]
+
+import h5py
+def get_dataset():
+    f2 = h5py.File('f2.h5', 'r')
+    return f2['dataset']
+ds = get_dataset()
+
+# OK - f2 is out of scope, but the dataset reference keeps it open:
+ds[0]
+
+del ds  # Now f2.h5 will be closed
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Accessing datasets and attributes with open and close a .h5 or .H5 or .HE5 or .he5 or .HDF5 or .hdf5 file: 
+
+Explanation:
+If a file named f1.h5 contains datasets such as 'surface_pressure' and 'subgroup2/dataset_three' and also 'surface_pressure' contains an attribute 'temperature',
+we can open and access both the datasets and attributes like below example code
+
+Code:
+import h5py
+with h5py.File('f1.h5', 'r') as f1:
+    ds = f1['surface_pressure']
+    dataset_three = f1['subgroup2/dataset_three']
+    ds.attrs['temperature']
+
+=== CHUNK END ===

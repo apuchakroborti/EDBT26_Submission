@@ -1,0 +1,96 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - `from pathlib import Path`
+   - `import vtkmodules.vtkInteractionStyle`
+   - `import vtkmodules.vtkRenderingOpenGL2`
+   - `import vtkmodules.vtkRenderingUI`
+   - `from vtkmodules.vtkCommonColor import vtkNamedColors`
+   - `from vtkmodules.vtkCommonCore import vtkCommand`
+   - `from vtkmodules.vtkCommonDataModel import vtkPlane`
+   - `from vtkmodules.vtkFiltersCore import vtkClipPolyData`
+   - `from vtkmodules.vtkFiltersSources import vtkSphereSource`
+   - `from vtkmodules.vtkIOXML import vtkXMLPolyDataReader`
+   - `from vtkmodules.vtkInteractionWidgets import vtkImplicitPlaneRepresentation, vtkImplicitPlaneWidget2`
+   - `from vtkmodules.vtkRenderingCore import vtkActor, vtkPolyDataMapper, vtkProperty, vtkRenderWindow, vtkRenderWindowInteractor, vtkRenderer`
+
+2. Define the Main Function:
+   - The function is named `main` and takes one parameter `fn`.
+
+3. Initialize Named Colors:
+   - Create an instance of `vtkNamedColors` called `colors`.
+
+4. Create a Sphere Source (if no file is provided):
+   - Instantiate `vtkSphereSource` with variable name `sphere_source`.
+   - Set the radius of the sphere to 10.0 using `SetRadius(10.0)`.
+
+5. Check for Input File:
+   - If `fn` is provided, assign it to `fp` as a `Path` object.
+   - Verify that `fp` is an existing file with the `.vtp` extension. If not, print error messages and exit the function.
+
+6. Set Up Visualization Pipeline:
+   - Create a plane using `vtkPlane()` with variable name `plane`.
+   - Instantiate `vtkClipPolyData` with variable name `clipper`.
+   - Set the clip function of `clipper` to `plane` using `SetClipFunction(plane)`.
+   - Enable inside-out clipping using `InsideOutOn()`.
+   - If a file is provided (`fn`), read it using `vtkXMLPolyDataReader`, set its filename, and connect it to `clipper`. Otherwise, connect the sphere source to `clipper`.
+
+7. Create Mapper and Actor:
+   - Instantiate `vtkPolyDataMapper` with variable name `mapper`.
+   - Connect `mapper` to the output of `clipper` using `SetInputConnection(clipper.GetOutputPort())`.
+   - Create an actor using `vtkActor()` with variable name `actor`.
+   - Set the mapper for the actor using `actor.SetMapper(mapper)`.
+
+8. Set Backface Property:
+   - Create a property named `back_faces` using `vtkProperty()`.
+   - Set the diffuse color of `back_faces` to gold using `SetDiffuseColor(colors.GetColor3d('Gold'))`.
+   - Assign this property as the backface property of the actor using `actor.SetBackfaceProperty(back_faces)`.
+
+9. Configure Renderer and Render Window:
+   - Create a renderer named `renderer` using `vtkRenderer()`.
+   - Instantiate `vtkRenderWindow` with variable name `ren_win`.
+   - Add the renderer to the render window using `AddRenderer(renderer)`.
+   - Set the window title to 'ImplicitPlaneWidget2' using `SetWindowName('ImplicitPlaneWidget2')`.
+
+10. Add Actor to Renderer:
+    - Use `renderer.AddActor(actor)` to add the actor to the renderer.
+    - Set the background color of the renderer to slate gray using `renderer.SetBackground(colors.GetColor3d('SlateGray'))`.
+
+11. Set Up Interactor:
+    - Create an interactor named `iren` using `vtkRenderWindowInteractor()`.
+    - Attach the render window to the interactor with `iren.SetRenderWindow(ren_win)`.
+
+12. Define and Configure Callback:
+    - Define a class `IPWCallback` that takes a plane as input in its constructor.
+    - The callback updates the plane based on user interaction.
+    - Instantiate `IPWCallback` with variable name `my_callback`, passing the `plane` object to it.
+
+13. Configure Implicit Plane Representation:
+    - Create an instance of `vtkImplicitPlaneRepresentation` named `rep`.
+    - Set the place factor to 1.25 using `SetPlaceFactor(1.25)`.
+    - Place the widget using the bounds of the actor with `PlaceWidget(actor.GetBounds())`.
+    - Set the normal vector of the plane representation using `SetNormal(plane.GetNormal())`.
+
+14. Create and Configure Implicit Plane Widget:
+    - Instantiate `vtkImplicitPlaneWidget2` with variable name `plane_widget`.
+    - Attach the interactor to the widget using `SetInteractor(iren)`.
+    - Set the representation of the widget to `rep` using `SetRepresentation(rep)`.
+    - Add an observer for interaction events, triggering `my_callback` when such events occur.
+
+15. Adjust Camera and Render:
+    - Adjust the active camera's azimuth to -60 degrees with `renderer.GetActiveCamera().Azimuth(-60)`.
+    - Set the elevation angle to 30 degrees using `renderer.GetActiveCamera().Elevation(30)`.
+    - Reset the camera view with `renderer.ResetCamera()`.
+    - Zoom the camera by a factor of 0.75 using `renderer.GetActiveCamera().Zoom(0.75)`.
+
+16. Initialize and Start Interaction:
+    - Initialize the interactor with `iren.Initialize()`.
+    - Render the scene using `ren_win.Render()`.
+    - Enable the plane widget with `plane_widget.On()`.
+
+17. Start Mouse Interaction:
+    - Begin interaction by calling `iren.Start()`.
+
+18. Main Execution:
+    - When the script is run as the main program, set `file_name` to 'ImplicitPlaneWidget2_cow.vtp'.
+    - Call the `main` function with this file name using `main(file_name)`.

@@ -1,0 +1,20 @@
+The code starts by reading an HDF5 file named `SMAP_L1C_S0_HIRES_02298_A_20150707T160502_R13080_001.h5`. 
+
+It accesses several datasets within the file: 
+`/cell_sigma0_hh_fore` containing sigma-0 data, and `/cell lat` and `/cell lon` containing latitude and longitude data from the group /Sigma0_Data.
+
+The program needs to access attributes such as long name, fill value, valid max and valid min.
+It then decode the long name value using decode function with parameters ascii and replace
+
+then it creates invalid data using numpy logical or with parameters of data > valid max and data < valid min
+then updates the ivalid data using numpy logical or with parameter invalid itself and comparing data with fill value data
+then set the invalid data with numpy NaN value
+
+The code processes the sigma-0 data by marking invalid values as NaN and creating a masked array. 
+
+The script creates a map with projection named cylindrical, sets up its boundaries (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc), 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 91, and 45.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [True, False, False, True] 
+
+Then it adds scatter values such as longitude, latitude, data, cmap such as plt.cm.jet, no edge color and linewidth equal to 0, 
+the colorbar location is bottom and the padding is 10 percent with the label units which is accessed previously from the main dataset solar azimuth angle

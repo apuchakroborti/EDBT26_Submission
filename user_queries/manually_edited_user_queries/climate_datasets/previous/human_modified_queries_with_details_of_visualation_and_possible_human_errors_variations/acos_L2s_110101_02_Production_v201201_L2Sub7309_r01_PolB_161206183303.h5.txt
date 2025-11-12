@@ -1,0 +1,16 @@
+It seems to visualize data from an HDF5 file containing GOSAT ACOS L2 Swath data.
+
+The script starts by defining a constant `FILE_NAME` set to the name of the HDF5 file. Then it opens the file in read-only mode.
+
+It reads various datasets from the file, including:
+- `/RetrievalResults/xco2`: CO2 data
+- `sounding_latitude_geoid`, `sounding_longitude_geoid`, and `sounding_altitude` as latitude, longitude, and altitude data respectively from SoundingGeometry root group
+- `/RetrievalHeader/sounding_time_tai93`: time data
+
+The script also reads attributes from the datasets, including units for CO2 and altitude data.
+it read 0th index data for the attributes
+
+Next, it creates two subplots: an orthographic projection map showing the trajectory of the sounding using latitude and longitude coordinates, 
+and a line plot showing the relationship between time and CO2 data, with a twin plot of time vs. altitude data.
+
+The script customizes the plots by setting axis labels, titles, and tick formats, and saves the plot to a PNG file constructed from the base name of the HDF5 file.

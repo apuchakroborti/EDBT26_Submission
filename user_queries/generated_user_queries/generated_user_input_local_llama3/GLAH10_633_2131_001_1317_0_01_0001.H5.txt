@@ -1,0 +1,28 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The script starts by importing several modules: `os`, `matplotlib`, `Basemap` from `mpl_toolkits.basemap`, and `numpy`.
+
+**Defining a function to run**
+
+A function named `run` is defined, which takes one argument, `FILE_NAME`. This function will be used to access and visualize the NSIDC ICESat/GLAS GLAH10 L2 HDF5 file.
+
+**Accessing HDF5 file using netCDF4 or h5py**
+
+The script uses either `netCDF4` or `h5py` to access the HDF5 file, depending on the value of `USE_NETCDF4`. If `USE_NETCDF4` is `True`, it uses `netCDF4` to:
+
+1. Create a `Dataset` object for the specified file name (`FILE_NAME`).
+2. Access groups and variables within the file using dot notation.
+
+The script extracts variables: `latitude`, `longitude`, `temp`, and `time`.
+
+**Drawing an equidistant cylindrical projection**
+
+The script uses `Basemap` to draw an equidistant cylindrical projection of the Earth, including coastlines, parallels, and meridians.
+
+**Plotting data and saving the plot**
+
+The script plots temperature values (`temp`) as colored points on the map using `matplotlib`, with a color bar (CB). The plot is saved as a PNG file named after the input HDF5 file.
+
+This code provides an example of how to access and visualize an NSIDC ICESat/GLAS GLAH10 L2 HDF5 file in Python, using either `netCDF4` or `h5py`.

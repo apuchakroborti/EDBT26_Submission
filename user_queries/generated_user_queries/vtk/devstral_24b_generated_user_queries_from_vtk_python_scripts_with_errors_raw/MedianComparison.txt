@@ -1,0 +1,50 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to compare two different methods for cleaning up noisy images. It reads an image file, adds some noise (random unwanted pixels) to it, and then applies two different smoothing techniques to see which one works better at reducing the noise.
+
+### Step-by-Step Explanation
+
+#### 1. Setting Up
+The script starts by importing various tools that will help it read, process, and display images. Think of these imports like bringing in specialized equipment for a specific job.
+
+#### 2. Reading the Image
+- File Name: The script knows which image to work with because it's given a file name (`MedianComparison_FullHead.mhd`).
+- Reading the File: It uses a tool (like a scanner) to read this image file into its memory so it can be processed.
+
+#### 3. Understanding the Image
+- Range of Values: The script checks what range of values are in the image (like checking if the colors go from black to white or something else).
+- Middle Slice: It finds the middle slice of the image, which is like finding the center page of a book.
+
+#### 4. Preparing the Image
+- Converting Data Type: The script converts the image data into a format that's easier to work with (like converting a photo from JPEG to PNG).
+- Copying Original Data: It makes a copy of this prepared image so it can compare the original with the processed versions later.
+
+#### 5. Adding Noise
+The script adds random noise to the copied image, making it look worse by adding unwanted pixels. This is like taking a clean photo and then splattering some paint on it randomly.
+
+#### 6. Applying Smoothing Techniques
+- Median Smoothing: The script applies one method (median smoothing) to reduce the noise. Think of this as using a special eraser that carefully removes the unwanted paint without damaging the original image too much.
+- Gaussian Smoothing: It also applies another method (Gaussian smoothing), which is like using a different kind of eraser that blends away the noise.
+
+#### 7. Setting Up Display
+The script prepares to show four versions of the image:
+1. The original clean image
+2. The noisy image
+3. The image after median smoothing
+4. The image after Gaussian smoothing
+
+It sets up a window with four sections (like a grid) so you can see all these images side by side.
+
+#### 8. Displaying the Images
+- Renderers: These are like projectors that show each version of the image in its own section.
+- Viewport Setup: The script arranges where each projector should shine its light on the window (like setting up a movie theater screen).
+- Camera Adjustment: It adjusts the camera so all images are shown clearly and at the right size.
+
+#### 9. Running the Display
+Finally, it starts showing these images in the window. You can interact with this window to see how each smoothing method affects the noisy image compared to the original.
+
+### Summary
+In simple terms, this script takes an image, messes it up by adding noise, and then tries two different ways to clean it up. It shows you the original image, the messy one, and both cleaned-up versions side by side so you can compare them easily. This helps in understanding which cleaning method works better for reducing unwanted noise in images.
+
+This is like having a before-and-after comparison of a photo editing process, but with two different editing techniques shown at once.

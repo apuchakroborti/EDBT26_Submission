@@ -1,0 +1,44 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The first four lines import Python modules:
+1. `os`: for operating system-related functions
+2. `h5py`: a Python library for working with HDF5 files
+3. `_numpy` (as `np`): for numerical computations
+4. `matplotlib` (as `mpl`) and its plotting module (`pyplot` as `plt`): for creating visualizations
+
+**Defining constants**
+
+The next three lines define constants:
+1. `FILE_NAME`: the name of the HDF5 file to be read (`AMSR_E_L2_Land_V11_201110031920_D.he5`)
+2. `DATA_NAME`: the path within the HDF5 file to access the desired data (`/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`)
+3. `FIELD_NAME`: the name of the specific field (or dataset) within the HDF5 file to be accessed (`SoilMoistureSCA`)
+
+**Opening the HDF5 file**
+
+The `with` statement opens the HDF5 file in read-only mode (`'r'`) using the `h5py` library.
+
+**Accessing and processing data**
+
+1. `datas = f[DATA_NAME][:]`: loads the dataset at the specified path into memory.
+2. Extract specific fields from the dataset using their names: `latitude`, `longitude`, and `data`.
+3. Replace `_FillValue_ with `np.nan` to mark missing values.
+
+**Creating a map and plotting**
+
+1. Create a cylindrical projection map with boundaries: `m = Basemap(projection='cyl', resolution='l', llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-170, urcrnrlon=190)`.
+2. Draw coastlines and parallels on the map.
+3. Plot data points on the map using a scatter plot: `m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, linewidth=0)`.
+4. Add a color bar to the plot.
+
+**Adding title and saving the figure**
+
+1. Set the title of the plot with the file name and field name.
+2. Save the plot as a PNG image: `fig.savefig(pngfile)`.
+
+The code includes many implementation details, such as:
+* Using HDF5 file paths and dataset names to access specific data within the file
+* Handling missing or invalid data values using masked arrays
+* Creating a map and plotting data points with a color bar
+* Adding a title and saving the figure to a PNG image

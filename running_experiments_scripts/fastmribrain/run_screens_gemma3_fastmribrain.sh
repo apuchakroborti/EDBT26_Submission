@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Define your screen session names and associated commands
+
+declare -A jobs=(
+  [job2]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --errors True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector.log 2>&1"
+  [job3]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --errors True -c True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector.log 2>&1"
+  [job4]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --errors True --rag True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector.log 2>&1"
+  [job5]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --errors True --rag True -c True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector.log 2>&1"
+  [job6]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_without_corrector.log 2>&1"
+  [job7]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --rag True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_without_corrector.log 2>&1"
+  [job8]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b -c True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_corrector.log 2>&1"
+  [job9]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://localhost:11434/api/generate --model gemma3:27b --rag True -c True --dataset FASTMRIBRAIN_RAG > ./mri_nyu_data/output_logs/gemma3_27b_fastmribrain_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_corrector.log 2>&1"
+)
+
+for job in "${!jobs[@]}"; do
+  echo "Starting $job..."
+  screen -dmS "$job" bash -c "${jobs[$job]}"
+  
+  # Wait until the screen session ends
+  while screen -ls | grep -q "$job"; do
+    sleep 5
+  done
+
+  echo "$job finished."
+done
+
+echo "All jobs completed."

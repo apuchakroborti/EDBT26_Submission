@@ -1,0 +1,121 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Open an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+2. Access the following datasets within the file:
+   - Ozone data: "/HDFEOS/SWATHS/O3/Data Fields/L2gpValue"
+   - Latitude values: "Latitude", Pressure levels: "Pressure", Time information: "Time" from the group `/HDFEOS/SWATHS/O3/Geolocation Fields`
+
+3. Read ozone data from index 0 to 70 along the x-axis and all y-axis data.
+4. Read latitude data from index 0 to 70.
+5. Read pressure data up to index 55.
+6. Extract units and title information from the ozone, latitude, and longitude datasets and also and decods the value.
+
+7. Preprocess the data:
+   - Replace _FillValue with numpy NaN.
+   - Mask ozone data using masked_array where values are NaN.
+
+8. Calculate start and end times using datetime functions relative to "1993-01-01" plus time in seconds from index 0 and 70, respectively, and format these as strings.
+
+9. Create a pcolormesh plot with parameters: latitude, longitude, and ozone data transposed (data.T).
+
+10. Set x-axis label using latitude title and units, and y-axis label using longitude title and units.
+
+11. Set the plot title to include the data title concatenated with start and end times.
+
+12. Configure the plot:
+    - sets gca to plt
+    - Invert the y-axis.
+    - Set y-scale to log.
+    - Format major ticks to display values with one decimal place.
+
+13. Save the plot at the location of the data file and Display the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file in read mode
+with h5py.File('MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5', 'r') as f:
+    # Accessing datasets and attributes
+    ozone = f['/HDFEOS/SWATHS/O3/Data Fields/L2gpValue'][0:70, :]
+    latitudes = f['/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude'][0:70]
+    pressures = f['/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure'][:55]
+    
+    # Extracting units and title information
+    ozone_units = f['/HDFEOS/SWATHS/O3/Data Fields/L2gpValue'].attrs.get('units')
+    latitudes_title = f['/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude'].attrs.get('long_name')
+    pressures_units = f['/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure'].attrs.get('units')
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Replace _FillValue with NaN and mask ozone data using masked_array where values are NaN
+ozone = np.ma.masked_where(ozone == ozone._FillValue, ozone)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Create a pcolormesh plot with parameters: latitude, longitude, and ozone data transposed (data.T)
+m = Basemap(projection='cyl')
+x, y = m(*np.meshgrid(latitudes, pressures))
+plt.pcolormesh(x, y, ozone.T, cmap=plt.cm.jet)
+
+# Set x-axis label using latitude title and units, and y-axis label using longitude title and units
+m.drawparallels(np.arange(-90.,120.,30.), labels=[True,False,False,True], fontsize=10)
+plt.xlabel('%s (%s)' % (latitudes_title, 'degrees'))
+m.drawmeridians(np.arange(0.,420.,60.), labels=[True,False,False,True], fontsize=10)
+plt.ylabel('%s (%s)' % ('Pressure', pressures_units))
+
+# Set the plot title to include the data title concatenated with start and end times
+start_time = '1993-01-01' + str(int(np.round((70 / ozone.shape[1]) * (f['Time'].value - 1))))
+end_time = '1993-01-01' + str(int(np.round((70 / ozone.shape[1]) * f['Time'].value)))
+plt.title('%s: %s to %s' % (f['/HDFEOS/SWATHS/O3/Data Fields/L2gpValue'].attrs.get('long_name'), start_time, end_time))
+
+# Configure the plot
+plt.gca().invert_yaxis()
+plt.yscale('log')
+plt.gca().xaxis.set_major_formatter(plt.FuncFormatter(lambda x, pos: '%.1f' % x))
+
+# Save the plot at the location of the data file and Display the plot
+plt.savefig('MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5.png')
+plt.show()
+```

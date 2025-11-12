@@ -1,0 +1,76 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            
+
+Create a Python script that performs the following steps:
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Open an HDF5 file in read mode using h5py and extract the dataset located at '/S1/Tb', 
+including its 'units' and '_FillValue' attributes. Also, retrieve geolocation data from '/S1/Latitude' and '/S1/Longitude'.
+
+3. Mask NaN values in the '/S1/Tb' dataset using numpy's masked_where function with parameters based on numpy's isnan.
+
+4. Create a cylindrical projection map with specific settings (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc.). 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 91, and 45.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [True, False, False, True] 
+
+5. Plot the dataset as a scatter plot on the map using the 'jet' colormap, setting each point's size to 1.
+
+6. Add a colorbar below the plot with padding of 10% and label it using the units extracted from the '/S1/Tb' dataset.
+
+7. Set the plot title by combining the HDF5 file's basename, the string "/S1/Tb", and "(nchan1=0)".
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per their instructions. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open an HDF5 file and extract specific datasets and attributes. They mentioned using h5py, so I should focus on that. The key points are accessing '/S1/Tb' dataset along with its 'units' and '_FillValue', and also retrieving geolocation data from latitude and longitude paths. So the sub-query should clearly state opening the file, extracting these datasets and attributes.
+
+Next, for NumPy-based Data Preprocessing, the main task is masking NaN values in the '/S1/Tb' dataset using np.masked_where with isnan. I need to ensure that the sub-query specifies this exact method and parameters, focusing solely on handling _FillValue and applying masks.
+
+Lastly, the Plotting and Visualization part involves creating a map with specific projections and settings. The user wants a cylindrical projection with certain latitude and longitude ranges, adding coastlines, parallels, meridians, and then plotting as a scatter plot. Also, adding a colorbar with padding and labeling is important. I should detail each of these steps clearly in the sub-query.
+
+I need to make sure each sub-query is focused on its respective domain without overlapping information. Each should be clear and specific so that when someone looks it up, they can find exactly what's needed for that part of the task.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using h5py, extract the dataset at '/S1/Tb', including its 'units' and '_FillValue' attributes, and retrieve geolocation data from '/S1/Latitude' and '/S1/Longitude'.
+
+NumPy Data Preprocessing Sub-query:
+How to mask NaN values in a NumPy array using np.masked_where with parameters based on np.isnan.
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical projection map using matplotlib, add coastlines, parallels, and meridians with specific settings, plot data as a scatter plot with 'jet' colormap, add a colorbar below the plot with padding of 10%, and set the title based on the HDF5 file's basename.

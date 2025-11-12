@@ -1,0 +1,27 @@
+1. Import Necessary Libraries: Include libraries for OS functions (os), plotting (matplotlib, matplotlib.pyplot), numerical operations (numpy), map projections (mpl_toolkits.basemap), and HDF5 handling.
+
+2. Define Constants: Set `FILE_NAME` to "ATL20-01_20181101001332_05100101_004_01.h5".
+
+3. Open HDF5 File: Access the file in read mode and extract datasets `/grid_lat`, `/grid_lon`, and `/monthly/mean_fb`.
+
+4. Extract Attributes: For each dataset, decode 'units' and 'long_name' using ASCII with replace errors, and retrieve '_FillValue'.
+
+5. Data Processing:
+   - Convert main data to float.
+   - Replace _FillValue with NaN.
+   - Mask data where values are NaN.
+
+6. Create Map Projection: Use npstere with low resolution, boundinglat=60, lon_0=45.
+
+7. Customize Map:
+   - Add coastlines (linewidth=0.5).
+   - Draw parallels at [-90, 120, 30].
+   - Draw meridians at [-180, 180, 45].
+
+8. Adjust Longitude: Subtract 180 from longitude values before plotting.
+
+9. Plot Data: Use pcolormesh with adjusted longitudes and latitudes, setting latlon=True.
+
+10. Add Colorbar and Title:
+    - Position colorbar at the bottom, labeled with dataset units.
+    - Set title using file basename and 'long_name' attribute.

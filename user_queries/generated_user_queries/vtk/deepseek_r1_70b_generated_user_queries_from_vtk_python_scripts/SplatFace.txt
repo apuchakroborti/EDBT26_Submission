@@ -1,0 +1,54 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkmodules.vtkInteractionStyle`
+   - Import `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import `vtkContourFilter`, `vtkMaskPoints`, and `vtkPolyDataNormals` from `vtkmodules.vtkFiltersCore`
+   - Import `vtkPolyDataReader` from `vtkmodules.vtkIOLegacy`
+   - Import `vtkGaussianSplatter` from `vtkmodules.vtkImagingHybrid`
+   - Import `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. Define the Main Function:
+   - Initialize `colors` using `vtkNamedColors()` for color management.
+   - Set `fileName` to `'SplatFace_fran_cut.vtk'`.
+
+3. Create Rendering Objects:
+   - Create a renderer (`ren1`), render window (`renWin`), and render window interactor (`iren`).
+   - Add the renderer to the render window and set the interactor's render window.
+
+4. Read Input File:
+   - Use `vtkPolyDataReader` to read the file specified by `fileName`.
+
+5. Process Data with Filters:
+   - Apply `vtkPolyDataNormals` to compute normals from the reader output.
+   - Use `vtkMaskPoints` to reduce the number of points, setting the ratio to 8.
+   - Apply `vtkGaussianSplatter` to create a volume from the masked points:
+     - Set sample dimensions to (100, 100, 100)
+     - Set eccentricity to 2.5
+     - Enable normal warping
+     - Set scale factor to 1.0 and radius to 0.025
+
+6. Extract Contours:
+   - Use `vtkContourFilter` on the splattered data, setting the contour value to 0.25.
+
+7. Create Mappers and Actors:
+   - Create a mapper (`splatMapper`) for the contour output and disable scalar visibility.
+   - Create an actor (`splatActor`) for the splat data, setting its color to 'Flesh'.
+   - Create another mapper (`cyberMapper`) for the original reader output and disable scalar visibility.
+   - Create an actor (`cyberActor`) for the cyberware data, setting it to wireframe representation with 'Turquoise' color.
+
+8. Configure Renderer:
+   - Add both actors to the renderer.
+   - Set the background color to 'Wheat'.
+   - Set the render window size to 640x480 and title to 'SplatFace'.
+
+9. Set Up Camera:
+   - Create a camera with specific clipping range, focal point, position, view angle, and up vector.
+
+10. Render and Interact:
+    - Render the scene.
+    - Start the interactor to handle user interactions.
+
+11. Run Main Function:
+    - Execute `main()` when the script is run as the main program.

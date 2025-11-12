@@ -1,0 +1,7 @@
+The code starts by reading an HDF5 file named `SMAP_L1C_S0_HIRES_02298_A_20150707T160502_R13080_001.h5`. It accesses several datasets within the file: `/Sigma0_Data/cell_sigma0_hh_fore` containing sigma-0 data, and `/Sigma0_Data/cell_lat` and `/Sigma0_Data/cell_lon` containing latitude and longitude data.
+
+The code processes the sigma-0 data by marking invalid values as NaN and creating a masked array. It then creates a map using Basemap with a cylindrical projection and resolution. The map displays coastlines, parallels, and meridians, and plots the sigma-0 data as a scatter plot.
+
+Finally, the code customizes the plot by setting the color bar label to the units of the data and the title to include the file name and long name of the dataset. It saves the figure as a PNG file.
+
+Note that the code assumes the HDF5 file is in the current working directory, and it doesn't display the plot using `plt.show()`.

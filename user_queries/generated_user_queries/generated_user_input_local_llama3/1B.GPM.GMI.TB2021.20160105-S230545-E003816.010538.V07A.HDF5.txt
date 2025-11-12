@@ -1,0 +1,79 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing various Python libraries:
+```python
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.basemap import Basemap
+import h5py
+```
+These libraries are used for data manipulation, visualization, and HDF5 file handling.
+
+**Setting font size**
+
+The code sets the font size to 9 using Matplotlib's `rcParams`:
+```python
+mpl.rcParams.update({"font.size": 9})
+```
+This is done because the file name is quite long, and a smaller font size will make it easier to read.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    ...
+```
+The `mode="r"` argument specifies that we want to read the file (as opposed to writing or appending). The `with` statement ensures that the file is properly closed when we're done with it.
+
+**Reading a dataset and plotting data**
+
+Within the `with` block, the code reads a specific dataset from the HDF5 file:
+```python
+name = "/S1/Tb"
+data = f[name][:, :, 0]
+...
+m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet)
+```
+Here's what's happening:
+
+* The `scatter` method plots points on the map using the longitude, latitude, and data values.
+* The `c` argument specifies the color of each point based on the corresponding value in the `data` array.
+
+**Creating a Basemap**
+
+The code uses the `Basemap` library to create a map projection:
+```python
+m = Basemap(projection="cyl", resolution="l", llcrnrlat=-90, urcrnlnlat=90, llcrnrlon=-180, urcrnrlon=180)
+```
+The `Basemap` object is used to create a cylindrical map projection with the specified bounds (latitudes and longitudes).
+
+**Drawing coastlines, parallels, and meridians**
+
+The code uses various methods of the `Basemap` object to draw coastlines, parallels, and meridians on the map:
+```python
+m.drawcoastlines(linewidth=0.5)
+m.drawparallels(np.arange(-90, 91, 45))
+m.drawmeridians(np.arange(-180, 180, 45), labels=[True, False, False, True])
+```
+These methods create a map with coastlines, parallels (latitude lines), and meridians (longitude lines).
+
+**Saving the plot as an image file**
+
+Finally, the code saves the plot as a PNG file using Matplotlib's `savefig` method:
+```python
+plt.title("{0}\n{1}".format(basename, name + " (nchan1=0)"))
+fig = plt.gcf()
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+Here's what's happening:
+
+* The `basename` variable extracts the file name from the full path.
+* The `plt.title` method sets the title of the plot, including the file name and dataset information.
+* The `fig = plt.gcf()` line gets a reference to the current figure.
+* The `pngfile` variable constructs the output file name by appending ".py.png" to the file name.
+* The `fig.savefig(pngfile)` method saves the plot as a PNG file with the specified name.

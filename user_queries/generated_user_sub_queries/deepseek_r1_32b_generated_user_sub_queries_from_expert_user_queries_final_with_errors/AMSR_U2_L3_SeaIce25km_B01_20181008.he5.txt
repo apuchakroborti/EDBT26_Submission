@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes and visualizes data from an HDF-EOS5 file by following these steps:
+
+1. Define constants for the main dataset path 'SI_25km_NH_89V_DAY' located at /HDFEOS/GRIDS/NpPolarGrid25km/Data Fields 
+and grid metadata path ('/HDFEOS INFORMATION/StructMetadata.0').
+
+2. Create a function that takes a file name as input, opens the HDF-EOS5 file, extracts metadata, and retrieves projection parameters.
+
+3. Convert the main dataset to numpy.float64 using astype.
+
+4. Preprocess the data by:
+   - Setting values equal to 0 to NaN.
+   - Scaling the data by multiplying with 0.1.
+   - Creating a masked array using numpy.ma.masked_array where data is invalid.
+
+5. Construct the grid using extracted projection parameters and data shape, then transform coordinates from EASE Grid to WGS84 using pyproj.
+
+6. Create a map using Basemap with:
+   - npstere projection.
+   - Low resolution.
+   - boundinglat=33 and lon_0=0.
+   - Coastlines with linewidth 0.5.
+   - Parallels at latitudes from 0 to 90 with every 20 degree with left labels only
+   - Meridians at longitudes from -180 to 180 to every 45 degree with bottom labels.
+
+7. Add a pcolormesh layer using longitude, latitude, and data with latlon=True.
+
+8. Include a colorbar labeled with the main dataset's units.
+
+9. Set the plot title to include the file basename and the main dataset's long_name containing 'SI_25km_NH_89V_DAY'.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user is dealing with an HDF-EOS5 file and needs to access specific datasets and metadata. They mentioned paths like '/HDFEOS/GRIDS/NpPolarGrid25km/Data Fields/SI_25km_NH_89V_DAY' and '/HDFEOS INFORMATION/StructMetadata.0'. So, the sub-query should focus on using h5py to open the file, extract these datasets, and retrieve metadata.
+
+Next, for NumPy-based Data Preprocessing, the steps include converting data to float64, setting zeros to NaNs, scaling by 0.1, and creating a masked array. The sub-query needs to cover handling _FillValue, using np.where or masked_where, and preprocessing techniques like min, max, etc.
+
+Lastly, the Plotting and Visualization part involves using Basemap with specific projections and settings. They want a map with npstere projection, coastlines, parallels, meridians, and a colorbar. The sub-query should focus on matplotlib, basemap configurations, and adding elements like pcolormesh and labels.
+
+I'll structure each sub-query to target these areas precisely.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to access an HDF-EOS5 file, extract metadata from '/HDFEOS INFORMATION/StructMetadata.0', retrieve dataset at '/HDFEOS/GRIDS/NpPolarGrid25km/Data Fields/SI_25km_NH_89V_DAY', and get projection parameters?
+
+NumPy Data Preprocessing Sub-query:
+How to convert an HDF5 dataset to numpy.float64, set values equal to 0 to NaN, scale data by multiplying with 0.1, and create a masked array using numpy.ma.masked_array where data is invalid?
+
+Plotting and Visualization Sub-query:
+How to use Basemap with npstere projection, add coastlines, parallels at 0-90 every 20 degrees with left labels, meridians at -180-180 every 45 degrees with bottom labels, pcolormesh layer with latlon=True, and a colorbar labeled with dataset units?

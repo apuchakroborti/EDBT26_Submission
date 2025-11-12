@@ -1,0 +1,54 @@
+Purpose
+This script creates a visual representation (like a picture) of a specific slice from a 3D scan of a head. It highlights different tissue densities within that slice using colored lines.
+
+Step-by-Step Explanation
+
+1. Setting Up the Tools:
+   - The script starts by importing various tools it needs to read and display images.
+   - These tools are like specialized software components for handling graphics and image processing.
+
+2. Main Function:
+   - This is where all the action happens. It's like the main stage of a play where everything comes together.
+
+3. File and Method Selection:
+   - The script decides which method to use for creating contour lines (lines that show different levels of tissue density).
+   - It prints out whether it will use one specific tool (`vtkContourFilter`) or another (`vtkFlyingEdges2D`).
+
+4. Creating the Display Window:
+   - It sets up a window where the final image will be displayed.
+   - This is like setting up a canvas for painting.
+
+5. Reading the Image File:
+   - The script reads an image file named `FlyingHeadSlice_FullHead.mhd`.
+   - Think of this as opening a photo on your computer.
+
+6. Extracting a Specific Part of the Image:
+   - It extracts a specific slice from the 3D scan.
+   - This is like cutting out a single page from a book to focus on just that page.
+
+7. Setting Up Contour Lines:
+   - The script sets up contour lines based on tissue density levels.
+   - These lines will show different densities of tissues in the head slice, similar to how contour lines on a map show elevation changes.
+
+8. Mapping and Coloring the Contours:
+   - It maps these contours onto the image so they can be displayed.
+   - The script also sets up colors for these lines, using a color called 'Wheat'.
+
+9. Creating an Outline:
+   - An outline of the head slice is created to give context to where the contours are located.
+
+10. Adding Everything to the Display:
+    - Both the contour lines and the outline are added to the display window.
+    - The background color of the window is set to 'SlateGray'.
+
+11. Adjusting the View:
+    - The script adjusts the camera view to make sure everything fits nicely in the window.
+
+12. Displaying the Image:
+    - Finally, it shows the image on the screen.
+    - It waits for user interaction (like clicking or closing the window).
+
+Summary
+In simple terms, this script takes a 3D scan of a head and extracts a single slice from it. It then creates colored lines that show different tissue densities within that slice. These lines are displayed in a window along with an outline of the head slice for context. The user can view this image on their screen.
+
+This process is like taking a cross-section of a loaf of bread, coloring the different parts to show where the denser and less dense areas are, and then displaying that colored section so you can see it clearly.

@@ -1,0 +1,120 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads an HDF5 file and generates a map visualization by following these steps:
+
+1. Read HDF5 File: Open the file `AMSR_E_L2_Land_V11_201110031920_D.he5` in read-only mode.
+
+2. Extract Data:
+   - Retrieve main data from the attribute 'SoilMoistureSCA' at `AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+   - Extract latitude data, longitude data from the group `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+
+3. Data Cleaning:
+   - Assign a static `FillValue` of -9999.0.
+   - Replace values matching `FillValue` with numpy NaN.
+   - Mask data using numpy's masked_array where values are not NaN.
+
+4. Create Map:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude range from -90 to 90 and longitude from -170 to 190.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels to every 45 degree from -90 to 90 and left labels.
+   - Draw meridians to every 45 degree from -180 to 180 and bottom labels.
+
+5. Scatter Plot:
+   - Use longitude and latitude data.
+   - Set parameters: marker size (s=0.1), colormap (plt.cm.jet), edgecolors=None, linewidth=0.
+
+6. Add Colorbar and Title:
+   - Include a colorbar labeled with the dataset's units.
+   - Set title to include the file basename and 'SoilMoistureSCA'.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file in read-only mode.
+with h5py.File('AMSR_E_L2_Land_V11_201110031920_D.he5', 'r') as f:
+    # Retrieve main data from the attribute 'SoilMoistureSCA' at `AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+    soil_moisture = f['AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields'].attrs['SoilMoistureSCA']
+    
+    # Extract latitude data, longitude data from the group `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+    lat_data = f['/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/latitude'][:]
+    lon_data = f['/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/longitude'][:]
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Assign a static `FillValue` of -9999.0.
+soil_moisture[soil_moisture == f['AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields'].attrs['_FillValue']] = np.nan
+
+# Replace values matching `FillValue` with numpy NaN.
+masked_array = np.ma.masked_invalid(soil_moisture)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Use an equidistant cylindrical projection with low resolution.
+map = Basemap(projection='cyl', llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-170, urcrnrlon=190)
+
+# Set latitude range from -90 to 90 and longitude from -170 to 190.
+map.drawmeridians(np.arange(-180., 181., 45.), labels=[False, False, True, False])
+map.drawparallels(np.arange(-90., 91., 45.), labels=[True, False, False, False])
+
+# Add coastlines with a linewidth of 0.5.
+map.drawcoastlines(linewidth=0.5)
+
+# Draw parallels to every 45 degree from -90 to 90 and left labels.
+map.drawparallels(np.arange(-90., 91., 45.), linewidth=0.5, color='gray', labels=[True, False, False, False])
+
+# Draw meridians to every 45 degree from -180 to 180 and bottom labels.
+map.drawmeridians(np.arange(-180., 181., 45.), linewidth=0.5, color='gray', labels=[False, False, False, True])
+
+# Use longitude and latitude data.
+x, y = map(lon_data, lat_data)
+
+# Set parameters: marker size (s=0.1), colormap (plt.cm.jet), edgecolors=None, linewidth=0.
+map.scatter(x, y, s=0.1, c=masked_array, cmap=plt.cm.jet, edgecolors=None, linewidth=0)
+
+# Include a colorbar labeled with the dataset's units.
+cbar = map.colorbar(location='bottom')
+cbar.set_label('Soil Moisture SCA (%)')
+
+# Set title to include the file basename and 'SoilMoistureSCA'.
+plt.title('AMSR-E Soil Moisture SCA: 2011-10-03 19:20')
+```

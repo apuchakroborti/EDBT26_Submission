@@ -1,0 +1,10 @@
+"I have a Python script that accesses and visualizes data from an NSIDC ICESat/GLAS L2 swath data file in HDF5 format, /Data_1HZ/Atmosphere/d_Surface_temp
+Geolocation Data_1HZ Time d_UTCTime_1. Here's how it works:
+
+The script imports necessary libraries like `os`, `matplotlib`, `Basemap`, and `numpy`. It defines a `run` function that takes the path to the HDF5 file as an argument.
+
+The function reads the HDF5 file using either `netCDF4` or `h5py`, depending on a flag. It extracts datasets for latitude, longitude, surface temperature, and UTC time, along with their metadata.
+
+The script then applies valid range values to the extracted data, setting any out-of-range values to NaN. It creates two plots: a time series plot of surface temperature vs. elapsed time, and a map plot showing the satellite's trajectory with temperature values represented by color.
+
+Finally, the script saves the plot to a PNG file using `matplotlib`. The main execution checks if it's being run as the main module, sets the input HDF5 file name and path, and calls the `run` function with these arguments."

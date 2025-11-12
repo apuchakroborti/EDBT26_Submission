@@ -1,0 +1,84 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            - Import necessary libraries
+
+- Define variables for file handling and data storage, including FILE_NAME for the HDF5 file path.
+
+- Read the HDF5 file using h5py, extracting the 'l3m_data' dataset into a variable named datavar.
+
+- Retrieve attributes from l3m_data: data_minimum, data_maximum, and _FillValue.
+
+- Replace _FillValue in l3m_data with NaN values.
+
+- Create invalid_data by identifying values outside the range [data_minimum, data_maximum] using logical OR operations.
+
+- Set metadata variables: units = 'psu' and long_name = 'Sea Surface Salinity'.
+
+- Compare data against valid ranges and set out-of-range values to NaN.
+
+- Initialize a Basemap instance with cylindrical projection, setting resolution to 'l', latitude limits from -90 to 90, and longitude limits from -180 to 180.
+
+- Generate x and y coordinates using meshgrid based on longitude and latitude arrays.
+
+- Add geographical features: coastlines with linewidth 0.5, 
+    parallels at intervals of 45 degrees from -90 to 90, 
+    and meridians at intervals of 45 degrees from -180 to 180 with specific labels  to left and bottom 
+- Create a scatter plot of the data using the 'jet' colormap.
+
+- Append a colorbar to the plot with units labeled as 'psu'.
+
+- Set the plot title using the filename and long_name attributes.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to import h5py, define variables for file handling, read an HDF5 file named FILE_NAME, extract the 'l3m_data' dataset into datavar, and retrieve specific attributes like data_minimum, data_maximum, and _FillValue. So I'll structure that as a sub-query focusing solely on these tasks using h5py.
+
+Next, the NumPy-based Data Preprocessing part involves handling _FillValue by replacing it with NaNs. Then, creating invalid_data by identifying values outside the [data_min, data_max] range using logical OR operations. Also, setting metadata variables and ensuring out-of-range values are set to NaN. This sub-query should cover all these preprocessing steps using NumPy functions.
+
+Lastly, for Map Plotting and Visualization, the user needs to initialize a Basemap with specific projections and limits, generate x and y coordinates with meshgrid, add geographical features like coastlines, parallels, and meridians, create a scatter plot with 'jet' colormap, add a colorbar with units, and set the title. I'll make sure this sub-query addresses all these visualization aspects using matplotlib and Basemap.
+
+I need to ensure each sub-query is clear and focused on its respective domain without overlapping information.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to read an HDF5 file named FILE_NAME, extract the 'l3m_data' dataset into a variable called datavar, and retrieve attributes data_minimum, data_maximum, and _FillValue from l3m_data.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue in a NumPy array with NaN values, create a mask for invalid data using logical OR operations where values are outside the range [data_minimum, data_maximum], and set out-of-range values to NaN while setting metadata variables units='psu' and long_name='Sea Surface Salinity'.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib and Basemap to initialize a cylindrical projection map with resolution 'l', add coastlines, parallels at 45-degree intervals from -90 to 90, meridians at 45-degree intervals from -180 to 180 with labels on the left and bottom, create a scatter plot using the 'jet' colormap, add a colorbar labeled with units 'psu', and set the title using filename and long_name attributes.

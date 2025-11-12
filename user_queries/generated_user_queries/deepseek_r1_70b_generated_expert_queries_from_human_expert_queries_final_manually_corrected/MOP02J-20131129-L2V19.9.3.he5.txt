@@ -1,0 +1,28 @@
+File Input and Constants
+- Specify the input file as `MOP02J-20131129-L2V19.9.3.he5` stored in the constant `FILE_NAME`.
+- Import necessary libraries: `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+Extracting Data
+- Extract data from the HDF5 dataset at `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedSurfaceTemperature`.
+- Read the first column of this dataset into an array named `data`.
+- Retrieve the `units` and `_FillValue` attributes associated with the RetrievedSurfaceTemperaturehis dataset.
+- Decode the `units` string using the `decode()` function.
+
+Data Preprocessing and Cleaning
+- Replace values in `data` that match `_FillValue` with `numpy.nan`.
+
+Extracting Geolocation Data
+- Extract latitude data from `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude`.
+- Extract longitude data from `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude`.
+
+Creating a Map
+- Add coastlines with a line width of 0.5.
+- Draw parallels using `numpy.arange(-90, 91, 45)`.
+- Draw meridians using `numpy.arange(-180, 180, 45)` and set labels to `[True, False, False, True]`.
+
+Scatter Plot Configuration
+- Use the `scatter` function with parameters: longitude, latitude, `c=data`, marker size `s=1`, colormap `plt.cm.jet`, no edge colors (`edgecolors=None`), and line width `linewidth=0`.
+
+Customizing the Map
+- Add a colorbar to represent data units.
+- Set the colorbar label using the decoded `units` value.

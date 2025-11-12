@@ -1,0 +1,20 @@
+a Python script that reads an HDF-EOS5 swath file and creates a map with plotted data. Here's what it does:
+Importing Libraries
+The script imports necessary libraries for interacting with the operating system, reading/writing HDF5 files, creating plots/visualizations, and numerical computations.
+
+Defining Constants
+Two constants are defined: `FILE_NAME` (the name of the HDF-EOS5 swath file) and `units` (an empty string to be populated later).
+
+Reading Data
+The script opens the HDF file in read-only mode and reads data from `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedSurfaceTemperature`. 
+It extracts units then decoded using decode function and fill values, replaces fill values with NaN, and assigns the data to `data`.
+
+Reading Geolocation Data
+It reads geolocation data from `/Geolocation Fields/Latitude` and `/Geolocation Fields/Longitude` from the sub group of /HDFEOS/SWATHS/MOP02 
+assigning them to `latitude` and `longitude`.
+
+Creating a Map
+The script creates a cylindrical map with low resolution, sets latitude from -90 to 90 and longitude -180 to 180 limits, and draws coastlines, parallels, and meridians.
+
+Plotting Data
+It plots the `data` array on the map using a scatter plot, adds a colorbar with units as the label

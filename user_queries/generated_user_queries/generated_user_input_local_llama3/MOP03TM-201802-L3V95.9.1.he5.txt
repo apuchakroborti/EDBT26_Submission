@@ -1,0 +1,61 @@
+Here's a reduced version of the text while keeping many implementation details:
+
+**Importing necessary libraries**
+
+The code starts by importing various Python libraries:
+```python
+import os
+import re
+import h5py
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+```
+These libraries are used for file operations, regular expressions, HDF5 file handling, numerical computations, and data visualization.
+
+**Opening the HDF5 file**
+
+The code opens an HDF5 file using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+This line creates a file object in read-only mode for the specified file.
+
+**Accessing and processing data**
+
+Within the file context manager, the code accesses a specific group `/HDFEOS/GRIDS/MOP03/Data Fields` using:
+```python
+group = f['/HDFEOS/GRIDS/MOP03/Data Fields']
+dsname = 'RetrievedSurfaceTemperatureDay'
+data = group[dsname][:].T
+```
+The code then selects a specific dataset named `'RetrievedSurfaceTemperatureDay'`, extracts its values, and replaces fill values with NaN.
+
+**Creating a Basemap**
+
+The code creates a Basemap object:
+```python
+m = Basemap(projection='cyl', resolution='l',
+            llcrnrlat=-90, urcrnrlat=90,
+            llcrnrlon=-180, urcrnrlon=180)
+```
+This Basemap object is used to create a map with a cylindrical projection.
+
+**Plotting the data**
+
+The code plots the temperature data:
+```python
+m.drawcoastlines(linewidth=0.5)
+m.drawparallels(np.arange(-90, 91, 45))
+m.drawmeridians(np.arange(-180, 180, 45), labels=[True,False,False,True])
+m.pcolormesh(longitude, latitude, data, latlon=True)
+cb = m.colorbar()
+cb.set_label(units)
+```
+These lines create a map with coastlines and grid lines. The temperature data is then plotted as a pseudocolor mesh.
+
+**Implementation details**
+
+The code uses HDF5 group objects to access datasets within the file, replaces fill values with NaN, creates a Basemap object for plotting geographical data, and uses `pcolormesh` to plot pseudocolor maps.

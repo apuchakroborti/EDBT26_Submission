@@ -1,0 +1,112 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a Python script that reads an HDF5 file and generates a map plot with the following specifications:
+
+1. Import Libraries:  
+   - Import necessary libraries: `os`, `re`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl`), and `matplotlib.pyplot` (as `plt`) for file operations, metadata parsing, HDF5 handling, numerical computations, and visualization.
+
+2. Read HDF5 File:  
+   - Access the dataset `/HDFEOS/GRIDS/VNP_Grid_500m_2D/Data Fields/SurfReflect_I3_1`.  
+   - Read the data into a NumPy array and convert it to `np.float64` using `astype(np.float)`.
+
+3. Extract Attributes:  
+   - Extract attributes (`Scale`, `Offset`, `units`, `_FillValue`, `long_name`) from the `SurfReflect_I3_1` dataset. Use the `decode()` function for `units` and `long_name`.  
+
+4. Grid Metadata:  
+   - Read the `/HDFEOS INFORMATION/StructMetadata.0` dataset.  
+   - Extract `upper_left_x` and `upper_left_y` using a regex pattern:  
+     ```
+     UpperLeftPointMtrs=\((?P<upper_left_x>[+-]?\d+\.\d+),(?P<upper_left_y>[+-]?\d+\.\d+)\)
+     ```  
+   - Use this data to construct meshgrid coordinates for longitude and latitude.
+
+5. Coordinate Transformation:  
+   - Perform a coordinate transformation from Sinusoidal to WGS84 (Latitude-Longitude) using a projection library.
+
+6. Data Processing:  
+   - Apply the `_FillValue` to the `SurfReflect_I3_1` dataset, setting NaN values where necessary.  
+   - Scale and offset the data:  
+     ```
+     SurfReflect_I3_1 = scale  SurfReflect_I3_1 + offset
+     ```
+
+7. Visualization:  
+   - Create a map using a cylindrical projection with low resolution.  
+   - Set the latitude range from `min(latitude)` to `max(latitude)` and longitude range from `min(longitude)` to `max(longitude)`.  
+   - Add parallels (latitude gridlines):  
+     ```
+     np.arange(floor(min_latitude), ceil(max_latitude), 1)
+     ```  
+     with labels at `[1, 0, 0, 0]` (top only).  
+
+   - Add meridians (longitude gridlines):  
+     ```
+     np.arange(floor(min_longitude), ceil(max_longitude), 2)
+     ```  
+     with labels at `[0, 0, 0, 1]` (right only).  
+
+   - Use `pcolormesh` to plot the data:  
+     ```
+     plt.pcolormesh(longitude, latitude, SurfReflect_I3_1, latlon=True)
+     ```
+
+   - Add a colorbar with the label set to the `units` attribute.  
+   - Set the plot title as the concatenation of the base name of the HDF5 file and the `long_name` attribute.
+
+This structured query provides clear instructions for generating the desired Python script.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three focused sub-queries. Let me start by understanding what the user is asking for.
+
+The main task is to create a Python script that reads an HDF5 file and generates a map plot with specific steps. The user has outlined seven detailed steps, each involving different technical domains. My job is to split this into three parts: HDF5 access, NumPy preprocessing, and visualization.
+
+First, looking at the HDF5 part. The user wants to access a specific dataset path using h5py. They also need to extract attributes like Scale, Offset, units, _FillValue, and long_name. Additionally, there's another dataset for grid metadata which requires regex extraction of upper_left_x and upper_left_y. So I'll focus on these aspects for the first sub-query.
+
+Next, the NumPy preprocessing. The user mentions applying the _FillValue to set NaNs, scaling, and offsetting the data. They also talk about using functions like np.where or np.ma.masked_where for masking. So this sub-query should cover handling _FillValue, scaling, and any other preprocessing logic.
+
+Lastly, the visualization part uses matplotlib, basemap, or cartopy. The user wants a cylindrical projection with specific latitude and longitude ranges. They also want gridlines with labels at certain positions and a colorbar with units. Plus, the title is a combination of the HDF5 filename and long_name attribute. So this sub-query should focus on setting up the map, adding gridlines, plotting with pcolormesh, and adding the colorbar and title.
+
+I need to make sure each sub-query is concise and targets only its specific domain without overlapping. That way, when someone looks them up in a vector database, they can find relevant examples or documentation easily.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+Access HDF5 file using `h5py`, read dataset `/HDFEOS/GRIDS/VNP_Grid_500m_2D/Data Fields/SurfReflect_I3_1` into NumPy array with `astype(np.float64)`. Extract attributes `Scale`, `Offset`, `units`, `_FillValue`, and `long_name` using `.attrs` and decode `units` and `long_name` with `decode()`. Read `/HDFEOS INFORMATION/StructMetadata.0` dataset, extract `upper_left_x` and `upper_left_y` using regex pattern.
+
+NumPy Data Preprocessing Sub-query:  
+Apply `_FillValue` to dataset using NumPy functions like `np.where` or `np.ma.masked_where`, set NaN values where necessary. Scale and offset data with formula `SurfReflect_I3_1 = scale * SurfReflect_I3_1 + offset`.
+
+Plotting and Visualization Sub-query:  
+Create cylindrical projection map with low resolution using `matplotlib`, `mpl_toolkits.basemap`, or `cartopy`. Set latitude range from `min(latitude)` to `max(latitude)` and longitude range from `min(longitude)` to `max(longitude)`. Add parallels with `np.arange` from `floor(min_latitude)` to `ceil(max_latitude)` with labels at `[1, 0, 0, 0]`, and meridians with `np.arange` from `floor(min_longitude)` to `ceil(max_longitude)` with labels at `[0, 0, 0, 1]`. Use `plt.pcolormesh` to plot data with `latlon=True`. Add colorbar labeled with `units` attribute. Set title as concatenation of HDF5 file base name and `long_name` attribute.

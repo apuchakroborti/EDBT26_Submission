@@ -1,0 +1,27 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing Libraries**
+
+The code imports several libraries: `os` for interacting with the operating system, `matplotlib.pyplot` as `plt` for creating plots and visualizations, `numpy` as `np` for numerical computations and data manipulation, `mpl_toolkits.basemap` as `Basemap` for creating maps and geospatial visualizations, and `h5py` for reading and manipulating HDF5 files.
+
+**Defining File Names**
+
+The code defines two file names: `FILE_NAME` for the ECOSTRESS L2 HDF5 file and `FILE_NAME_GEO` for the ECOSTRESS L1B GEO HDF5 file.
+
+**Opening HDF5 Files and Reading Data**
+
+The code opens both HDF5 files in read mode using the `with` statement. It reads data from the ECOSTRESS L2 file, including the `/SDS/LST` dataset into a NumPy array `data`, and attributes such as `scale_factor`, `add_offset`, `units`, `_FillValue`, and `long_name`. It also reads longitude and latitude values from the ECOSTRESS L1B GEO file.
+
+**Applying Fill Value and Scale Factor**
+
+The code applies the fill value and scale factor to the data, replacing missing values with NaN and scaling the data by multiplying it with the scale factor and adding the offset value. It creates a masked array for the data, longitude, and latitude values.
+
+**Creating a Basemap and Drawing the Map**
+
+The code creates a Basemap object with specific settings (projection, resolution, lower left corner coordinates, etc.) and draws the map using this object. It draws coastlines, parallels, and meridians, and plots the data as a scatter plot with specific settings (colormap, no edge colors or line widths).
+
+**Creating a Colorbar and Saving the Plot**
+
+The code creates a colorbar for the scatter plot with the units label set to the `units` attribute value. Finally, it saves the plot as a PNG file using the base name of the input file as the title, the long name of the dataset as the subtitle, and specific settings for the figure object.
+
+I reduced the text by about 20% while keeping most of the implementation details intact. Let me know if you have any further requests!

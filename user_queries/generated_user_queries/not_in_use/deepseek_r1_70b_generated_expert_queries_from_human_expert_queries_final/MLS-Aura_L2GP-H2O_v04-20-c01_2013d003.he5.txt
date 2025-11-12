@@ -1,0 +1,27 @@
+Create a Python script that performs the following tasks:
+
+1. Import Libraries: Include `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Read HDF5 File: Open the file `MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5` using `h5py`.
+
+3. Access Datasets:
+   - Extract data from `/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue`, focusing on the x-axis and y=0 index of the 2D array.
+   - Retrieve pressure values from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure`.
+   - Obtain attributes: `Units` from both datasets and `Title` from the Pressure dataset.
+
+4. Extract Geolocation Data:
+   - Fetch latitude data from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Latitude`.
+   - Fetch longitude data from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Longitude`.
+
+5. Visualization Setup:
+   - Create a cylindrical projection map with low resolution, setting latitude from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels using `numpy.arange` for values -90, 91, 45.
+   - Draw meridians similarly with the same spacing, starting at -180, and apply labels [True, False, False, True].
+
+6. Scatter Plot:
+   - Use `plt.scatter` with longitude and latitude coordinates, data from L2gpValue, markersize 1, colormap 'jet', no edge colors, and linewidth 0.
+
+7. Colorbar and Labels:
+   - Add a colorbar at the bottom with format "%.1e" and 10% padding.
+   - Set the colorbar label using the `Units` attribute from L2gpValue.

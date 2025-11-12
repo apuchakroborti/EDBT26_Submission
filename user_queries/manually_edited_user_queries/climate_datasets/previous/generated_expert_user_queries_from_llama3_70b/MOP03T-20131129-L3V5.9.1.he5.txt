@@ -1,0 +1,65 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+1. `os`: for operating system-related tasks
+2. `re`: for regular expression operations (not used in this script)
+3. `h5py`: for working with HDF5 files
+4. `numpy` as `np`: for numerical computations
+5. `matplotlib` as `mpl`: for data visualization
+6. `matplotlib.pyplot` as `plt`: for creating plots
+7. `Basemap`: for creating maps (part of the Matplotlib toolkit)
+
+**Defining Constants**
+
+The script defines a constant `FILE_NAME` with the value `'MOP03T-20131129-L3V5.9.1.he5'`, which is the name of the HDF-EOS file to be processed.
+
+**Opening the HDF-EOS File**
+
+The code uses the `h5py` library to open the specified HDF-EOS file in read-only mode (`mode='r'`) using a context manager (`with` statement). This ensures that the file is properly closed when the script finishes executing.
+
+**Accessing Data Fields**
+
+Within the context manager, the script accesses various datasets within the HDF-EOS file:
+1. `group`: The `/HDFEOS/GRIDS/MOP03/Data Fields` group is accessed.
+2. `dsname`: The dataset named `'RetrievedSurfaceTemperatureDay'` is selected from the `group`.
+3. `data`: The entire dataset is read into memory using `group[dsname][:].T`, which transposes the data (likely to convert between row-major and column-major ordering).
+4. `longname`: The long name of the dataset is retrieved from its attributes.
+5. `units`: The units of the dataset are retrieved from its attributes.
+6. `fillvalue`: The fill value of the dataset is retrieved from its attributes.
+
+**Data Processing**
+
+The script performs some data processing:
+1. Replaces fill values with NaN (Not a Number) using `data[data == fillvalue] = np.nan`.
+2. Creates a masked array from the data using `np.ma.masked_array(data, np.isnan(data))`.
+
+**Accessing Geolocation Data**
+
+The script accesses geolocation data:
+1. `y`: The `/HDFEOS/GRIDS/MOP03/Data Fields/Latitude` dataset is read into memory.
+2. `x`: The `/HDFEOS/GRIDS/MOP03/Data Fields/Longitude` dataset is read into memory.
+3. `longitude` and `latitude`: Meshgrids are created from the longitude and latitude datasets using `np.meshgrid(x, y)`.
+
+**Creating a Map**
+
+The script uses the `Basemap` library to create a map:
+1. Creates a cylindrical projection map with a resolution of 'l' (low) using `m = Basemap(projection='cyl', ...`.
+2. Draws coastlines with a line width of 0.5.
+3. Draws parallels and meridians with labels.
+
+**Plotting Data**
+
+The script plots the data on the map:
+1. Creates a scatter plot using `m.scatter` with the longitude, latitude, and data values.
+2. Sets the colorbar label to the units of the dataset.
+
+**Saving the Plot**
+
+Finally, the script:
+1. Retrieves the base name of the input file using `os.path.basename(FILE_NAME)`.
+2. Sets the title of the plot using `plt.title` with the base name and long name of the dataset.
+3. Saves the plot to a PNG file named `<basename>.py.png` using `fig.savefig`.
+
+Note that the script does not display the plot interactively (`# plt.show()` is commented out). Instead, it saves the plot to a file.

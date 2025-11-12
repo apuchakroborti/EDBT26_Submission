@@ -1,0 +1,15 @@
+1. Import Libraries: Use os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Open HDF5 File: Access the file in read-only mode and extract the `/FS/SLV/precipRateESurface` dataset along with its units and _FillValue attribute.
+
+3. Handle Missing Data: Replace _FillValue entries with NaNs using numpy's masked_where function to mask the data where values are NaN.
+
+4. Retrieve Geolocation Data: Extract latitude from `/FS/Latitude` and longitude from `/FS/Longitude`.
+
+5. Set Up Map Projection: Create a cylindrical projection with low resolution, spanning latitudes from -90 to 90 and longitudes from -180 to 180.
+
+6. Customize Map: Add coastlines (width 0.5), parallels at [-90, 0, 90], and meridians at [-180, 0, 180] with specific labels.
+
+7. Plot Data: Use a scatter plot with the 'jet' colormap, point size of 1, based on longitude and latitude coordinates.
+
+8. Add Colorbar and Title: Include a colorbar below the plot, labeled with the dataset's units, and set the title to reflect the file and dataset name.

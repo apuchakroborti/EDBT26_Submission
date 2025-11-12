@@ -1,0 +1,12 @@
+Python code that reads and visualizes ozone data from an HDF5 file based on the foloowing below description: 
+
+It accesses the `/Data Fields` group and retrieves variables for `Profile Ozone`, `Latitude`, `Profile Pressure Levels`, and `Date`.
+It reads ProfileOzone 3D data as a slice of 0th index of x-axis and all from both y and z axis data from the 3 dimensiontal array
+It read units and long name attribute from the above mention datasets
+it access the fill value data from the profile ozone data and by comparing with fill values it set NaN value
+It also acces 0th index of the Date data
+
+Next, it processes the data by converting the date to a string and applying a log scale to the pressure levels. 
+Then, it creates a contour plot of the ozone data.
+
+The plot is customized with a colorbar, labels, titles, and a text annotation displaying the date.

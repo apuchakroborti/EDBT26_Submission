@@ -1,0 +1,72 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            It loads brain MRI data from an HDF5 file and plots slices through the volume. 
+
+The program starts by defining file paths: `FAST_MRI_BRAIN_H5_FILE` which is 3_fastMRI_brain_first_10_dcm_to_h5.h5 for the HDF5 file containing brain MRI data, 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` where full path is located at `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data` within the HDF5 hierarchy.
+
+It then loads the HDF5 file, accesses the brain MRI data, and reshapes it into a 3D array with shape `(16, 32, 512)`.
+
+Next, it defines plot parameters: `fig_rows`, `fig_cols`, `n_subplots`, `n_slice`, `step_size`, `plot_range`, and `start_stop` to control the plotting process.
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing by step_size,
+set imshow by slicing data from the x axis , plots brain MRI slices as grayscale images, and turns off axis labels for each subplot. 
+Finally, it applies tight layout and displays the figure.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the problem again carefully.
+
+The user is working on a program that loads brain MRI data from an HDF5 file and then plots slices of the volume. The steps involved are accessing the HDF5 file, reshaping the data into a 3D array, setting up plot parameters, creating subplots, and displaying the images.
+
+First, I'll tackle the HDF5 Dataset Access part. The user mentions using `h5py` to access an HDF5 file with specific paths like `/Grid/cloudWater`. In their case, they have a file path `FAST_MRI_BRAIN_H5_FILE` pointing to an H5 file and another path within the HDF5 structure at `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`. So I need to generate a sub-query that focuses on how to access this data using `h5py`, including opening the file, navigating through the dataset paths, and retrieving metadata.
+
+Next is the NumPy-based Data Preprocessing. The user reshapes the MRI data into a 3D array of shape (16, 32, 512). They also mention handling `_FillValue` and using masks with `np.where` or `np.ma.masked_where`. So I need to create a sub-query that addresses how to reshape the data, handle any fill values, apply necessary masks, and perform any preprocessing steps like computing min, max, etc.
+
+Lastly, for Map Plotting and Visualization. The user sets up multiple subplots using matplotlib, loops through slices with specific parameters, uses `imshow` to display grayscale images, turns off axis labels, applies tight layout, and displays the figure. I need a sub-query that focuses on how to use matplotlib (and possibly other libraries like basemap or cartopy) for visualizing geospatial data, setting up projections, adding coastlines, meridians, parallels, colorbars, and titles.
+
+I should make sure each sub-query is clear and targets the specific technical domain without overlapping too much with the others. Also, I need to avoid any explanations or code examples—just the focused questions.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access brain MRI data from an HDF5 file using h5py, including opening the file at path `FAST_MRI_BRAIN_H5_FILE` and navigating to dataset at `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` within the HDF5 hierarchy?
+
+NumPy Data Preprocessing Sub-query:
+How to reshape brain MRI data into a 3D array of shape (16, 32, 512) using NumPy, handle _FillValue, and apply preprocessing steps like min, max, or masking with np.where or np.ma.masked_where?
+
+Plotting and Visualization Sub-query:
+How to plot brain MRI slices as grayscale images in multiple subplots using matplotlib, configure the figure layout with fig_rows=4 and fig_cols=4, set step_size for slicing, and display the images with proper axis settings?

@@ -1,0 +1,63 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for interacting with the operating system (e.g., getting the current working directory)
+2. `matplotlib` and `matplotlib.pyplot`: for creating visualizations
+3. `numpy`: for numerical computations
+4. `mpl_toolkits.basemap`: for creating maps
+5. `h5py`: for reading HDF5 files
+
+**Setting Font Size**
+
+The code reduces the font size to 9 points because the file name is long.
+
+**Defining File Name and Opening HDF5 File**
+
+The code defines a variable `FILE_NAME` with the path to an HDF5 file: `"1A.GPM.GMI.COUNT2021.20160105-S230545-E003816.010538.V07A.HDF5"`. The file is then opened in read-only mode (`mode="r"`) using the `h5py` library.
+
+**Reading Data from HDF5 File**
+
+The code reads data from the HDF5 file:
+
+1. It accesses a dataset named `/S2/solarAzimuthAngle` and reads its contents into an array `data`.
+2. It retrieves the units of the dataset from its attributes (`attrs["units"]`) and decodes them.
+3. It retrieves the fill value of the dataset from its attributes (`attrs["_FillValue"]`) and replaces it with NaN (Not a Number) values in the data array.
+4. It creates a masked array `data` to handle NaN values.
+
+**Getting Geolocation Data**
+
+The code reads geolocation data from the HDF5 file:
+
+1. It accesses datasets named `/S2/Latitude` and `/S2/Longitude` and reads their contents into arrays `latitude` and `longitude`.
+
+**Creating Map Visualization**
+
+The code creates a map visualization using `Basemap`:
+
+1. It defines a Basemap object `m` with a cylindrical projection, low resolution, and a global extent (-90 to 90 latitude, -180 to 180 longitude).
+2. It draws coastlines, parallels, and meridians on the map.
+3. It scatters the geolocation data (longitude and latitude) on the map, coloring each point by the corresponding value in the `data` array.
+
+**Adding Colorbar and Title**
+
+The code adds a colorbar to the map:
+
+1. It creates a colorbar object `cb` at the bottom of the figure.
+2. It sets the label of the colorbar to the units of the dataset.
+
+It also adds a title to the figure:
+
+1. It gets the base name of the HDF5 file using `os.path.basename`.
+2. It formats the title with the base name and the dataset name (`/S2/solarAzimuthAngle`).
+
+**Saving Figure**
+
+Finally, the code saves the figure as a PNG file:
+
+1. It gets the current figure object using `plt.gcf()`.
+2. It saves the figure to a file named `<basename>.py.png`, where `<basename>` is the base name of the HDF5 file.
+
+Overall, this code reads data from an HDF5 file, creates a map visualization, and adds a colorbar and title before saving the figure as a PNG file.

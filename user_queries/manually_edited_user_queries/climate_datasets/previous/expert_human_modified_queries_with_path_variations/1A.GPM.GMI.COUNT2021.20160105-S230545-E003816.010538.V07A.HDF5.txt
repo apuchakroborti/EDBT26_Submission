@@ -1,0 +1,19 @@
+A python script that visualizes data from an HDF5 file. Here's what it does:
+
+Step 1: Load Data
+The script loads an HDF5 file and extracts several datasets:
+	from the root group S2 it reads dataset 'solarAzimuthAngle' (solar azimuth angle) for the main data source 
+	and for the geolocation data it reads from `latitude` and `longitude` (which are geolocation data) from the same root group S2
+	Then it access two attributes named units and fill value from the main solar azimuth angle dataset
+
+Step 2: Process Solar Azimuth Angle Data
+It processes the solar azimuth angle data by replacing fill values with NaN and masking NaN values.
+
+Step 3: Create Map and Plot Data
+The script creates a map with projection named cylindrical map projection, sets up its boundaries (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc), 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 91, and 45.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [True, False, False, True] 
+
+Step 4: Add Colorbar and Title
+Then it adds scatter values suchas longitude, latitudem data, cmap such as plt.cm.jet, no edge color and linewidth equal to 0, 
+the colorbar location is bottom and the padding is 10 percent with the label units which is accessed previously from the main dataset solar azimuth angle

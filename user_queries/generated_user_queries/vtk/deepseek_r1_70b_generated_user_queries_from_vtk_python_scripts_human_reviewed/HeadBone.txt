@@ -1,0 +1,77 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkInteractionStyle`  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`  
+   - `VTK_VERSION_NUMBER` and `vtkVersion` from `vtkmodules.vtkCommonCore`  
+   - `vtkMergePoints` from `vtkmodules.vtkCommonDataModel`  
+   - `vtkFlyingEdges3D` and `vtkMarchingCubes` from `vtkmodules.vtkFiltersCore`  
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`  
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`  
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define File Path:  
+   - Set the file path to `'HeadBone_FullHead.mhd'`.
+
+3. Initialize Variables:  
+   - Create a `colors` object using `vtkNamedColors()`.
+
+4. Create Rendering Components:  
+   - Initialize `ren` as a `vtkRenderer`.  
+   - Initialize `ren_win` as a `vtkRenderWindow` and add the renderer to it.  
+   - Initialize `iren` as a `vtkRenderWindowInteractor` and set its render window.
+
+5. Set Up Pipeline:  
+   - Create a `reader` object using `vtkMetaImageReader()` and set its file name to `'HeadBone_FullHead.mhd'`.  
+   - Update the reader to load the data.
+
+6. Configure Locator:  
+   - Create a `locator` object using `vtkMergePoints()`.  
+   - Set the locator divisions to `(64, 64, 92)` and points per bucket to `2`.  
+   - Disable automatic mode for the locator.
+
+7. Check VTK Version:  
+   - Use `vtk_version_ok(8, 2, 0)` to determine if `vtkFlyingEdges3D` is available.  
+   - If available, set `use_flying_edges` to `True` and create an `iso` object using `vtkFlyingEdges3D()`.  
+   - If not available, fall back to `vtkMarchingCubes()`.
+
+8. Configure Isosurface:  
+   - Set the input for `iso` to the reader's output.  
+   - Enable gradient computation and disable scalar computation.  
+   - Set the isovalue to `1150`.  
+   - If using marching cubes, set the locator.
+
+9. Create Mapper and Actor for Isosurface:  
+   - Create a mapper (`iso_mapper`) and connect it to the isosurface output.  
+   - Disable scalar visibility for the mapper.  
+   - Create an actor (`iso_actor`), set its mapper, and set its color to `'Ivory'`.
+
+10. Create Outline Filter:  
+    - Create an `outline` object using `vtkOutlineFilter()` and connect it to the reader's output.
+
+11. Create Mapper and Actor for Outline:  
+    - Create a mapper (`outline_mapper`) and connect it to the outline filter's output.  
+    - Create an actor (`outline_actor`) and set its mapper.
+
+12. Set Up Renderer:  
+    - Add `outline_actor` and `iso_actor` to the renderer.  
+    - Set the background color to `'SlateGray'`.  
+    - Configure the camera:  
+      - Set focal point to `(0, 0, 0)`.  
+      - Set position to `(0, -1, 0)`.  
+      - Set view up direction to `(0, 0, -1)`.  
+    - Reset the camera and adjust the clipping range.  
+    - Set the render window size to `640x480` and title to `'HeadBone'`.
+
+13. Render and Start Interaction:  
+    - Render the scene.  
+    - Start the interactor with `iren.Start()`.
+
+14. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "HeadBone_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

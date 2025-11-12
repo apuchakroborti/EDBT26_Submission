@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file and generates a geospatial plot as follows:
+
+1. Load Data: Open the HDF5 file "1C.F19.SSMIS.XCAL2021-V.20160105-S214106-E232259.009078.V07A.HDF5" in read-only mode using h5py.
+
+2. Extract Dataset: Access the `Tc` dataset from the group `S1` of hierarchical dataset, 
+    which is 3D. Extract all data from the first and second dimensions at the 0th index of the third dimension. 
+Retrieve attributes: 'Units', 'longname', and 'Fillvalue'.
+
+3. Data Cleaning: Replace values matching Fillvalue with NaN in the Tc dataset.
+
+4. Geolocation Data: Read latitude from "Latitude" and longitude from "Longitude".
+
+5. Map Setup: Create a cylindrical projection map with low resolution, latitude range -90 to 90, and longitude range -180 to 180. 
+Add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90], 
+and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with left and bottom labels.
+
+6. Plot Data: Display Tc data as a scatter plot on the map using 'jet' colormap and point size 1.
+
+7. Colorbar: Add a colorbar below the plot with 10% padding, labeled with the units from Tc's attributes.
+
+8. Title: Set the title to include the file basename, Tc's LongName, and " (nchannel1=0)".
+
+This structured approach ensures clarity for code generation by an LLM.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per their instructions. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open a specific HDF5 file using h5py and access certain datasets and attributes. They mentioned opening the file in read-only mode, accessing the 'Tc' dataset from the 'S1' group, which is 3D. Also, they need to extract data along the first and second dimensions at the 0th index of the third dimension. Plus, retrieving specific attributes: Units, longname, and Fillvalue.
+
+So, I'll structure this sub-query to focus solely on these aspects using h5py functions. It should include opening the file, accessing the dataset with the correct path, extracting the data slice, and fetching those attributes.
+
+Next, for NumPy-based Data Preprocessing. The task here is to replace the Fillvalue in the Tc dataset with NaNs. This involves using numpy's where function or masked arrays. I need to ensure that the preprocessing logic correctly identifies and replaces these values without affecting other parts of the data.
+
+I'll phrase this sub-query to concentrate on handling _FillValue, applying masks, and any necessary preprocessing steps like replacing values with NaNs.
+
+Lastly, the Map Plotting and Visualization section requires setting up a cylindrical projection map using matplotlib or cartopy. The user specified low resolution, latitude and longitude ranges, adding coastlines, parallels, meridians, and then plotting the Tc data as a scatter plot. They also want a colorbar with specific padding and labeling, along with a title that includes file details.
+
+I'll make sure this sub-query covers all these visualization aspects: setting up the map projection, adding geographical features, plotting the data correctly, customizing the colorbar, and setting an appropriate title.
+
+Putting it all together, each sub-query should be clear and focused on its respective domain to facilitate accurate retrieval of relevant information.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file named "1C.F19.SSMIS.XCAL2021-V.20160105-S214106-E232259.009078.V07A.HDF5" in read-only mode using h5py, access the 'Tc' dataset from the group 'S1', extract data along the first and second dimensions at the 0th index of the third dimension, and retrieve attributes 'Units', 'longname', and 'Fillvalue'.
+
+NumPy Data Preprocessing Sub-query:
+How to replace values matching Fillvalue with NaN in a NumPy array using np.where or np.ma.masked_where.
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical projection map with low resolution, set latitude range from -90 to 90 and longitude range from -180 to 180, add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90], meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with left and bottom labels, plot data as a scatter plot using 'jet' colormap and point size 1, add a colorbar below the plot with 10% padding labeled with units, and set the title to include file basename, Tc's LongName, and " (nchannel1=0)".

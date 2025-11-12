@@ -1,0 +1,23 @@
+a Python script. Here's what it does:
+Reading an HDF-EOS File
+The script reads an HDF-EOS file named `MOP03TM-201802-L3V95.9.1.he5`.
+
+Accessing Data Fields
+Within the `/HDFEOS/GRIDS/MOP03/Data Fields` group, it retrieves:
+
+ A dataset named `RetrievedSurfaceTemperatureDay`, which is assigned to `data`.
+ The long name and units of the dataset from its attributes and then these values decoded using decode function.
+ The fill value representing missing or invalid data.
+
+Data Preprocessing
+The script replaces values equal to the fill value with `NaN` and creates a masked array using NumPy's `ma` module.
+
+Retrieving Geolocation Information
+It retrieves two datasets: `Latitude` and `Longitude`, and creates a 2D meshgrid using NumPy's `meshgrid` function.
+
+Creating a Basemap
+The script uses the `Basemap` toolkit to create a cylindrical map projection with settings low resolution, specifying latitude from -90 to 90 and longitude from -180 to 180. 
+It draws coastlines, parallels, and meridians on the map.
+
+Visualizing Data
+It creates a pseudocolor plot of the retrieved data on the map using Basemap, with settings like latlon coordinates and a colorbar.

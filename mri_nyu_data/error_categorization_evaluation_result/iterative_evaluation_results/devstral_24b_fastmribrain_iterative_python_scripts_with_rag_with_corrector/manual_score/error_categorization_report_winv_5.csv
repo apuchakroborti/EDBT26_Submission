@@ -1,0 +1,12 @@
+Base Image,Generated Image,Similarity Raw,Similarity (%)
+0_fastmri_brain_first_10_dcm_to_h5.h5,0_fastmri_brain_first_10_dcm_to_h5,0,0
+1_fastmri_brain_first_10_dcm_to_h5.h5,1_fastmri_brain_first_10_dcm_to_h5,0,0
+2_fastmri_brain_first_10_dcm_to_h5.h5,Not found,0,0
+3_fastmri_brain_first_10_dcm_to_h5.h5,3_fastmri_brain_first_10_dcm_to_h5,0,0
+4_fastmri_brain_first_10_dcm_to_h5.h5,4_fastmri_brain_first_10_dcm_to_h5,0,0
+5_fastmri_brain_first_10_dcm_to_h5.h5,5_fastmri_brain_first_10_dcm_to_h5,0,0
+6_fastmri_brain_first_10_dcm_to_h5.h5,6_fastmri_brain_first_10_dcm_to_h5,0,0
+7_fastmri_brain_first_10_dcm_to_h5.h5,7_fastmri_brain_first_10_dcm_to_h5,0,0
+8_fastmri_brain_first_10_dcm_to_h5.h5,8_fastmri_brain_first_10_dcm_to_h5,0,0
+9_fastmri_brain_first_10_dcm_to_h5.h5,9_fastmri_brain_first_10_dcm_to_h5_brain_mask,0,0
+10_fastmri_brain_first_10_dcm_to_h5.h5,Not found,0,0

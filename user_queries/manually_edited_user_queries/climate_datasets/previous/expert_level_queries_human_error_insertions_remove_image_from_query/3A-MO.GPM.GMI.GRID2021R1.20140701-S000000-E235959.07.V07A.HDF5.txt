@@ -1,0 +1,26 @@
+Step 1: Setting up
+The code starts by defining some constants, including the name of the HDF5 file to read.
+
+Step 2: Reading data
+It opens the HDF5 file and accesses a specific dataset called `cloud Water` from the group 'Grid'. 
+the cloudWater dataset is a 3 dimensional data but take the 0th slice from x axis and all data from both y and z axis 
+It reads the first slice of the 3D array and extracts the units of the data.
+
+The code replaces fill values with NaN by comparing the main data from the dataset named cloudWater by comparing with the _FillValue data, 
+It should then process the cloudWater data by checking where numpy data is nan and previously accessed cloudWater data. 
+
+Step 3: Creating geolocation data
+Since there's no geolocation data in the HDF5 file, the code constructs it manually by creating longitude and latitude arrays ranging from 
+there are 1440 values for the longditude such as -179.875 -179.625 -179.375 ...  179.375  179.625  179.875
+there are 720 valus for the latitude such as 89.875 -89.625 ... 89.375  89.625  89.875
+
+Step 4: Setting up map visualization
+The code creates a map object with a cylindrical projection and low resolution and latitude and longitude from -180 to 180 degrees and -90 to 90 degrees respectively. 
+It sets the latitude and longitude limits to cover the entire globe.
+
+Step 5: Drawing the map
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 91, and 45.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [True, False, False, True] 
+
+Step 6: Adding finishing touches
+A colorbar is added with a label set to the units of the data, and the title includes the name of the HDF5 file and dataset path.

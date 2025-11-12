@@ -1,0 +1,13 @@
+A Python script to visualize data from a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file.
+
+Steps:
+1. Import necessary libraries: os, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and mpl_toolkits.basemap import Basemap.
+2. Read the HDF file located at 'GSSTF_3_2008_12_31.he5'.
+3. Extract the 'E' dataset, including its attributes ('units' and 'long_name') using decode(), and retrieve the _FillValue attribute.
+4. Preprocess data by replacing _FillValue with np.nan and create a masked array using np.masked_array with conditions based on np.isnan(data).
+5. Construct longitude and latitude arrays based on the shape of the 'E' dataset since they are not provided in the file.
+6. Create a cylindrical projection map with boundaries set for low resolution, latitudes from -90 to 90, and longitudes from -180 to 180.
+7. Add parallels at the result of numpy arrange value of [-90, 120, 30] degrees latitude with labels [1,0,0,0], 
+    and meridians at the result of numpy arrange value of [-180, 180, 45] degrees longitude with labels [0,0,0,1].
+8. Visualize the data using pcolormesh with parameters longitude, latitude, data, and latlon=True.
+9. Add a colorbar and a descriptive title to the plot.

@@ -1,0 +1,16 @@
+a Python script that reads an HDF5 file containing ASTER GED data, extracts specific datasets, and visualizes them on a map. 
+
+The main function `run` takes an input file name and performs the following steps:
+
+1. Reads the input file using HDF5.
+2. Extracts datasets: 
+    - `Mean Emissivity for Band 10` (2D array with shape `(1, :, :)`) access description attribute and get the 0th index value
+        here no units name and no long name so set these values as None and Mean emissivity for Band 10
+    - `latitude` and `longitude` (1D arrays)
+3. Applies fill value (-9999) and scaling (0.001) to the extracted data.
+4. Creates an equidistant cylindrical projection map using Basemap with high resolution specifying latitude values of 62.5 to 64.5 and longtitude values from 89.5 to 87.5.
+5. Plots the scaled data on the map using `pcolormesh`.
+6. Adds a colorbar and title to the plot.
+
+The script then sets the input file name to `AG100.v003.64.-089.0001.h5` 
+At the end, it calls the `run` function with the input file name as an argument.

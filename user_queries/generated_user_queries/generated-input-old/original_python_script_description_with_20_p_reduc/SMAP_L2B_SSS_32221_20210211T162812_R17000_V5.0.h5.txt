@@ -1,0 +1,38 @@
+Here is the rewritten description with 20% less text while keeping implementation details:
+
+**Importing necessary libraries**
+
+The code imports several Python libraries: `os`, `matplotlib`, `mpl_toolkits.basemap`, `numpy`, and `h5py`.
+
+**Defining constants**
+
+Two constants are defined: `FILE_PATH` (the directory path) and `FILE_NAME` (the full path and name of the HDF5 file).
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read-only mode using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+This ensures the file is properly closed when done.
+
+**Reading datasets and metadata**
+
+The code reads three datasets from the HDF5 file: `latvar`, `longitude`, and `datavar`. It also extracts metadata from `datavar`: `units`, `long_name`, and `_FillValue`.
+
+**Handling FillValue and creating a masked array**
+
+The code replaces `_FillValue` with `NaN` using NumPy's `nan` constant and creates a masked array using `np.ma.masked_where`.
+
+**Creating a map and plotting the data**
+
+The code uses `Basemap` to create an equidistant cylindrical projection of the data and plots it on the map using `m.scatter`. It also adds coastlines, parallels, and meridians to the map.
+
+**Adding a colorbar and setting the title**
+
+The code adds a colorbar to the plot with a label set to the units of the data and sets the title of the plot using the filename and long name of the dataset.
+
+**Saving the plot**
+
+Finally, the code saves the plot to a PNG file using `matplotlib`'s `savefig` method.

@@ -1,0 +1,18 @@
+A Python code that reads and visualizes data from an NSIDC ICESat-2 ATL10 L3A version 6 HDF5 file. 
+
+The code starts by importing necessary libraries. Then, it defines the HDF5 file name as `"ATL10-02_20181227215113_13790101_006_02.h5"`.
+
+Next, it opens the HDF5 file in read-only mode and accesses various datasets:
+
+`/geophysical/latitude` and `/geophysical/longitude` for latitude and longitude values
+`/beam_fb_height` for data values, along with units, long name, and fill value attributes
+`/geophysical/delta_time` for time values
+
+all of the above datasets situated in the /gt1l/freeboard_segment subgroup
+
+The code then processes the data by handling fill values and converting time values to create an elapsed time series.
+
+After that, it creates two plots: a line plot showing time vs. height data 
+and a map plot displaying the trajectory of the flight path with the starting point annotated.
+
+Finally, the code saves the plot as a PNG file with a name derived from the HDF5 file name.

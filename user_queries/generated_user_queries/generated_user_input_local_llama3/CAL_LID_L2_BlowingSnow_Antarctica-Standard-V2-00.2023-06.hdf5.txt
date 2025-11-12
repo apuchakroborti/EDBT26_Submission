@@ -1,0 +1,35 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing four Python libraries: `h5py`, `os`, `cartopy.crs` and `matplotlib.pyplot`, and `numpy`.
+
+**Defining constants and variables**
+
+The code defines several constants and variables, including the name of the HDF5 file (`FILE_NAME`) and the fill value for missing data (`_FillValue`).
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file using the `h5py` library.
+
+**Reading data from the HDF5 file**
+
+The code reads data from the HDF5 file, converting it to a NumPy array of type `np.float64`. It then extracts the first column (i.e., the first dimension) of the dataset.
+
+**Handling fill value**
+
+The code handles the fill value by replacing it with NaN in the data array and creating a masked array.
+
+**Plotting the data**
+
+The code plots the data using `matplotlib`, creating a scatter plot with longitude, latitude, and color representing the data. It also adds a color bar to the plot.
+
+**Adding additional features**
+
+The code adds several additional features to the plot, including grid lines, coastlines, and a title.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file.
+
+Note that I removed some of the explanatory text and focused on the implementation details. Let me know if you'd like me to make any further changes!

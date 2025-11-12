@@ -1,0 +1,28 @@
+Here's the reduced text while keeping implementation details:
+
+**Importing necessary libraries**
+
+The code imports:
+* `os` for operating system interactions
+* `h5py` for HDF5 file operations
+* `matplotlib` and its plotting module (`mpl.pyplot`) for visualizations
+* `numpy` (as `np`) for numerical computations
+
+**Defining the file name and opening the HDF5 file**
+
+The code defines a string variable `FILE_NAME` containing an HDF5 file path: `'MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5'`. It then opens the file using `h5py.File`, specifying the file name and mode `'r'` (read-only), assigning it to a variable `f`.
+
+**Accessing specific datasets**
+
+The code accesses three datasets:
+1. `/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue`: water vapor concentration values
+2. `/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure`: pressure values
+3. Geolocation datasets: `/HDFEOS/SWATHS/H2O/Geolocation Fields/Latitude` and `/HDFEOS/SWATHS/H2O/Geolocation Fields/Longitude`
+
+**Creating a Basemap plot and plotting data**
+
+The code creates a cylindrical map projection (`projection='cyl'`) with coastlines, parallels, and meridians. It plots the water vapor concentration values onto the map using `m.scatter`, specifying geolocation data, water vapor concentrations, and a color map.
+
+**Adding a color bar and saving the plot**
+
+The code adds a color bar to the plot using `m.colorbar` and specifies an orientation and format. Finally, it saves the plot as a PNG file named `{0}.py.png` using `fig.savefig`.

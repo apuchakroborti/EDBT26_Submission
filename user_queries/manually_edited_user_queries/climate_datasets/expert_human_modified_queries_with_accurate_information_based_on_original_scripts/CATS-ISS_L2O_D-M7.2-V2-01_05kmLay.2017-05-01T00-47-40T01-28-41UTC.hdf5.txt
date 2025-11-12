@@ -1,0 +1,32 @@
+It starts by loading an HDF5 file named 'CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5'. 
+At first it imports some libraries such as datetime, os, matplotlib and colors, matplotlib.pyplot, mpl_toolkits.basemap, numpy
+
+The file is opened in read-only mode.
+The code then accesses two datasets: 
+'/layer_descriptor/Aerosol_Type_Fore_FOV' (a 2D array with aerosol type information) 
+and '/geolocation/CATS_Fore_FOV_Latitude' 
+and '/geolocation/CATS_Fore_FOV_Longitude' (2D arrays with latitude and longitude values).
+
+from the Aerosol_Type_Fore_FOV data program reads extracts the first column from the 2D array
+from the latitude data it should read the 2nd column of of the 2D array
+from the longitude data it should read 2nd colmn of the 2D array
+
+Next, it creates a discrete color map named cmap with 9 colors of "grey", "blue", "aqua", "yellow", "orange", "green", "red", "black", and "brown" each representing a specific aerosol type. 
+
+A geographic map is created using a cylindrical projection with low resolution, latitude range of -90 to 90 and longitude range of -180 to 180, 
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45 , 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+The plot title is set with the value of data file basename
+
+Then the program should define the bins and normalize for discrete colorbar
+such as the bounds is set using numply linspace function with the values of 0, 9, 10
+normalize is set by the value of matplotlib colors BoundaryNorm with values bounds and N value from the cmap
+
+In the 2nd axes such as ax2 should be set using add_axes with list of values [0.1, 0.1, 0.8, 0.02]
+
+then the matplotlib colorbar ColorBase values are set with values with parameters ax2, cmap, normalize, orientation="horizontal", spacing="proportional", ticks=bounds, boundaries=bounds, format="%1i"
+At the end the ax xticklabels are set with parameter the list of [ "invalid", "marine", "p. marine", "dust", "dust mixture", "clean/bg", "p. continental", "smoke", "volcanic", ] and fontzie = 5

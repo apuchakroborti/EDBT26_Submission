@@ -1,0 +1,30 @@
+A Python script. 
+Here's what it does:
+Reading an HDF-EOS File file named `MOP03TM-201802-L3V95.9.1.he5`.
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Accessing Datasets
+It declares a variable named data, the it reads data from the path /HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay
+Then it reads the attributes data from the data such as long_name with decode() and units with decode function, and _FillValue from
+The _FillValue representing missing or invalid data.
+
+Data Preprocessing
+The script replaces values equal to the _FillValue with `NaN` 
+and it masks the data using numpy ma modlue's masked_array function with parameters data and numpy isnan(nan)
+
+Retrieving Geolocation Information
+It retrieves two datasets: `Latitude` and `Longitude` from the below paths
+/HDFEOS/GRIDS/MOP03/Data Fields/Latitude and /HDFEOS/GRIDS/MOP03/Data Fields/Longitude respectively which are stored into two variables named x and y, 
+and creates a 2D meshgrid from x and y using NumPy's `meshgrid` function that stores the values of longitude and latitude.
+
+Creating a Basemap
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45, 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+Then it adds pcolormesh with parameters longitude, latitude, data, and latlon=True
+
+Visualizing Data
+After that it adds a colorbar and set label using set_lable funtion with parameter units.

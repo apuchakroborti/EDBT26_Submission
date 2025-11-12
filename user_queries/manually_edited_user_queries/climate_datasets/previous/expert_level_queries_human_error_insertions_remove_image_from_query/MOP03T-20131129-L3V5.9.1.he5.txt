@@ -1,0 +1,9 @@
+The script starts by reading the file. It then accesses several datasets located at /HDFEOS/GRIDS/MOP03 within the file: 
+- `/Data Fields/RetrievedSurfaceTemperatureDay`, which contains 2D surface temperature data
+- `/Data Fields/Latitude`, which contains latitude values
+- `/Data Fields/Longitude`, which contains longitude values
+
+The script preprocesses the data by replacing fill values with `NaN` and creating a masked array. 
+
+Next, it creates a map using `Basemap` library with a cylindrical projection and sets the latitude and longitude limits. 
+It then plots the surface temperature data on the map as a scatter plot.

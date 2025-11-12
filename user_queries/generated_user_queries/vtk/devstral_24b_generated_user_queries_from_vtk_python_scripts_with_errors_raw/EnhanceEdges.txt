@@ -1,0 +1,50 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to enhance edges in an image. Think of it like using a special filter on your camera or photo editing app that makes the outlines and details in a picture stand out more clearly.
+
+### Step-by-Step Explanation
+
+1. Importing Tools:
+   - The script starts by importing various tools (modules) needed for working with images, displaying them, and performing mathematical operations on them. These are like different specialized tools in a toolbox that help us process the image.
+
+2. Setting Up the Main Function:
+   - It defines a main function where all the important work happens. This is like setting up your workspace before you start building something.
+
+3. Loading the Image:
+   - The script specifies which image file to use (`EnhanceEdges_FullHead.mhd`). Imagine this as selecting a photo from your gallery that you want to edit.
+   - It then reads this image using a special tool (reader) and updates it, making sure everything is loaded correctly.
+
+4. Getting Image Details:
+   - The script checks the range of values in the image. This is like looking at how light or dark different parts of your photo are.
+   - It also decides which slice of the 3D image to focus on (middleSlice = 22). Think of this as choosing a specific layer if you were working with a multi-layered cake.
+
+5. Preparing for Edge Enhancement:
+   - The script sets up tools to convert the image into a format that's easier to work with (`cast`).
+   - It then applies a mathematical operation called Laplacian, which helps find edges in the image (`laplacian`). This is like using a special filter on your photo app that highlights edges.
+
+6. Combining Images:
+   - The script combines the original image and the edge-enhanced version by subtracting one from the other (`enhance`). This makes the edges stand out even more, similar to how you might sharpen an image in a photo editor.
+
+7. Setting Up Colors:
+   - It sets up color mapping for the images so they look good when displayed. This is like adjusting the brightness and contrast on your TV or monitor.
+
+8. Creating Actors:
+   - The script creates "actors" for each version of the image (original, edge-enhanced, and Laplacian). These actors are like characters in a play that will be shown on stage.
+   - Each actor is given specific instructions on how to display its part of the image.
+
+9. Setting Up the Stage:
+   - The script sets up a virtual "stage" where these images will be displayed (`renderers`). It arranges them in a grid so you can see all three versions side by side.
+   - It also sets the size and position for each image on this stage, making sure everything fits nicely.
+
+10. Displaying the Images:
+    - The script creates a window to display these images (`renderWindow`) and sets up an interactor that lets you zoom in and out or move around the images.
+    - It then renders (draws) the images on the screen so you can see them.
+
+11. Starting the Show:
+    - Finally, it starts the interactive part where you can view and interact with the images. This is like turning on your TV to watch a show.
+
+### Summary
+In simple terms, this script takes an image, applies special filters to make edges stand out more clearly, and then displays three versions of the image side by side: the original, the edge-enhanced version, and the intermediate step that shows where the edges are. It's like using a photo editing app to sharpen your pictures and see how it works step by step.
+
+This explanation should give you a good understanding of what the script does without getting into any technical details!

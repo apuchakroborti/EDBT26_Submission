@@ -1,0 +1,35 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+1. `os`: a built-in Python library for interacting with the operating system.
+2. `matplotlib.pyplot` (imported as `plt`): a plotting library for creating visualizations.
+3. `numpy` (imported as `np`): a library for numerical computations.
+
+**Defining constants and variables**
+
+1. `FILE_NAME`: the name of the HDF5 file to be accessed, set to `"ATL21-01_20210301005637_10241001_003_01.h5"`.
+2. The script opens the HDF5 file in read-only mode (`mode="r"`).
+
+**Accessing and processing data from the HDF5 file**
+
+1. `latvar` and `longitude` are assigned the values of the `/grid_lat` and `/grid_lon` datasets, respectively.
+2. The `latitude` and `longitude` variables are set to the values of `latvar[:)` and `lonvar[:]`, respectively.
+
+3. The script accesses the `/monthly/mean_weighted_mss` dataset (assigned to `dset_name`) and extracts its contents (`data = datavar[:]`).
+4. It also retrieves the units, long name, and fill value attributes of this dataset.
+5. The script handles the fill value by replacing it with NaN values.
+
+**Creating a map plot**
+
+1. A Basemap object (`m`) is created with a "npstere" projection and a resolution of "l".
+2. Coastlines are drawn using `m.drawcoastlines()`.
+3. Parallels (latitude lines) and meridians (longitude lines) are drawn using `m.drawparallels()` and `m.drawmeridians()`, respectively.
+4. The data (`data`) is plotted on the map using `m.pcolormesh()`.
+5. A colorbar is added to the plot using `m.colorbar(location="bottom")`.
+
+**Saving the plot**
+
+1. The script saves the plot as a PNG file with a name based on the HDF5 file's basename.
+
+This reduced text still includes most of the implementation details, but condenses some of the steps and removes less important information.

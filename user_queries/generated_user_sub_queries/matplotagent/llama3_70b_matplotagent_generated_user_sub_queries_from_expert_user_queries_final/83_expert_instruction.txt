@@ -1,0 +1,61 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            I want to plot a line graph of the Dow Jones Industrial Average (DJIA) from October 2006 to August 2013.
+The data is in '83_h5_data.h5'
+The data contains three datasets:
+    `date`: The date of the record.
+    `Dow Jones Industrial Average`: The daily closing value of the DJIA.
+    `1 year Moving Average`: The 1-year moving average value of the DJIA.
+With this data, you can plot the line graph using Python. Here's how you can do it:
+
+- Read the data from the h5 file using h5py.
+- Convert the date datasets values to datetime for proper plotting.
+- Plot the daily DJIA values and the 1-year moving average as lines on the graph.
+- Fill the area between the lines with the appropriate colors using the fill_between method.
+- Set the title of the graph and labels for the X and Y axes.
+- Adjust the X-axis to display the dates in a readable format.
+- Add a legend to the graph.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+Here are the 3 sub-queries:
+
+HDF5 Dataset Access Sub-query:
+Accessing HDF5 file '83_h5_data.h5' using h5py, reading datasets 'date', 'Dow Jones Industrial Average', and '1 year Moving Average'.
+
+NumPy Data Preprocessing Sub-query:
+Converting date dataset values to datetime format for plotting, handling _FillValue if present.
+
+Plotting and Visualization Sub-query:
+Plotting line graph of DJIA daily closing values and 1-year moving average using matplotlib or cartopy, filling area between lines with colors, setting title and axis labels, adjusting X-axis date format, adding legend.

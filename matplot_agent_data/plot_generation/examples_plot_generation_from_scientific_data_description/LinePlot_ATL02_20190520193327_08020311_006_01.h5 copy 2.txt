@@ -1,0 +1,23 @@
+Here's a reduced version of the text, keeping implementation details and removing Python libraries:
+
+**Exploring HDF5 File**
+
+I'm working with an HDF5 file containing ICESat-2 ATL02 data. I'll be accessing two specific datasets within the file.
+
+**Dataset 1: Elevation Data**
+
+The first dataset is located at `/atlas/pce1/background/bg_cnt_50shot_s`. This dataset contains elevation information. When I access it, I get its shape (dimensions) and extract the entire dataset to analyze further.
+
+**Dataset 2: Time-Related Data**
+
+The second dataset is located at `/atlas/pce1/background/delta_time`. This dataset contains time-related information. Again, I get its shape and extract the entire dataset for analysis.
+
+**Plotting Elevation Over Time**
+
+I'll create a line plot showing the elevation data over time using Matplotlib. The plot will have an X-axis label "Time", a Y-axis label based on the long name extracted from the elevation dataset's metadata, and a title that matches the Y-axis label followed by " over Time".
+
+**File Hierarchy**
+
+To identify these datasets within the HDF5 file hierarchy, I'll keep track of their parent groups: `/atlas/pce1/background/` for both datasets.
+
+Please note that this text is written in a style that resembles a real human user's prompt.

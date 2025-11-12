@@ -1,0 +1,83 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script to read and visualize HDF-EOS5 file data.
+
+1. Import Libraries: Include necessary libraries such as os, h5py, numpy (as np), matplotlib (as mpl), matplotlib.pyplot (as plt), and Basemap from mpl_toolkits.basemap.
+
+2. Open File: Use h5py to open the file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' in read mode.
+
+3. Retrieve Data:
+   - Extract grid metadata from '/HDFEOS INFORMATION/StructMetadata.0'.
+   - Read SurfacePressure data from '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure' into a NumPy array (dtype float64).
+   - Extract metadata: '_FillValue', 'MissingValue', 'Title' (using decode()), and 'Units' (using decode()) from the SurfacePressure dataset.
+
+4. Process Data:
+   - Identify invalid values using np.logical_or with SurfacePressure == _FillValue[0] and SurfacePressure == MissingValue[0].
+   - Set invalid values to NaN.
+   - Create a masked array using np.ma.masked_array with parameters SurfacePressure data and isnan(SurfacePressure).
+
+5. Retrieve Coordinates:
+   - Extract Longitude and Latitude from '/HDFEOS/GRIDS/NadirGrid/Data Fields/Longitude' and 'Latitude' as float64 NumPy arrays.
+
+6. Create Map:
+   - Initialize a Basemap object with cylindrical projection, resolution 'l', latitude range [-90, 90], longitude range [-180, 180].
+   - Draw coastlines (linewidth=0.5), parallels (np.arange(-45, 91, 45) with labels [1,0,0,0]), and meridians (np.arange(-180, 180, 45) with labels [0,0,0,1]).
+
+7. Visualize Data:
+   - Use pcolormesh to plot data with longitude, latitude, SurfacePressure data, and latlon=True.
+   - Add a colorbar with the Units label from metadata.
+   - Set the title as a concatenation of the file's base name and the Title metadata.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. The user provided a detailed Python script outline for reading and visualizing HDF-EOS5 data. My task is to extract each part of this process into separate sub-queries focused on HDF5 access, NumPy preprocessing, and visualization.
+
+First, looking at the HDF5 Dataset Access section. The user opens an HE5 file using h5py, retrieves metadata from specific paths, and reads datasets like SurfacePressure. So the sub-query should cover opening the file, accessing datasets by their paths, extracting attributes such as _FillValue and MissingValue, and handling metadata.
+
+Next, for NumPy-based Data Preprocessing, the user identifies invalid values using logical operations, sets them to NaN, and creates a masked array. The sub-query needs to focus on handling these specific preprocessing steps with NumPy functions like np.where or masked_where, dealing with _FillValue, and applying masks.
+
+Lastly, the Map Plotting and Visualization section involves setting up a Basemap with a cylindrical projection, drawing coastlines, meridians, parallels, plotting data with pcolormesh, adding a colorbar, and setting titles. The sub-query should cover all these visualization steps using matplotlib and Basemap.
+
+I need to ensure each sub-query is clear and targets only the specified technical domains without overlapping information.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF-EOS5 file with h5py, access datasets like SurfacePressure at '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure', retrieve metadata including _FillValue, MissingValue, Title, and Units.
+
+NumPy Data Preprocessing Sub-query:
+How to process data using NumPy by identifying invalid values with np.logical_or where SurfacePressure equals _FillValue or MissingValue, setting them to NaN, and creating a masked array with np.ma.masked_array.
+
+Plotting and Visualization Sub-query:
+How to visualize geospatial data using Basemap with a cylindrical projection, draw coastlines, parallels at -45, 0, 45, 90°, meridians every 45°, plot SurfacePressure with pcolormesh, add a colorbar labeled with Units, and set the title.

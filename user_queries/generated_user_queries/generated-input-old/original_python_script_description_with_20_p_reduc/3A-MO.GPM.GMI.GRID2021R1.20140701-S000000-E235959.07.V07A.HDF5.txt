@@ -1,0 +1,35 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Step 1: Import necessary libraries**
+
+The code imports five Python libraries: `os`, `matplotlib.pyplot` (as `plt`), `numpy` (as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Step 2: Define constants**
+
+Two constants are defined: `FILE_NAME` (the HDF5 file name) and `name` (the path to a specific dataset within the HDF5 file).
+
+**Step 3: Open the HDF5 file**
+
+The code uses `h5py` to open the HDF5 file in read-only mode (`mode="r"`). The `with` statement ensures the file is properly closed.
+
+**Step 4: Read data from the HDF5 file**
+
+Within the `with` block, the code reads a 2D array from the dataset at path `/Grid/cloudWater`, along with its units and fill value attributes.
+
+**Step 5-6: Replace fill values with NaN and create a masked array**
+
+The code replaces fill values with `NaN` using NumPy's vectorized operations and creates a masked array to ignore NaN values.
+
+**Step 7: Construct geolocation data**
+
+The code constructs longitude and latitude arrays manually using NumPy.
+
+**Step 8-10: Create a Basemap instance, draw map features, and create a pseudocolor mesh**
+
+The code creates a `Basemap` instance, draws coastlines, parallels, and meridians, and creates a pseudocolor mesh from the data array.
+
+**Step 11-12: Add a colorbar, set title, and save figure**
+
+The code adds a colorbar, sets the title using the HDF5 file name and dataset name, and saves the figure as a PNG image.
+
+That's it! The code reads an HDF5 file, extracts data and metadata, constructs geolocation data, creates a map visualization using Basemap, and saves the figure as a PNG image.

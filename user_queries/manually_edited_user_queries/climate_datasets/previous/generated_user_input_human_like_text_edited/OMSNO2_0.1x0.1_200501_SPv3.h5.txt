@@ -1,0 +1,7 @@
+Here is the rewritten description:
+
+"Can you explain how this Python code works? It imports `os`, `re`, `h5py`, and `numpy` modules, then defines constants for an HDF5 file name and a dataset within that file. 
+
+The code opens the HDF5 file in read-only mode and reads three datasets: `/OMI_SurfNO2`, `/Longitude`, and `/Latitude`. It processes this data by creating 2D arrays from the longitude and latitude values, then combines these with the SurfNO2 data into a single array.
+
+Finally, it saves this processed data to a CSV file with the same base name as the HDF5 file. I'd like you to focus on the implementation details, especially how it interacts with the HDF5 file."

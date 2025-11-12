@@ -1,0 +1,93 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that visualizes data from an HDF5 file using the following steps:
+
+1. Import Libraries: Include necessary libraries for handling files, numerical operations, and visualization:
+   - `os` for operating system functions
+   - `datetime` for time-related operations
+   - `h5py` to work with HDF5 files
+   - `numpy as np` for numerical computations
+   - `matplotlib as mpl` and `matplotlib.pyplot as plt` for creating visualizations
+   - `mpl_toolkits.basemap import Basemap` for map projections
+
+2. Define Constants: Set the file name constant:
+   - `FILE_NAME = 'Q2011280003000.L2_SCI_V5.0.h5'`
+
+3. Open HDF5 File: Open the specified HDF5 file in read-only mode using a `with` statement, assigning it to variable `f`.
+
+4. Access Data and Attributes:
+   - Extract the `/Aquarius Data/SSS` dataset into `datavar`.
+   - Slice `datavar` to get 1D data by taking all rows from the 0th column.
+   - Retrieve attributes `units`, `long_name`, and `_FillValue` from `datavar`, decoding byte-encoded strings.
+
+5. Extract Latitude and Longitude:
+   - Access `/Navigation/sclat` as a 1D array for latitude data.
+   - Access `/Navigation/sclon` as a 1D array for longitude data.
+
+6. Handle Fill Values:
+   - Replace `_FillValue` in the SSS dataset with `NaN` to handle missing data.
+   - Create a masked array for efficient management of invalid data points.
+
+7. Create Map Projection:
+   - Use Basemap's cylindrical projection with latitude limits from -90 to 90 and longitude from -180 to 180.
+
+8. Generate Scatter Plot:
+   - Plot data points on the map using longitude as x and latitude as y coordinates.
+   - Apply the `jet` colormap for data representation.
+
+9. Add Colorbar:
+   - Create a colorbar with a label based on the SSS dataset's units attribute for clarity.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants a Python script that visualizes data from an HDF5 file. They've outlined specific steps, so I need to break it down into the three required sub-queries.
+
+First, the HDF5 Dataset Access part. The user mentions using h5py to open the file and access datasets like /Aquarius Data/SSS. They also need to retrieve attributes like units and _FillValue. So the sub-query should focus on how to open the file with h5py, access specific datasets by path, and extract attributes, especially handling byte-encoded strings. Also, slicing the dataset to get 1D data is part of this step.
+
+Next, the NumPy-based Data Preprocessing. The user wants to replace _FillValue with NaN and create a masked array. The sub-query here should address handling _FillValue using NumPy functions like np.where or np.ma.masked_where. It should mention replacing the fill value and creating a masked array for efficient data management.
+
+Lastly, the Map Plotting and Visualization. The user is using Basemap with a cylindrical projection, plotting scatter points with longitude and latitude, using the jet colormap, adding a colorbar with the units label. The sub-query needs to focus on using matplotlib and Basemap for projections, drawing coastlines, meridians, parallels, and adding colorbars and titles. It should specify the cylindrical projection and the use of scatter plots with the specified colormap.
+
+I need to make sure each sub-query is specific to its domain. For HDF5, it's about accessing the file and datasets. For NumPy, it's about data preprocessing steps like handling missing values. For visualization, it's about plotting with map projections and colorbars. Avoid any overlap between the sub-queries and stick strictly to the technical aspects mentioned in each section of the user's query.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with h5py in read-only mode, access datasets at specific paths like '/Aquarius Data/SSS' and '/Navigation/sclat', retrieve attributes (units, long_name, _FillValue), and decode byte-encoded strings while slicing datasets to extract 1D arrays.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue in a NumPy array with NaN using np.where or np.ma.masked_where, create masked arrays for invalid data points, and apply min/max filtering for preprocessing before visualization.
+
+Plotting and Visualization Sub-query:
+How to use Basemap with cylindrical projection (lat -90/90, lon -180/180) to create scatter plots of geospatial data using longitude/latitude arrays, apply jet colormap, add coastlines, meridians/parallels, and create colorbars with units labels from dataset metadata.

@@ -1,0 +1,29 @@
+Here's a reduced version of the description, keeping most implementation details:
+
+This Python script reads and visualizes a GESDISC MEaSUREs Ozone Zonal Average HDF5 file. Here's an overview:
+
+1. Import necessary modules:
+   - `import datetime` for date manipulation
+   - `import os` for operating system interactions
+   - `import matplotlib as mpl` and `from mpl_toolkits.basemap import Basemap` for plotting
+   - `import numpy as np` for numerical operations
+
+2. Define a function `run(FILE_NAME)` to read the HDF5 file, extract relevant data, and create a plot.
+
+3. Open the HDF5 file using either `netCDF4` or `h5py`, depending on the value of `USE_NETCDF4`. Extract:
+   - 'ProfileOzone', 'Latitude', 'ProfilePressureLevels', and 'Date' variables/data
+   - Data values, latitude values, pressure level values, and date value
+
+4. Apply a log scale to the pressure levels (lev) for better visualization.
+
+5. Create a contour plot using `matplotlib.pyplot` with ozone data, latitude, and log-scaled pressure levels.
+
+6. Add a color bar, axis labels, title, and a text label showing the date.
+
+7. Save the plot as a PNG file with the same name as the input HDF5 file, but with a `.py.png` extension.
+
+8. In the main part of the script:
+    - Check if environment variable `HDFEOS_ZOO_DIR` is set; if so, use its value to look for the input file
+    - Call the `run(FILE_NAME)` function with the input file name
+
+The script assumes that the input file has a specific HDF5 hierarchy structure.

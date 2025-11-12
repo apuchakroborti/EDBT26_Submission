@@ -1,0 +1,13 @@
+"I'm working with a Python script that reads an HDF5 file and creates a 2D map visualization. Here's what it does:
+
+First, it imports necessary modules: `os`, `re`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl` and `plt`), and `Basemap`.
+
+It defines two constants: `FILE_NAME`, which is the name of the HDF5 file (`MOP03TM-201802-L3V95.9.1.he5`), and reads the file using `h5py`.
+
+The script accesses several datasets within the HDF5 file, including `RetrievedSurfaceTemperatureDay`, `Latitude`, and `Longitude`. It assigns these datasets to variables, such as `group`, `dsname`, `data`, `longname`, `units`, `fillvalue`, `y`, and `x`.
+
+Next, it performs data processing steps: replacing fill values with NaN, creating a masked array from the data, and transposing the data.
+
+The script then creates a `Basemap` object using the `cyl` projection and sets various parameters, such as resolution, latitude bounds, and longitude bounds. It plots the data using this object, drawing coastlines, parallels, meridians, and creating a pseudo-color plot.
+
+Finally, it adds a colorbar to the plot with a label set to the units of the data, and saves the plot to a PNG file with a title that includes the base name and long name of the dataset."

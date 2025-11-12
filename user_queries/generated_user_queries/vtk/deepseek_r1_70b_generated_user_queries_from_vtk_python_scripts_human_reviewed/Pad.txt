@@ -1,0 +1,98 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkmodules.vtkRenderingOpenGL2`.
+   - From `vtkmodules.vtkCommonColor`, import `vtkNamedColors`.
+   - From `vtkmodules.vtkIOImage`, import `vtkImageReader2Factory`.
+   - From `vtkmodules.vtkImagingColor`, import `vtkImageMapToWindowLevelColors`.
+   - From `vtkmodules.vtkImagingCore`, import:
+     - `vtkImageConstantPad`
+     - `vtkImageMirrorPad`
+   - From `vtkmodules.vtkInteractionStyle`, import `vtkInteractorStyleImage`.
+   - From `vtkmodules.vtkRenderingCore`, import:
+     - `vtkImageActor`
+     - `vtkRenderWindow`
+     - `vtkRenderWindowInteractor`
+     - `vtkRenderer`
+  - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define the Main Function:
+   - Initialize a `colors` object using `vtkNamedColors()`.
+
+3. Set File Path:
+   - Define `fileName` as `'Pad_FullHead.mhd'`.
+
+4. Read the Image:
+   - Create `readerFactory` using `vtkImageReader2Factory()`.
+   - Create `reader` by calling `CreateImageReader2(fileName)` on `readerFactory`.
+   - Set `reader.SetFileName(fileName)`.
+   - Update the reader with `reader.Update()`.
+
+5. Configure Pipelines:
+   - Create `constantPad` using `vtkImageConstantPad()`.
+     - Set input connection to `reader.GetOutputPort()`.
+     - Set constant value to 800.
+     - Define output extent as `(-127, 383, -127, 383, 22, 22)`.
+   - Create `mirrorPad` using `vtkImageMirrorPad()`.
+     - Set input connection to `reader.GetOutputPort()`.
+     - Set output extent to match `constantPad.GetOutputWholeExtent()`.
+
+6. Create Actors for Constant Pad:
+   - Create `constantPadColor` using `vtkImageMapToWindowLevelColors()`.
+     - Set window to 2000.
+     - Set level to 1000.
+     - Connect input to `constantPad.GetOutputPort()`.
+   - Create `constantPadActor` using `vtkImageActor()`.
+     - Connect mapper input to `constantPadColor.GetOutputPort()`.
+     - Set interpolation type to nearest.
+
+7. Create Actors for Mirror Pad:
+   - Create `mirrorPadColor` using `vtkImageMapToWindowLevelColors()`.
+     - Set window to 2000.
+     - Set level to 1000.
+     - Connect input to `mirrorPad.GetOutputPort()`.
+   - Create `mirrorPadActor` using `vtkImageActor()`.
+     - Connect mapper input to `mirrorPadColor.GetOutputPort()`.
+     - Set interpolation type to nearest.
+
+8. Set Up Renderers:
+   - Create `constantPadRenderer` using `vtkRenderer()`.
+     - Set viewport to `(0.0, 0.0, 0.5, 1.0)`.
+     - Add `constantPadActor`.
+     - Reset camera.
+     - Set background color to `colors.GetColor3d("SlateGray")`.
+   - Create `mirrorPadRenderer` using `vtkRenderer()`.
+     - Set viewport to `(0.5, 0.0, 1.0, 1.0)`.
+     - Add `mirrorPadActor`.
+     - Set active camera to `constantPadRenderer.GetActiveCamera()`.
+     - Set background color to `colors.GetColor3d("LightSlateGray")`.
+
+9. Configure the Render Window:
+   - Create `renderWindow` using `vtkRenderWindow()`.
+     - Set size to `(600, 300)`.
+     - Set window name to `'Pad'`.
+     - Add both renderers.
+
+10. Set Up Interaction Style:
+    - Create `style` using `vtkInteractorStyleImage()`.
+    - Create `renderWindowInteractor` using `vtkRenderWindowInteractor()`.
+      - Set interactor style to `style`.
+      - Set render window to `renderWindow`.
+
+11. Finalize and Start Interaction:
+    - Adjust camera with `constantPadRenderer.GetActiveCamera().Dolly(1.2)`.
+    - Reset camera clipping range.
+    - Initialize the interactor.
+    - Start interaction with `renderWindowInteractor.Start()`.
+
+12. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "Pad_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.
+
+13. Run Main Function:
+    - Execute `main()` when script is run as main program.

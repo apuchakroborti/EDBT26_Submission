@@ -1,0 +1,25 @@
+A Python script that performs the following tasks:
+
+1. Import Libraries: Import os, matplotlib.pyplot as plt, numpy as np, and mpl_toolkits.basemap.Basemap.
+
+2. Read Data from HDF5 File:
+   - Open an HDF5 file.
+   - Read datasets: soil_moisture from `soil_moisture`, 
+      latitude from `latitude`, and longitude from `longitude` from the group `Soil_Moisture_Rettrieval_Data_AM`.
+   - Retrieve attributes: units, long_name, _FillValue, valid_max, and valid_min from the soil_moisture dataset.
+
+3. Decode Units and Long Name: Decode byte strings using decode('ascii', 'replace') for units and long_name.
+
+4. Calculate Invalid Data:
+   - Use numpy.logical_or to find data where soil_moisture is outside valid_min and valid_max.
+   - Update invalid data where it equals _FillValue.
+   - Replace invalid points with NaNs.
+
+5. Create Masked Array: Use numpy.masked_where with isnan(soil_moisture) to mask the data.
+
+6. Create Map and Visualize Data:
+   - Set up an equidistant cylindrical projection map using Basemap with low resolution.
+   - Draw coastlines with line width 0.5, parallels at [-180, -135, -90, -45, 0, 45, 90], and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+   - Create a scatter plot of soil_moisture data using longitude and latitude coordinates, with markers size 1, colormap jet, no edge color, and linewidth 0.
+   - Add a colorbar labeled with the decoded units.
+   - Set the title as the HDF5 file's basename concatenated with the long_name attribute.

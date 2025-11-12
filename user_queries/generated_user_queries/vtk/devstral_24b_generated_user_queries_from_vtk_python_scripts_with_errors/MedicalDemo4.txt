@@ -1,0 +1,58 @@
+Purpose
+This script is designed to read a 3D medical image (like a CT scan or MRI) and display it on your screen. It helps doctors visualize the inside of a patient's body in three dimensions.
+
+Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing some tools that are needed to handle graphics and images. Think of these as different toolboxes you need for specific tasks.
+
+2. Creating Colors:
+   - It sets up a color palette, which is like choosing colors from a paint box. This will be used later to set the background color when displaying the image.
+
+3. File Name:
+   - The script specifies the name of the file it needs to read (in this case, 'MedicalDemo4_FullHead.mhd'). This is like telling someone which book you want them to open.
+
+4. Setting Background Color:
+   - It sets a specific color for the background where the image will be displayed. Imagine painting the wall behind a picture frame.
+
+5. Creating the Display Area:
+   - The script creates an area on your screen where the 3D image will be shown, along with tools to interact with it (like clicking and dragging). Think of this as setting up a TV screen and remote control.
+
+6. Reading the Image File:
+   - It reads the medical image file that contains multiple slices (like pages in a book) representing different layers of the body. This is like opening a book and reading each page to understand the whole story.
+
+7. Preparing the 3D View:
+   - The script sets up how the 3D image will be displayed using something called ray-casting, which helps create a realistic view by simulating light rays passing through the volume of the body. Imagine shining a flashlight through a glass sculpture to see its insides.
+
+8. Color Mapping:
+   - It defines rules for what colors should represent different parts of the body (like flesh and bone). This is like coloring different parts of a drawing with specific crayons based on their type.
+
+9. Opacity Settings:
+   - The script sets how transparent or opaque (solid) different tissues should appear. For example, it makes bones more solid-looking than soft tissues. Think of adjusting the transparency of different layers in a glass sculpture.
+
+10. Gradient Opacity:
+    - It adjusts how the transparency changes smoothly across different parts of the image to make boundaries between tissues look clearer. This is like blending colors on a painting to create smooth transitions.
+
+11. Volume Properties:
+    - The script combines all these settings (colors, opacity) into one package that describes how the 3D volume should look when displayed. Think of this as setting up all the rules for how your sculpture should appear under different lighting conditions.
+
+12. Creating the Volume Object:
+    - It creates a 3D object that will hold and display the image based on the settings defined earlier. This is like placing your glass sculpture in the display case.
+
+13. Adding to Display Area:
+    - The script adds this 3D object to the screen area where it will be shown. Think of putting your sculpture into the display case on the TV screen.
+
+14. Setting Up the Camera View:
+    - It sets up a virtual camera to show the best view of the 3D image, positioning and aiming it like you would with a real camera. This helps in getting a clear look at the important parts of the body.
+
+15. Adjusting Background Color:
+    - The script applies the background color that was chosen earlier to the display area. Think of painting the frame around your sculpture.
+
+16. Resizing the Window:
+    - It sets the size of the window where the image will be displayed, making it big enough to see clearly. This is like adjusting the size of your TV screen.
+
+17. Starting Interaction:
+    - Finally, the script starts the interaction mode, allowing you to move and zoom in on the 3D image using your mouse or keyboard. Think of turning on the remote control so you can interact with what's on the screen.
+
+Summary
+In simple terms, this script reads a complex medical image file, sets up how different parts should look (colors, transparency), creates a 3D view of it, and displays it on your screen in an interactive way. It's like setting up a sophisticated display for a detailed glass sculpture that doctors can examine from all angles.

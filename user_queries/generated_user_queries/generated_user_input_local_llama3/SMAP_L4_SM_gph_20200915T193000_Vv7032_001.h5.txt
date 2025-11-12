@@ -1,0 +1,27 @@
+Here's the reduced text, keeping as many implementation details as possible:
+
+**Accessing and Visualizing SMAP L4 HDF5 File**
+
+This Python script accesses and visualizes a soil moisture product from a SMAP L4 HDF5 file.
+
+**Importing Libraries**
+
+The script imports necessary libraries: `os`, `matplotlib.pyplot` (aliased as `plt`), `numpy` (aliased as `np`), and `mpl_toolkits.basemap`.
+
+**Defining File Name and Opening HDF5 File**
+
+The script defines a constant `FILE_NAME` with the path to the SMAP L4 HDF5 file. It then opens the file in read-only mode using `h5py`.
+
+**Accessing Geophysical Data**
+
+Within the HDF5 file, the script accesses the `/Geophysical_Data/sm_profile` dataset and extracts soil moisture profile data.
+
+**Creating Map**
+
+The script creates a cylindrical map projection (`projection='cyl'`) with coastlines, parallels, and meridians. It then scatters soil moisture data points onto the map using `scatter`.
+
+**Saving Plot**
+
+Finally, the script saves the plot as a PNG file with a name based on the HDF5 file name and adds a title with the long name of the dataset.
+
+This reduced text maintains most of the implementation details while condensing the original text.

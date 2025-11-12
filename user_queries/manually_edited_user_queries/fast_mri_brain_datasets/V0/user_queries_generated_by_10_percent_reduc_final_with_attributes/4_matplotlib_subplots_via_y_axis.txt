@@ -1,0 +1,37 @@
+This code is part of an application for visualizing and analyzing brain MRI data stored in HDF5 files. Here's how it works:
+
+File Paths and Variables
+The code defines two file paths: `FAST_MRI_BRAIN_H5_FILE` is located at fastMRI_brain_first_10_dcm_to_h5.h5 and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`, 
+which points to a specific dataset within the HDF5 file.
+
+Also print the below information by acessing attributes data from the metadata sub group from the group FAST_MRI_BRAIN_ROOT/100099070170/279 
+Patient age, Patient BirthDate, Patient id, Patient_Identity_Removed, Patientname, Sex
+
+
+Reading Data from HDF5 File
+The code reads data from the HDF5 file. It opens the file in read mode and assigns it to a variable. 
+Then, it reads the dataset at the specified path and assigns it to a variable `brain_vol`.
+
+Reshaping Data
+The 2D dataset is reshaped into a 3D array with shape `(16, 32, 512)` using the `reshape()` method.
+
+Plotting Data
+The code sets up a figure with multiple subplots using `matplotlib`. It defines the number of rows and columns for the subplot grid, as well as the total number of subplots. 
+Then, it iterates over a range of slice indices and plots each slice using `imshow()`, applying a 270-degree rotation to align the slices with the correct orientation using scipy.ndimage.
+
+Implementation Details
+The HDF5 file contains a dataset at the path `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`, which is read into memory as a 2D array.
+The 2D array is reshaped into a 3D array with shape `(16, 32, 512)`.
+Each slice is rotated by 270 degrees to align it with the correct orientation.
+
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing by step_size,
+set imshow by slicing data from the y axis,  
+
+plots brain MRI slices as grayscale images, and turns off axis labels for each subplot. 
+
+HDF5 Hierarchy
+The HDF5 file hierarchy can be inferred from the code:
+the root group is FAST_MRI_BRAIN_ROOT parent sub group is 279 and the dataset is fastMRI_brain_data - This is the parent group of the dataset.
+	+ `fastMRI_brain_data` - This is the dataset containing the brain MRI data.

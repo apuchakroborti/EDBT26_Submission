@@ -1,0 +1,40 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The first four lines import the following libraries:
+* `datetime` and `os`
+* `matplotlib.pyplot` (as `plt`)
+* `numpy` (as `np`)
+* `mpl_toolkits.basemap`
+* `h5py`
+
+**Defining the file name and opening HDF5 file**
+
+The next line defines the file name as `"ATL10-02_20181227215113_13790101_006_02.h5"`. The `with` statement opens the HDF5 file in read-only mode (`mode="r"`).
+
+**Accessing and processing data**
+
+The code accesses datasets within the HDF5 file:
+* `/gt1r/freeboard_segment/geophysical/latitude`: latitude values
+* `/gt1r/freeboard_segment/geophysical/longitude`: longitude values
+* `/gt1r/freeboard_segment/beam_fb_height`: beam-freeboard height values
+
+It extracts data from these datasets using slicing (`[:]`) and assigns it to variables:
+* `latitude` and `longitude`
+* `data`: beam-freeboard height values
+* Attribute values: `units`, `long_name`, `_FillValue`
+
+**Handling Fill Value and processing time data**
+
+The code checks for `_FillValue` and sets those values to NaN. It then masks the data where NaN values are present.
+
+It also accesses the `/gt1r/freeboard_segment/geophysical/delta_time` dataset and extracts time values into the `time` variable.
+
+**Creating plots and saving the plot**
+
+The code creates two subplots:
+* Plotting time vs. height
+* Creating a map of the trajectory with an orthographic projection
+
+It saves the plot as a PNG file named after the HDF5 file, but with a `.py.png` extension.

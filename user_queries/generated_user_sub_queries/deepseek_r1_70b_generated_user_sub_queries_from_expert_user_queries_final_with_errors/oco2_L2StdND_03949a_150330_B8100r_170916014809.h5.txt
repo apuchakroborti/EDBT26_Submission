@@ -1,0 +1,93 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads an HDF5 file named `oco2_L2StdND_03949a_150330_B8100r_170916014809.h5` and generates a data visualization map. 
+The script should perform the following steps:
+
+1. Import Libraries: Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy`, `matplotlib`, `matplotlib.pyplot`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Define Constants: Set the constant `FILE_NAME` to the specified HDF5 file name.
+
+3. Open HDF5 File: Open the file in read-only mode and assign it to a variable `f`.
+
+4. Read Data:
+   - Extract data from `/RetrievalResults/xco2` into a variable named `data`.
+   - Retrieve the units and description of this dataset.
+
+5. Read Geolocation Data:
+   - Read latitude values from `retrieval_latitude` into a NumPy array called `latitude`, 
+   - Read longitude values from `retrieval_longitude` into a NumPy array called `longitude` 
+      from the group RetrievalGeometry.
+
+6. Set Up Map Projection:
+   - Use a cylindrical projection with low resolution.
+   - Define latitude and longitude ranges from -90 to 90 and -180 to 180, respectively.
+
+7. Customize Map Features:
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels using NumPy arange with values [-90, 91, 45] and meridians with values [-180, 180, 45], both at intervals of 45 degrees.
+   - Label the map with `labels=[True, False, False, True]`.
+
+8. Create Scatter Plot:
+   - Use the scatter function with parameters: longitude (`lon`), latitude (`lat`), data (`c=data`), marker size (`s=1`), colormap (`cmap=plt.cm.jet`), and no edge colors or line width.
+
+9. Add Colorbar and Labels:
+   - Include a colorbar at the bottom of the plot with format `%.1e` and 10% padding.
+   - Set the label for the data using the retrieved units.
+
+10. Display Plot: Render the final visualization.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user's query into three specific sub-queries. Let me read through the problem again carefully.
+
+The user wants a Python script that reads an HDF5 file and creates a visualization map. They've outlined 10 steps, from importing libraries to displaying the plot. My task is to split this into three focused areas: HDF5 access with h5py, NumPy preprocessing, and plotting with matplotlib or related tools.
+
+First, looking at step 4 and 5 in their script, they're extracting data from specific paths like '/RetrievalResults/xco2' and retrieving attributes. So the first sub-query should focus on accessing these datasets and their metadata using h5py.
+
+Next, steps 6 to 8 involve setting up a map projection with Basemap, customizing features like coastlines and parallels, and creating a scatter plot. This falls under plotting and visualization, so I'll need to frame that as the third sub-query.
+
+Now, what about NumPy preprocessing? The user's script doesn't explicitly mention handling _FillValue or masking data, but in typical HDF5 processing, especially with geospatial data, such steps are common. So I should include how to apply masks using np.where or np.ma.masked_where and handle any fill values.
+
+Putting it all together, each sub-query needs to be concise and target a specific technical area so that the user can find relevant documentation or examples easily.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to access HDF5 datasets and attributes using `h5py`, including reading data from paths like `/RetrievalResults/xco2` and retrieving metadata such as units and descriptions.
+
+NumPy Data Preprocessing Sub-query:  
+How to handle `_FillValue` in NumPy arrays, apply masks using `np.where` or `np.ma.masked_where`, and perform preprocessing operations like filtering based on min/max values.
+
+Plotting and Visualization Sub-query:  
+How to create a map visualization with `matplotlib` and `mpl_toolkits.basemap.Basemap`, including setting up cylindrical projections, adding coastlines, drawing parallels/meridians, creating scatter plots, and customizing colorbars.

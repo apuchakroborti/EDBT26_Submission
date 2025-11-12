@@ -1,0 +1,32 @@
+Importing Libraries
+The script starts by importing necessary libraries.
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, FormatStrFormatter from matplotlib.ticker, and mpl_toolkits.basemap import Basemap
+
+Defining Constants
+It defines a constant `FILE_NAME` for the HDF5 file to be read which is located at SBUV2-NOAA17_L2-SBUV2N17L2_2011m1231_v01-02-2013m0828t143157.h5
+
+Reading Data
+The script opens the HDF5 file and reads various datasets:
+- `/SCIENCE_DATA/ProfileO3Retrieved`: 2D ozone profile data
+- `/GEOLOCATION_DATA/Latitude`: 1D latitude values
+- `/ANCILLARY_DATA/PressureLevels`: 1D pressure level values
+- `nTimes`: 1D time values in seconds since 1993-01-01
+
+It then access attributes such as units, valid_min, valid_max, _FillValue, and long_name
+After that it uses decode function for the units and long_name
+
+Data Processing
+The script processes the ozone profile data by replacing invalid values with NaN, and creating a masked array.
+
+Sorting Latitude Values
+It sorts latitude values in ascending order.
+
+Converting Time Values
+Time values are converted from seconds to datetime objects.
+
+Plotting the Data
+A contour plot is created using latitude on the x-axis and pressure levels on the y-axis. The colorbar is labeled with ozone profile data units.
+
+Customizing the Plot
+The script customizes the plot by setting axis labels, adding a title, and annotating start and end times. It also inverts the y-axis, applies a log scale, 
+and removes scientific notation from tick labels.

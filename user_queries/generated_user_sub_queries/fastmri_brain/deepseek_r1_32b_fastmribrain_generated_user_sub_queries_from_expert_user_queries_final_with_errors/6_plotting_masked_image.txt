@@ -1,0 +1,69 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            It starts by loading an HDF5 file located at `6_fastMRI_brain_first_10_dcm_to_h5.h5` in read-only mode.
+
+The code then accesses a dataset within the HDF5 file from the dataset fastMRI_brain_data from the sub group 279 and root group FAST_MRI_BRAIN_ROOT, 
+which represents 16 slices, 32 rows, and 512 columns. 
+
+Two masks are created: one where values are greater than 10% of the maximum value, 
+and another where values are less than 15% of the maximum value. 
+The two masks are combined using element-wise addition, and then thresholded to create a final mask.
+
+The code visualizes the mask using a gray colormap and slice of 20th column from 3D array that means it reads all values from x axis,
+and z axis but only select the 20th slice from y axis, displaying a slice of the mask. 
+
+In summary, this code loads an HDF5 file containing MRI data, reshapes the data into 3D, applies masking, and visualizes the results.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, I need to break down the user's query into three specific sub-queries based on the given categories. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user is loading an HDF5 file and accessing a dataset within it. They mention the file path, the group structure (FAST_MRI_BRAIN_ROOT and subgroup 279), and the dataset name fastMRI_brain_data. So I should focus on how to access this specific dataset using h5py.
+
+Next, for NumPy-based Data Preprocessing, the user creates two masks based on percentages of the maximum value and combines them. They also reshape the data into a 3D array. My sub-query needs to cover creating these masks using np.where or similar functions, combining them, and applying thresholds.
+
+Lastly, the Plotting and Visualization part involves using matplotlib to display a slice of the mask with specific parameters like gray colormap, axis labels, and title. I should focus on how to visualize this data correctly, including setting up the plot and adding necessary elements.
+
+Putting it all together, each sub-query should clearly target one technical domain without overlapping.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access the dataset 'fastMRI_brain_data' from subgroup 279 under root group FAST_MRI_BRAIN_ROOT in the HDF5 file located at '6_fastMRI_brain_first_10_dcm_to_h5.h5' using h5py?
+
+NumPy Data Preprocessing Sub-query:
+How to create two masks where one is values greater than 10% of the maximum value and another is less than 15% of the maximum value, combine them using element-wise addition, and threshold to create a final mask in NumPy?
+
+Plotting and Visualization Sub-query:
+How to visualize a slice from a 3D array (20th column) using matplotlib with gray colormap, displaying coastlines, meridians, parallels, colorbar, and title?

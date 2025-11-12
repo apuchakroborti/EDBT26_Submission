@@ -1,0 +1,27 @@
+Create a script that performs the following steps:
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Define a constant FILE_NAME with the name of the HDF5 file to be processed.
+
+3. Open the specified HDF5 file in read-only mode.
+
+4. Extract datasets from the file:
+   - `/RetrievalResults/xco2` for xCO2 data
+   - `/SoundingGeometry/sounding_latitude_geoid` for latitude data
+   - `/SoundingGeometry/sounding_longitude_geoid` for longitude data
+   - `/SoundingGeometry/sounding_altitude` for altitude data
+   - `/RetrievalHeader/sounding_time_tai93` for time data
+
+5. Retrieve the 'Units' attribute from both xco2 and altitude datasets at index 0.
+
+6. Create a figure with two subplots:
+   - First subplot: Orthographic projection map with low resolution, centered at lat_0 = -55 and lon_0 = 120, displaying the sounding trajectory using latitude and longitude coordinates.
+   - Second subplot: Line plot showing time vs xco2 data, with a twin axis for time vs altitude data.
+
+7. Customize the map by adding:
+   - Coastlines with a line width of 0.5
+   - Parallels at latitudes [-80, 0, 20]
+   - Meridians at longitudes [-180, 181, 20]
+
+8. Customize both plots by setting appropriate axis labels, titles, and tick formats.

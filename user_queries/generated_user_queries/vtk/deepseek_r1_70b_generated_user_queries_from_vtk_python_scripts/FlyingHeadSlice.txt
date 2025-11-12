@@ -1,0 +1,73 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkInteractionStyle` from `vtkmodules`.
+   - Import `vtkRenderingOpenGL2` from `vtkmodules`.
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`.
+   - Import `vtkContourFilter` and `vtkFlyingEdges2D` from `vtkmodules.vtkFiltersCore`.
+   - Import `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`.
+   - Import `vtkMetaImageReader` from `vtkmodules.vtkIOImage`.
+   - Import `vtkExtractVOI` from `vtkmodules.vtkImagingCore`.
+   - Import `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+
+2. Define the Main Function:
+   - Set `fileName` to `'FlyingHeadSlice_FullHead.mhd'` and `useContouring` to `True`.
+   - Print a message indicating whether `vtkContourFilter` or `vtkFlyingEdges2D` is being used based on the value of `useContouring`.
+
+3. Create Visualization Components:
+   - Create a renderer (`ren1`), render window (`renWin`), and interactor (`iren`).
+   - Add the renderer to the render window and set the interactor for the render window.
+
+4. Set Up Data Reading Pipeline:
+   - Create a `vtkMetaImageReader` instance named `reader`.
+   - Set the file name of the reader to `fileName`.
+   - Update the reader to load the data.
+   - Create a `vtkExtractVOI` instance named `extractVOI`.
+   - Connect the output of the reader to the input of `extractVOI`.
+   - Set the volume of interest (VOI) for `extractVOI` using `SetVOI(0, 255, 0, 255, 45, 45)`.
+
+5. Define Scalar Range:
+   - Set `scalarRange` to `[500, 1150]`.
+
+6. Create Contouring Pipeline:
+   - Create a `vtkContourFilter` instance named `contour`.
+   - Create a `vtkFlyingEdges2D` instance named `flyingEdges`.
+   - Create a `vtkPolyDataMapper` instance named `isoMapper`.
+   - If `useContouring` is `True`, connect the output of `extractVOI` to `contour`, generate 12 contour values within `scalarRange`, and connect the output of `contour` to `isoMapper`.
+   - Otherwise, connect the output of `extractVOI` to `flyingEdges`, generate 12 contour values within `scalarRange`, and connect the output of `flyingEdges` to `isoMapper`.
+
+7. Configure Mapper:
+   - Enable scalar visibility for `isoMapper`.
+   - Set the scalar range of `isoMapper` to `scalarRange`.
+
+8. Create Actor for Contour Lines:
+   - Create a `vtkActor` instance named `isoActor`.
+   - Set the mapper of `isoActor` to `isoMapper`.
+   - Set the color of `isoActor` to 'Wheat' using `vtkNamedColors`.
+
+9. Create Outline Pipeline:
+   - Create a `vtkOutlineFilter` instance named `outline`.
+   - Connect the output of `extractVOI` to `outline`.
+   - Create a `vtkPolyDataMapper` instance named `outlineMapper`.
+   - Connect the output of `outline` to `outlineMapper`.
+
+10. Create Actor for Outline:
+    - Create a `vtkActor` instance named `outlineActor`.
+    - Set the mapper of `outlineActor` to `outlineMapper`.
+
+11. Add Actors to Renderer and Configure Scene:
+    - Add `outlineActor` and `isoActor` to the renderer (`ren1`).
+    - Set the background color of the renderer to 'SlateGray' using `vtkNamedColors`.
+    - Reset the camera view.
+    - Adjust the camera with `Dolly(1.5)` and reset the camera clipping range.
+
+12. Configure Render Window:
+    - Set the size of the render window (`renWin`) to 640x640 pixels.
+    - Set the window title to 'FlyingHeadSlice'.
+    - Render the scene.
+
+13. Start Interaction:
+    - Start the interaction loop with `iren.Start()`.
+
+14. Run Main Function:
+    - Call the main function when the script is executed as the main program using `if __name__ == '__main__': main()`.

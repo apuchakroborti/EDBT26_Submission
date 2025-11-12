@@ -1,0 +1,62 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Comments and Usage Information**
+
+The first section consists of comments explaining the purpose of the code, how to use it, and some information about the testing environment.
+
+**Importing Libraries**
+
+The next section imports several libraries:
+
+1. `os`: for operating system-related functionality
+2. `matplotlib.pyplot` (as `plt`): for creating plots and visualizations
+3. `numpy` (as `np`): for numerical computations and array operations
+4. `mpl_toolkits.basemap` (as `Basemap`): for geographic plotting and mapping
+5. `h5py`: for working with HDF5 files
+
+**File Access and Data Retrieval**
+
+The code then accesses an HDF5 file named "SMAP_L3_SM_P_20200916_R19240_001.h5" using the `h5py` library.
+
+1. The file is opened in read-only mode (`mode="r"`).
+2. The code retrieves a dataset named "soil_moisture" from the HDF5 file, which is located under the group "/Soil_Moisture_Retrieval_Data_AM".
+3. It extracts various attributes associated with the dataset, such as:
+	* `units`: the units of measurement for the data
+	* `long_name`: a longer description of the data
+	* `_FillValue`: a special value indicating missing or invalid data
+	* `valid_max` and `valid_min`: the valid range of values for the data
+
+**Data Processing**
+
+The code then processes the retrieved data:
+
+1. It creates a mask (`invalid`) to identify invalid data points, which are:
+	* Outside the valid range (less than `valid_min` or greater than `valid_max`)
+	* Equal to `_FillValue`
+2. The code sets these invalid data points to NaN (Not a Number) using NumPy's `nan` value.
+3. It creates a masked array (`data`) using the `np.ma.masked_where` function, which allows for efficient handling of missing or invalid data.
+
+**Geolocation Data Retrieval**
+
+The code retrieves geolocation data from the HDF5 file:
+
+1. It extracts latitude and longitude datasets from the group "/Soil_Moisture_Retrieval_Data_AM".
+
+**Plotting**
+
+The code uses the `Basemap` library to create a geographic plot:
+
+1. It creates a Basemap object (`m`) with a cylindrical projection, setting the resolution, lat/lon limits, and other parameters.
+2. It draws coastlines, parallels, and meridians on the map using various `Basemap` functions.
+3. It scatters the soil moisture data points on the map, using the longitude and latitude values as coordinates, and coloring them according to their values (using a jet colormap).
+4. It adds a colorbar (`cb`) to the plot, labeling it with the units of measurement.
+
+**Plot Customization and Saving**
+
+Finally, the code customizes the plot and saves it to a file:
+
+1. It sets the title of the plot using the file name and long description.
+2. It gets the figure object (`fig`) using `plt.gcf()`.
+3. It saves the plot to a PNG file with the same base name as the HDF5 file, but with a `.py.png` extension.
+
+That's a summary of what the code does!

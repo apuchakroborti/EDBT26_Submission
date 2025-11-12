@@ -1,0 +1,51 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Create a Python script to generate a 3D scatter plot from a h5 file named "78_h5_data.h5" with datasets ["0-60 mph(sec)", "Gas Mileage(mpg)", "Power(kw)", "Weight(kg)", "Engine Displacement(CC)"]. The plot should meet the following specifications:
+- Plot each car as a point in 3D space using its acceleration time, gas mileage, and power as coordinates.
+- Point sizes should increase with the engine displacement, and colors should vary from one end of the spectrum (like purple) for smaller engines to the other end (like yellow) for larger engines.
+- Add flat projections of these points onto the XY, ZX, and YZ planes below and to the sides of the 3D points, colored blue, red, and green, respectively.
+- Include a color bar to indicate the relationship between color and engine displacement.
+- Label each axis to show what it represents and use a 3D perspective for viewing the plot.
+- Ensure the plot has a modern and clean design, with clear, semi-transparent points to avoid visual clutter.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to use `h5py` to open a file with extension ".h5" and access specific datasets by name (e.g., "0-60 mph(sec)", "Gas Mileage(mpg)") within the opened h5 file.
+
+NumPy Data Preprocessing Sub-query:
+How to use NumPy to extract data from arrays, handle potential `_FillValue` entries, and scale or transform the data for use as point sizes or color values in a 3D plot.
+
+Plotting and Visualization Sub-query:
+How to create a 3D scatter plot using `matplotlib`, configure the plot's perspective, add projections onto XY, ZX, and YZ planes, customize point sizes and colors based on data values, add a colorbar, and label the axes.

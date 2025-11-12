@@ -1,0 +1,37 @@
+Here's the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code starts by importing several Python modules, including `os`, `re` (regular expressions), `matplotlib`, `Basemap` from `mpl_toolkits.basemap`, `pyproj` for projection conversions, and `numpy`.
+
+**Defining a function to run**
+
+The code defines a function called `run()` that takes a single argument `FILE_NAME`. This function will be used to process the HDF5 file.
+
+**Processing the HDF5 file using GDAL (optional)**
+
+If `USE_GDAL` is set to `True`, the code uses `gdal` to open the HDF5 file and read its contents. It sets up a string `gname` that points to the desired dataset, opens the dataset using `gdal.Open()`, reads the data, and converts it to a NumPy array.
+
+**Processing the HDF5 file using h5py**
+
+If `USE_GDAL` is set to `False`, the code uses `h5py` to open the HDF5 file and read its contents. It sets up a string `name` that points to the desired dataset, reads the data, and converts it to a NumPy array.
+
+**Constructing the grid**
+
+The code uses regular expressions (regex) to extract the upper-left and lower-right coordinates of the grid from the StructMetadata.0 dataset.
+
+**Processing the data**
+
+The code processes the data by setting up a meshgrid of coordinates using `numpy`'s `meshgrid()` function, transforming the EASE Grid to WGS84 coordinates using `pyproj.transform()`, and setting up units and a long name for the dataset.
+
+**Plotting the data**
+
+The code uses `Basemap` to create a plot of the data. It sets up a Basemap object with an npstere projection, resolution 'l', and bounding latitude 33, draws coastlines and parallels/meridians, creates a pseudocolor plot using `m.pcolormesh()`, and sets up a color bar.
+
+**Saving the plot**
+
+The code saves the plot to a PNG file with a name based on the input file name.
+
+**Running the script**
+
+The code defines an `if __name__ == "__main__":` block, which runs the `run()` function with the input file name.

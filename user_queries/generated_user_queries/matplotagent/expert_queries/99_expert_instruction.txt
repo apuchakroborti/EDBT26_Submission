@@ -1,0 +1,5 @@
+To create a violin plot using Seaborn, you should use data from a h5 file named "99_h5_data.h5" 
+which includes datasets `total_bill`, `tip`, `sex`, `smoker`, `day`, `time`, and `size`. 
+The plot should focus on comparing the 'Total_Bill' amounts for different 'Day' values (days of the week), 
+with a distinction between 'smoker' and 'non-smoker' categories. Implement split violins for this purpose, 
+and within each violin, use quartiles to represent the data distribution. The color scheme should be green for smokers and grey for non-smokers. Adopt a dark style theme for the plot.

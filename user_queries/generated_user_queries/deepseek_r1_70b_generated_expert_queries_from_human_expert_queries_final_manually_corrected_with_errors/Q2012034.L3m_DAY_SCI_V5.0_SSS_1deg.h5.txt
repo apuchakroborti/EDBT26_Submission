@@ -1,0 +1,28 @@
+- Import necessary libraries
+
+- Define variables for file handling and data storage, including FILE_NAME for the HDF5 file path.
+
+- Read the HDF5 file using h5py, extracting the 'l3m_data' dataset into a variable named datavar.
+
+- Retrieve attributes from l3m_data: data_minimum, data_maximum, and _FillValue.
+
+- Replace _FillValue in l3m_data with NaN values.
+
+- Create invalid_data by identifying values outside the range [data_minimum, data_maximum] using logical OR operations.
+
+- Set metadata variables: units = 'psu' and long_name = 'Sea Surface Salinity'.
+
+- Compare data against valid ranges and set out-of-range values to NaN.
+
+- Initialize a Basemap instance with cylindrical projection, setting resolution to 'l', latitude limits from -90 to 90, and longitude limits from -180 to 180.
+
+- Generate x and y coordinates using meshgrid based on longitude and latitude arrays.
+
+- Add geographical features: coastlines with linewidth 0.5, 
+    parallels at intervals of 45 degrees from -90 to 90, 
+    and meridians at intervals of 45 degrees from -180 to 180 with specific labels  to left and bottom 
+- Create a scatter plot of the data using the 'jet' colormap.
+
+- Append a colorbar to the plot with units labeled as 'psu'.
+
+- Set the plot title using the filename and long_name attributes.

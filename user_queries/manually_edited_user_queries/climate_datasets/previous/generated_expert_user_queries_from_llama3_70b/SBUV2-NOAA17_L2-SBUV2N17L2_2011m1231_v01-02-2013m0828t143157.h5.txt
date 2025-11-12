@@ -1,0 +1,57 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries needed for the script to run:
+1. `os`: For interacting with the operating system, particularly for file handling.
+2. `h5py`: A library for reading and writing HDF5 files in Python.
+3. `datetime`: For working with dates and times.
+4. `numpy as np`: A library for efficient numerical computations (imported as `np`).
+5. `matplotlib as mpl` and `matplotlib.pyplot as plt`: Libraries for creating visualizations (plots, charts, etc.).
+6. `mpl_toolkits.basemap`: A toolkit for creating maps with Matplotlib.
+7. `matplotlib.ticker`: For customizing the formatting of axis tick labels.
+
+**Defining Constants**
+
+The script defines a constant `FILE_NAME` which is the name of the HDF5 file to be read.
+
+**Reading HDF5 File**
+
+The code then opens the specified HDF5 file in read-only mode (`'r'`) using `h5py`. The file object is assigned to `f`.
+
+**Accessing Datasets**
+
+Four datasets are accessed from the HDF5 file:
+1. `/SCIENCE_DATA/ProfileO3Retrieved` (ozone zonal average data)
+2. `/GEOLOCATION_DATA/Latitude` (latitude values)
+3. `/ANCILLARY_DATA/PressureLevels` (pressure levels)
+4. `nTimes` (time values)
+
+**Reading Data and Attributes**
+
+The code reads the data from each dataset using slicing (`[:]`). It also reads various attributes associated with each dataset, such as units, valid minimum and maximum values, fill values, and long names.
+
+**Data Processing**
+
+1. The ozone data is masked to remove invalid or fill values.
+2. The latitude values are sorted in ascending order since they're not monotonic.
+3. The time values are converted from seconds since 1993-01-01 to datetime objects using `datetime`.
+
+**Plotting**
+
+The script creates a contour plot of the ozone data using `plt.contourf`. The x-axis represents latitude, and the y-axis represents pressure levels. The colorbar is labeled with the units of the ozone data.
+
+**Customizing Plot**
+
+1. Axis labels are set using `plt.xlabel` and `plt.ylabel`.
+2. A title is added to the plot using `plt.title`, which includes the file name and long name of the ozone data.
+3. A text box is added to display the start and end times of the data.
+4. The y-axis is inverted to put high pressure at the bottom.
+5. A log scale is applied to the y-axis for better visualization.
+6. Scientific notation is removed from the y-axis tick labels using `FormatStrFormatter`.
+
+**Saving Plot**
+
+Finally, the script saves the plot as a PNG file with a name derived from the HDF5 file name.
+
+Overall, this script reads an HDF5 file containing ozone zonal average data and creates a contour plot of the data, customizing the plot to better visualize the information.

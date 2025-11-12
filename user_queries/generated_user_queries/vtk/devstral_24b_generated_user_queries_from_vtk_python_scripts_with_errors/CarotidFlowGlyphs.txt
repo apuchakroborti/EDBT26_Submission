@@ -1,0 +1,49 @@
+Purpose
+This script is designed to create a visual representation (like a 3D model) of blood flow in human carotid arteries. It uses data from a file to show the direction and speed of blood flow.
+
+Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing various tools it needs to work with 3D graphics and data visualization.
+   - These tools help create shapes, colors, and render (draw) things on a screen.
+
+2. Creating the Main Function:
+   - This is where all the important actions happen. Think of this as setting up a stage for our visual representation.
+
+3. Loading Data:
+   - The script loads data from a file named 'CarotidFlowGlyphs_carotid.vtk'.
+   - This file contains information about blood flow in the carotid arteries.
+
+4. Processing the Data:
+   - It filters out unnecessary parts of the data to focus only on what's important.
+   - Then, it creates small cone shapes that will represent the direction and speed of blood flow at different points.
+
+5. Setting Up Colors and Scales:
+   - The script sets up a color scheme for the cones based on their size (which represents blood flow speed).
+   - It calculates the range of sizes to make sure everything is displayed correctly.
+
+6. Creating Visual Elements:
+   - It creates 3D shapes (actors) that will be shown in the final image.
+   - These include:
+     - Cones representing blood flow
+     - Lines showing specific speeds of blood flow
+     - An outline around the entire model
+
+7. Setting Up the Scene:
+   - The script sets up a virtual camera to view the 3D model from a specific angle and distance.
+   - It also sets the background color for the scene.
+
+8. Rendering the Image:
+   - Finally, it draws everything on the screen so you can see the blood flow in the carotid arteries.
+   - It opens a window where you can interact with the 3D model (like rotating or zooming).
+
+Real-Life Analogy
+Imagine you're looking at a detailed map of a city. This script is like taking data about traffic flow on that map and creating a 3D model to show:
+
+- Where cars are moving (direction)
+- How fast they're moving (speed)
+
+It filters out unnecessary details, sets up colors to represent different speeds, creates shapes to show the direction of movement, and then puts everything together in a way you can see and interact with.
+
+Summary
+In simple terms, this script takes data about blood flow in arteries, processes it to focus on important parts, creates visual elements to represent that data, sets up a scene to view those elements, and finally renders (draws) the scene so you can see how blood flows through the carotid arteries.

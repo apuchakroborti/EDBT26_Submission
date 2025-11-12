@@ -1,0 +1,45 @@
+Here's a reduced version of the description while keeping implementation details:
+
+Let's break down this code step-by-step:
+
+**Opening an HDF5 File**
+
+Open an HDF5 file named "HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5" in read-only mode.
+
+**Accessing Datasets within the File**
+
+Within the file, access three datasets:
+
+* "/HDFEOS/SWATHS/HIRDLS/Data Fields/O3"
+* "/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Pressure"
+* "/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Time"
+
+**Reading Data and Attributes**
+
+Read data from each dataset:
+
+* "O3" data
+* Pressure values
+* Time values
+
+Also, read attributes:
+
+* Units for O3 and pressure datasets
+* Title for O3, time, and pressure datasets
+* _FillValue for O3 dataset (for handling missing data)
+
+**Handling Missing Data**
+
+Set any missing data to NaN.
+
+**Plotting the Data**
+
+Create an area plot with:
+
+* Time on the x-axis
+* Pressure over time as a line
+* Sky blue fill between time and pressure
+* Slateblue color for pressure line
+* Set axis labels and title
+
+That's it!

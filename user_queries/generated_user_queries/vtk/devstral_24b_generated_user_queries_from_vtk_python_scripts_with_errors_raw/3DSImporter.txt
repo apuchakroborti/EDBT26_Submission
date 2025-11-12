@@ -1,0 +1,55 @@
+Sure, let's break down this Python script step by step as if we're explaining it to someone with no programming experience.
+
+### Purpose of the Script
+This script is designed to open and display a 3D model file on your computer screen. Think of it like opening a special kind of image that shows you a three-dimensional object, which you can rotate and look at from different angles.
+
+### Step-by-Step Explanation
+
+1. Setting Up the Tools
+   - The script starts by gathering all the necessary tools (called "modules") to work with 3D models and display them on your screen.
+   - It's like getting out a toolbox that has everything you need for this specific task.
+
+2. Defining What We're Going to Do
+   - The script defines a main function, which is the core part of what it will do when you run it. Think of it as writing down a recipe before you start cooking.
+
+3. Specifying the File to Open
+   - It tells the program which 3D model file to open. In this case, it's looking for a file named "3DSImporter_iflamingo.3ds".
+   - This is like telling someone exactly which book to take off the shelf.
+
+4. Setting Up the Importer
+   - The script creates an importer tool that knows how to read 3D model files.
+   - It tells this importer where to find the file and asks it to calculate details about the surfaces of the objects in the file (like how light would hit them).
+   - This is similar to giving someone a special scanner that can read specific types of documents.
+
+5. Setting Up Colors
+   - The script sets up some color tools so it can use named colors like "Gold" and "Wheat".
+   - It's like having a paint palette with predefined colors ready to go.
+
+6. Creating the Display Area
+   - The script creates an area on your screen where the 3D model will be displayed.
+   - This is like setting up a canvas or a TV screen where you'll show the image.
+
+7. Setting Up the Background
+   - It sets the background of this display area to have a gradient from "Gold" at the top to "Wheat" at the bottom.
+   - Think of it as painting the background of your canvas with two colors that blend into each other.
+
+8. Connecting Everything Together
+   - The script connects all these tools together so they can work in harmony.
+   - It tells the importer where to display its results and updates everything to make sure it's ready to go.
+
+9. Counting Objects in the Model
+   - The script counts how many objects are in the 3D model file and prints this number out.
+   - This is like counting how many toys are in a box before you start playing with them.
+
+10. Setting Up the Camera
+    - It sets up a virtual camera to view the 3D model from a specific angle.
+    - The script positions this camera, points it at the center of the scene, and adjusts its angle so you can see the model clearly.
+    - This is like setting up a real camera on a tripod to take a picture.
+
+11. Displaying the Model
+    - Finally, the script tells everything to render (draw) the 3D model on your screen using the virtual camera's view.
+    - It starts an interactive mode where you can move and rotate the model with your mouse or keyboard.
+    - This is like turning on a TV and letting someone control what they see by moving around.
+
+### Summary
+In simple terms, this script opens a specific 3D model file, sets up a nice background for viewing it, positions a virtual camera to look at the model from a good angle, counts how many objects are in the model, and then displays everything on your screen so you can interact with it. It's like setting up a special display for a 3D sculpture that you can rotate and examine closely.

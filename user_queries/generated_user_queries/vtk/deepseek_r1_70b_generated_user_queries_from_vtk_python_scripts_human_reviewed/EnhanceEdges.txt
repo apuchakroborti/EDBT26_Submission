@@ -1,0 +1,105 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkIOImage` from `vtkmodules.vtkIOImage`  
+   - `vtkImagingColor` from `vtkmodules.vtkImagingColor`  
+   - `vtkImagingCore` from `vtkmodules.vtkImagingCore`  
+   - `vtkImagingGeneral` from `vtkmodules.vtkImagingGeneral`  
+   - `vtkImagingMath` from `vtkmodules.vtkImagingMath`  
+   - `vtkInteractionStyle` from `vtkmodules.vtkInteractionStyle`  
+   - `vtkRenderingCore` from `vtkmodules.vtkRenderingCore`
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`  
+
+2. Define File Name:  
+   - `fileName = 'EnhanceEdges_FullHead.mhd'`
+
+3. Read the Image:  
+   - Create a `readerFactory` using `vtkImageReader2Factory()`.  
+   - Create a `reader` object by calling `CreateImageReader2(fileName)` on the factory.  
+   - Set the file name for the reader and update it to load the image data.
+
+4. Extract Scalar Range:  
+   - Initialize an array `scalarRange` with two elements.  
+   - Populate `scalarRange` with the minimum and maximum values from the image data.  
+   - Print the range to the console.  
+
+5. Set Middle Slice:  
+   - Define `middleSlice = 22`.
+
+6. Cast Image Data:  
+   - Create a `cast` object using `vtkImageCast()`.  
+   - Set the input of the cast to the reader's output and specify the output scalar type as double.  
+   - Update the cast to process the image.
+
+7. Compute Laplacian:  
+   - Create a `laplacian` object using `vtkImageLaplacian()`.  
+   - Set the input of the laplacian to the cast's output and specify 3D dimensionality.
+
+8. Subtract Laplacian from Original Image:  
+   - Create an `enhance` object using `vtkImageMathematics()`.  
+   - Connect the original image (cast output) as the first input and the laplacian output as the second input.  
+   - Set the operation to subtract.
+
+9. Define Color Window and Level:  
+   - Calculate `colorWindow` as the difference between the scalar range values.  
+   - Calculate `colorLevel` as half of the color window.
+
+10. Map Original Image Colors:  
+    - Create an `originalColor` object using `vtkImageMapToWindowLevelColors()`.  
+    - Set the window and level for the original image.  
+    - Connect the reader's output to the color mapping.  
+
+11. Create Original Actor:  
+    - Create an `originalActor` using `vtkImageActor()`.  
+    - Connect the actor's mapper to the original color mapping output.  
+    - Set interpolation type to nearest and define the display extent using the middle slice.
+
+12. Map Laplacian Colors:  
+    - Create a `laplacianColor` object using `vtkImageMapToWindowLevelColors()`.  
+    - Set the window to 1000 and level to 0 for the laplacian image.  
+    - Connect the laplacian output to the color mapping.
+
+13. Create Laplacian Actor:  
+    - Create a `laplacianActor` using `vtkImageActor()`.  
+    - Connect the actor's mapper to the laplacian color mapping output.  
+    - Set interpolation type to nearest and match the display extent of the original actor.
+
+14. Map Enhanced Image Colors:  
+    - Create an `enhancedColor` object using `vtkImageMapToWindowLevelColors()`.  
+    - Set the window and level for the enhanced image.  
+    - Connect the enhance output to the color mapping.
+
+15. Create Enhanced Actor:  
+    - Create an `enhancedActor` using `vtkImageActor()`.  
+    - Connect the actor's mapper to the enhanced color mapping output.  
+    - Set interpolation type to nearest and match the display extent of the original actor.
+
+16. Setup Renderers:  
+    - Create three renderers: `originalRenderer`, `laplacianRenderer`, and `enhancedRenderer`.  
+    - Add each corresponding actor to its renderer.
+
+17. Configure Viewports:  
+    - Define a `rendererSize` of 400 pixels.  
+    - Set up a grid with 3 columns (`xGridDimensions = 3`) and 1 row (`yGridDimensions = 1`).  
+    - Create a render window with dimensions based on the grid size.  
+    - Calculate viewports for each renderer to position them in the grid.
+
+18. Add Renderers to Window:  
+    - Add all renderers to the render window using their calculated viewports.
+
+19. Setup Interactor and Camera:  
+    - Create a `renderWindowInteractor` and set its style to `vtkInteractorStyleImage()`.  
+    - Initialize the interactor and start interaction.  
+    - Adjust the camera position for better viewing by calling `Dolly(1.5)` on the first renderer's active camera.  
+    - Reset the camera clipping range and synchronize cameras across all renderers.
+
+20. Render the Scene:  
+    - Call `renderWindow.Render()` to display the final scene.
+
+21. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "EnhancedEdges_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

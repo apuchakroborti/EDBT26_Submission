@@ -1,0 +1,32 @@
+Python script. 
+Here's what it does:
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, FormatStrFormatter from matplotlib.ticker, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+The script starts by opening an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+It then accesses several datasets within the file using their sub paths:
+
+"/HDFEOS/SWATHS/O3/Data Fields/L2gpValue" (Ozone data)
+"/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude" (latitude values)
+"/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure" (pressure levels)
+"/HDFEOS/SWATHS/O3/Geolocation Fields/Time" (time information)
+
+It reads Ozone data of 0 to 70th index from the x-axis and all data from the y-axis of 2D data 
+It also reads latitude from 0 to 70th index from the 1D data 
+and pressure data from till 55th index of 1D data
+
+Then from the Ozone, latitude, and longitude data it reads Units and Title and decoded the value
+
+The program then reads the _FillValue and my comparing _FillValue and Ozone data it replaces the _FillValue data with numpy nan
+
+Next, it stores two values using datetime function since 1993-01-01 + value of datetime. timedelta with parameter seconds= time from 0th index
+and   datetime function since 1993-01-01 + value of datetime. timedelta with parameter seconds= time from 70th indexto in a string format.
+
+Then it set the pcolormesh wih paramets latitude, longitude, and data.T
+
+Then it adds xlabel and ylabel to the plt with lat_title and lat_units for the xlabel
+then lon_title and lon_units
+
+The plt sets set title for concatenating three values such as data Title, and the string constructed from the datatime and timedelta functions
+
+After that it sets gca to plt as invert_yaxis and set_yscale with value of 'log', also set_major_formatter with %.1f

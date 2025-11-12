@@ -1,0 +1,13 @@
+Here is a rewritten version of the description, condensed by about 40% while keeping as many implementation details as possible:
+
+"Can you explain this Python code? 
+
+It starts by importing modules: `os` for OS interactions, `matplotlib.pyplot` and `numpy` for numerical computations, `mpl_toolkits.basemap` for map projections, and `h5py` for HDF5 file interactions.
+
+The code defines a constant `FILE_NAME` for the HDF5 file to be read. It then opens the file in read-only mode using `h5py`, ensuring it's properly closed afterwards.
+
+Within the `with` block, the code accesses several datasets: `/profile_1/high_rate/latitude`, `/profile_1/high_rate/longitude`, and `/profile_1/high_rate/apparent_surf_reflec`. It reads each dataset into memory and extracts their valid ranges and attributes.
+
+The code then creates a map projection using `Basemap` with an equidistant cylindrical projection, draws coastlines and parallels, and plots the surface reflectance values as a scatter plot. The color of each point is determined by the reflectance value.
+
+Finally, it customizes the plot with a colorbar and title, and saves the figure as a PNG image file using `fig.savefig`. Can you walk me through this code?"

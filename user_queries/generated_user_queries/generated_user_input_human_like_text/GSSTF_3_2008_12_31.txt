@@ -1,0 +1,21 @@
+Here is a rewritten version of the description with about 40% less text while keeping implementation details:
+
+Can you explain this Python code?
+
+The code starts by importing necessary modules: `datetime`, `os`, `matplotlib`, `mpl_toolkits.basemap`, and `numpy`.
+
+It defines a constant `USE_NETCDF4` to determine whether to use NetCDF4 or h5py to read the HDF-EOS file.
+
+The `run` function takes an HDF-EOS file path as input. It:
+
+1. Opens the file using NetCDF4 or h5py depending on `USE_NETCDF4`.
+2. Accesses a dataset named 'E' within the 'Data Fields' group of the 'SET1' grid.
+3. Reads the entire dataset into memory as a NumPy array and handles fill values if necessary.
+
+The code then constructs latitude and longitude arrays based on the data shape, creates a Basemap object with an equidistant cylindrical projection, and plots the data onto it using `pcolormesh`.
+
+It adds coastlines, parallels, and meridians to the map, creates a colorbar, and sets the plot title. Finally, it saves the plot as a PNG file.
+
+The main script checks for an environment variable `HDFEOS_ZOO_DIR` to locate the input file, then calls the `run` function with the input file's path.
+
+This code reads an HDF-EOS file, extracts a dataset, and visualizes it using Basemap and Matplotlib.

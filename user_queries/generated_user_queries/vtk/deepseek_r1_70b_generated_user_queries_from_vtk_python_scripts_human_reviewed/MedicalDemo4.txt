@@ -1,0 +1,83 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkInteractionStyle`  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkmodules.vtkRenderingVolumeOpenGL2`  
+   - `vtkmodules.vtkCommonColor` (as `vtkNamedColors`)  
+   - `vtkmodules.vtkCommonDataModel` (as `vtkPiecewiseFunction`)  
+   - `vtkmodules.vtkIOImage` (as `vtkMetaImageReader`)  
+   - `vtkmodules.vtkRenderingCore` (as `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer`, `vtkVolume`, `vtkVolumeProperty`, `vtkColorTransferFunction`)  
+   - `vtkmodules.vtkRenderingVolume` (as `vtkFixedPointVolumeRayCastMapper`)  
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define Variables and Initialize:  
+   - Create a `vtkNamedColors` object named `colors`.  
+   - Define the file path as `'MedicalDemo4_FullHead.mhd'`.  
+   - Set the background color to `[51, 77, 102, 255]` using `colors.SetColor('BkgColor', [51, 77, 102, 255])`.
+
+3. Create Rendering Components:  
+   - Create a renderer (`ren = vtkRenderer()`).  
+   - Create a render window (`ren_win = vtkRenderWindow()`) and add the renderer to it.  
+   - Create an interactor (`iren = vtkRenderWindowInteractor()`) and set its render window.
+
+4. Read Volume Data:  
+   - Create a `vtkMetaImageReader` object named `reader`.  
+   - Set the file name of the reader to `'MedicalDemo4_FullHead.mhd'`.
+
+5. Configure Volume Rendering:  
+   - Create a `vtkFixedPointVolumeRayCastMapper` named `volume_mapper` and connect it to the reader’s output.  
+
+6. Define Color Transfer Function:  
+   - Create a `vtkColorTransferFunction` named `volume_color`.  
+   - Add RGB points:  
+     - `(0, 0.0, 0.0, 0.0)`  
+     - `(500, 240/255, 184/255, 160/255)`  
+     - `(1000, 240/255, 184/255, 160/255)`  
+     - `(1150, 1.0, 1.0, 240/255)`  
+
+7. Define Opacity Transfer Functions:  
+   - Create a `vtkPiecewiseFunction` named `volume_scalar_opacity`. Add points:  
+     - `(0, 0.00)`  
+     - `(500, 0.15)`  
+     - `(1000, 0.15)`  
+     - `(1150, 0.85)`  
+   - Create another `vtkPiecewiseFunction` named `volume_gradient_opacity`. Add points:  
+     - `(0, 0.0)`  
+     - `(90, 0.5)`  
+     - `(100, 1.0)`  
+
+8. Configure Volume Properties:  
+   - Create a `vtkVolumeProperty` named `volume_property`.  
+   - Set the color transfer function (`SetColor(volume_color)`).  
+   - Set the scalar opacity function (`SetScalarOpacity(volume_scalar_opacity)`).  
+   - Set the gradient opacity function (`SetGradientOpacity(volume_gradient_opacity)`).  
+   - Configure additional properties:  
+     - Set interpolation type to linear.  
+     - Enable shading (`ShadeOn()`).  
+     - Set `Ambient` to 0.4, `Diffuse` to 0.6, and `Specular` to 0.2.
+
+9. Create and Add Volume:  
+   - Create a `vtkVolume` named `volume`.  
+   - Set its mapper (`SetMapper(volume_mapper)`).  
+   - Set its property (`SetProperty(volume_property)`).  
+   - Add the volume to the renderer (`ren.AddViewProp(volume)`).
+
+10. Configure Camera and View:  
+    - Get the active camera from the renderer.  
+    - Calculate the center of the volume (`c = volume.GetCenter()`).  
+    - Set the camera’s view up, position, focal point, azimuth, and elevation.
+
+11. Finalize Rendering Setup:  
+    - Set the background color using `ren.SetBackground(colors.GetColor3d('BkgColor'))`.  
+    - Set the render window size to `(640, 480)` and name it `'MedicalDemo4'`.
+
+12. Start Interaction:  
+    - Start the interactor with `iren.Start()`.
+
+13. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "MedicalDemo4_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

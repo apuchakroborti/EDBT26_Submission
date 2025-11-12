@@ -1,0 +1,16 @@
+a Python script that reads data from two HDF5 files. Here's what it does:
+
+First, it imports necessary libraries and defines file names and paths for the ECOSTRESS L2 and L1B GEO HDF5 files.
+
+Then, it opens these files in read-only mode using `h5py` and reads various datasets and attributes:
+
+* From the L2 file: "LST" dataset (land surface temperature data), scale factor, offset, units, fill value, and long name.
+* From the L1B GEO file: longitude and latitude values.
+
+The script then processes the data by replacing fill values with NaN, applying scale factors and offsets, and creating masked arrays.
+
+Next, it creates a map projection using Basemap with Albers Equal-Area Conic (AEA) projection, low resolution, and specific bounding box parameters.
+
+Finally, it plots the LST data on the map projection, adds coastlines, parallels, meridians, and a colorbar with units, and saves the plot to a PNG file named after the input HDF5 file.
+
+Please note that I've kept essential details about the script's functionality, including dataset names and their parent groups within the HDF5 hierarchy.

@@ -1,0 +1,15 @@
+It reads and visualizes data from an HDF-EOS5 file which is located at GSSTFYC_3_Year_1988_2008.he5. 
+
+Here's what I've gathered so far:
+The script defines a `run` function that takes a file name as input. Within this function, it reads data from the HDF-EOS5 file.
+
+For reading data, it navigates through the group hierarchy to find the `SST` variable and reads its data into a NumPy array. 
+If using H5Py, it also decodes string attributes from bytes to UTF-8.
+
+It acces the fill value of 0th index only
+Next, the script prepares the data for visualization by creating latitude and longitude arrays based on the data shape and applying a fill value if necessary.
+
+It then creates a map with an equidistant cylindrical projection, draws coastlines and meridians, and renders the image in the projected coordinate system. 
+A colorbar is also created with a label set to the units of the data.
+
+Finally, the script saves the plot as a PNG file with a filename based on the input HDF-EOS5 file.

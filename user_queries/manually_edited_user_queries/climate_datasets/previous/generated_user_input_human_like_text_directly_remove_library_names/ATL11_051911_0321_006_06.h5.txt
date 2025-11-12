@@ -1,0 +1,15 @@
+**Loading data from an HDF5 file**
+
+The code opens an HDF5 file in read-only mode and accesses three datasets: `/pt1/latitude`, `/pt1/longitude`, and `/pt1/h_corr`. It reads the data into memory and handles missing values by replacing fill values with NaN (Not a Number) values.
+
+**Creating a map visualization**
+
+The code creates a map using Basemap, with an equidistant cylindrical projection and low-resolution coastline database. It subsets the data for Cycle 3 and plots it as a scatter plot on the map.
+
+**Adding details to the plot**
+
+The code adds a colorbar and title to the plot, including the file name, dataset name, and long name from the HDF5 file attributes.
+
+**Saving the plot**
+
+Finally, the code saves the plot as a PNG image with a file name constructed by appending `.py.png` to the base name of the HDF5 file.

@@ -1,0 +1,38 @@
+Here is the reduced text while keeping implementation details:
+
+This Python code accesses and visualizes NASA LP DAAC VNP09GA HDF-EOS5 Sinusoidal projection Grid file. Here's a step-by-step explanation:
+
+1. **Import necessary libraries**: The code imports:
+   - `os`
+   - `h5py` for working with HDF5 files
+   - `pyproj` for spatial transformations
+   - `numpy` (`np`) for numerical computations
+   - `matplotlib` (`mpl`) and its plotting module (`plt`) for creating plots
+
+2. **Define the file name**: The code sets a variable `FILE_NAME` to the name of the HDF5 file: 'VNP09GA.A2020305.h30v07.001.2020306101330.h5'.
+
+3. **Open the HDF5 file**: The code opens the HDF5 file in read mode (`'r'`) using `h5py.File`.
+
+4. **Access the data field and its attributes**: Within the HDF5 file, the code accesses a dataset containing actual data, retrieving:
+   - `Scale`: a scale factor
+   - `Offset`: an offset value
+   - `units`: units of measurement (decoded from bytes)
+   - `_FillValue`: a fill value to indicate missing or invalid data
+   - `long_name`: a longer description of the dataset (decoded from bytes)
+
+5. **Read metadata**: The code reads metadata from the HDF5 file, specifically from the `/HDFEOS INFORMATION/StructMetadata.0` dataset.
+
+6. **Construct the grid**: The code constructs the grid by parsing string metadata using regular expressions to extract upper left and lower right points of the grid (in meters).
+
+7. **Transform the grid coordinates to WGS84**: The code uses `pyproj` to transform grid coordinates from Sinusoidal projection to World Geodetic System 1984 (WGS84) coordinate reference system.
+
+8. **Create a plot**: The code creates a zoomed-in plot of the data using `Basemap` class:
+    - Create a Basemap object with 'cyl' projection and resolution set to 'l'.
+    - Set latitude and longitude limits based on minimum and maximum values in transformed grid coordinates.
+    - Draw coastlines and parallels/meridians using `m.drawcoastlines` and `m.drawparallels/m.drawmeridians`.
+    - Create a pseudocolor plot of the data using `m.pcolormesh`.
+    - Add a color bar with units label.
+
+9. **Save the plot to a file**: The code saves the plot as a PNG image file, named after the HDF5 file with extension '.py.png'.
+
+In summary, this code reads an HDF5 file containing NASA LP DAAC VNP09GA data, extracts grid coordinates and data values, applies transformations and scaling as needed, and creates a zoomed-in plot of the data.

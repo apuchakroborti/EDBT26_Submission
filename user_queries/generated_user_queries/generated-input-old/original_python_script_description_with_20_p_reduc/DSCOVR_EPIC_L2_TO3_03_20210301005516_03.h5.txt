@@ -1,0 +1,45 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Step 1: Importing necessary libraries**
+
+The code imports several Python libraries:
+* `os` for operating system-related functions
+* `h5py` for working with HDF5 files
+* `matplotlib` and `matplotlib.pyplot` for creating plots and visualizations
+* `cartopy.crs` for geographic projections and mapping
+* `numpy` for numerical computations
+
+**Step 2: Defining file paths and names**
+
+The code defines two variables:
+* `FILE_PATH`: the path to the directory containing the HDF5 file
+* `FILE_NAME`: the full path and name of the HDF5 file, constructed by concatenating `FILE_PATH` with the filename
+
+**Step 3: Opening the HDF5 file and reading data**
+
+The code opens the HDF5 file in read-only mode using `h5py.File`. It reads:
+* A dataset named `/Ozone`, converts it to a NumPy float64 array, and assigns it to the variable `data`
+* Two attributes: `units` (set to `'DU'`) and `long_name` (set to `'Ozone'`)
+* Two datasets: `/Latitude` and `/Longitude`, which are assigned to the variables `lat` and `lon`, respectively
+
+**Step 4: Handling FillValue and creating a masked array**
+
+The code checks for `_FillValue` (-999.0) in the `data` array, replaces it with `NaN`, and creates a masked array using `np.ma.masked_where`.
+
+**Step 5: Creating an orthographic projection and plotting data**
+
+Using `cartopy.crs`, the code creates an orthographic projection centered at the middle location (`lat_m`, `lon_m`). It then plots the `data` values as a scatter plot on the map, with colors represented by the `cmap` (jet colormap).
+
+**Step 6: Adding grids, coastlines, and labels**
+
+The code adds grid lines, coastlines, and configures the grid labels to only appear at the left and bottom edges.
+
+**Step 7: Creating a colorbar and setting title**
+
+The code creates a colorbar for the plot using `matplotlib.pyplot.colorbar` and sets the plot title using the filename and long name attributes.
+
+**Step 8: Saving image**
+
+Finally, the code saves the plot as a PNG image file in the same directory as the HDF5 file.
+
+Overall, this code reads an HDF5 file containing ozone data, extracts the necessary datasets and attributes, and visualizes the data on a map using Cartopy and Matplotlib.

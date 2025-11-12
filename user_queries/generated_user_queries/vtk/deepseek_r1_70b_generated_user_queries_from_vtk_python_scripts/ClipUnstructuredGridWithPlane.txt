@@ -1,0 +1,62 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Libraries:
+   - Import `collections` for dictionary operations.
+   - Import `vtkmodules.vtkInteractionStyle` and `vtkmodules.vtkRenderingOpenGL2`.
+   - Import specific modules from `vtkmodules`:
+     - `vtkNamedColors` from `vtkCommonColor`
+     - `vtkCellTypes` and `vtkPlane` from `vtkCommonDataModel`
+     - `vtkTransform` from `vtkCommonTransforms`
+     - `vtkTableBasedClipDataSet` from `vtkFiltersGeneral`
+     - `vtkUnstructuredGridReader` from `vtkIOLegacy`
+     - `vtkActor`, `vtkDataSetMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkRenderingCore`.
+
+2. Define the Main Function:
+   - Set the filename to `'ClipUnstructuredGridWithPlane_treemesh.vtk'`.
+   - Create a `vtkUnstructuredGridReader` named `reader` and set its filename.
+   - Update the reader to process the data.
+
+3. Extract Bounds and Center:
+   - Retrieve the bounds of the dataset using `GetBounds()`.
+   - Get the center of the dataset using `GetCenter()`.
+
+4. Configure Renderer and Window:
+   - Create a `vtkRenderer` named `renderer`, set its background color to 'Wheat', and enable hidden line removal.
+   - Create a `vtkRenderWindow` named `renderWindow`, add the renderer, and set its size to 640x480 pixels.
+   - Create a `vtkRenderWindowInteractor` named `interactor` and link it to the render window.
+
+5. Define Clipping Plane:
+   - Create a `vtkPlane` named `clipPlane`.
+   - Set the origin of the plane to the center of the dataset.
+   - Set the normal vector of the plane to `[-1.0, -1.0, 1.0]`.
+
+6. Clip the Dataset:
+   - Create a `vtkTableBasedClipDataSet` named `clipper`.
+   - Set the clip function to `clipPlane`, input data to the reader's output, and clipping value to 0.0.
+   - Enable generation of clipped output and update the clipper.
+
+7. Create Mappers for Inside and Clipped Data:
+   - Create a `vtkDataSetMapper` named `insideMapper` and set its input to the clipper's output.
+   - Disable scalar visibility for `insideMapper`.
+   - Repeat the process for `clippedMapper`, setting its input to the clipper's clipped output.
+
+8. Create Actors for Visualization:
+   - Create a `vtkActor` named `insideActor`, set its mapper to `insideMapper`, and configure its appearance (diffuse color, ambient, edge visibility).
+   - Repeat the process for `clippedActor`, setting its mapper to `clippedMapper` and configuring its appearance.
+
+9. Apply Transformations:
+   - Create transforms (`insideTransform` and `clippedTransform`) to position and rotate the actors for better visualization.
+   - Apply these transforms to the respective actors.
+
+10. Add Actors to Renderer:
+    - Add both actors to the renderer.
+    - Reset the camera, adjust the view, and render the window.
+
+11. Start Interaction:
+    - Start the interactor to enable user interaction with the visualization.
+
+12. Generate Report:
+    - Retrieve the number of cells in the inside and clipped datasets.
+    - Print the cell types and their counts for both datasets using `vtkCellTypes.GetClassNameFromTypeId()`.
+
+This description provides a clear, step-by-step guide to reproducing the script's functionality.

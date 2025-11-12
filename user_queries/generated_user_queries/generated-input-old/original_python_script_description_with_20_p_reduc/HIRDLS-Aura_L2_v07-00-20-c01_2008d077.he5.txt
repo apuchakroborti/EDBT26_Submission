@@ -1,0 +1,25 @@
+Here is a reduced version of the description, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports several libraries: `datetime`, `os`, `matplotlib` and its sub-module `pyplot`, `mpl_toolkits.basemap`, `numpy`, and `h5py`.
+
+**Defining constants and opening the HDF5 file**
+
+A constant `FILE_NAME` is set to an HDF-EOS5 file name. The code opens the HDF5 file in read-only mode using `h5py` and a `with` statement.
+
+**Accessing datasets and attributes**
+
+The code accesses three datasets: `/HDFEOS/SWATHS/HIRDLS/Data Fields/O3`, `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Pressure`, and `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Time`. It also accesses several attributes, including units, titles, and a fill value.
+
+**Reading data and replacing fill values**
+
+The code reads the data from each dataset and replaces any occurrences of the `_FillValue` with `NaN`.
+
+**Converting time data and creating a plot**
+
+The code converts the time data to a `datetime` object and creates a plot of the ozone data versus pressure using `matplotlib`. The plot is customized with a title, axis labels, and logarithmic scale.
+
+**Saving the plot to a PNG file**
+
+Finally, the code saves the plot to a PNG file using `matplotlib`'s `savefig()` method. The file name is constructed by appending `.py.png` to the base name of the input HDF5 file.

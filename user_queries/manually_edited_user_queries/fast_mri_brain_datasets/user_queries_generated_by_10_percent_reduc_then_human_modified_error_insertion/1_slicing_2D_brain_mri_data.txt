@@ -1,0 +1,10 @@
+The code starts by defining two constants: `FAST_MRI_BRAIN_H5_FILE` (the path to the HDF5 file) which is located at 1_fastMRI_brain_first_10_dcm_to_h5.h5 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` (the path within the HDF5 file where the brain volume data is stored) 
+which read from FAST_MRI_BRAIN_ROOT root group, 
+sub group is 100099070170 and immediate parent sub-group is 279 and dataset is fastMRI_brain_data.
+
+It then opens the HDF5 file in read mode, accessing the brain volume data by navigating to the specified path FAST_MRI_BRAIN_H5_FILE_DATA_PATH. 
+It reads all data along all axes, storing it in the `brain_vol` variable.
+
+The code prints information about the `brain_vol` data and visualizes a slice through different planes of the brain volume data using image plots. 
+Specifically, it creates plots of bone map (a slice from 10 to 502 from both the rows and columns) , using indexing to select specific slices from the 2D array.

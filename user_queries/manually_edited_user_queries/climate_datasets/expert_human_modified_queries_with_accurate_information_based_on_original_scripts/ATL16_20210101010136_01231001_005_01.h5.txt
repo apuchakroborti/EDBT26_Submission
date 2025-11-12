@@ -1,0 +1,35 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+To be more specific the libraries are os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL16_20210101010136_01231001_005_01.h5 
+which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/global_grid_lat` latitude data, 
+`/global_grid_lon` longitude data, 
+and `/global_asr` main data 
+
+Reads attributes named units and long_name both with decoding using decode() function with parameters ascii and replace, 
+and _FillValue from the main data
+The main data type is set to astype float
+
+main data's _FillValue is set to numpy NaN
+and masked the data using numpy masked_where function with parameters of numpy isnan of data and data itself
+
+Creating a Map
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30, 
+and meridians with parameters numpy arrange -180, 180, 45
+
+Before setting pcolormesh the 180 should be subtractted from longitude value and update the longitude existing value 
+Then it adds pcolormesh with parameters longitude, latitude, data, and latlon=True
+
+Adding Colorbar and Title
+A colorbar is added to the map with location of bottom, 
+labeled with main dataset's units, and a title is set including the file basename, and long_name

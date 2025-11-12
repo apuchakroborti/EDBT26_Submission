@@ -1,0 +1,81 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkCommonColor`
+   - `vtkMetaImageReader` from `vtkIOImage`
+   - `vtkImageHSVToRGB` from `vtkImagingColor`
+   - `vtkImageCast`, `vtkImageConstantPad`, `vtkImageExtractComponents`, and `vtkImageMagnify` from `vtkImagingCore`
+   - `vtkImageEuclideanToPolar`, `vtkImageGaussianSmooth`, and `vtkImageGradient` from `vtkImagingGeneral`
+   - `vtkImageViewer` from `vtkInteractionImage`
+   - `vtkRenderWindowInteractor` from `vtkRenderingCore`
+
+2. Define Variables:
+   - `fileName`: Path to the input image file, set to `'ImageGradient_FullHead.mhd'`.
+   - `colors`: Instance of `vtkNamedColors()` for color definitions.
+
+3. Read Input Image:
+   - Create a `vtkMetaImageReader` object named `reader`.
+   - Set `reader.SetFileName(fileName)`.
+   - Update the reader to process the file with `reader.Update()`.
+
+4. Cast Image Data:
+   - Create a `vtkImageCast` object named `cast`.
+   - Connect input to `reader.GetOutputPort()`.
+   - Set output scalar type to float using `SetOutputScalarTypeToFloat()`.
+
+5. Magnify the Image:
+   - Create a `vtkImageMagnify` object named `magnify`.
+   - Connect input to `cast.GetOutputPort()`.
+   - Set magnification factors (2, 2, 1) with `SetMagnificationFactors(2, 2, 1)`.
+   - Enable interpolation with `InterpolateOn()`.
+
+6. Smooth the Image:
+   - Create a `vtkImageGaussianSmooth` object named `smooth`.
+   - Connect input to `magnify.GetOutputPort()`.
+   - Set dimensionality to 2D using `SetDimensionality(2)`.
+   - Configure smoothing parameters with standard deviations (1.5, 1.5, 0.0) and radius factors (2.01, 2.01, 0.0).
+
+7. Compute Gradient:
+   - Create a `vtkImageGradient` object named `gradient`.
+   - Connect input to `smooth.GetOutputPort()`.
+   - Set dimensionality to 2D using `SetDimensionality(2)`.
+
+8. Convert to Polar Coordinates:
+   - Create a `vtkImageEuclideanToPolar` object named `polar`.
+   - Connect input to `gradient.GetOutputPort()`.
+   - Set maximum theta value to 255.0 with `SetThetaMaximum(255.0)`.
+
+9. Add Third Component:
+   - Create a `vtkImageConstantPad` object named `pad`.
+   - Connect input to `polar.GetOutputPort()`.
+   - Set output scalar components to 3 using `SetOutputNumberOfScalarComponents(3)`.
+   - Set constant value to 200.0 with `SetConstant(200.0)`.
+
+10. Permute Components:
+    - Create a `vtkImageExtractComponents` object named `permute`.
+    - Connect input to `pad.GetOutputPort()`.
+    - Rearrange components using `SetComponents(0, 2, 1)` for HSV order.
+
+11. Convert HSV to RGB:
+    - Create a `vtkImageHSVToRGB` object named `rgb`.
+    - Connect input to `permute.GetOutputPort()`.
+    - Set maximum value to 255.0 with `SetMaximum(255.0)`.
+
+12. Set Up Viewer:
+    - Create a `vtkImageViewer` object named `viewer`.
+    - Connect input to `rgb.GetOutputPort()`.
+    - Set Z-slice to 22 using `SetZSlice(22)`.
+    - Configure color window (255.0) and level (127.0).
+    - Set render window size to 512x512 pixels.
+    - Set background color to 'Silver' from `colors.GetColor3d('Silver')`.
+    - Set window name to 'ImageGradient'.
+
+13. Create Interactor:
+    - Create a `vtkRenderWindowInteractor` object named `iren`.
+    - Set up interactor with viewer using `viewer.SetupInteractor(iren)`.
+    - Render the scene with `viewer.Render()`.
+    - Initialize and start interaction with `iren.Initialize()` and `iren.Start()`.
+
+This script processes an image to compute its gradient, converts it into a color representation, and displays it interactively.

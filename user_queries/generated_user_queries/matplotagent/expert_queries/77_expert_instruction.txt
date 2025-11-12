@@ -1,0 +1,11 @@
+I have data of protein consumption in 24 European countries named "77_h5_data.h5". 
+The datasets are ["Country", "Red Meat", "White Meat", "Eggs", "Milk", "Fish", "Cereals", "Starch", "Nuts", "Fruits and Vegetables"].
+Write a python code to create an image of a 2D scatter plot representing a K-Means clustering of data. 
+The plot should have three distinct clusters of points, each in its own color. 
+For example, Cluster 0 could be blue, Cluster 1 could be red, and Cluster 2 could be green. 
+Around each cluster, draw a semi-transparent ellipse in the same color as the cluster points but in a lighter shade, giving a sense of grouping. 
+Connect each data point to the centroid of its cluster with a thick grey line. The background should have a grid, enhancing the plot's readability. 
+Label the x-axis as 'Principal Component 1' and the y-axis as 'Principal Component 2'. 
+Annotate each data point with a small text label close to it, which could be the names of countries for a realistic touch, but ensure the text is legible. 
+The plot should have a title at the top: 'K-Means Clustering with PCA-reduced Data and Colored Ellipses'. 
+Include a legend on the side, denoting the clusters with their respective colors.   

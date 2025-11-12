@@ -1,0 +1,44 @@
+Here is a reduced version of the text, keeping as many implementation details as possible:
+
+This Python script reads a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file and visualizes its data using matplotlib.
+
+**Step 1: Import necessary libraries**
+
+The script imports:
+* `datetime` for dates
+* `os` for operating system interactions
+* `matplotlib` (as `mpl`) for plotting, specifically `matplotlib.pyplot` (as `plt`)
+* `numpy` (as `np`) for numerical computations
+* `Basemap` from `mpl_toolkits.basemap` for creating maps
+
+**Step 2: Define a function `run(FILE_NAME)`**
+
+The `run` function takes the HDF5 file name as input.
+
+**Step 3: Read the HDF5 file using either `netCDF4` or `h5py`**
+
+The script reads the HDF5 file:
+* If `USE_NETCDF4` is `True`, it uses `netCDF4` to read the file.
+	+ Opens the file using `Dataset(FILE_NAME)`
+	+ Navigates down the hierarchy to retrieve the `SST` dataset
+	+ Reads data values from the `SST` dataset using slicing (`data_var[:]`)
+* If `USE_NETCDF4` is `False`, it uses `h5py` to read the file.
+	+ Opens the file using `with h5py.File(FILE_NAME, mode='r') as f:`
+	+ Navigates down the hierarchy to retrieve the `/HDFEOS/GRIDS/NCEP/Data Fields/SST` dataset
+	+ Retrieves data values from the `SST` dataset using slicing (`dset_var[:]`)
+	+ Reads string attributes from the `SST` dataset and decodes them to UTF-8 strings
+
+**Step 4: Process the data**
+
+The script processes the data:
+* Applies a fill value to missing values
+* Masks out missing values using NumPy's `masked_array` function
+* Creates latitude and longitude arrays from the dataset shape
+* Draws an equidistant cylindrical projection map using `Basemap`
+* Renders the image on the plot
+
+**Step 5: Save the plot**
+
+The script saves the plot to a PNG file named after the input HDF5 file, with a `.py.png` extension.
+
+I removed some of the redundant information and condensed the steps into fewer sections. Let me know if you'd like me to make any further changes!

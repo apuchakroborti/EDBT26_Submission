@@ -1,0 +1,34 @@
+Step-by-Step Code Requirements
+1. Define Constants
+   - Set `FILE_NAME` to "ATL12_20190330212241_00250301_006_03.h5".
+
+2. Open HDF5 File and Access Datasets
+   - Open the file in read mode.
+   - Extract datasets: `latitude`, `longitude`, and `swh` data from the sub group path `/gt1l/ssh_segments`
+
+3. Read Dataset Attributes
+   - Retrieve 'units' and 'long name' attributes from the swh dataset, decoding them with ASCII and replacing errors.
+   - Extract the '_Fillvalue' attribute from the swh dataset.
+
+4. Data Processing and Cleaning
+   - Convert data to float type.
+   - Replace _FillValue with numpy NaN.
+   - Mask data where values are NaN using numpy's masked_where.
+
+5. Create Map Projection
+   - Use an equidistant cylindrical projection.
+   - Set resolution to 'low'.
+   - Define latitude and longitude bounds from -90 to 90 and -180 to 180, respectively.
+
+6. Customize Map Features
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at latitudes from -90 to 120 with interval of 30 degree
+   - Draw meridians at longitudes from -180 to 180 with interval of 45 degree
+
+7. Plot Data on Map
+   - Use scatter plot with longitude and latitude coordinates.
+   - Set marker size (s=0.1), colormap (jet), remove edge colors, and set linewidth to 0.
+
+8. Add Colorbar and Title
+   - Attach a colorbar below the map, labeled with dataset units.
+   - Set the title to include the filename, dataset path, and long_name attribute.

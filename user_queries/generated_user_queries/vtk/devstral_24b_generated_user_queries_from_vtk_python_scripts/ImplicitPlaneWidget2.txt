@@ -1,0 +1,63 @@
+1. **Import Libraries**:
+   - Import `Path` from the `pathlib` module.
+   - Import various VTK modules:
+     - `vtkInteractionStyle`, `vtkRenderingOpenGL2`, and `vtkRenderingUI`
+     - `vtkNamedColors` from `vtkCommonColor`
+     - `vtkCommand` from `vtkCommonCore`
+     - `vtkPlane` from `vtkCommonDataModel`
+     - `vtkClipPolyData` from `vtkFiltersCore`
+     - `vtkSphereSource` from `vtkFiltersSources`
+     - `vtkXMLPolyDataReader` from `vtkIOXML`
+     - `vtkImplicitPlaneRepresentation`, `vtkImplicitPlaneWidget2` from `vtkInteractionWidgets`
+     - `vtkActor`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Create a function named `main(fn)` that takes one argument, `fn`.
+
+3. **Initialize Colors and Sphere Source**:
+   - Initialize `colors` using `vtkNamedColors()`.
+   - Create a sphere source with radius 10.0 using `sphere_source = vtkSphereSource()`.
+
+4. **File Path Validation**:
+   - Check if `fn` is provided:
+     - If yes, convert it to a `Path` object and validate that it's an existing `.vtp` file.
+     - If not valid, print error messages and return.
+
+5. **Setup Visualization Pipeline**:
+   - Create a plane using `vtkPlane()`.
+   - Create a clipper using `vtkClipPolyData()` and set its clip function to the plane.
+   - Enable inside-out clipping with `clipper.InsideOutOn()`.
+   - If a file name is provided:
+     - Read the polydata from the file using `vtkXMLPolyDataReader()`.
+     - Set the input connection of the clipper to the reader's output port.
+   - Otherwise, set the input connection of the clipper to the sphere source.
+
+6. **Create Mapper and Actor**:
+   - Create a mapper with `vtkPolyDataMapper()` and set its input connection to the clipper's output port.
+   - Create an actor with `vtkActor()` and set its mapper.
+   - Set backface property of the actor using `vtkProperty()`.
+
+7. **Setup Renderer and Render Window**:
+   - Create a renderer with `vtkRenderer()`.
+   - Create a render window with `vtkRenderWindow()`, add the renderer to it, and set the window name.
+   - Add the actor to the renderer and set background color.
+
+8. **Create Interactor**:
+   - Create an interactor with `vtkRenderWindowInteractor()` and set its render window.
+
+9. **Setup Callback and Plane Widget**:
+   - Define a callback class `IPWCallback` that updates the plane when called.
+   - Create a representation for the implicit plane widget using `vtkImplicitPlaneRepresentation()`.
+   - Place the widget, set normal direction, and create an instance of `vtkImplicitPlaneWidget2`.
+   - Set interactor, representation, and add observer with the callback.
+
+10. **Adjust Camera Settings**:
+    - Adjust camera azimuth, elevation, reset, and zoom settings for better visualization.
+
+11. **Render and Interact**:
+    - Initialize the render window interactor.
+    - Render the scene and activate the plane widget.
+    - Start interaction loop with `iren.Start()`.
+
+12. **Entry Point**:
+    - If the script is run directly, call the `main` function with a default file name 'ImplicitPlaneWidget2_cow.vtp'.

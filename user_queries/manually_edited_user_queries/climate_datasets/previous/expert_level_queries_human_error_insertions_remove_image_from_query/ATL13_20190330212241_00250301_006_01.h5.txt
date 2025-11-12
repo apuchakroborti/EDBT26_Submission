@@ -1,0 +1,17 @@
+Python code. 
+It starts by importing necessary libraries and defining constants. 
+The main constant is `FILE_NAME`, which is set to "ATL13_20190330212241_00250301_006_01.h5".
+
+The code then reads the HDF5 file using `h5py`. 
+Within the file, it accesses three datasets: 
+`segment_lat` for latitude values, `segment_lon` for longitude values, and `/segment geoid` for geoid data from the root group /gt1l
+
+Each dataset is read into memory using slicing.
+
+The code handles missing or invalid values by replacing them with `NaN` and masking them. 
+It then creates an equidistant cylindrical projection map using `Basemap` with latitude and longitude boundaries (such as -90 to 90 and -180 to 180) respectively, 
+drawing coastlines, parallels, and meridians. 
+The data points are scattered on the map, colored according to their geoid values.
+
+A colorbar is created with a label indicating the units of the geoid data, 
+and the plot title is set based on the file name, dataset name, and long name of the geoid data. 

@@ -1,0 +1,69 @@
+1. Import Required Libraries:
+   - Import `vtkInteractionStyle` from `vtkmodules`.
+   - Import `vtkRenderingOpenGL2` from `vtkmodules`.
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`.
+   - Import `VTK_VERSION_NUMBER` and `vtkVersion` from `vtkmodules.vtkCommonCore`.
+   - Import `vtkFlyingEdges3D` and `vtkMarchingCubes` from `vtkmodules.vtkFiltersCore`.
+   - Import `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`.
+   - Import `vtkMetaImageReader` from `vtkmodules.vtkIOImage`.
+   - Import `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+
+2. Define the Main Function:
+   - Check if VTK version is 8.2 or higher using `vtk_version_ok(8, 2, 0)` and store result in `use_flying_edges`.
+   - Create a `vtkNamedColors` object named `colors`.
+   - Define file path as `'MedicalDemo1_FullHead.mhd'`.
+
+3. Set Up Colors:
+   - Set color `SkinColor` to `[240, 184, 160, 255]`.
+   - Set color `BackfaceColor` to `[255, 229, 200, 255]`.
+   - Set color `BkgColor` to `[51, 77, 102, 255]`.
+
+4. Create Renderer and Window:
+   - Create a renderer (`a_renderer`), render window (`ren_win`), and interactor (`iren`).
+   - Add renderer to the render window and set the interactor's render window.
+
+5. Read Data:
+   - Use `vtkMetaImageReader` to read the file specified by `file_name`.
+
+6. Extract Skin Surface:
+   - If VTK version is 8.2 or higher, use `vtkFlyingEdges3D`; otherwise, use `vtkMarchingCubes`.
+   - Set contour value to 500 for skin extraction.
+   - Connect reader output to the extractor and mapper.
+
+7. Create Skin Actor:
+   - Create a `vtkActor` named `skin`, set its mapper, and apply `SkinColor`.
+
+8. Set Backface Properties:
+   - Define backface color using `BackfaceColor` and apply it to the skin actor.
+
+9. Add Outline:
+   - Use `vtkOutlineFilter` to create an outline of the data.
+   - Create a mapper (`map_outline`) and actor (`outline`) for the outline, setting its color to black.
+
+10. Set Up Camera:
+    - Create a camera (`a_camera`) with specific view settings (view up, position, focal point).
+    - Adjust camera orientation using `Azimuth` and `Elevation`.
+
+11. Add Actors to Renderer:
+    - Add both the outline and skin actors to the renderer.
+    - Set the active camera and reset it.
+
+12. Adjust Camera Position:
+    - Use `Dolly(1.5)` to zoom in the camera view.
+
+13. Set Background and Window Properties:
+    - Set background color using `BkgColor`.
+    - Set render window size to 640x480 pixels.
+    - Set window name to `'MedicalDemo1'`.
+
+14. Adjust Clipping Planes:
+    - Reset camera clipping range for proper rendering.
+
+15. Start Interaction:
+    - Initialize and start the interactor event loop.
+
+16. VTK Version Check Function:
+    - Define `vtk_version_ok(major, minor, build)` to check if VTK version meets specified criteria.
+
+17. Run Main Function:
+    - Execute `main()` when script is run as the main program.

@@ -1,0 +1,23 @@
+I am working with an HDF5 file containing SMAP Level 1C data. 
+The script should begin by importing necessary libraries
+
+Define a constant `filename` with the value "SMAP_L1C_TB_50719_D_20240730T124417_R19240_001.h5".
+
+The program should read this HDF5 file in read-only mode. 
+Access the main dataset at "cell_tb_h_fore" and geolocation datasets at "cell_lat" (latitude) and "cell_lon" (longitude).
+from the group `Global_Projection`
+
+Extract attributes from the cell_tb_h_fore dataset: units, long_name, _FillValue, valid_max, and valid_min. 
+Decode these attributes using 'ascii' encoding with 'replace' as the error handling parameter.
+
+Identify invalid data by combining two conditions using numpy's logical_or: values greater than valid_max or less than valid_min. 
+Update this mask to include values equal to _FillValue. Replace invalid data in cell_tb_h_fore with NaNs and create a masked array using numpy's masked_where function, checking for NaNs.
+
+For visualization, initialize a Basemap object with a cylindrical projection. Set map boundaries from -90 to 90 latitude and -180 to 180 longitude. 
+Add coastlines with a line width of 0.5. 
+Draw parallels at intervals of 45 degrees and meridians at the same interval, labeling them at the position of left and bottom.
+
+Create a scatter plot using longitude and latitude coordinates, with data from cell_tb_h_fore, point size 1, colormap 'jet', no edge color, and linewidth 0. 
+Add a colorbar below the plot with 10% padding and label it with the units attribute.
+
+Set the plot title to the concatenation of the filename's basename and long_name, using fontsize 7.

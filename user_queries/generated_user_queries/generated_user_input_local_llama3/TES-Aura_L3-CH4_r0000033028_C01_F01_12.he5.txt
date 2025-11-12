@@ -1,0 +1,47 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code imports various Python modules:
+
+1. `os`, `re`, `h5py`, `numpy` (`np`), `matplotlib` (`mpl`), and `Basemap`
+
+**Defining constants**
+
+The code defines two constants:
+
+1. `FILE_NAME`: the name of the HDF5 file to be read
+2. `METADATA_FIELD` and `DATA_FIELD`: strings representing the paths to specific datasets within the HDF5 file
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read-only mode (`mode='r'`) using the `h5py.File` function:
+
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    # ...
+```
+
+**Retrieving grid metadata and accessing data fields**
+
+The code retrieves the grid metadata by accessing the `/HDFEOS INFORMATION/StructMetadata.0` dataset and converting its contents to a string:
+
+```python
+gridmeta = str(f[METADATA_FIELD][...])
+```
+
+It also accesses several datasets within the HDF5 file, including surface pressure values, longitude, and latitude.
+
+**Processing data**
+
+The code performs operations on the surface pressure data, such as converting it to float64 format, retrieving fill and missing value attributes, replacing invalid values with NaN, and creating a masked array.
+
+**Creating a map and plotting data**
+
+The code creates a Basemap object (`m`) using cylindrical projection and low resolution. It then draws coastlines, parallels, and meridians, and creates a pcolormesh plot of the surface pressure data using `m.pcolormesh`.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file using `fig.savefig`, with the filename constructed by concatenating the basename of the HDF5 file and the string `.py.png`.
+
+Note that I removed some of the implementation details, such as the exact values used for the Basemap object's parameters, to reduce the text while still keeping most of the important information.

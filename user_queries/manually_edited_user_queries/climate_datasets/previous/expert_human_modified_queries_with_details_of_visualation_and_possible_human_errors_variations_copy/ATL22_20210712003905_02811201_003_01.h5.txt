@@ -1,0 +1,25 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL22_20210712003905_02811201_003_01.h5, which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/transect_lat`, `/transect_lon`, and `/inland_water_body_type` from the root group gt1l. 
+Each dataset is read into memory using slicing.
+
+Handling Missing Data and Creating a Map
+
+The code handles missing data by replacing it with `NaN` values, then creates an equidistant cylindrical projection map with a low-resolution with 
+boundaries (such as -90 to 90 and -180 to 180 for the latitude and longitude respectively ) coastline database. 
+The map is customized with coastline drawing, parallel and meridian lines, and a scatter plot of the data values colored according to their values.
+
+Adding Colorbar and Title
+
+A colorbar is added to the map, labeled with dataset units, and a title is set including the file name, dataset name, and long name.
+
+Saving the Plot
+
+Finally, the code saves the plot as a PNG image file using the original HDF5 file name with a `.py.png` extension.

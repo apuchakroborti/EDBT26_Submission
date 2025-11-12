@@ -1,0 +1,15 @@
+Improved Query:
+
+1. Import Libraries: Include necessary modules for OS operations, plotting, numerical computations, map projections, and HDF5 handling.
+
+2. Define Constants: Set `FILE_NAME` to "ATL06_20190223232535_08780212_006_02.h5".
+
+3. Read HDF5 Data: Open the file in read mode and extract datasets for latitude, longitude, and h_li. Retrieve attributes using decode() and handle _FillValue.
+
+4. Preprocess Data: Replace _FillValue in h_li with NaNs and mask invalid data using numpy functions.
+
+5. Create Map: Use an equidistant cylindrical projection with specified boundaries. Add coastlines, parallels, and meridians.
+
+6. Plot Data: Generate a scatter plot of the data with given parameters including colormap and marker size.
+
+7. Add Colorbar and Title: Include a colorbar labeled with dataset units and set the title using the file's basename and long_name.

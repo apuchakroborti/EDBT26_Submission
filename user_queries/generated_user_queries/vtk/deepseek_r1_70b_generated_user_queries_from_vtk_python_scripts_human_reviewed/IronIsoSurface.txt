@@ -1,0 +1,51 @@
+1. Import Required Libraries:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkContourFilter` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkStructuredPointsReader` from `vtkmodules.vtkIOLegacy`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define the Main Function:
+   - Set the file name to `'IronIsoSurface_ironProt.vtk'`.
+   - Initialize a `vtkNamedColors` object named `colors`.
+
+3. Create Visualization Components:
+   - Create a renderer (`ren1`), render window (`renWin`), and interactor (`iren`).
+   - Add the renderer to the render window and set the interactor's render window.
+
+4. Set Up Data Pipeline:
+   - Create a `vtkStructuredPointsReader` named `reader` and set its file name.
+   - Create a `vtkContourFilter` named `iso`, set its input to the reader’s output, and set the contour value to 128.
+
+5. Configure Isosurface Visualization:
+   - Create a `vtkPolyDataMapper` named `isoMapper`, set its input to the contour filter’s output, and disable scalar visibility.
+   - Create an actor (`isoActor`), set its mapper to `isoMapper`, and set its color to "Banana" from `colors`.
+
+6. Add Outline:
+   - Create a `vtkOutlineFilter` named `outline`, set its input to the reader’s output.
+   - Create a `vtkPolyDataMapper` named `outlineMapper`, set its input to the outline filter’s output.
+   - Create an actor (`outlineActor`) and set its mapper to `outlineMapper`.
+
+7. Finalize Scene:
+   - Add both actors (`isoActor` and `outlineActor`) to the renderer.
+   - Set the background color of the renderer to "SlateGray".
+   - Set the render window size to 640x640 pixels and title to 'IronIsoSurface'.
+
+8. Render the Scene:
+   - Reset the camera, adjust its azimuth to 30 degrees and elevation to 30 degrees.
+   - Render the scene and start the interactor.
+
+9. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "IronIsoSurface_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.
+
+10. Run the Script:
+   - Execute the `main()` function when the script is run as the main program.

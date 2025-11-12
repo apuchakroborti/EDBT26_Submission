@@ -1,0 +1,82 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that visualizes data from an HDF5 file by following these structured steps:
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Load Data:
+   - Open the HDF5 file using h5py.
+   - Extract datasets:
+     - 'solarAzimuthAngle' from path /S2/solarAzimuthAngle.
+     - 'latitude' from path /S2/Latitude.
+     - 'longitude' from path /S2/Longitude.
+   - Retrieve attributes 'units' and '_FillValue' from the solarAzimuthAngle dataset.
+
+3. Process Solar Azimuth Angle Data:
+   - Replace _FillValue with NaN in the solarAzimuthAngle data.
+   - Mask NaN values to handle missing data appropriately.
+
+4. Create Map and Plot Data:
+   - Initialize a cylindrical map projection using Basemap.
+   - Set map boundaries with low resolution, latitude range from -90 to 90, and longitude range from -180 to 180.
+   - Add coastlines with line width 0.5.
+   - Draw parallels at intervals of every 45 degrees (using numpy.arange for values -90, 91) and meridians at the same intervals with labels [True, False, False, True].
+
+5. Add Colorbar and Title:
+   - Use matplotlib's scatter function to plot longitude and latitude data points.
+   - Apply colormap plt.cm.jet with no edge color and linewidth 0.
+   - Create a colorbar below the plot with padding of 10% and label it using the 'units' attribute from solarAzimuthAngle.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants a Python script that visualizes data from an HDF5 file. They've outlined specific steps, so I need to break it down into the three required sub-queries.
+
+First, the HDF5 Dataset Access part. The user is using h5py to open the file and extract datasets. The paths are /S2/solarAzimuthAngle, /S2/Latitude, and /S2/Longitude. They also need to retrieve the 'units' and '_FillValue' attributes from the solarAzimuthAngle dataset. So the sub-query should focus on how to access these datasets and their attributes using h5py. I need to mention the specific paths and the attributes they want to retrieve.
+
+Next, the NumPy-based Data Preprocessing. The user wants to replace _FillValue with NaN and mask those NaNs. The functions mentioned are np.where and np.ma.masked_where. The sub-query should address handling _FillValue, replacing it with NaN, and applying masks. It should specify using NumPy functions for these operations.
+
+For the Plotting and Visualization part, they're using Basemap with a cylindrical projection. The map boundaries are set from -90 to 90 latitude and -180 to 180 longitude. They need coastlines, parallels, and meridians at 45-degree intervals. The scatter plot uses a colormap, and there's a colorbar with a label from the units attribute. The sub-query should focus on Basemap's cylindrical projection setup, drawing coastlines, setting parallels and meridians with specific intervals, and adding a colorbar with the correct label.
+
+I need to make sure each sub-query is specific to its domain. No code, just the technical aspects. Let me check each part again to ensure they align with the user's steps and the required focus areas.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to use h5py to open an HDF5 file with extension .h5, extract datasets at paths `/S2/solarAzimuthAngle`, `/S2/Latitude`, and `/S2/Longitude`, and retrieve attributes `units` and `_FillValue` from the `solarAzimuthAngle` dataset.  
+
+NumPy Data Preprocessing Sub-query:  
+How to replace `_FillValue` with NaN in a NumPy array using `np.where` or `np.ma.masked_where`, and apply masking to handle missing values in solarAzimuthAngle data.  
+
+Plotting and Visualization Sub-query:  
+How to use `mpl_toolkits.basemap` to create a cylindrical projection map with latitude range -90 to 90, longitude range -180 to 180, draw coastlines with linewidth 0.5, add parallels and meridians at 45° intervals using `numpy.arange`, and plot a scatter map with `plt.cm.jet` colormap, no edge color, and a colorbar labeled with dataset units.

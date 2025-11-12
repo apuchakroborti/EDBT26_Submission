@@ -1,0 +1,19 @@
+A Python script that visualizes data from an HDF5 file. 
+Here's how it works:
+Reading Data
+
+The script reads data from the HDF5 file, depending on a setting. 
+It extracts latitude values such as d_lat, longitude values such as d_lon, surface temperature r_Surface_temp values, and UTC time values from the file.
+The code then applies valid min and max values to the longitudes and latitudes datasets and take slices of 2D datasets from valid min to valid max 
+
+Visualizing the Data
+The script then creates a map visualization of the data using Basemap. 
+It sets up an equidistant cylindrical projection with a low-resolution coastline database, draws coastlines, parallels, 
+and meridians on the map, and scatters the longitude and latitude values on the map, colored by surface temperature. 
+A colorbar is added with the units of the temperature values.
+
+Saving the Plot
+Finally, the script saves the plot to a PNG file with a name based on the input HDF5 file.
+
+The script has a main program that sets the HDF5 file name and calls the `run` function with this file name. 
+The `run` function takes care of accessing and visualizing the data in the file.

@@ -1,0 +1,81 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Define Constants: Set `FILE_NAME` to "ATL20-01_20181101001332_05100101_004_01.h5".
+
+2. Open HDF5 File: Access the file in read mode and extract datasets `/grid_lat`, `/grid_lon`, and `/monthly/mean_fb`.
+
+3. Extract Attributes: From the mean_fb dataset, decode 'unit' and 'Long Name' using ASCII with replace errors, and retrieve 'FillValue'.
+
+4. Data Processing:
+   - Convert mean_fb data to float.
+   - Replace FillValue with NaN.
+   - Mask data where values are NaN.
+
+5. Create Map Projection: Use npstere with low resolution, boundinglat=60, lon_0=45.
+
+6. Customize Map:
+   - Add coastlines (linewidth=0.5).
+   - Draw parallels from -90 to 120 with interval of 30.
+   - Draw meridians from -180 to 180 with interval of 45.
+
+7. Adjust Longitude: 
+   Before setting pcolormesh the 180 should be subtractted from longitude value and update the longitude existing value 
+   Then it adds pcolormesh with parameters longitude, latitude, data, and latlon=True
+
+8. Add Colorbar and Title:
+    - Position colorbar at the bottom, labeled with dataset units.
+    - Set title using file basename and 'long name' attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open an HDF5 file and extract certain datasets and attributes. They mention using h5py, accessing files with specific extensions, and extracting paths like '/grid_lat', '/grid_lon', and '/monthly/mean_fb'. Also, they need to get metadata such as 'unit' and 'Long Name' from the mean_fb dataset. So I'll structure that into a sub-query focusing on h5py operations.
+
+Next, for NumPy-based Data Preprocessing, the user is dealing with handling _FillValue by replacing it with NaNs, masking data where values are NaN, converting data to float, and possibly other preprocessing steps. This part should focus solely on NumPy functions like np.where or masked arrays.
+
+Lastly, the Map Plotting and Visualization section involves using matplotlib or cartopy to create a map projection, add coastlines, meridians, parallels, colorbars, and titles. The user also mentions adjusting longitude values before plotting with pcolormesh. I'll need to capture all these visualization steps in the third sub-query.
+
+I should make sure each sub-query is clear and targets only its specific domain without overlapping into other areas.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file named "ATL20-01_20181101001332_05100101_004_01.h5" and extract datasets '/grid_lat', '/grid_lon', and '/monthly/mean_fb, including extracting attributes like 'unit' and 'Long Name' from the mean_fb dataset.
+
+NumPy Data Preprocessing Sub-query:
+How to convert a NumPy array to float, replace specific fill values with NaNs using np.where or np.ma.masked_where, and mask data where values are NaN.
+
+Plotting and Visualization Sub-query:
+How to create a map projection using matplotlib or cartopy with npstere, add coastlines, parallels, meridians, adjust longitude by subtracting 180, plot data with pcolormesh, add colorbar at the bottom, and set title.

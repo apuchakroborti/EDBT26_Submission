@@ -1,0 +1,26 @@
+A python program
+First, It should open the file "CAL_LID_L2_BlowingSnow_Antarctica-Standard-V2-00.2023-06.hdf5" in read-only mode.
+
+The program should import h5py, os, cartopy.crs as ccrs, matplotlib.pyplot as plt, numpy as np, and LATITUDE_FORMATTER, LONGITUDE_FORMATTER from cartopy.mpl.gridliner
+
+
+Next, It should read three datasets: 
+    `/Snow_Fields/Blowing_Snow_Depol_Profile` containing blowing snow depolarization profile data, 
+    and `/Geolocation_Fields/Latitude` and `/Geolocation_Fields/Longitude` containing geolocation data 
+
+I then read the "units" attribute from the `/Snow_Fields/Blowing_Snow_Depol_Profile` dataset then decode the attribute and set a long_name for it as "Blowing_Snow_Depol_Profile". 
+After reading the blowing snow depol profile data it convert the type of numpy to float64
+
+The program reads part of the program data such as first column of the data from then slices data such as all data from the x-axis and 0th index data from y-index of 2D data
+
+After that, The program should replace Blowing_Snow_Depol_Profile data that matches FillValue (0.0) and mask these values using numpy ma masked_where function with parameters numpy isnan Blowing_Snow_Depol_Profile data and Blowing_Snow_Depol_Profile data.
+
+Using Cartopy, I create an orthographic projection map with parameters central_longitude=0, central_latitude=-90, globe=None
+It also set plot axes projection=orth
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, and transform=ccrs.PlateCarree() 
+
+I also add gridlines, coastlines, 
+and set the colorbar with values 0.022 and padding with th evalue of 0.01
+
+At the end, the plot title is set by combining with data file basename and long_name

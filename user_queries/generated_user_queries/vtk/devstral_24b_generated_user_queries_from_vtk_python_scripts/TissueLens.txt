@@ -1,0 +1,41 @@
+This Python script performs the following steps:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `VTK_VERSION_NUMBER`, `vtkLookupTable`, and `vtkVersion` from `vtkmodules.vtkCommonCore`
+   - `vtkSphere` from `vtkmodules.vtkCommonDataModel`
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes`, and `vtkProbeFilter` from `vtkmodules.vtkFiltersCore`
+   - `vtkClipDataSet` from `vtkmodules.vtkFiltersGeneral`
+   - `vtkSphereSource` from `vtkmodules.vtkFiltersSources`
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - `vtkActor`, `vtkCamera`, `vtkDataSetMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Check if VTK version is >= 8.2 to use `vtkFlyingEdges3D`
+   - Create a `vtkNamedColors` object named `colors`
+   - Set colors for 'SkinColor', 'BackfaceColor', and 'BkgColor'
+   - Read volume data from file 'TissueLens_FullHead.mhd' using `vtkMetaImageReader` (stored in variable `reader`)
+   - Extract skin isosurface at value 500 using either `vtkFlyingEdges3D` or `vtkMarchingCubes` (depending on VTK version)
+   - Define a spherical clip function with radius 50 and center at (73, 52, 15) using `vtkSphere`
+   - Clip the skin isosurface with this sphere using `vtkClipDataSet`
+   - Create a mapper for the clipped skin data using `vtkDataSetMapper` and set its properties
+   - Create an actor for the skin using `vtkActor` and set its color properties
+   - Define a lens model as a sphere matching the clip function's geometry using `vtkSphereSource`
+   - Sample the input volume with this lens model using `vtkProbeFilter`
+   - Clip the lens data at isosurface value 500 using another `vtkClipDataSet`
+   - Create a grayscale lookup table for the lens using `vtkLookupTable`
+   - Map and create an actor for the clipped lens data
+   - Set up initial camera view with `vtkCamera` and define its position, focal point, and orientation
+   - Create renderer (`vtkRenderer`), render window (`vtkRenderWindow`), and interactor (`vtkRenderWindowInteractor`)
+   - Add actors to the renderer and set up initial camera view
+   - Set background color for the renderer and size of the render window
+   - Adjust clipping planes for the camera
+   - Initialize and start the event loop
+
+3. **Define a Helper Function**:
+   - `vtk_version_ok(major, minor, build)`: Checks if the current VTK version is greater than or equal to the specified version.
+
+4. **Run the Main Function**:
+   - If this script is run as the main module, call the `main()` function.

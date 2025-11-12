@@ -1,0 +1,108 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Read HDF5 File: Open the file `MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5` using `h5py`.
+
+3. Access Datasets:
+   - Extract data from `L2gpValue` from the group `/HDFEOS/SWATHS/H2O/Data Fields`, focusing on the x-axis and y=0 index of the 2D array.
+   - Retrieve pressure values from `/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure`.
+   - Obtain attributes: `Units` from both datasets and `Title` from the Pressure dataset.
+
+4. Extract Geolocation Data:
+   - Fetch latitude data from `Latitude`, longitude data from `Longitude` from the group `/HDFEOS/SWATHS/H2O/Geolocation Fields`
+
+5. Visualization Setup:
+   - Create a cylindrical projection map with low resolution, setting latitude from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels at latitudes from -90 to 90 with the interval of 45.
+   - Draw meridians similarly with spacing of 45 degree, starting at -180 till 180, and apply left and bottom labels
+
+6. Scatter Plot:
+   - Use `plt.scatter` with longitude and latitude coordinates, data from L2gpValue, markersize 1, colormap 'jet', no edge colors, and linewidth 0.
+
+7. Colorbar and Labels:
+   - Add a colorbar at the bottom with format "%.1e" and 10% padding.
+   - Set the colorbar label using the `Units` attribute from L2gpValue.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file
+file = h5py.File('MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5', 'r')
+
+# Access datasets and attributes
+data = file['/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue'][...]  # Extract data
+pressure = file['/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure'][...]  # Retrieve pressure values
+units = file['/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue'].attrs['Units']  # Extract units attribute
+title = file['/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure'].attrs['Title']  # Extract title attribute
+
+# Close the file
+file.close()
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Apply mask where _FillValue is present in data
+mask = np.ma.getmask(data)
+data_masked = np.ma.array(data, mask=mask)
+
+# Filter data based on min and max values
+filtered_data = np.where((data >= 0) & (data <= 1), data, np.nan)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Create a map object with low resolution
+map = Basemap(projection='cyl', llcrnrlat=-90, urcrnrlat=90, llcrnrlon=-180, urcrnrlon=180, resolution='l')
+
+# Add coastlines and labels
+map.drawcoastlines(linewidth=0.5)
+map.drawparallels(np.arange(-90., 91., 45.), linewidth=0.5)
+map.drawmeridians(np.arange(-180., 181., 45.), linewidth=0.5)
+
+# Scatter plot of data
+x, y = map(longitude, latitude)
+plt.scatter(x, y, c=data_masked, s=1, cmap='jet', edgecolors='none', lw=0)
+
+# Add colorbar and labels
+cbar = plt.colorbar(format="%.1e")
+cbar.set_label(units)
+```

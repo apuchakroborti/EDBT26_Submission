@@ -1,0 +1,68 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Comments and imports**
+
+The code starts with comments explaining usage instructions and contact information.
+
+It then imports various Python libraries:
+```python
+import os
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import colors
+from mpl_toolkits.basemap import Basemap
+import h5py
+```
+These libraries are used for operating system-related functions, data visualization, numerical computations, color management, geographic mapping, and HDF5 file handling.
+
+**Font size adjustment**
+
+The code reduces the font size:
+```python
+mpl.rcParams.update({"font.size": 8})
+```
+This sets the global font size for Matplotlib plots.
+
+**File path and name**
+
+The script defines a file path and name:
+```python
+FILE_PATH = "/Users/apukumarchakroborti/gsu_research/llam_test/LaRC/"
+fn = FILE_PATH + "CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5"
+```
+**HDF5 file access**
+
+The script opens the HDF5 file in read-only mode using `h5py`:
+```python
+with h5py.File(fn, mode="r") as f:
+    ...
+```
+This creates a context manager that ensures the file is properly closed.
+
+**Data extraction and plotting**
+
+Within the HDF5 file, the script extracts two datasets: aerosol type data and latitude/longitude coordinates. It then plots the aerosol type data using a discrete color map and Basemap object:
+```python
+cmap = colors.ListedColormap([...])
+m = Basemap(...)
+m.scatter(longitude, latitude, c=data, s=1, cmap=cmap)
+```
+**Title, figure setup, and colorbar creation**
+
+The script sets up a title for the plot and creates a discrete colorbar:
+```python
+basename = os.path.basename(fn)
+plt.title("{0}\n{1} at Layer 0".format(basename, name))
+fig = plt.gcf()
+bounds = np.linspace(0, 9, 10)
+norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
+cb = mpl.colorbar.ColorbarBase(ax_cb, cmap=cmap, norm=norm, boundaries=bounds, ticks=bounds)
+```
+**Output**
+
+Finally, the script saves the plot to a file:
+```python
+plt.savefig("aerosol_type_plot.png", dpi=300)
+```
+This produces a PNG image of the plot with a resolution of 300 DPI.

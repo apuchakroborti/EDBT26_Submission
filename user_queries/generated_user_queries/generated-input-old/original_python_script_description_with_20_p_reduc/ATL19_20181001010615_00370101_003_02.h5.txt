@@ -1,0 +1,40 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Step 1: Importing necessary libraries**
+
+The code imports several Python libraries:
+* `os`
+* `matplotlib.pyplot` as `plt`
+* `numpy` as `np`
+* `mpl_toolkits.basemap` as `Basemap`
+* `h5py`
+
+**Step 2: Defining the file name and opening the HDF5 file**
+
+The code defines a variable `FILE_NAME` with the path to an HDF5 file. It then opens the file in read-only mode (`mode="r"`) using `h5py.File()`.
+
+**Step 3: Reading datasets from the HDF5 file**
+
+The code reads three datasets:
+* `/mid_latitude/latitude`
+* `/mid_latitude/longitude`
+* `/mid_latitude/beam_1/dot_avg`
+
+It also retrieves attributes from the `datavar` dataset:
+* `units`
+* `long_name`
+* `_FillValue`
+
+**Step 4: Handling FillValue and creating a masked array**
+
+The code replaces all occurrences of `_FillValue` with `np.nan` using NumPy's broadcasting rules. It then creates a masked array using `np.ma.masked_where()`.
+
+**Step 5-7: Creating a map projection, drawing coastlines, and creating a pcolormesh plot**
+
+The code uses `Basemap` to create an equidistant cylindrical projection with a low-resolution coastline database. It draws coastlines on the map and creates a pseudocolor mesh plot using `m.pcolormesh()`.
+
+**Step 8-9: Creating a colorbar, setting the plot title, and saving the figure**
+
+The code creates a colorbar using `m.colorbar()`, sets the plot title using `plt.title()`, and saves the figure to a PNG file using `fig.savefig()`.
+
+Note that I removed some redundant information and condensed the steps 5-7 to focus on the main implementation details.

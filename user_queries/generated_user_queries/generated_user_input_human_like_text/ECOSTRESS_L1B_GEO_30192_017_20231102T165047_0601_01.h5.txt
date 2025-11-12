@@ -1,0 +1,29 @@
+Here is a rewritten version of the text, condensed by about 40% while keeping as many implementation details as possible:
+
+Can you explain this Python code step-by-step?
+
+The code starts by importing necessary libraries: `os`, `matplotlib.pyplot` (aliased as `plt`), `numpy` (aliased as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+It then defines two file names: `FILE_NAME` for the ECOSTRESS L2 HDF5 file and `FILE_NAME_GEO` for the ECOSTRESS L1B GEO HDF5 file.
+
+The code opens both HDF5 files in read-only mode using `h5py` and reads data from the L2 file:
+
+* It accesses the `/SDS/LST` dataset, reading its contents into a NumPy array (`data`) with dtype `float64`.
+* It reads several attributes associated with the `/SDS/LST` dataset, including `scale_factor`, `add_offset`, `units`, `_FillValue`, and `long_name`.
+
+The code also reads geolocation data from the L1B GEO file:
+
+* It accesses the `/Geolocation/longitude` and `/Geolocation/latitude` datasets, reading their contents into NumPy arrays (`lon` and `lat`) with dtype `float64`.
+
+Next, it applies transformations to the data: replacing fill values with NaN, scaling using `scale_factor`, adding `add_offset`, and creating masked arrays.
+
+The code then creates a Basemap instance for map projection:
+
+* Projection type is set to "aea" (Albers Equal Area Conic).
+* Resolution is set to "l" (low).
+* Lower-left and upper-right corners of the map are defined using minimum and maximum latitude and longitude values.
+* Central meridian and parallel are set to mean longitude and latitude values.
+
+The code draws several elements on the map, including coastlines, parallel lines, meridian lines, and a pseudocolor mesh. It also adds a colorbar with a label set to the units of the data and sets the plot title.
+
+Finally, it saves the plot to a PNG file constructed by appending ".z.py.png" to the base name of the L2 file.

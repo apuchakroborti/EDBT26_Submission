@@ -1,0 +1,46 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code starts by importing several Python modules:
+* `os`
+* `h5py` for working with HDF5 files
+* `numpy` (`np`) for numerical computations
+* `matplotlib` (`mpl`) and `matplotlib.pyplot` (`plt`) for creating plots
+* `Basemap` for mapping and geographic projections
+
+**Setting the file name and opening the HDF5 file**
+
+The code sets a constant `FILE_NAME` to `'GEOLST4KHR_201612291600_002_20210714015139.h5'`. This is the name of the HDF5 file that will be accessed. The file is opened using `h5py.File(FILE_NAME, mode='r')`, which means it opens the file in read-only mode.
+
+**Accessing datasets and attributes**
+
+The code accesses several datasets within the HDF5 file:
+* `/lst`: a dataset containing data
+* `/lon` and `/lat`: datasets containing longitude and latitude values, respectively
+
+It reads several attributes from the `/lst` dataset:
+* `scale_factor`
+* `add_offset`
+* `units`
+* `_FillValue`
+* `long_name`
+
+**Converting datasets to NumPy arrays**
+
+The code converts the datasets to NumPy arrays:
+* `data`: the data array
+* `lon` and `lat`: longitude and latitude arrays, respectively
+
+These conversions are done using the `.astype(np.float64)` method.
+
+**Applying fill value and scale factor, creating a mask for missing data, and plotting**
+
+The code applies the fill value and scale factor to the `data` array. It creates a mask for missing data by creating a masked array from the `data`, `lon`, and `lat` arrays. The code uses the `Basemap` module to create a map plot.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file:
+* It gets the current figure object using `fig = plt.gcf()`
+* It sets the title of the plot using `plt.title`
+* It saves the plot to a file named after the HDF5 file, with a `.py.png` extension

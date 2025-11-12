@@ -1,0 +1,84 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Import Required Libraries
+
+2. Read HDF5 File: Open the HDF5 file named `SMAP_L1C_S0_HIRES_02298_A_20150707T160502_R13080_001.h5`.
+
+3. Access Datasets:
+   - Retrieve `cell_sigma0_hh_fore` for sigma-0 data.
+   - Extract latitude and longitude from `cell_lat` and `cell_lon` respectively.
+   from the group `Sigma0_Data`
+
+4. Extract Attributes: Obtain attributes `long_name`, `_FillValue`, `valid_max`, and `valid_min` 
+   Decode `long_name` using ASCII with replace error handling.
+
+5. Data Cleaning:
+   - Identify invalid data where sigma-0 values exceed `valid_max` or are below `valid_min`.
+   - Update invalid flags to include data equal to `_FillValue`.
+   - Set identified invalid sigma-0 values to `NaN`.
+   - Mask the dataset using `masked_where` for NaNs.
+
+6. Create Map Projection: Use cylindrical projection with boundaries set from latitude -90 to 90 and longitude -180 to 180, low resolution.
+
+7. Customize Map:
+   - Add coastlines with line width 0.5.
+   - Draw parallels at latitudes -90, -45, 0, 45, and 90.
+   - Draw meridians at longitudes -180, -135, -90, -45, 0, 45, 90, 135, and 180 with labels at left and bottom
+
+8. Plot Data: Use scatter plot with longitude, latitude coordinates, sigma-0 data, colormap `plt.cm.jet`, no edge color, and linewidth 0.
+
+9. Add Colorbar: Position the colorbar at the bottom with 10% padding and label it using the units from the sigma-0 dataset's `long_name` attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open a specific HDF5 file and access certain datasets within it. They also mention extracting attributes like long_name, _FillValue, valid_max, and valid_min. I should make sure to include all these points in the sub-query, focusing on using h5py for accessing the file and retrieving the necessary data and metadata.
+
+Next, the NumPy-based Data Preprocessing part involves handling invalid data. The user wants to identify values that are outside the valid range or equal to _FillValue, set them to NaN, and then mask the dataset. I need to ensure that this sub-query clearly outlines these steps using NumPy functions like np.where and np.ma.masked_where.
+
+Lastly, for Map Plotting and Visualization, the user is looking to create a cylindrical projection map with specific boundaries, add coastlines, parallels, meridians, and then plot the data as a scatter plot. They also want a colorbar at the bottom labeled appropriately. I should structure this sub-query to cover all these visualization aspects using matplotlib or related libraries.
+
+I need to make sure each sub-query is focused on its specific domain without overlapping with others. Also, the language should be clear and concise so that when someone looks for information based on these sub-queries, they can find relevant documentation or examples easily.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file named `SMAP_L1C_S0_HIRES_02298_A_20150707T160502_R13080_001.h5` using h5py, access datasets like `cell_sigma0_hh_fore`, `cell_lat`, and `cell_lon` from the group `Sigma0_Data`, and extract attributes such as `long_name`, `_FillValue`, `valid_max`, and `valid_min`?
+
+NumPy Data Preprocessing Sub-query:
+How to identify invalid data in a NumPy array where values exceed `valid_max` or are below `valid_min`, update invalid flags to include data equal to `_FillValue`, set identified invalid values to NaN, and mask the dataset using `np.ma.masked_where` for NaNs?
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical projection map with boundaries from latitude -90 to 90 and longitude -180 to 180 using matplotlib or cartopy, add coastlines, parallels at latitudes -90, -45, 0, 45, 90, meridians at longitudes -180, -135, -90, -45, 0, 45, 90, 135, 180 with labels on the left and bottom, plot data as a scatter plot with longitude and latitude coordinates using colormap `plt.cm.jet`, no edge color, linewidth 0, and add a colorbar at the bottom with 10% padding labeled using the units from the sigma-0 dataset's `long_name` attribute?

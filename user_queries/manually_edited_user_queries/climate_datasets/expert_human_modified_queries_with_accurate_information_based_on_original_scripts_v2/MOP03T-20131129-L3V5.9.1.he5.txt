@@ -1,0 +1,33 @@
+A python script
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+The script starts by reading the file. It then accesses several datasets within the file: 
+- `/HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay`, which contains 2D surface temperature data and stores the data into a variable name data
+
+Then from the data three attributes named long_name, units, and _FillValue are retrieved
+Then the long_name and units values are being decoded using decode() function
+
+
+Data Preprocessing
+The script replaces values equal to the _FillValue with `NaN` 
+and it masks the data b=using numpy ma modlue's masked_array function with parameters data and numpy isnan(nan)
+
+Then it reads the geolocation data
+- `/HDFEOS/GRIDS/MOP03/Data Fields/Latitude`, which contains latitude values
+- `/HDFEOS/GRIDS/MOP03/Data Fields/Longitude`, which contains longitude values
+
+which are stored into two variables named x and y respectively, 
+and creates a 2D meshgrid from x and y using NumPy's `meshgrid` function that stores the values of longitude and latitude.
+
+Creating a Basemap
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45, 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+
+The program should set scatter function with paramets of longitude, latitude, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+Visualizing Data
+After that it adds a colorbar and set label using set_lable funtion with parameter units.

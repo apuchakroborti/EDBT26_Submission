@@ -1,0 +1,57 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+1. `datetime`: for working with dates and times
+2. `os`: for interacting with the operating system (e.g., getting the current working directory)
+3. `matplotlib.pyplot` as `plt`: for creating plots
+4. `numpy` as `np`: for numerical computations
+5. `mpl_toolkits.basemap` as `Basemap`: for creating maps
+6. `h5py`: for reading HDF5 files
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME` which is the name of the HDF5 file to be read: "ATL10-02_20181227215113_13790101_006_02.h5".
+
+**Reading HDF5 File**
+
+The code opens the HDF5 file in read mode (`"r"`), using the `h5py` library, and assigns it to a variable `f`.
+
+**Extracting Data from HDF5 File**
+
+The code extracts various datasets from the HDF5 file:
+
+1. **Latitude**: `/gt1r/freeboard_segment/geophysical/latitude`
+2. **Longitude**: `/gt1r/freeboard_segment/geophysical/longitude`
+3. **Data**: `/gt1r/freeboard_segment/beam_fb_height` (with attributes: `units`, `long_name`, and `_FillValue`)
+4. **Time**: `/gt1r/freeboard_segment/geophysical/delta_time`
+
+The code reads the entire dataset into memory using slicing (`[:]`).
+
+**Handling Fill Values**
+
+The code replaces fill values in the data with NaN (Not a Number) and creates a masked array to handle missing values.
+
+**Plotting Data**
+
+The code creates two plots:
+
+1. **Time vs. Height**: The first plot shows the relationship between time and height.
+	* It creates a figure with a single axis (`ax1`) using `matplotlib`.
+	* It plots the data as blue circles (`"bo"`).
+	* It sets the x-axis label to "Seconds from <timestamp>" and y-axis label to the units of the data.
+	* It sets the title of the plot to include the file name, dataset name, and long name of the data.
+2. **Trajectory**: The second plot shows the trajectory of the flight path.
+	* It creates a new axis (`ax3`) using `matplotlib`.
+	* It uses `Basemap` to create an orthographic map projection.
+	* It draws coastlines, parallels, and meridians on the map.
+	* It plots the longitude and latitude data as a line on the map.
+	* It annotates the starting point of the trajectory with "START" and offsets the text by 200 km.
+
+**Saving Plot to File**
+
+The code saves the plot to a PNG file named after the HDF5 file, but with a `.py.png` extension.
+
+That's it!

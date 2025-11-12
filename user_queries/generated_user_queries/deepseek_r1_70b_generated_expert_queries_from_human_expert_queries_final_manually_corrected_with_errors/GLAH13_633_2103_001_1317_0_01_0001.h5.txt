@@ -1,0 +1,32 @@
+A Python script that processes an HDF5 file and generates visualizations based on specific datasets and attributes.
+
+1. Read Datasets:
+   - Extract latitude data from `d_lat`, longitude data from `d_lon` from the sub group path `Data_1HZ/Geolocation`.
+   - Extract surface temperature data from `Atmosphere/d_Surface_temp`, time data from `Time/d_UTCTime_1` from the group`from Data_1HZ`
+
+3. Extract Attributes:
+   - For latitude, read `valid_min` and `valid_max`, combine into `latitude_valid`.
+   - For longitude, read `valid_min` and `valid_max`, combine into `longitude_valid`.
+   - For surface temperature, read `valid_min`, `valid_max`, `units`, and `long_name`, combining ranges into `surfacetemperature_valid`.
+
+4. Data Validation:
+   - Replace latitude values outside `latitude_valid[0]` and `latitude_valid[1]` with NaN.
+   - Apply similar validation to longitude using `longitude_valid`.
+   - Apply similar validation to surface temperature using `surfacetemperature_valid`.
+
+5. Plotting Setup:
+   - Create a figure of size 15x6 inches with two subplots arranged horizontally (1 row, 2 columns).
+   - Configure the first subplot with labels: x-axis as 'Elapsed Time (Minutes)', y-axis using the units from surface temperature data.
+
+6. Map Visualization:
+   - Use cylindrical projection with low resolution.
+   - Set latitude from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with linewidth 0.5, parallels at intervals of 30 degrees from -90 to 120, and meridians every 45 degrees from -180 to 180.
+
+7. Scatter Plot on Map:
+   - Use longitude and latitude for coordinates, surface temperature data for color.
+   - Set markers size to 0.1, colormap to jet, no edges or linewidth.
+
+8. Colorbar and Title:
+   - Add a colorbar labeled with the units from surface temperature.
+   - Set plot title combining HDF5 file basename and surface temperature's long_name.

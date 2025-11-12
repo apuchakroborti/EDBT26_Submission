@@ -1,0 +1,13 @@
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Open an HDF5 file in read mode using h5py and extract the dataset located at '/S1/Tb', including its 'units' and '_FillValue' attributes. Also, retrieve geolocation data from '/S1/Latitude' and '/S1/Longitude'.
+
+3. Mask NaN values in the '/S1/Tb' dataset using numpy's masked_where function with parameters based on numpy's isnan.
+
+4. Create a cylindrical projection map with low resolution, latitude range from -90 to 90, and longitude range from -180 to 180. Add coastlines with a width of 0.5, parallels at -90, 0, 90, and meridians at -180, 0, 180 with specific labels.
+
+5. Plot the dataset as a scatter plot on the map using the 'jet' colormap, setting each point's size to 1.
+
+6. Add a colorbar below the plot with padding of 10% and label it using the units extracted from the '/S1/Tb' dataset.
+
+7. Set the plot title by combining the HDF5 file's basename, the string "/S1/Tb", and "(nchan1=0)".

@@ -1,0 +1,71 @@
+This Python script applies a connectivity filter to remove noisy isosurfaces using the VTK library. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkIdList` from `vtkmodules.vtkCommonCore`
+   - `vtkPolyDataConnectivityFilter` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkMCubesReader` from `vtkmodules.vtkIOGeometry`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define Function**:
+   - Define the function `pine_root_connectivity(fileName, noConnectivity)` which takes two parameters: `fileName` (string) and `noConnectivity` (boolean).
+
+3. **Inner Function**:
+   - Inside `pine_root_connectivity`, define an inner function `NumberOfTriangles(pd)` that counts the number of triangles in a given vtkPolyData object.
+
+4. **Initialize Colors**:
+   - Create a `vtkNamedColors` object named `colors`.
+
+5. **Create Pipeline**:
+   - Create a `vtkMCubesReader` object named `reader`.
+   - Set the file name for the reader using `reader.SetFileName(fileName)`.
+   - If `noConnectivity` is False, update the reader and print the number of triangles before applying connectivity.
+
+6. **Apply Connectivity Filter**:
+   - Create a `vtkPolyDataConnectivityFilter` object named `connect`.
+   - Set its input connection to the reader's output port using `connect.SetInputConnection(reader.GetOutputPort())`.
+   - Set extraction mode to largest region with `connect.SetExtractionModeToLargestRegion()`.
+   - If `noConnectivity` is False, update the connectivity filter and print the number of triangles after applying it.
+
+7. **Create Mapper and Actor**:
+   - Create a `vtkPolyDataMapper` object named `isoMapper`.
+   - Set its input connection based on whether `noConnectivity` is True or False.
+   - Turn off scalar visibility with `isoMapper.ScalarVisibilityOff()`.
+   - Create a `vtkActor` object named `isoActor`, set its mapper to `isoMapper`, and set the color property.
+
+8. **Create Outline**:
+   - Create a `vtkOutlineFilter` object named `outline`.
+   - Set its input connection to the reader's output port using `outline.SetInputConnection(reader.GetOutputPort())`.
+   - Create a `vtkPolyDataMapper` object named `outlineMapper`, set its input connection to the outline filter.
+   - Create a `vtkActor` object named `outlineActor`, set its mapper to `outlineMapper`, and set the color property.
+
+9. **Create Renderer, RenderWindow, and Interactor**:
+   - Create a `vtkRenderer` object named `ren`.
+   - Create a `vtkRenderWindow` object named `renWin`, add the renderer to it.
+   - Create a `vtkRenderWindowInteractor` object named `iren`, set its render window.
+
+10. **Add Actors and Set Background**:
+    - Add `outlineActor` and `isoActor` to the renderer using `ren.AddActor()`.
+    - Set the size of the render window with `renWin.SetSize(512, 512)`.
+    - Set the window name with `renWin.SetWindowName('PineRootConnectivity')`.
+    - Set the background color using `ren.SetBackground(colors.GetColor3d('SlateGray'))`.
+
+11. **Set Camera Parameters**:
+    - Get the active camera from the renderer and set its focal point, position, clipping range, view angle, and view up direction.
+
+12. **Render and Start Interaction**:
+    - Initialize the interactor with `iren.Initialize()`.
+    - Render the window with `renWin.Render()`.
+    - Start the interaction loop with `iren.Start()`.
+
+13. **Main Function**:
+    - Define a `main()` function that sets the file name to `'PineRootConnectivity_pine_root.tri'` and `noConnectivity` to 0 (False).
+    - Call `pine_root_connectivity(fileName, noConnectivity)`.
+
+14. **Entry Point**:
+    - If this script is run as the main module (`if __name__ == '__main__':`), call the `main()` function.
+
+This description provides a clear step-by-step breakdown of what each part of the script does and how it works together to apply a connectivity filter to remove noisy isosurfaces using VTK.

@@ -1,0 +1,13 @@
+Here is the rewritten description with 40% reduction in text while keeping as many implementation details as possible:
+
+"Can you explain this Python code step by step?
+
+The code imports necessary libraries: `os`, `matplotlib.pyplot` as `plt`, `numpy` as `np`, `mpl_toolkits.basemap` as `Basemap`, and `h5py`.
+
+It defines a constant `FILE_NAME` for the HDF5 file "ATL20-01_20181101001332_05100101_004_01.h5".
+
+The code opens the HDF5 file, reads latitude and longitude datasets (`/grid_lat` and `/grid_lon`) and assigns them to `latitude` and `longitude`. It also reads the main dataset (`/monthly/mean_fb`) and extracts its data, units, long description, and fill value.
+
+The code replaces fill values with `np.nan`, creates a masked array, and sets up a Basemap object with a North Polar Stereographic projection. It draws coastlines, parallels, and meridians on the map.
+
+The code plots the data using `m.pcolormesh()`, shifting longitude values by 180 degrees for proper centering. It creates a colorbar with a label set to the units of the data and sets the plot title including the HDF5 file name and long description. Finally, it saves the figure to a PNG file."

@@ -1,0 +1,44 @@
+Here's the reduced version while keeping implementation details:
+
+**Access and Visualize GESDISC HIRDLS Zonal Average HDF-EOS5 File**
+
+1. **Import necessary libraries**:
+   - `datetime` for date and time manipulation
+   - `os` for operating system-related tasks (e.g., getting the base name of a file)
+   - `matplotlib` and its sub-module `pyplot` for creating plots
+   - `Basemap` for creating maps
+   - `numpy` (`np`) for numerical operations
+   - `h5py` for working with HDF5 files
+
+2. **Define the file name**:
+   Specify the file name as a string: `'HIRDLS-Aura_L3ZFCNO2_v07-00-20-c01_2005d022-2008d077.he5'`
+
+3. **Open the HDF5 file**:
+   - `with h5py.File(FILE_NAME, mode='r') as f:` This line opens the HDF5 file in read-only mode (`mode='r'`)
+
+4. **Access and read datasets from the file**:
+   - Access datasets: `dset_var`, `dset_lat`, `dset_lev`, `dset_date`, and `dset_nco`
+   - Read data from datasets: `data = dset_var[0, :, :, 0]`
+
+5. **Read attributes from the datasets**:
+   - Read attribute `'Units'` and decode it to UTF-8 (for Python 3)
+
+6. **Convert data values**:
+   - Replace fill value with NaN
+   - Create a masked array from the data
+
+7. **Create a plot**:
+   - `plt.contourf(lat, lev, data)`
+   - Add color bar and set label: `cb.set_label(data_units)`
+
+8. **Add labels and title**:
+    - Set x-axis label and y-axis label
+    - Set plot title with file name, date, and nCoeffs
+
+9. **Customize the plot**:
+   - Invert y-axis
+   - Set y-axis scale to logarithmic
+   - Format y-axis tick labels as decimal numbers with one digit after the decimal point
+
+10. **Save the plot**:
+    - Save the plot to a PNG file

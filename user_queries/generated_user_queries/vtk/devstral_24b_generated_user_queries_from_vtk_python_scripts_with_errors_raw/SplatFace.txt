@@ -1,0 +1,47 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script creates a 3D visualization of a face using special techniques. It reads data from a file, processes it, and then displays it on your screen.
+
+### Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing some tools (modules) that will help with creating graphics and handling 3D data.
+   - These tools are like different specialized workers in a factory, each responsible for specific tasks.
+
+2. Creating the Main Function:
+   - This is where all the action happens. Think of it as the main stage where everything comes together.
+
+3. Setting Up Colors:
+   - The script sets up some colors that will be used later to make things look nice on screen.
+   - It's like choosing paint colors before you start painting a picture.
+
+4. Reading the File:
+   - The script reads data from a file named 'SplatFace_fran_cut.vtk'.
+   - This file contains information about the shape of a face, similar to how a blueprint contains details about a building.
+
+5. Processing the Data:
+   - The script processes this data in several steps:
+     1. Calculating Normals: It calculates which way each part of the face is pointing (like figuring out if a wall is facing north or south).
+     2. Masking Points: It reduces the number of points to make the processing faster, like taking a sample instead of measuring every single detail.
+     3. Splattering: It uses a special technique called "Gaussian Splatter" to spread these points out in a 3D space (like splashing paint on a canvas but in 3D).
+     4. Creating Contours: It creates outlines based on the splattered data, like drawing lines around different areas of the face.
+
+6. Setting Up the Visualization:
+   - The script sets up how things will be displayed:
+     1. Mappers: These are like translators that convert the processed data into something that can be shown on screen.
+     2. Actors: These represent the objects (like the face) that will be displayed.
+
+7. Adding Actors to the Scene:
+   - It adds these actors (the face and its outlines) to a virtual scene, like placing characters on a stage for a play.
+
+8. Setting Up the Camera:
+   - The script sets up a virtual camera to determine how you'll see the scene.
+   - It adjusts things like where the camera is positioned, what it's looking at, and how wide its view is (like setting up a movie camera).
+
+9. Rendering the Image:
+   - Finally, the script renders (draws) the image on your screen using all the setup from before.
+   - It starts an interactive window so you can see and interact with the 3D face.
+
+### Summary
+In simple terms, this script takes data about a face, processes it to make it easier to work with, creates a 3D representation of that face, sets up how it will be displayed (including colors and camera angles), and then shows it on your screen. It's like creating a detailed 3D model of a face from a blueprint and displaying it in an interactive window.

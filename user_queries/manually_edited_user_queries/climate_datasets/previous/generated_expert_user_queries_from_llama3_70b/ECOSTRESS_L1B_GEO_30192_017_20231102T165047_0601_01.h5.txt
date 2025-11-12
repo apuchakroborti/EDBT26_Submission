@@ -1,0 +1,59 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing necessary libraries:
+1. `os`: for operating system-specific functionalities.
+2. `matplotlib.pyplot` as `plt`: for creating plots and visualizations.
+3. `numpy` as `np`: for numerical computations and array operations.
+4. `mpl_toolkits.basemap` as `Basemap`: for creating maps and geospatial visualizations.
+5. `h5py`: for working with HDF5 files.
+
+**Defining File Names**
+
+Two file names are defined:
+1. `FILE_NAME`: "ECOSTRESS_L2_LSTE_30192_017_20231102T165047_0601_01.h5", which is an ECOSTRESS L2 HDF5 file.
+2. `FILE_NAME_GEO`: "ECOSTRESS_L1B_GEO_30192_017_20231102T165047_0601_01.h5", which is an ECOSTRESS L1B GEO HDF5 file.
+
+**Opening HDF5 Files**
+
+The code opens both HDF5 files in read mode (`mode="r"`) using the `h5py` library. The files are opened within a `with` statement, ensuring that they are properly closed when no longer needed.
+
+**Accessing Datasets and Attributes**
+
+From the `FILE_NAME` file, the code accesses:
+1. The `/SDS/LST` dataset, which is read into a NumPy array (`data`) with float64 data type.
+2. Various attributes associated with the `/SDS/LST` dataset:
+	* `scale_factor`
+	* `add_offset`
+	* `units` (decoded from bytes to string)
+	* `_FillValue`
+	* `long_name` (decoded from bytes to string)
+
+From the `FILE_NAME_GEO` file, the code accesses:
+1. The `/Geolocation/longitude` dataset, which is read into a NumPy array (`lon`) with float64 data type.
+2. The `/Geolocation/latitude` dataset, which is read into a NumPy array (`lat`) with float64 data type.
+
+**Data Processing**
+
+The code applies the following operations to the data:
+1. Replaces fill values with NaN (Not a Number) in `data`, `lon`, and `lat`.
+2. Applies the scale factor and offset to `data`.
+3. Creates masked arrays for `data`, `lat`, and `lon` using NumPy's `ma` module, which allows for efficient handling of missing data.
+
+**Map Visualization**
+
+The code uses the `Basemap` library to create a map visualization:
+1. Defines a map projection (`aea`) with various parameters (resolution, lat/lon limits, etc.).
+2. Draws coastlines, parallels, and meridians on the map.
+3. Creates a pseudocolor mesh plot of `data` using `m.pcolormesh`, with `lat` and `lon` as coordinates.
+4. Adds a colorbar to the plot with a label set to the units of the data.
+
+**Saving the Plot**
+
+Finally, the code:
+1. Gets the base name of the input file (`basename`) using `os.path.basename`.
+2. Sets the title of the plot to include the base name and long name of the dataset.
+3. Saves the plot as a PNG file with a name based on the input file name.
+
+The program's perspective is to access and visualize data from ECOSTRESS L2 HDF5 files, specifically the Land Surface Temperature (LST) dataset, along with geolocation information from an accompanying L1B GEO file.

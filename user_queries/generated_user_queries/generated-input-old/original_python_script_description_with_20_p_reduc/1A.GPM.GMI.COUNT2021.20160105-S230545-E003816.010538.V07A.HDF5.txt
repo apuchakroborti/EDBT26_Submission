@@ -1,0 +1,39 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports several Python libraries: `os`, `matplotlib` and `matplotlib.pyplot` (as `mpl` and `plt`), `numpy` (as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Configuring Matplotlib**
+
+The font size of Matplotlib is set to 9 using `mpl.rcParams.update({"font.size": 9})`.
+
+**Defining constants and variables**
+
+The code defines several constants and variables: `FILE_NAME`, the name of the HDF5 file, and `name`, the path to a dataset within the HDF5 file.
+
+**Reading HDF5 file and extracting data**
+
+The code opens the HDF5 file in read mode using `h5py.File(FILE_NAME, mode="r") as f:`. It extracts `data` (values of the dataset), `units` (decoded from a byte string), and `_FillValue` (fill value of the dataset). All occurrences of `_FillValue` in `data` are replaced with `NaN`.
+
+**Extracting geolocation data**
+
+The code extracts latitude and longitude datasets from the HDF5 file.
+
+**Creating a Basemap instance**
+
+A Basemap instance is created using `Basemap` from `mpl_toolkits.basemap`. The map is configured with a cylindrical projection, low-resolution coastline, and specific latitude and longitude bounds.
+
+**Plotting data**
+
+The code plots the data using `m.drawcoastlines`, `m.drawparallels`, `m.drawmeridians`, and `m.scatter`.
+
+**Adding colorbar and title**
+
+A colorbar is added at the bottom of the plot with a 10% padding, and the label is set to the units of the dataset. The title is set to include the file name and dataset name.
+
+**Saving the figure**
+
+The figure is saved to a PNG file using `plt.gcf()` and `fig.savefig(pngfile)`.
+
+This reduced text still provides a clear overview of the code's implementation details, while removing some of the extraneous explanations and examples.

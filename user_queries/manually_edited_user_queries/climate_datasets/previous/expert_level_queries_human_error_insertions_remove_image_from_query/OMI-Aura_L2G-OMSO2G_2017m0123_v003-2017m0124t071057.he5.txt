@@ -1,0 +1,15 @@
+"I'm working with an HDF-EOS5 file and I need to extract specific datasets. Here's what I've done so far:
+
+First, I set up variables for the file name (`OMI-Aura_L2G-OMSO2G_2017m0123_v003-2017m0124t071057.he5`) 
+and paths within the file (`/HDFEOS/GRIDS/OMI Total Column Amount SO2/Data Fields/`). 
+I also specified dataset names: `ColumnAmountSO2 PBL` for data, `Latitude`, and `Longitude`.
+The above datasets are 3D data so need to access 0th index from the x-axis and all data from the y and z axis
+
+Next, I read the datasets using the HDF-EOS5 file's hierarchy. 
+I retrieved attributes like title, units, valid range, fill value, offset, and scale factor.
+
+To handle missing values and valid ranges, I replaced fill values with NaN, applied the scale factor and offset to the data, and masked values outside the valid range.
+
+I then subsetted the data by selecting the first slice of the arrays. Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively 
+I created a scatter plot of the data with coastlines, parallels, and meridians drawn at specific intervals.

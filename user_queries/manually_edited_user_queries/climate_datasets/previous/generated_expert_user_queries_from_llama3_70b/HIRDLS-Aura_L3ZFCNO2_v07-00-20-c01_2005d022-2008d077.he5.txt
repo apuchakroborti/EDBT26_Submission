@@ -1,0 +1,62 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Step 1: Importing Libraries**
+
+The code starts by importing various libraries:
+	* `datetime`: for working with dates and times
+	* `os`: for interacting with the operating system (e.g., getting the current working directory)
+	* `matplotlib` and `matplotlib.pyplot`: for creating plots and visualizations
+	* `mpl_toolkits.basemap`: for creating maps (not used in this code snippet)
+	* `numpy`: for numerical computations
+	* `h5py`: for reading HDF-EOS5 files
+
+**Step 2: Defining Constants**
+
+The code defines a constant `FILE_NAME` which is the name of the HDF-EOS5 file to be read.
+
+**Step 3: Opening the HDF-EOS5 File**
+
+The code opens the HDF-EOS5 file in read-only mode (`mode='r'`) using `h5py`. The file object is assigned to the variable `f`.
+
+**Step 4: Accessing Datasets**
+
+The code accesses various datasets within the HDF-EOS5 file:
+	* `/HDFEOS/ZAS/HIRDLS/Data Fields/NO2Ascending`: a dataset containing NO2 ascending data
+	* `/HDFEOS/ZAS/HIRDLS/Data Fields/Latitude`: a dataset containing latitude values
+	* `/HDFEOS/ZAS/HIRDLS/Data Fields/Pressure`: a dataset containing pressure values
+	* `/HDFEOS/ZAS/HIRDLS/Data Fields/Time`: a dataset containing time values
+	* `HDFEOS/ZAS/HIRDLS/nCoeffs`: a dataset containing nCoeffs values
+
+**Step 5: Reading Data and Attributes**
+
+The code reads the data from each dataset:
+	* `data`: NO2 ascending data
+	* `lat`: latitude values
+	* `lev`: pressure values
+	* `time`: time values
+	* `nco`: nCoeffs values
+
+It also reads attributes from each dataset, such as units and titles.
+
+**Step 6: Data Processing**
+
+The code processes the data:
+	* It replaces fill values with NaN (Not a Number) values in the NO2 ascending data.
+	* It creates a masked array for the NO2 ascending data using `numpy.ma`.
+
+**Step 7: Converting Date**
+
+The code converts the time value from a six-digit number to a string using `datetime`.
+
+**Step 8: Creating Plot**
+
+The code creates a contour plot of the NO2 ascending data using `matplotlib`:
+	* It sets up the x-axis label, y-axis label, and title.
+	* It applies a log scale to the y-axis.
+	* It removes scientific notation from the y-axis labels.
+
+**Step 9: Saving Plot**
+
+The code saves the plot as a PNG file with a name based on the input file name.
+
+Overall, this code reads an HDF-EOS5 file, extracts various datasets, processes the data, and creates a contour plot of the NO2 ascending data.

@@ -1,0 +1,49 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The script starts by importing several Python modules:
+
+* `os`
+* `matplotlib` (as `mpl`) and its plotting module (`matplotlib.pyplot` as `plt`)
+* `numpy` (as `np`)
+* `h5py`
+
+**Defining the file name and opening the HDF5 file**
+
+The script defines the file name and opens the file in read mode using `h5py.File`.
+
+**Accessing data from the HDF5 file**
+
+The script accesses a dataset named `/S1/Tc` from the file. It extracts:
+
+* `data`
+* `units` (decoded from the HDF5 attribute)
+* `long_name` (decoded from the HDF5 attribute)
+* `_FillValue` (decoded from the HDF5 attribute)
+
+**Accessing geolocation data**
+
+The script accesses two datasets:
+
+* `/S1/Latitude`: containing latitude values
+* `/S1/Longitude`: containing longitude values
+
+These are used to create a scatter plot of the data.
+
+**Creating a Basemap and plotting the data**
+
+The script creates a `Basemap` object using the `cyl` projection. The map is set up to cover the entire globe.
+
+The script then:
+
+* Draws coastlines on the map
+* Draws parallels and meridians on the map
+* Creates a scatter plot of the data using longitude, latitude, and data values
+* Sets up a color bar for the plot
+
+**Saving the plot**
+
+The script saves the plot as a PNG file named after the file name (without the extension). The title includes the file name, long name of the variable, and "nchannel1=0".
+
+That's it! This script provides an example of how to access and visualize a GPM L1C HDF5 file in Python.

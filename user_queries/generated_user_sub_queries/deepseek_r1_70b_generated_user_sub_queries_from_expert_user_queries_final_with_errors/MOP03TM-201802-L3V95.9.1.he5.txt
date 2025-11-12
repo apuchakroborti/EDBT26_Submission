@@ -1,0 +1,88 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Import Libraries: Import the required libraries, including `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Read HDF-EOS File: Open and read the HDF-EOS file named `MOP03TM-201802-L3V95.9.1.he5`.
+
+3. Access Datasets:
+   - Read the dataset located at `RetrievedSurfaceTemperatureDay` from the group `/HDFEOS/GRIDS/MOP03/Data Fields` into a variable named `data`.
+   - Extract attributes from this dataset, including `long_name`, `units`, and `_FillValue`. Decode string attributes using the `decode()` method.
+
+4. Data Preprocessing:
+   - Replace values in the `RetrievedSurfaceTemperatureDay` dataset that match `_FillValue` with `NaN`.
+   - Create a masked array using `numpy.ma.masked_array` to mask invalid or missing data points identified by `numpy.isnan`.
+
+5. Retrieve Geolocation Information:
+   - Extract latitude and longitude datasets from `Latitude` and `Longitude` from the group `/HDFEOS/GRIDS/MOP03/Data Fields`, 
+      respectively, into variables named `x` (latitude) and `y` (longitude).
+   - Generate a 2D meshgrid using `numpy.meshgrid` from the latitude and longitude data.
+
+6. Create Basemap:
+   - Set up a cylindrical projection map with low resolution.
+   - Define the map boundaries with latitude ranging from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels using `numpy.arange` with values at -90, 91, 45(start, stop, interval) and meridians with values at -180, -135, -90, -45, 0, 45, 90, 135, 180. 
+      Set labels for these meridians as `[True, False, False, True]`.
+   - Use `pcolormesh` to plot the data on the map, ensuring `latlon=True`.
+
+7. Visualize Data:
+   - Add a colorbar to the plot.
+   - Label the colorbar using the `units` attribute from the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user's query into three specific sub-queries. Let me start by understanding what each part of their task entails.
+
+First, the user wants a Python script that does several things with HDF-EOS files, data preprocessing, and visualization. They've listed seven main tasks, from importing libraries all the way to visualizing the data.
+
+Looking at the first task: they're using h5py to read an HE5 file. So I need to focus on how to access datasets and attributes specifically with h5py. The sub-query should target accessing the dataset path and extracting attributes like long_name, units, and _FillValue. Also, decoding string attributes is important here.
+
+Next, for data preprocessing, they're using NumPy functions. They want to replace _FillValue with NaNs and create a masked array. So the sub-query should focus on handling these fill values and masking using numpy.where or np.ma.masked_where. It's all about how to preprocess the data correctly.
+
+Lastly, visualization with Basemap. The user wants to set up a cylindrical projection, draw coastlines, meridians, parallels, and plot the data using pcolormesh. They also need to add a colorbar and labels. So the sub-query should target using matplotlib and Basemap for geospatial plotting, including setting up projections and adding map elements.
+
+I think I've covered each part without overlapping. Now, I'll structure these into three separate sub-queries as per the instructions.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to use `h5py` to open and read an HDF-EOS file named `MOP03TM-201802-L3V95.9.1.he5`, access datasets at specific paths like `/HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay`, extract attributes such as `long_name`, `units`, and `_FillValue`, and decode string attributes using the `decode()` method.
+
+NumPy Data Preprocessing Sub-query:  
+How to replace values matching `_FillValue` with `NaN` in a NumPy array, create a masked array using `numpy.ma.masked_array` or `numpy.ma.masked_where`, and handle invalid or missing data points identified by `numpy.isnan`.
+
+Plotting and Visualization Sub-query:  
+How to use `matplotlib` and `mpl_toolkits.basemap` to create a cylindrical projection map with low resolution, define map boundaries from -90 to 90 latitude and -180 to 180 longitude, add coastlines with line width 0.5, draw parallels and meridians using `numpy.arange`, plot data using `pcolormesh` with `latlon=True`, add a colorbar, and label it using the dataset's `units` attribute.

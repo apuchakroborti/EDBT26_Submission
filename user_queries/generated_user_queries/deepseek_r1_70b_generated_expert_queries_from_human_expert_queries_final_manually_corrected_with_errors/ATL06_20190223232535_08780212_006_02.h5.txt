@@ -1,0 +1,19 @@
+1. Define Constants: Set `FILE_NAME` to "ATL06_20190223232535_08780212_006_02.h5".
+
+2. Read HDF5 Data: Open the file in read mode and extract datasets for 
+    `latitude` latitude data, `longitude` longitude data, and `h_li` data from  the root group `gt1l` and sub group `land_ice_segments`  
+Retrieve attributes using decode() and handle fillValue.
+
+3. Preprocess Data: Replace `FillValue` in `h_li` with NaNs and mask invalid data using numpy functions.
+
+4. Create Map: Using an equidistant cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively. 
+It also adds coastlines with linewidth of 0.5, 
+parallels at -90 to 120 with interval of 30 degree, 
+and meridians at -180 to 180 with interval of 45
+
+5. Plot Data: 
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+Generate a scatter plot of the data with given parameters including colormap and marker size.
+
+6. Add Colorbar and Title: Include a colorbar labeled with dataset units and set the title using the file's basename and long name.

@@ -1,0 +1,2820 @@
+=== CHUNK START ===
+Title: Azimuthal Equidistant Projection
+
+Explanation:
+The shortest route from the center of the map to any other point is a straight line in the azimuthal equidistant projection. 
+So, for the specified point, all points that lie on a circle around this point are equidistant on the surface of the earth on this projection. 
+The specified point lon_0, lat_0 shows up as a black dot in the center of the map.
+Here’s an example using the width and height keywords to specify the map region.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+width = 28000000; lon_0 = -105; lat_0 = 40
+m = Basemap(width=width,height=width,projection='aeqd', lat_0=lat_0,lon_0=lon_0)
+# fill background.
+m.drawmapboundary(fill_color='aqua')
+# draw coasts and fill continents.
+m.drawcoastlines(linewidth=0.5)
+m.fillcontinents(color='coral',lake_color='aqua')
+# 20 degree graticule.
+m.drawparallels(np.arange(-80,81,20))
+m.drawmeridians(np.arange(-180,180,20))
+# draw a black dot at the center.
+xpt, ypt = m(lon_0, lat_0)
+m.plot([xpt], [ypt], 'ko') 
+# draw the title.
+plt.title('Azimuthal Equidistant Projection')
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Whole Azimuthal Equidistant Projection
+
+Explanation:
+The shortest route from the center of the map to any other point is a straight line in the azimuthal equidistant projection. 
+So, for the specified point, all points that lie on a circle around this point are equidistant on the surface of the earth on this projection. 
+The specified point lon_0, lat_0 shows up as a black dot in the center of the map.
+Here’s an example using the width and height keywords to specify the map region.
+If both the width/height and corner lat/lon keywords are omitted, the whole world is plotted in a circle.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+lon_0 = -105; lat_0 = 40
+m = Basemap(projection='aeqd',lat_0=lat_0,lon_0=lon_0)
+# fill background.
+m.drawmapboundary(fill_color='aqua')
+# draw coasts and fill continents.
+m.drawcoastlines(linewidth=0.5)
+m.fillcontinents(color='coral',lake_color='aqua')
+# 20 degree graticule.
+m.drawparallels(np.arange(-80,81,20))
+m.drawmeridians(np.arange(-180,180,20))
+# draw a black dot at the center.
+xpt, ypt = m(lon_0, lat_0)
+m.plot([xpt],[ypt],'ko') 
+# draw the title.
+plt.title('Whole World Azimuthal Equidistant Projection')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Gnomonic Projection
+Explanation:
+This Python code demonstrates how to create a global map visualization using the Gnomonic projection with the help of the Basemap toolkit from mpl_toolkits.basemap, along with matplotlib and numpy. 
+The script initializes a Basemap instance centered at 60°N latitude and 30°W longitude with a large map area defined by a width and height of 15 million meters. 
+It sets the projection type to 'gnom', which is useful for representing great-circle paths as straight lines, typically used for navigation or trajectory visualization. 
+The map's background is filled with aqua blue to represent water bodies, and continental areas are colored coral to distinguish landmasses. 
+The coastlines are drawn to outline the shapes of continents, while latitude (parallels) and longitude (meridians) grid lines are plotted at specified intervals to help with geographic orientation. 
+A title is added to the plot for context, and the final map is displayed using plt.show(). This script effectively combines cartographic customization and geospatial projection to visualize data on a spherical Earth model using the Gnomonic projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+m = Basemap(width=15.e6, height=15.e6, projection='gnom',lat_0=60.,lon_0=-30.)
+m.drawmapboundary(fill_color='aqua')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+m.drawparallels(np.arange(10,90,20))
+m.drawmeridians(np.arange(-180,180,30))
+plt.title('Gnomonic Projection')
+plt.show()
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Orthographic Projection
+Explanation:
+This code utilizes the `Basemap` toolkit from `mpl_toolkits` to render an orthographic projection of the Earth centered at longitude -105 and latitude 40, 
+which simulates a globe-like view from space. It begins by importing the necessary libraries: `Basemap` for geographical plotting, `numpy` for numerical operations, and `matplotlib.pyplot` 
+for displaying the visual output. The projection type is set to `'ortho'`, short for orthographic, and low-resolution coastlines are specified using the `'l'` flag. The `drawcoastlines()` 
+method adds outlines of landmasses, while `fillcontinents()` colors the continents with coral and lakes with aqua, enhancing the visual contrast.
+
+Latitude and longitude grid lines, known as parallels and meridians, are added at regular intervals using `drawparallels()` and `drawmeridians()`, respectively. 
+The map’s boundary is filled with the same aqua color to represent oceans. The first figure is titled "Full Disk Orthographic Projection" and is displayed with `plt.show()`. 
+After the initial map is rendered, another set of meridians is drawn, this time at 30-degree intervals from -180 to 180. A second title, "Gnomonic Projection", is set using `plt.title()`, 
+and another figure is displayed, though this appears inconsistent because the actual projection remains orthographic and the title may be incorrectly labeled. Overall, 
+the script demonstrates how to create and customize a globe-style map view using Basemap, making it a useful reference for rendering global datasets or creating educational geographic visualizations.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0, lat_0 are the center point of the projection.
+# resolution = 'l' means use low resolution coastlines.
+m = Basemap(projection='ortho',lon_0=-105,lat_0=40,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Full Disk Orthographic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Orthographic Map Showing A Quadrant of the Globe
+Explanation:
+This Python code generates a quadrant view of an orthographic projection of the Earth using the Basemap toolkit from `mpl_toolkits.basemap`, 
+along with NumPy and Matplotlib for numerical and plotting support. The script begins by checking the installed version of Matplotlib to ensure 
+compatibility with the appropriate keyword argument for setting the background color of the plotting axis—using `axisbg` for versions older than 2.0 
+and `facecolor` otherwise. It creates a figure and uses an orthographic projection centered at latitude 10° and longitude 57°, 
+with an initial full-globe Basemap instance (`m1`) to determine the corner coordinates of the map. A second Basemap instance (`m`) 
+is defined with a resolution of `'l'` (low) and projection corners manually set in map projection coordinates to visualize only the upper-right quadrant of the globe. 
+This approach avoids using geographic corner definitions (`llcrnrlat`, `urcrnrlon`, etc.), which can fail when parts of the view lie outside the Earth's surface. 
+The map includes coastlines, country borders, filled continents, and a water-colored background. Parallels and meridians are drawn at regular intervals for spatial reference. 
+The plot is titled accordingly and displayed, illustrating a partial orthographic view useful for focused geographic visualization or stylized mapping presentations.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl_version = tuple(map(int, mpl.__version__.split(".")))
+axkwds = {"axisbg" if mpl_version < (2,) else "facecolor": "k"}
+
+fig = plt.figure()
+# global ortho map centered on lon_0,lat_0
+lat_0=10.; lon_0=57.
+# resolution = None means don't process the boundary datasets.
+m1 = Basemap(projection='ortho',lon_0=lon_0,lat_0=lat_0,resolution=None)
+# add an axes with a black background
+ax = fig.add_axes([0.1,0.1,0.8,0.8], **axkwds)
+# plot just upper right quadrant (corners determined from global map).
+# keywords llcrnrx,llcrnry,urcrnrx,urcrnry used to define the lower
+# left and upper right corners in map projection coordinates.
+# llcrnrlat,llcrnrlon,urcrnrlon,urcrnrlat could be used to define
+# lat/lon values of corners - but this won't work in cases such as this
+# where one of the corners does not lie on the earth.
+m = Basemap(projection='ortho',lon_0=lon_0,lat_0=lat_0,resolution='l',\
+    llcrnrx=0.,llcrnry=0.,urcrnrx=m1.urcrnrx/2.,urcrnry=m1.urcrnry/2.)
+m.drawcoastlines()
+m.drawmapboundary(fill_color='aqua')
+m.fillcontinents(color='coral',lake_color='aqua')
+m.drawcountries()
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary()
+plt.title('Orthographic Map Showing A Quadrant of the Globe')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Geostationary Projection
+Explanation:
+This Python script utilizes the `Basemap` toolkit from `mpl_toolkits.basemap` alongside `numpy` and `matplotlib` to render a full-disk view of Earth using a geostationary projection. 
+The projection is defined with the `projection='geos'` parameter, which simulates the viewpoint of a satellite in geostationary orbit. The central longitude of the projection is 
+set to -105 degrees (`lon_0=-105`), placing the viewpoint above that meridian, while a low-resolution coastline dataset (`resolution='l'`) is selected to keep rendering lightweight. 
+The Earth is modeled with a custom reference ellipsoid using the radii of the WGS84 spheroid (`rsphere=(6378137.00,6356752.3142)`). Coastlines are drawn, continents are filled with a coral color, 
+and inland water bodies are filled with aqua. The map includes parallels of latitude spaced every 30 degrees from -90 to 90 and meridians of longitude spaced every 60 degrees from 0 to 360. 
+The map boundary is also filled with aqua to match the ocean. Finally, a title "Full Disk Geostationary Projection" is added to the plot, and the map is displayed using `plt.show()`. 
+This configuration is ideal for satellite-style Earth views and illustrates how to generate spherical Earth visualizations from a geostationary perspective.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is the central longitude of the projection.
+# resolution = 'l' means use low resolution coastlines.
+# optional parameter 'satellite_height' may be used to
+# specify height of orbit above earth (default 35,786 km).
+m = Basemap(projection='geos',lon_0=-105,resolution='l',rsphere=(6378137.00,6356752.3142))
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Full Disk Geostationary Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Geostationary Map Showing A Quadrant of the Globe
+Explanation:
+This Python script generates a quadrant view of the Earth using a geostationary projection with the Basemap library from `mpl_toolkits`. 
+It first checks the installed version of Matplotlib to configure the axes background key appropriately, as the parameter name differs across versions (`axisbg` for older versions and `facecolor` for newer ones). 
+A `figure` object is created using Matplotlib, and a preliminary Basemap instance (`m1`) is constructed to determine the full extent of a global geostationary projection centered at longitude 57 degrees. 
+Using this full map as a reference, a second Basemap instance (`m`) is defined with custom projection coordinates to display only the upper right quadrant. 
+This is achieved by specifying the lower-left and upper-right corners in map projection coordinates, which is necessary since not all corners lie on the Earth's surface.
+
+The map is drawn with medium-resolution coastlines, countries, parallels, and meridians. Continents are filled with a coral color, and ocean areas are filled with aqua. 
+The geostationary projection simulates the view from a satellite in a fixed position above the equator, providing a realistic perspective of Earth's surface from that vantage point. 
+The plot concludes with a title and is rendered using `plt.show()`. This script showcases quadrant-based spatial customization, dynamic Matplotlib compatibility handling, 
+and the ability to manipulate satellite-like projections with Basemap for focused geospatial visualization.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl_version = tuple(map(int, mpl.__version__.split(".")))
+axkwds = {"axisbg" if mpl_version < (2,) else "facecolor": "k"}
+
+fig = plt.figure()
+# global geostationary map centered on lon_0
+lon_0=57.
+# resolution = None means don't process the boundary datasets.
+m1 = Basemap(projection='geos',lon_0=lon_0,resolution=None)
+# add an axes with a black background
+ax = fig.add_axes([0.1,0.1,0.8,0.8], **axkwds)
+# plot just upper right quadrant (corners determined from global map).
+# keywords llcrnrx,llcrnry,urcrnrx,urcrnry used to define the lower
+# left and upper right corners in map projection coordinates.
+# llcrnrlat,llcrnrlon,urcrnrlon,urcrnrlat could be used to define
+# lat/lon values of corners - but this won't work in cases such as this
+# where one of the corners does not lie on the earth.
+m = Basemap(projection='geos',lon_0=lon_0,resolution='l',
+    rsphere=(6378137.00,6356752.3142),
+    llcrnrx=0.,llcrnry=0.,urcrnrx=m1.urcrnrx/2.,urcrnry=m1.urcrnry/2.)
+m.drawcoastlines()
+m.drawmapboundary(fill_color='aqua')
+m.fillcontinents(color='coral',lake_color='aqua')
+m.drawcountries()
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary()
+plt.title('Geostationary Map Showing A Quadrant of the Globe')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Near-Sided Perspective Projection
+Explanation: 
+This Python script uses the `Basemap` toolkit from `mpl_toolkits` to generate a full-disk, near-sided perspective projection of Earth, 
+simulating the view from a satellite positioned above a specific point on the planet. The projection used is `'nsper'` (near-sided perspective), 
+which is ideal for visualizing the Earth as seen from space. The satellite is centered over longitude -105 and latitude 40, which places it roughly over the central United States. 
+The height of the satellite is defined as 3000 kilometers, converted to meters to match the expected input unit for `satellite_height`.
+
+The map resolution is set to `'l'`, indicating low-resolution coastlines are used for faster rendering. Coastlines are drawn over the map, 
+and the continents are filled with a coral color while water bodies are filled with aqua. Parallels (latitude lines) are drawn every 30 degrees from -90 to 90, 
+and meridians (longitude lines) are drawn every 60 degrees from 0 to 360. The map boundary is also filled with aqua, visually aligning with the ocean regions. 
+The map is titled with the altitude of the satellite to contextualize the perspective being shown, and `matplotlib.pyplot` is used to render and display the final plot.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0, lat_0 are the center point of the projection.
+# satellite_height is the altitude of the camera.
+# resolution = 'l' means use low resolution coastlines.
+h = 3000.
+m = Basemap(projection='nsper',lon_0=-105,lat_0=40,
+        satellite_height=h*1000.,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Full Disk Near-Sided Perspective Projection %d km above earth" %h, fontsize=10)
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Mollweide Projection
+Explanation:
+This Python script uses the Basemap toolkit from `mpl_toolkits.basemap` along with `matplotlib` and `numpy` to create a global map using the Mollweide projection. 
+The Mollweide projection is an equal-area, pseudocylindrical projection commonly used for representing global datasets with minimal distortion in area. 
+The central longitude is set to 0 using `lon_0=0`, centering the map on the prime meridian. The map resolution is specified as `'c'` for a coarse level of detail, 
+which is suitable for large-scale visualizations where fine geographical boundaries are not required.
+
+The code begins by initializing a Basemap object with the Mollweide projection. It then renders coastlines and fills continental landmasses with a coral color, 
+while water bodies such as lakes are filled with aqua. Latitude lines (parallels) are drawn at 30-degree intervals from -90 to 90, 
+and longitude lines (meridians) are drawn at 60-degree intervals from 0 to 360 degrees. The map boundary is explicitly filled with the same aqua color for visual continuity. 
+A title, "Mollweide Projection", is added to the plot, and the final map is displayed using `plt.show()`. This structured approach to visualization allows users to quickly produce 
+geographically accurate representations of global data using standard mapping tools.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='moll',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Mollweide Projection")
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Hammer Projection
+Explanation:
+This Python script utilizes the `Basemap` toolkit from `mpl_toolkits` along with `NumPy` and `matplotlib.pyplot` to generate a global map visualization using the Hammer projection. 
+The `Basemap` object is initialized with the `'hammer'` projection, which is an equal-area map projection useful for displaying the entire globe, and sets the central longitude (`lon_0`) to 0. 
+The resolution parameter is set to `'c'` for crude coastline rendering, optimizing performance for quick visualization. The `drawcoastlines()` method adds outlines of the continents, 
+while `fillcontinents()` fills landmasses with coral color and inland water bodies with aqua. The script uses `drawparallels()` and `drawmeridians()` to overlay latitude and longitude grid lines at specified intervals, 
+enhancing spatial reference. The map boundary is also filled with aqua using `drawmapboundary()`. Finally, the plot is titled “Hammer Projection” and rendered using `plt.show()`. 
+This configuration is useful for visualizing global geospatial data in a compact, area-preserving format suitable for scientific presentations or data exploration.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='hammer',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Hammer Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Near-Sided Perspective Map Showing A Quadrant of the Globe
+Explanation:
+This Python code generates a near-sided perspective map (also known as a satellite view) using the Basemap toolkit from the `mpl_toolkits.basemap` library. 
+It begins by importing the necessary libraries: `numpy`, `matplotlib`, and Basemap, and dynamically adjusts axis background keyword arguments based on the installed version of Matplotlib to maintain compatibility across versions. 
+A figure is created using `matplotlib.pyplot`, and a global orthographic projection is initially defined to help determine the map’s boundary extents using a satellite height of 3000 kilometers, 
+centered on the geographic coordinates (latitude 10°, longitude 57°). However, the actual map to be displayed uses a near-sided perspective (`'nsper'` projection), 
+again centered at the same point and altitude, but clipped to the upper-right quadrant of the globe by specifying map projection coordinates directly via `llcrnrx`, `llcrnry`, 
+`urcrnrx`, and `urcrnry`. The map is styled with coastlines, country borders, parallels, and meridians, with continents filled in coral and water bodies filled with aqua. 
+The map is displayed inside an axes with a black background, and a descriptive title is added to clarify that only a quadrant of the Earth is visualized from a satellite perspective. 
+This setup is particularly useful for generating localized, high-altitude satellite views, where part of the Earth is selectively rendered.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+mpl_version = tuple(map(int, mpl.__version__.split(".")))
+axkwds = {"axisbg" if mpl_version < (2,) else "facecolor": "k"}
+
+fig = plt.figure()
+# global ortho map centered on lon_0,lat_0
+lat_0=10.; lon_0=57.
+# altitude of camera (in km).
+h = 3000.
+# resolution = None means don't process the boundary datasets.
+m1 = Basemap(projection='nsper',satellite_height=h*1000.,\
+        lon_0=lon_0,lat_0=lat_0,resolution=None)
+# add an axes with a black background
+ax = fig.add_axes([0.1,0.1,0.8,0.8], **axkwds)
+# plot just upper right quadrant (corners determined from global map).
+# keywords llcrnrx,llcrnry,urcrnrx,urcrnry used to define the lower
+# left and upper right corners in map projection coordinates.
+# llcrnrlat,llcrnrlon,urcrnrlon,urcrnrlat could be used to define
+# lat/lon values of corners - but this won't work in cases such as this
+# where one of the corners does not lie on the earth.
+m = Basemap(projection='nsper',satellite_height=h*1000.,\
+        lon_0=lon_0,lat_0=lat_0,resolution='l',\
+    llcrnrx=0.,llcrnry=0.,urcrnrx=m1.urcrnrx/2.,urcrnry=m1.urcrnry/2.)
+m.drawcoastlines()
+m.drawmapboundary(fill_color='aqua')
+m.fillcontinents(color='coral',lake_color='aqua')
+m.drawcountries()
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary()
+plt.title('Near-Sided Perspective Map Showing A Quadrant of the Globe', fontsize=12)
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Robinson Projection
+Explanation:
+This Python script uses the `Basemap` toolkit from `mpl_toolkits` in conjunction with `matplotlib` and `numpy` to generate a global map visualization using the Robinson projection. 
+The `Basemap` object is instantiated with the `'robin'` projection and a central longitude (`lon_0`) set to 0, which centers the map on the Prime Meridian. 
+A crude resolution (`'c'`) is chosen to simplify and speed up the rendering of the coastlines. The script proceeds to draw coastlines and fills the continents with a coral color 
+while using aqua to represent lakes and ocean areas. It overlays geographic grid lines by drawing parallels at 30-degree intervals from -90 to 90 degrees and meridians every 60 degrees from 0 to 360 degrees. 
+The map boundary is filled with aqua to maintain visual consistency with the water bodies. Finally, a title "Robinson Projection" is added above the map, and the plot is rendered with `plt.show()`. 
+This code provides a lightweight yet informative global map representation suitable for visualizing Earth-wide geographic features.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='robin',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Robinson Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Eckert IV Projection
+Explanation:
+This code uses the Basemap toolkit from mpl\_toolkits to create a global map visualization with the Eckert IV projection centered at the prime meridian (longitude 0). 
+It imports necessary libraries including NumPy for numerical operations and Matplotlib for plotting. The Basemap object is initialized with the 'eck4' projection and a crude resolution setting for coastlines. 
+The code draws coastlines and fills continents with a coral color, while lakes are filled with aqua to differentiate water bodies. Parallels and meridians are drawn at regular intervals of 30 and 60 degrees respectively, 
+enhancing the geographical grid. The map boundary is filled with aqua to represent oceans. Finally, a title is added to the plot and the visualization is displayed using Matplotlib’s `plt.show()`. 
+This approach combines geospatial plotting with custom styling to generate an informative and visually appealing world map based on the Eckert IV projection.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='eck4',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Eckert IV Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Kavrayskiy VII Projection
+Explanation:
+The code uses the Basemap toolkit from mpl\_toolkits to create a world map with the Kavrayskiy VII projection, 
+centered at longitude 0. It sets a crude resolution for drawing coastlines to balance detail and performance. 
+The map visualizes continents filled in coral color and lakes in aqua, enhancing geographic features. Parallels are drawn every 30 degrees latitude from -90 to 90, 
+and meridians every 60 degrees longitude around the globe, providing a grid for reference. The map boundary is filled with aqua to represent oceans. 
+Finally, the plot is titled "Kavrayskiy VII Projection" and displayed using matplotlib’s pyplot. This setup demonstrates how to combine geographic projections, 
+customizable map features, and matplotlib plotting for geospatial visualization.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='kav7',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Kavrayskiy VII Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: McBryde-Thomas Flat Polar Quartic
+Explanation:
+This Python script uses the Basemap toolkit from mpl\_toolkits to create a map visualization with the McBryde-Thomas Flat Polar Quartic projection centered at longitude 0. 
+The map is rendered with a crude coastline resolution for faster drawing. It fills the continents with a coral color and the lakes with aqua, 
+providing a clear contrast between land and water. Parallels are drawn every 30 degrees from -90 to 90 degrees latitude, 
+while meridians are drawn every 60 degrees around the full 360-degree longitude range, giving a grid reference system. 
+The map boundary is also filled with aqua to represent the ocean or background. The plot is titled appropriately to reflect the projection type, 
+and the visualization is displayed using matplotlib’s `plt.show()`. This code combines geographic projection, data visualization, and map styling to produce a thematic world map suited for polar-focused data representation.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='mbtfpq',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("McBryde-Thomas Flat Polar Quartic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Sinusoidal Projection
+Explanation: A global equal-area projection where the length of each parallel is equal to the cosine of the latitude.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='sinu',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,120.,30.))
+m.drawmeridians(np.arange(0.,420.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Sinusoidal Projection")
+plt.show()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Equidistant Cylindrical Projection
+Explanation:
+The simplest projection, just displays the world in latitude/longitude coordinates.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='cyl',llcrnrlat=-90,urcrnrlat=90,\
+            llcrnrlon=-180,urcrnrlon=180,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,91.,30.))
+m.drawmeridians(np.arange(-180.,181.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Equidistant Cylindrical Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cassini Projection
+Explanation: 
+The transverse aspect of the equidistant cassindrical projection. The globe is first rotated so the central meridian becomes the “equator”, and then the normal equidistant cylindrical projection is applied.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'i' means use intermediate resolution coastlines.
+# lon_0, lat_0 are the central longitude and latitude of the projection.
+m = Basemap(llcrnrlon=-10.5,llcrnrlat=49.5,urcrnrlon=3.5,urcrnrlat=59.5,
+            resolution='i',projection='cass',lon_0=-4.36,lat_0=54.7)
+# can get the identical map this way (by specifying width and
+# height instead of lat/lon corners)
+#m = Basemap(width=891185,height=1115557,\
+#            resolution='i',projection='cass',lon_0=-4.36,lat_0=54.7)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-40,61.,2.))
+m.drawmeridians(np.arange(-20.,21.,2.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Cassini Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Mercator Projection
+Explanation:
+A cylindrical, conformal projection. Very large distortion at high latitudes, cannot fully reach the polar regions.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# lat_ts is the latitude of true scale.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='merc',llcrnrlat=-80,urcrnrlat=80,\
+            llcrnrlon=-180,urcrnrlon=180,lat_ts=20,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,91.,30.))
+m.drawmeridians(np.arange(-180.,181.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Mercator Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Transverse Mercator Projection
+Explanation: The transverse aspect of the mercator projection. The globe is first rotated so the central meridian becomes the “equator”, and then the normal mercator projection is applied.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'i' means use intermediate resolution coastlines.
+# lon_0, lat_0 are the central longitude and latitude of the projection.
+m = Basemap(llcrnrlon=-10.5,llcrnrlat=49.5,urcrnrlon=3.5,urcrnrlat=59.5,
+            resolution='i',projection='tmerc',lon_0=-4.36,lat_0=54.7)
+# can get the identical map this way (by specifying width and
+# height instead of lat/lon corners)
+#m = Basemap(width=894887,height=1116766,\
+#            resolution='i',projection='tmerc',lon_0=-4.36,lat_0=54.7)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-40,61.,2.))
+m.drawmeridians(np.arange(-20.,21.,2.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Transverse Mercator Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Oblique Mercator Projection
+Explanation: The oblique aspect of the mercator projection. The projection centerline, instead of being a latitude (as in the regular mercator projection) or 
+a longitude (as in the transverse mercator projection) can be an arbitrary great circle (defined by specifying two points).
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup oblique mercator basemap.
+# width is width of map projection region in km (xmax-xmin)
+# height is height of map projection region in km (ymax-ymin)
+# lon_0, lat_0 are the central longitude and latitude of the projection.
+# lat_1,lon_1 and lat_2,lon_2  are two pairs of points that define
+# the projection centerline.
+# Map projection coordinates are automatically rotated to true north.
+# To avoid this, set no_rot=True.
+# area_thresh=1000 means don't plot coastline features less
+# than 1000 km^2 in area.
+m = Basemap(height=16700000,width=12000000,
+            resolution='l',area_thresh=1000.,projection='omerc',\
+            lon_0=-100,lat_0=15,lon_2=-120,lat_2=65,lon_1=-50,lat_1=-55)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Oblique Mercator Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Polyconic Projection
+Explanation:
+setup polyconic basemap 
+by specifying lat/lon corners and central point.
+area_thresh=1000 means don't plot coastline features less
+than 1000 km^2 in area.
+draw parallels and meridians.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup polyconic basemap 
+# by specifying lat/lon corners and central point.
+# area_thresh=1000 means don't plot coastline features less
+# than 1000 km^2 in area.
+m = Basemap(llcrnrlon=-35.,llcrnrlat=-30,urcrnrlon=80.,urcrnrlat=50.,\
+            resolution='l',area_thresh=1000.,projection='poly',\
+            lat_0=0.,lon_0=20.)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Polyconic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Miller Cylindrical Projection
+Explanation: A modified version of the mercator projection that avoids the polar singularity. Neither equal-area or conformal.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='mill',llcrnrlat=-90,urcrnrlat=90,\
+            llcrnrlon=-180,urcrnrlon=180,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,91.,30.))
+m.drawmeridians(np.arange(-180.,181.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Miller Cylindrical Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Gall Stereographic Projection
+Explanation: 
+A stereographic, cylindrical projection that is neither equal-area or conformal.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='gall',llcrnrlat=-90,urcrnrlat=90,\
+            llcrnrlon=-180,urcrnrlon=180,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,91.,30.))
+m.drawmeridians(np.arange(-180.,181.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("Gall Stereographic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cylindrical Equal-Area Projection
+
+Explanation:
+It is what is says. llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+are the lat/lon values of the lower left and upper right corners of the map.
+resolution = 'c' means use crude resolution coastlines.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# llcrnrlat,llcrnrlon,urcrnrlat,urcrnrlon
+# are the lat/lon values of the lower left and upper right corners
+# of the map.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='cea',llcrnrlat=-90,urcrnrlat=90,\
+            llcrnrlon=-180,urcrnrlon=180,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-90.,91.,30.))
+m.drawmeridians(np.arange(-180.,181.,60.))
+m.drawmapboundary(fill_color='aqua')
+plt.title("Cylindrical Equal-Area Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Lambert Conformal Projection
+Explanation:
+A conformal projection. The green shapes drawn on the map are equal-area circles on the surface of the earth. 
+Known as “Tissot’s indicatrix”, they can be used to show the angular and areal distortion of a map projection. 
+On a conformal projection, the shape of the circles is preserved, but the area is not. On a equal-area projection, the area is preserved but the shape is not.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup lambert conformal basemap.
+# lat_1 is first standard parallel.
+# lat_2 is second standard parallel (defaults to lat_1).
+# lon_0,lat_0 is central point.
+# rsphere=(6378137.00,6356752.3142) specifies WGS84 ellipsoid
+# area_thresh=1000 means don't plot coastline features less
+# than 1000 km^2 in area.
+m = Basemap(width=12000000,height=9000000,
+            rsphere=(6378137.00,6356752.3142),\
+            resolution='l',area_thresh=1000.,projection='lcc',\
+            lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,9):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,12):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,1.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("Lambert Conformal Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Lambert Azimuthal Equal Area Projection
+Explanation: 
+An equal-area projection. The green shapes drawn on the map are equal-area circles on the surface of the earth. 
+Known as “Tissot’s indicatrix”, they can be used to show the angular and areal distortion of a map projection. 
+On a conformal projection, the shape of the circles is preserved, but the area is not. On a equal-area projection, the area is preserved but the shape is not.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup lambert azimuthal equal area basemap.
+# lat_ts is latitude of true scale.
+# lon_0,lat_0 is central point.
+m = Basemap(width=12000000,height=8000000,
+            resolution='l',projection='laea',\
+            lat_ts=50,lat_0=50,lon_0=-107.)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,9):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,12):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,1.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("Lambert Azimuthal Equal Area Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Stereographic Projection
+Explanation:
+A conformal projection. The green shapes drawn on the map are equal-area circles on the surface of the earth. Known as “Tissot’s indicatrix”, 
+they can be used to show the angular and areal distortion of a map projection. On a conformal projection, the shape of the circles is preserved, 
+but the area is not. On a equal-area projection, the area is preserved but the shape is not.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup stereographic basemap.
+# lat_ts is latitude of true scale.
+# lon_0,lat_0 is central point.
+m = Basemap(width=12000000,height=8000000,
+            resolution='l',projection='stere',\
+            lat_ts=50,lat_0=50,lon_0=-107.)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,9):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,12):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,1.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("Stereographic Projection")
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Equidistant Conic Projection
+Explanation:
+Neither conformal or equal area. Parallels are equally spaced. The green shapes drawn on the map are equal-area circles on the surface of the earth. 
+Known as “Tissot’s indicatrix”, they can be used to show the angular and areal distortion of a map projection. On a conformal projection, the shape of the circles is preserved, 
+but the area is not. On a equal-area projection, the area is preserved but the shape is not.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup equidistant conic basemap.
+# lat_1 is first standard parallel.
+# lat_2 is second standard parallel.
+# lon_0,lat_0 is central point.
+# resolution = 'l' for low-resolution coastlines.
+m = Basemap(width=12000000,height=9000000,
+            resolution='l',projection='eqdc',\
+            lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,9):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,12):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,1.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("Equidistant Conic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Albers Equal Area Projection
+Explanation:
+An equal-area projection. The green shapes drawn on the map are equal-area circles on the surface of the earth. 
+Known as “Tissot’s indicatrix”, they can be used to show the angular and areal distortion of a map projection. 
+On a conformal projection, the shape of the circles is preserved, but the area is not. On a equal-area projection, the area is preserved but the shape is not.
+Distortion is very large near the poles in this projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup albers equal area conic basemap
+# lat_1 is first standard parallel.
+# lat_2 is second standard parallel.
+# lon_0,lat_0 is central point.
+m = Basemap(width=8000000,height=7000000,
+            resolution='l',projection='aea',\
+            lat_1=40.,lat_2=60,lon_0=35,lat_0=50)
+m.drawcoastlines()
+m.drawcountries()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,10):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,12):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,1.25,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("Albers Equal Area Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Polar Stereographic Projection
+Explanation:
+For convenience, the projections npstere and spstere are provided for easy access to the polar aspect of the stereographic conformal projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup north polar stereographic basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0. Default value of lat_ts
+# (latitude of true scale) is pole.
+m = Basemap(projection='npstere',boundinglat=10,lon_0=270,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,10):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("North Polar Stereographic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: South Polar Stereographic Projection
+Explanation:
+For convenience, the projections npstere and spstere are provided for easy access to the polar aspect of the stereographic conformal projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup south polar stereographic basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0. Default value of lat_ts
+# (latitude of true scale) is pole.
+m = Basemap(projection='spstere',boundinglat=-10,lon_0=90,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(19*m.ymin/20,m.ymin/20,10):
+    for x in np.linspace(19*m.xmin/20,m.xmin/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("South Polar Stereographic Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: North Polar Lambert Azimuthal Projection
+Explanation:
+For convenience, the projections nplaea and splaea are provided for easy access to the polar aspect of the lambert azimuthal equal-area projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+# setup north polar lambert azimuthal basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0.
+m = Basemap(projection='nplaea',boundinglat=10,lon_0=270,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,10):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("North Polar Lambert Azimuthal Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: South Polar Lambert Azimuthal Projection
+Explanation:
+For convenience, the projections nplaea and splaea are provided for easy access to the polar aspect of the lambert azimuthal equal-area projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup south polar lambert azimuthal basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0.
+m = Basemap(projection='splaea',boundinglat=-10,lon_0=90,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(19*m.ymin/20,m.ymin/20,10):
+    for x in np.linspace(19*m.xmin/20,m.xmin/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("South Polar Lambert Azimuthal Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: North Polar Azimuthal Equidistant Projection
+Explanation:
+For convenience, the projections npaeqd and spaeqd are provided for easy access to the polar aspect of the azimuthal equidistant projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.patches import Polygon
+# setup north polar aimuthal equidistant basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0.
+m = Basemap(projection='npaeqd',boundinglat=10,lon_0=270,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(m.ymax/20,19*m.ymax/20,10):
+    for x in np.linspace(m.xmax/20,19*m.xmax/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("North Polar Azimuthal Equidistant Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: South Polar Azimuthal Equidistant Projection
+Explanation:
+For convenience, the projections npaeqd and spaeqd are provided for easy access to the polar aspect of the azimuthal equidistant projection.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# setup south polar aimuthal equidistant basemap.
+# The longitude lon_0 is at 6-o'clock, and the
+# latitude circle boundinglat is tangent to the edge  
+# of the map at lon_0.
+m = Basemap(projection='spaeqd',boundinglat=-10,lon_0=90,resolution='l')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(-180.,181.,20.))
+m.drawmapboundary(fill_color='aqua') 
+# draw tissot's indicatrix to show distortion.
+ax = plt.gca()
+for y in np.linspace(19*m.ymin/20,m.ymin/20,10):
+    for x in np.linspace(19*m.xmin/20,m.xmin/20,10):
+        lon, lat = m(x,y,inverse=True)
+        poly = m.tissot(lon,lat,2.5,100,\
+                        facecolor='green',zorder=10,alpha=0.5)
+plt.title("South Polar Azimuthal Equidistant Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: van der Grinten Projection
+Explanation:
+A global projection once used by the National Geographic Society for world maps. Neither equal area or conformal, shows the world in a circle centered on the equator.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# lon_0 is central longitude of projection.
+# resolution = 'c' means use crude resolution coastlines.
+m = Basemap(projection='vandg',lon_0=0,resolution='c')
+m.drawcoastlines()
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+m.drawparallels(np.arange(-80.,81.,20.))
+m.drawmeridians(np.arange(0.,360.,60.))
+m.drawmapboundary(fill_color='aqua') 
+plt.title("van der Grinten Projection")
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Draw coastlines, filling ocean and land areas.
+Explanation:
+drawcoastlines(): draw coastlines.
+fillcontinents(): color the interior of continents (by filling the coastline polygons). Unfortunately, the fillcontinents method doesn’t always do the right thing. 
+Matplotlib always tries to fill the inside of a polygon. Under certain situations, what is the inside of a coastline polygon can be ambiguous, and the outside may be filled instead of the inside. 
+In these situations, the recommended workaround is to use the drawlsmask() method to overlay an image with different colors specified for land and water regions (see below).
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+# setup Lambert Conformal basemap.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution='c',lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+# draw coastlines.
+m.drawcoastlines()
+# draw a boundary around the map, fill the background.
+# this background will end up being the ocean color, since
+# the continents will be drawn on top.
+m.drawmapboundary(fill_color='aqua') 
+# fill continents, set lake color same as ocean color. 
+m.fillcontinents(color='coral',lake_color='aqua')
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Draw a land-sea mask as an image.
+
+Explanation:
+Instead of drawing coastlines and political boundaries, an image can be used as a map background. Basemap provides several options for this:
+drawlsmask(): draw a high-resolution land-sea mask as an image, with land and ocean colors specified. The land-sea mask is derived from the GSHHS coastline data, and there are several coastline options and pixel sizes to choose from.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+# setup Lambert Conformal basemap.
+# set resolution=None to skip processing of boundary datasets.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution=None,lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+# draw a land-sea mask for a map background.
+# lakes=True means plot inland lakes with ocean color.
+m.drawlsmask(land_color='coral',ocean_color='aqua',lakes=True)
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Draw the NASA ‘Blue Marble’ image.
+Explanation:
+Instead of drawing coastlines and political boundaries, an image can be used as a map background. Basemap provides several options for this:
+bluemarble(): draw a NASA Blue Marble image as a map background.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+# setup Lambert Conformal basemap.
+# set resolution=None to skip processing of boundary datasets.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution=None,lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+m.bluemarble()
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Draw a shaded relief image.
+Explanation:
+Instead of drawing coastlines and political boundaries, an image can be used as a map background. Basemap provides several options for this:
+shadedrelief(): draw a shaded relief image as a map background.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+# setup Lambert Conformal basemap.
+# set resolution=None to skip processing of boundary datasets.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution=None,lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+m.shadedrelief()
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Draw an etopo relief image.
+
+Explanation:
+Instead of drawing coastlines and political boundaries, an image can be used as a map background. Basemap provides several options for this:
+etopo(): draw an etopo relief image as map background.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+# setup Lambert Conformal basemap.
+# set resolution=None to skip processing of boundary datasets.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution=None,lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+m.etopo()
+plt.show()
+=== CHUNK END ===
+
+
+
+=== CHUNK START ===
+Title: Drawing and Labelling Parallels and Meridians
+Explanation:
+Most maps include a graticule grid, a reference network of labelled latitude and longitude lines. Basemap does this with the drawparallels() and drawmeridians() instance methods. 
+The longitude and latitude lines can be labelled where they intersect the map projection boundary. There are a few exceptions: meridians and parallels cannot be labelled on maps with proj set to ortho (orthographic), 
+geos (geostationary), vandg (van der Grinten) or nsper (near-sided perspective), and meridians cannot be labelled on maps with proj set to ortho (orthographic), geos (geostationary), 
+vandg (van der Grinten), nsper (near-sided perspective), moll (Mollweide), hammer (Hammer), or sinu (sinusoidal). This is because the lines can be very close together where they intersect the boundary on these maps, 
+so that they really need to be labelled manually on the interior of the plot. Here’s an example that shows how to draw parallels and meridians and label them on different sides of the plot.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
+# setup Lambert Conformal basemap.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution='c',lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+# draw coastlines.
+m.drawcoastlines()
+# draw a boundary around the map, fill the background.
+# this background will end up being the ocean color, since
+# the continents will be drawn on top.
+m.drawmapboundary(fill_color='aqua') 
+# fill continents, set lake color same as ocean color. 
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+# label parallels on right and top
+# meridians on bottom and left
+parallels = np.arange(0.,81,10.)
+# labels = [left,right,top,bottom]
+m.drawparallels(parallels,labels=[False,True,True,False])
+meridians = np.arange(10.,351.,20.)
+m.drawmeridians(meridians,labels=[True,False,False,True])
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Converting to and from map projection coordinates
+
+Explanation:
+In order to plot data on a map, the coordinates of the data must be given in map projection coordinates. 
+Calling a Basemap class instance with the arguments lon, lat will convert lon/lat (in degrees) to x/y map projection coordinates (in meters). 
+The inverse transformation is done if the optional keyword inverse is set to True. 
+Here’s an example that uses this feature to plot a marker and some text to denote the location of Boulder, CO, given the lat/lon position.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
+# setup Lambert Conformal basemap.
+m = Basemap(width=12000000,height=9000000,projection='lcc',
+            resolution='c',lat_1=45.,lat_2=55,lat_0=50,lon_0=-107.)
+# draw a boundary around the map, fill the background.
+# this background will end up being the ocean color, since
+# the continents will be drawn on top.
+m.drawmapboundary(fill_color='aqua') 
+# fill continents, set lake color same as ocean color. 
+m.fillcontinents(color='coral',lake_color='aqua')
+# draw parallels and meridians.
+# label parallels on right and top
+# meridians on bottom and left
+parallels = np.arange(0.,81,10.)
+# labels = [left,right,top,bottom]
+m.drawparallels(parallels,labels=[False,True,True,False])
+meridians = np.arange(10.,351.,20.)
+m.drawmeridians(meridians,labels=[True,False,False,True])
+# plot blue dot on Boulder, colorado and label it as such.
+lon, lat = -104.237, 40.125 # Location of Boulder
+# convert to map projection coords. 
+# Note that lon,lat can be scalars, lists or numpy arrays.
+xpt,ypt = m(lon,lat) 
+# convert back to lat/lon
+lonpt, latpt = m(xpt,ypt,inverse=True)
+m.plot(xpt,ypt,'bo')  # plot a blue dot there
+# put some text next to the dot, offset a little bit
+# (the offset is in map projection coordinates)
+plt.text(xpt+100000,ypt+100000,'Boulder (%5.1fW,%3.1fN)' % (lonpt,latpt))
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Plot contour lines on a basemap
+Explanation:
+This script creates an orthographic map projection centered at 45°N, 100°W using the Basemap library. 
+It draws coastlines, country borders, filled continents, and a blue ocean background. Latitude and longitude gridlines are added at 30-degree intervals. 
+Synthetic data is generated on a regular lat/lon grid, and combined wave and mean values are contoured onto the map. 
+Finally, the visualization is saved as a high-resolution PNG image.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import numpy as np
+# set up orthographic map projection with
+# perspective of satellite looking down at 45N, 100W.
+# use low resolution coastlines.
+map = Basemap(projection='ortho',lat_0=45,lon_0=-100,resolution='l')
+# draw coastlines, country boundaries, fill continents.
+map.drawcoastlines(linewidth=0.25)
+map.drawcountries(linewidth=0.25)
+map.fillcontinents(color='coral',lake_color='aqua')
+# draw the edge of the map projection region (the projection limb)
+map.drawmapboundary(fill_color='aqua')
+# draw lat/lon grid lines every 30 degrees.
+map.drawmeridians(np.arange(0,360,30))
+map.drawparallels(np.arange(-90,90,30))
+# make up some data on a regular lat/lon grid.
+nlats = 73; nlons = 145; delta = 2.*np.pi/(nlons-1)
+lats = (0.5*np.pi-delta*np.indices((nlats,nlons))[0,:,:])
+lons = (delta*np.indices((nlats,nlons))[1,:,:])
+wave = 0.75*(np.sin(2.*lats)**8*np.cos(4.*lons))
+mean = 0.5*np.cos(2.*lats)*((np.sin(2.*lats))**2 + 2.)
+# compute native map projection coordinates of lat/lon grid.
+x, y = map(lons*180./np.pi, lats*180./np.pi)
+# contour data over the map.
+cs = map.contour(x,y,wave+mean,15,linewidths=1.5)
+plt.title('contour lines over filled continent background')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot precip with filled contours
+Explanation:
+plot rainfall from NWS using special precipitation
+colormap used by the NWS, and included in basemap.
+create figure and axes instances
+create polar stereographic Basemap instance.
+draw coastlines, state and country boundaries, edge of map.
+draw parallels.
+draw meridians
+draw filled contours.
+add colorbar.
+add title
+
+Code:
+from mpl_toolkits.basemap import Basemap, cm
+# requires netcdf4-python (netcdf4-python.googlecode.com)
+from netCDF4 import Dataset as NetCDFFile
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+
+# plot rainfall from NWS using special precipitation
+# colormap used by the NWS, and included in basemap.
+
+ncpath = os.path.join(*6 * [".."] + ["examples", "nws_precip_conus_20061222.nc"])
+nc = NetCDFFile(ncpath)
+# data from http://water.weather.gov/precip/
+prcpvar = nc.variables['amountofprecip']
+data = 0.01*prcpvar[:]
+latcorners = nc.variables['lat'][:]
+loncorners = -nc.variables['lon'][:]
+lon_0 = -nc.variables['true_lon'].getValue()
+lat_0 = nc.variables['true_lat'].getValue()
+# create figure and axes instances
+fig = plt.figure(figsize=(8,8))
+ax = fig.add_axes([0.1,0.1,0.8,0.8])
+# create polar stereographic Basemap instance.
+m = Basemap(projection='stere',lon_0=lon_0,lat_0=90.,lat_ts=lat_0,\
+            llcrnrlat=latcorners[0],urcrnrlat=latcorners[2],\
+            llcrnrlon=loncorners[0],urcrnrlon=loncorners[2],\
+            rsphere=6371200.,resolution='l',area_thresh=10000)
+# draw coastlines, state and country boundaries, edge of map.
+m.drawcoastlines()
+m.drawstates()
+m.drawcountries()
+# draw parallels.
+parallels = np.arange(0.,90,10.)
+m.drawparallels(parallels,labels=[1,0,0,0],fontsize=10)
+# draw meridians
+meridians = np.arange(180.,360.,10.)
+m.drawmeridians(meridians,labels=[0,0,0,1],fontsize=10)
+ny = data.shape[0]; nx = data.shape[1]
+lons, lats = m.makegrid(nx, ny) # get lat/lons of ny by nx evenly space grid.
+x, y = m(lons, lats) # compute map proj coordinates.
+# draw filled contours.
+clevs = [0,1,2.5,5,7.5,10,15,20,30,40,50,70,100,150,200,250,300,400,500,600,750]
+cs = m.contourf(x,y,data,clevs,cmap=cm.s3pcpn)
+# add colorbar.
+cbar = m.colorbar(cs,location='bottom',pad="5%")
+cbar.set_label('mm')
+# add title
+plt.title(prcpvar.long_name+' for period ending '+prcpvar.dateofdata)
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot sea-level pressure weather map with labelled highs and lows
+Explanation:
+Summary: Plotting Highs and Lows on a Sea-Level Pressure Map
+Libraries Used
+numpy, matplotlib, datetime: For numerical operations, plotting, and time formatting.
+h5py: Reads atmospheric pressure data from an HDF5 file.
+scipy.ndimage.filters: Applies minimum and maximum filters to detect local extrema.
+mpl_toolkits.basemap: Used to render map projections and geographic features.
+
+Data Loading
+Reads latitude (lat), longitude (lon), and pressure (prmslmsl) from a NetCDF-style HDF5 dataset.
+Pressure values are scaled to hPa by multiplying by 0.01.
+
+Core Logic
+A custom extrema() function uses a sliding window (window=50) to detect local pressure minima and maxima across the grid.
+Basemap with a Miller projection is initialized for world coverage (0°–360° lon, -80° to 80° lat).
+Adds cyclic (wrap-around) longitude to ensure continuity on the global map.
+Pressure contours are plotted using matplotlib.contour.
+
+Map Features
+Coastlines, continents, parallels, and meridians are drawn.
+Pressure contours are labeled.
+High and Low Pressure Labels
+Iterates over detected high and low-pressure points.
+Prevents overlapping labels using Euclidean distance checks.
+Annotates map with "H" in red and "L" in blue, alongside numeric pressure values.
+
+Output
+Saves the map as a high-resolution PNG with the current date embedded in the title.
+
+
+Code:
+"""
+plot H's and L's on a sea-level pressure map
+(uses scipy.ndimage.filters and netcdf4-python)
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+from mpl_toolkits.basemap import Basemap, addcyclic
+from scipy.ndimage.filters import minimum_filter, maximum_filter
+import h5py
+# from netCDF4 import Dataset
+def extrema(mat,mode='wrap',window=10):
+        """find the indices of local extrema (min and max)
+        in the input array."""
+        mn = minimum_filter(mat, size=window, mode=mode)
+        mx = maximum_filter(mat, size=window, mode=mode)
+        # (mat == mx) true if pixel is equal to the local max
+        # (mat == mn) true if pixel is equal to the local in
+        # Return the indices of the maxima, minima
+        return np.nonzero(mat == mn), np.nonzero(mat == mx)
+
+# plot 00 UTC today.
+date = datetime.now().strftime('%Y%m%d')+'00'
+FULL_DATA_PATH = './saved_datasets/plot_sea_level_pressure_weather.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+        # read lats,lons.
+        lats = data['lat'][:]
+        lons1 = data['lon'][:]
+        nlats = len(lats)
+        nlons = len(lons1)
+        # read prmsl, convert to hPa (mb).
+        prmsl = 0.01*data['prmslmsl'][0]
+        # the window parameter controls the number of highs and lows detected.
+        # (higher value, fewer highs and lows)
+        local_min, local_max = extrema(prmsl, mode='wrap', window=50)
+        # create Basemap instance.
+        m = Basemap(llcrnrlon=0,llcrnrlat=-80,urcrnrlon=360,urcrnrlat=80,projection='mill')
+        # add wrap-around point in longitude.
+        prmsl, lons = addcyclic(prmsl, lons1)
+        # contour levels
+        clevs = np.arange(900,1100.,5.)
+        # find x,y of map projection grid.
+        lons, lats = np.meshgrid(lons, lats)
+        x, y = m(lons, lats)
+        # create figure.
+        fig=plt.figure(figsize=(8,4.5))
+        ax = fig.add_axes([0.05,0.05,0.9,0.85])
+        cs = m.contour(x,y,prmsl,clevs,colors='k',linewidths=1.)
+        m.drawcoastlines(linewidth=1.25)
+        m.fillcontinents(color='0.8')
+        m.drawparallels(np.arange(-80,81,20),labels=[1,1,0,0])
+        m.drawmeridians(np.arange(0,360,60),labels=[0,0,0,1])
+        xlows = x[local_min]; xhighs = x[local_max]
+        ylows = y[local_min]; yhighs = y[local_max]
+        lowvals = prmsl[local_min]; highvals = prmsl[local_max]
+        # plot lows as blue L's, with min pressure value underneath.
+        xyplotted = []
+        # don't plot if there is already a L or H within dmin meters.
+        yoffset = 0.022*(m.ymax-m.ymin)
+        dmin = yoffset
+        for x,y,p in zip(xlows, ylows, lowvals):
+                if x < m.xmax and x > m.xmin and y < m.ymax and y > m.ymin:
+                        dist = [np.sqrt((x-x0)**2+(y-y0)**2) for x0,y0 in xyplotted]
+                        if not dist or min(dist) > dmin:
+                                plt.text(x,y,'L',fontsize=14,fontweight='bold', ha='center',va='center',color='b')
+                                plt.text(x,y-yoffset,repr(int(p)),fontsize=9, ha='center',va='top',color='b', 
+                                                bbox = dict(boxstyle="square",ec='None',fc=(1,1,1,0.5)))
+                                xyplotted.append((x,y))
+        # plot highs as red H's, with max pressure value underneath.
+        xyplotted = []
+        for x,y,p in zip(xhighs, yhighs, highvals):
+                if x < m.xmax and x > m.xmin and y < m.ymax and y > m.ymin:
+                        dist = [np.sqrt((x-x0)**2+(y-y0)**2) for x0,y0 in xyplotted]
+                        if not dist or min(dist) > dmin:
+                                plt.text(x,y,'H',fontsize=14,fontweight='bold', ha='center',va='center',color='r')
+                                plt.text(x,y-yoffset,repr(int(p)),fontsize=9, ha='center',va='top',color='r',
+                                        bbox = dict(boxstyle="square",ec='None',fc=(1,1,1,0.5)))
+                                xyplotted.append((x,y))
+        plt.title('Mean Sea-Level Pressure (with Highs and Lows) %s' % date)
+        # plt.show()
+
+        import os
+        output_path = os.path.join(os.path.dirname("./output"), f'data_processing_plot_sea_level_pressure_weather_map_with_labelled_highs_and_lows.png')
+        plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot hurricane tracks from a shapefile
+Explanation:
+draw Atlantic Hurricane Tracks for storms that reached Cat 4 or 5.
+part of the track for which storm is cat 4 or 5 is shown red.
+Lambert Conformal Conic map.
+find names of storms that reached Cat 4.
+plot tracks of those storms.
+draw coastlines, meridians and parallels.
+
+Code:
+"""
+draw Atlantic Hurricane Tracks for storms that reached Cat 4 or 5.
+part of the track for which storm is cat 4 or 5 is shown red.
+ESRI shapefile data from http://nationalatlas.gov/mld/huralll.html
+"""
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+# Lambert Conformal Conic map.
+m = Basemap(llcrnrlon=-100.,llcrnrlat=0.,urcrnrlon=-20.,urcrnrlat=57.,
+            projection='lcc',lat_1=20.,lat_2=40.,lon_0=-60.,
+            resolution ='l',area_thresh=1000.)
+# read shapefile.
+shp_path = os.path.join(*6 * [".."] + ["examples", "huralll020"])
+shp_info = m.readshapefile(shp_path,'hurrtracks',drawbounds=False)
+# find names of storms that reached Cat 4.
+names = []
+for shapedict in m.hurrtracks_info:
+    cat = shapedict['CATEGORY']
+    name = shapedict['NAME']
+    if cat in ['H4','H5'] and name not in names:
+        # only use named storms.
+        if name != 'NOT NAMED':  names.append(name)
+# plot tracks of those storms.
+for shapedict,shape in zip(m.hurrtracks_info,m.hurrtracks):
+    name = shapedict['NAME']
+    cat = shapedict['CATEGORY']
+    if name in names:
+        xx,yy = zip(*shape)
+        # show part of track where storm > Cat 4 as thick red.
+        if cat in ['H4','H5']: 
+            m.plot(xx,yy,linewidth=1.5,color='r')
+        elif cat in ['H1','H2','H3']:
+            m.plot(xx,yy,color='k')
+# draw coastlines, meridians and parallels.
+m.drawcoastlines()
+m.drawcountries()
+m.drawmapboundary(fill_color='#99ffff')
+m.fillcontinents(color='#cc9966',lake_color='#99ffff')
+m.drawparallels(np.arange(10,70,20),labels=[1,1,0,0])
+m.drawmeridians(np.arange(-100,0,20),labels=[0,0,0,1])
+plt.title('Atlantic Hurricane Tracks (Storms Reaching Category 4, 1851-2004)')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot etopo5 topography/bathymetry data as an image (without shading from a specified light source) without shadding.
+Explanation:
+The code reads topographic and bathymetric data from an HDF5 file containing ETOPO5 dataset variables for elevation and geographic coordinates. 
+It adjusts the longitude data to a standard -180 to 180 degree range using the Basemap utility `shiftgrid` to ensure proper geographic referencing. 
+A Lambert Conformal Conic projection map is then configured over a specified region covering part of North America, utilizing WGS84 ellipsoid parameters for accuracy. 
+The elevation data is reprojected onto a regular 5 km grid native to the map projection using `transform_scalar`, which interpolates the data appropriately. 
+This gridded data is visualized as an image overlay with a perceptually uniform colormap (`GMT_haxby`). The map includes detailed geographic features such as coastlines, country borders, 
+and state boundaries, as well as labeled parallels and meridians for geographic context. A colorbar is added to provide a scale for elevation values. 
+Finally, the plot is saved as a high-resolution PNG file in the same directory as the input dataset. The code integrates NumPy for numerical operations, 
+Matplotlib for plotting, and h5py for reading hierarchical scientific data, combining geospatial data processing and visualization techniques commonly used in earth sciences and geospatial analysis.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap, shiftgrid, cm
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+
+FULL_DATA_PATH = './saved_datasets/plot_etopo5_topography_bathymetry_data.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as file:
+    topoin = file['/root/ROSE'][:]
+    lons = file['/root/ETOPO05_X'][:]
+    lats = file['/root/ETOPO05_Y'][:]
+    # shift data so lons go from -180 to 180 instead of 20 to 380.
+    topoin,lons = shiftgrid(180.,topoin,lons,start=False)
+
+    # plot topography/bathymetry as an image.
+
+    # create the figure and axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # setup of basemap ('lcc' = lambert conformal conic).
+    # use major and minor sphere radii from WGS84 ellipsoid.
+    m = Basemap(llcrnrlon=-145.5,llcrnrlat=1.,urcrnrlon=-2.566,urcrnrlat=46.352,\
+                rsphere=(6378137.00,6356752.3142),\
+                resolution='l',area_thresh=1000.,projection='lcc',\
+                lat_1=50.,lon_0=-107.,ax=ax)
+    # transform to nx x ny regularly spaced 5km native projection grid
+    nx = int((m.xmax-m.xmin)/5000.)+1; ny = int((m.ymax-m.ymin)/5000.)+1
+    topodat = m.transform_scalar(topoin,lons,lats,nx,ny)
+    # plot image over map with imshow.
+    im = m.imshow(topodat,cm.GMT_haxby)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    # draw parallels and meridians.
+    # label on left and bottom of map.
+    parallels = np.arange(0.,80,20.)
+    m.drawparallels(parallels,labels=[1,0,0,1])
+    meridians = np.arange(10.,360.,30.)
+    m.drawmeridians(meridians,labels=[1,0,0,1])
+    # add colorbar
+    cb = m.colorbar(im,"right", size="5%", pad='2%')
+    ax.set_title('ETOPO5 Topography - Lambert Conformal Conic')
+    # plt.show()
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'without_shading_plot_etopo5_topography_bathymetry_data_as_an_image.png')
+    plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plot etopo5 topography/bathymetry data as an image (with shading from a specified light source) with shadding.
+Explanation:
+This Python script performs topographic and bathymetric data visualization using the ETOPO5 dataset stored in an HDF5 file. 
+It begins by importing essential scientific and mapping libraries including `numpy`, `matplotlib`, `h5py`, and `Basemap` from `mpl_toolkits`. 
+The script accesses a dataset from the specified HDF5 file, extracting topographic data along with the corresponding longitude and latitude arrays. 
+The longitude data is adjusted using the `shiftgrid` function to range from -180° to 180°, aligning with standard global map projections. 
+A Lambert Conformal Conic (`'lcc'`) projection is used to initialize a Basemap instance that defines a specific geographic bounding box and resolution suitable for North America.
+
+The map projection is transformed into a native grid resolution of 5 kilometers, and the topographic data is interpolated onto this grid using `transform_scalar`. 
+The processed data is visualized on a map with `imshow`, using the `GMT_haxby` colormap. 
+The map includes coastlines, countries, states, parallels, meridians, and a colorbar for elevation interpretation, all rendered on an `Axes` object embedded within a figure.
+
+The second part of the script generates a shaded relief version of the same data. It creates a new figure and axes, and uses a `LightSource` object to apply hillshading, 
+producing an RGB image that simulates light and shadow on the terrain. The image is then rendered using the same Basemap instance and plotted similarly, 
+including geographic boundaries. Finally, the shaded relief image is saved to disk as a high-resolution PNG file in the same directory as the input HDF5 dataset. 
+This code effectively demonstrates how to process, project, and visualize large-scale elevation data in both standard and shaded formats using scientific Python tools.
+
+
+Code:
+from mpl_toolkits.basemap import Basemap, shiftgrid, cm
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+FULL_DATA_PATH = './saved_datasets/plot_etopo5_topography_bathymetry_data.h5'
+
+with h5py.File(FULL_DATA_PATH, 'r') as file:
+    topoin = file['/root/ROSE'][:]
+    lons = file['/root/ETOPO05_X'][:]
+    lats = file['/root/ETOPO05_Y'][:]
+
+    # shift data so lons go from -180 to 180 instead of 20 to 380.
+    topoin,lons = shiftgrid(180.,topoin,lons,start=False)
+
+    # plot topography/bathymetry as an image.
+    # create the figure and axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # setup of basemap ('lcc' = lambert conformal conic).
+    # use major and minor sphere radii from WGS84 ellipsoid.
+    m = Basemap(llcrnrlon=-145.5,llcrnrlat=1.,urcrnrlon=-2.566,urcrnrlat=46.352,\
+                rsphere=(6378137.00,6356752.3142),\
+                resolution='l',area_thresh=1000.,projection='lcc',\
+                lat_1=50.,lon_0=-107.,ax=ax)
+    # transform to nx x ny regularly spaced 5km native projection grid
+    nx = int((m.xmax-m.xmin)/5000.)+1; ny = int((m.ymax-m.ymin)/5000.)+1
+    topodat = m.transform_scalar(topoin,lons,lats,nx,ny)
+    # plot image over map with imshow.
+    im = m.imshow(topodat,cm.GMT_haxby)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    # draw parallels and meridians.
+    # label on left and bottom of map.
+    parallels = np.arange(0.,80,20.)
+    m.drawparallels(parallels,labels=[1,0,0,1])
+    meridians = np.arange(10.,360.,30.)
+    m.drawmeridians(meridians,labels=[1,0,0,1])
+    # add colorbar
+    cb = m.colorbar(im,"right", size="5%", pad='2%')
+    ax.set_title('ETOPO5 Topography - Lambert Conformal Conic')
+    plt.show()
+
+    # make a shaded relief plot.
+
+    # create new figure, axes instance.
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.8,0.8])
+    # attach new axes image to existing Basemap instance.
+    m.ax = ax
+    # create light source object.
+    from matplotlib.colors import LightSource
+    ls = LightSource(azdeg = 90, altdeg = 20)
+    # convert data to rgb array including shading from light source.
+    # (must specify color map)
+    rgb = ls.shade(topodat, cm.GMT_haxby)
+    im = m.imshow(rgb)
+    # draw coastlines and political boundaries.
+    m.drawcoastlines()
+    m.drawcountries()
+    m.drawstates()
+    ax.set_title('Shaded ETOPO5 Topography - Lambert Conformal Conic')
+    # plt.show()
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'with_shading_data_processing_plot_etopo5_topography_bathymetry_data_as_an_image.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+
+
+=== CHUNK START ===
+Title: Plot markers at locations of ARGO floats.
+Explanation:
+The code reads ARGO float location data (latitude, longitude, and timestamps) from an HDF5 file, filters it based on a given date range, and plots the float locations on a Hammer projection world map using Basemap. 
+The plot is titled with the number of floats and the date range, then saved as a PNG image in the same directory as the input file.
+
+Code: 
+import time
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+import os
+
+import h5py
+
+FULL_DATA_PATH = './saved_datasets/plot_markers_ARGO.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as dset:
+    lats = dset['latitude'][:]
+    lons = dset['longitude'][:]
+    time = dset['date']  # seconds since epoch
+    times = time[:]
+    t1 = times.min(); t2 = times.max()
+   
+    date1 = '2010-01-01 00:15:03'
+    date2 = '2010-01-07 23:57:57'
+
+    # draw map with markers for float locations
+    m = Basemap(projection='hammer',lon_0=180)
+    x, y = m(lons,lats)
+    m.drawmapboundary(fill_color='#99ffff')
+    m.fillcontinents(color='#cc9966',lake_color='#99ffff')
+    m.scatter(x,y,3,marker='o',color='k')
+    plt.title('Locations of %s ARGO floats active between %s and %s' %\
+            (len(lats),date1,date2),fontsize=12)
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'{os.path.basename(FULL_DATA_PATH)}.png')
+    plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Pseudo-color plot of SST and sea ice analysis.
+Explanation:
+Summary (Human Expert View + Technical Metadata)
+
+Data Source:
+Reads an HDF5 file located at ./saved_datasets/pseudo_color_plot_sst_sea_ice.h5.
+
+Libraries Used:
+h5py for HDF5 data access
+numpy for numerical operations
+matplotlib.pyplot for plotting
+mpl_toolkits.basemap.Basemap for map rendering
+datetime and os for timestamp and output handling
+
+Variables Extracted:
+sst: Sea Surface Temperature
+ice: Sea Ice Concentration
+lat, lon: Grid box center coordinates
+timevar: Full time range (not visualized here)
+timeindex = 348: Specific time slice used
+
+Coordinate Transformation:
+Latitude and longitude bounds are extended symmetrically to represent cell edges rather than centers using np.diff and np.append.
+
+Basemap Setup:
+Projection: 'kav7' (Kavrayskiy VII projection)
+resolution=None: Coastlines not rendered for faster performance
+drawmapboundary: Fills background with color '0.3' for land areas
+
+Data Plotting:
+Uses pcolormesh to overlay sst and ice data with different colormaps (jet and gist_gray)
+Latitude/longitude meshgrid is passed with latlon=True for geospatial accuracy
+Adds parallels (every 30°) and meridians (every 60°) without labels
+Adds colorbar below the plot
+
+Output:
+Title includes the datetime(2007,12,15,0) value
+
+Image saved at:
+./saved_datasets/data_processing_pseudo_color_plot_of_SST_and_sea_ice_analysis.png
+using plt.savefig(dpi=300)
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+from datetime import datetime
+date = datetime(2007,12,15,0) # date to plot.
+import h5py
+
+FULL_DATA_PATH = "./saved_datasets/pseudo_color_plot_sst_sea_ice.h5"
+with h5py.File(FULL_DATA_PATH, 'r') as file:   
+    timevar = file['time'][:]
+    timeindex = 348
+    sst = file['sst'][timeindex, :].squeeze()
+   
+    ice = file['icec'][timeindex,:].squeeze()
+    
+    # read lats and lons (representing centers of grid boxes).
+    lats = file['lat'][:]
+    lons = file['lon'][:]
+    
+    latstep, lonstep = np.diff(lats[:2]), np.diff(lons[:2])
+    lats = np.append(lats - 0.5 * latstep, lats[-1] + 0.5 * latstep)
+    lons = np.append(lons - 0.5 * lonstep, lons[-1] + 0.5 * lonstep)
+    lons, lats = np.meshgrid(lons,lats)
+    # create figure, axes instances.
+    fig = plt.figure()
+    ax = fig.add_axes([0.05,0.05,0.9,0.9])
+    # create Basemap instance.
+    # coastlines not used, so resolution set to None to skip
+    # continent processing (this speeds things up a bit)
+    m = Basemap(projection='kav7',lon_0=0,resolution=None)
+    # draw line around map projection limb.
+    # color background of map projection region.
+    # missing values over land will show up this color.
+    m.drawmapboundary(fill_color='0.3')
+    # plot sst, then ice with pcolor
+    im1 = m.pcolormesh(lons, lats, sst, shading='flat',cmap=plt.cm.jet,latlon=True)
+    im2 = m.pcolormesh(lons, lats, ice, shading='flat',cmap=plt.cm.gist_gray,latlon=True)
+    # draw parallels and meridians, but don't bother labelling them.
+    m.drawparallels(np.arange(-90.,99.,30.))
+    m.drawmeridians(np.arange(-180.,180.,60.))
+    # add colorbar
+    cb = m.colorbar(im1,"bottom", size="5%", pad="2%")
+    # add a title.
+    ax.set_title('SST and ICE analysis for %s'%date)
+    # plt.show()
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_pseudo_color_plot_of_SST_and_sea_ice_analysis.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+
+=== CHUNK START ===
+Title: Plotting wind vectors.
+Explanation: 
+Functionality Overview
+Libraries Used: numpy, matplotlib, h5py, datetime, Basemap (with shiftgrid)
+Data Source: HDF5 file containing meteorological variables.
+Date Reference: March 14, 1993, 00:00 hours.
+
+Data Handling
+Latitudes and Longitudes: Extracted from 'lat' and 'lon' datasets.
+Latitudes are reversed for south-to-north orientation.
+
+Meteorological Variables:
+Pressure_msl (Sea level pressure), converted to hPa.
+u-component_of_wind_height_above_ground and v-component_of_wind_height_above_ground (10m wind vectors).
+Cyclic Extension: Data arrays are extended by one column to make them cyclic in longitude for proper visualization.
+
+Map Projection and Plotting
+Projection: Orthographic (lat_0=60, lon_0=-60) with coarse resolution.
+Meshgrid: Constructed from longitudes and latitudes.
+Contour Plot: Pressure values plotted as both line contours and filled contours.
+
+Wind Vectors:
+Wind grids are shifted to longitude range -180 to 180 using shiftgrid.
+Transformed to map projection grid using transform_vector.
+Displayed using quiver, with a quiver key showing vector scale.
+
+Plot Finalization
+Map Features: Coastlines, parallels, meridians.
+Colorbar: For pressure with label in hPa.
+Title: Includes timestamp from the input date.
+Output: Saved as data_processing_plotting_wind_vector.png in the same directory as the input HDF5 file.
+
+Code:
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+from mpl_toolkits.basemap import Basemap, shiftgrid
+import h5py
+
+yyyy=1993; mm=3; dd=14; hh=0
+date = datetime.datetime(yyyy,mm,dd,hh)
+FULL_DATA_PATH = './saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+    # read lats,lons
+    # reverse latitudes so they go from south to north.
+    latitudes = data['lat'][:]
+    latitudes = latitudes[::-1]
+    longitudes = data['lon'][:].tolist()
+    # get sea level pressure and 10-m wind data.
+    # mult slp by 0.01 to put in units of hPa.
+    slpin = 0.01*data['Pressure_msl'][:].squeeze()
+    uin = data['u-component_of_wind_height_above_ground'][:].squeeze()
+    vin = data['v-component_of_wind_height_above_ground'][:].squeeze()
+    # add cyclic points manually (could use addcyclic function)
+    slp = np.zeros((slpin.shape[0],slpin.shape[1]+1),np.float64)
+    slp[:,0:-1] = slpin[::-1]; slp[:,-1] = slpin[::-1,0]
+    u = np.zeros((uin.shape[0],uin.shape[1]+1),np.float64)
+    u[:,0:-1] = uin[::-1]; u[:,-1] = uin[::-1,0]
+    v = np.zeros((vin.shape[0],vin.shape[1]+1),np.float64)
+    v[:,0:-1] = vin[::-1]; v[:,-1] = vin[::-1,0]
+    longitudes.append(360.); longitudes = np.array(longitudes)
+    # make 2-d grid of lons, lats
+    lons, lats = np.meshgrid(longitudes,latitudes)
+    # make orthographic basemap.
+    m = Basemap(resolution='c',projection='ortho',lat_0=60.,lon_0=-60.)
+    # create figure, add axes
+    fig1 = plt.figure(figsize=(8,10))
+    ax = fig1.add_axes([0.1,0.1,0.8,0.8])
+    # set desired contour levels.
+    clevs = np.arange(960,1061,5)
+    # compute native x,y coordinates of grid.
+    x, y = m(lons, lats)
+    # define parallels and meridians to draw.
+    parallels = np.arange(-80.,90,20.)
+    meridians = np.arange(0.,360.,20.)
+    # plot SLP contours.
+    CS1 = m.contour(x,y,slp,clevs,linewidths=0.5,colors='k')
+    CS2 = m.contourf(x,y,slp,clevs,cmap=plt.cm.RdBu_r)
+    # plot wind vectors on projection grid.
+    # first, shift grid so it goes from -180 to 180 (instead of 0 to 360
+    # in longitude).  Otherwise, interpolation is messed up.
+    ugrid,newlons = shiftgrid(180.,u,longitudes,start=False)
+    vgrid,newlons = shiftgrid(180.,v,longitudes,start=False)
+    # # transform vectors to projection grid.
+    uproj,vproj,xx,yy = m.transform_vector(ugrid,vgrid,newlons,latitudes,31,31,returnxy=True,masked=True)
+    # now plot.
+    Q = m.quiver(xx,yy,uproj,vproj,scale=700)
+    # make quiver key.
+    qk = plt.quiverkey(Q, 0.1, 0.1, 20, '20 m/s', labelpos='W')
+    # draw coastlines, parallels, meridians.
+    m.drawcoastlines(linewidth=1.5)
+    m.drawparallels(parallels)
+    m.drawmeridians(meridians)
+    # add colorbar
+    cb = m.colorbar(CS2,"bottom", size="5%", pad="2%")
+    cb.set_label('hPa')
+    # set plot title
+    ax.set_title('SLP and Wind Vectors '+str(date))
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_plotting_wind_vector.png')
+    plt.savefig(output_path, dpi=300)
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Plotting wind barbs.
+Explanation: 
+High-Level Summary
+Purpose: Visualize sea-level pressure (SLP) contours and 10-meter wind barbs on an orthographic projection using data from a pre-saved HDF5 file.
+Inputs: An .h5 file containing latitude, longitude, sea-level pressure, and u/v wind components.
+Outputs: A high-resolution PNG image showing contours and wind vectors.
+
+Technical Workflow for Regeneration
+Imports Required Libraries:
+numpy, matplotlib.pyplot, datetime for data manipulation and plotting.
+Basemap and shiftgrid from mpl_toolkits.basemap for mapping and grid transformation.
+h5py for reading HDF5 datasets.
+
+Set Date Reference:
+date = datetime.datetime(1993, 3, 14, 0)
+Load HDF5 Dataset:
+
+Read lat, lon, and meteorological variables:
+Pressure_msl (converted to hPa)
+u-component_of_wind_height_above_ground
+v-component_of_wind_height_above_ground
+Reverse latitudes (south to north).
+Add cyclic points manually to each data grid for continuity at 360°.
+
+Grid Setup:
+Use np.meshgrid() to create 2D longitude and latitude arrays.
+Shift u and v wind grids to center on 180° using shiftgrid().
+
+Basemap Initialization:
+Set an orthographic projection centered at lat 60°, lon -60°.
+Define contour levels (960 hPa to 1060 hPa, in 5 hPa increments).
+Use transform_vector() to interpolate wind components to the map's projection grid.
+
+Plotting Routine:
+Draw:
+SLP contours using contour() and contourf()
+Wind barbs using barbs()
+Coastlines, parallels, meridians for geographical context
+Add a colorbar labeled in hPa
+Title the plot with the associated datetime
+
+Save Output:
+Output the figure as a .png in the same folder as the input HDF5 file.
+
+File Dependencies
+Input HDF5 Path: ./saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5
+Output Image Path: Saved as data_processing_plotting_wind_barbs1.png in the same directory.
+
+Code:
+import numpy as np
+import matplotlib.pyplot as plt
+import datetime
+from mpl_toolkits.basemap import Basemap, shiftgrid
+import h5py
+
+yyyy=1993; mm=3; dd=14; hh=0
+date = datetime.datetime(yyyy,mm,dd,hh)
+
+FULL_DATA_PATH = './saved_datasets/plotting_wind_barbs_pgbh00_gdas.h5'
+with h5py.File(FULL_DATA_PATH, 'r') as data:
+    # read lats,lons
+    # reverse latitudes so they go from south to north.
+    latitudes = data['lat'][:]
+    latitudes = latitudes[::-1]
+    longitudes = data['lon'][:].tolist()
+    # get sea level pressure and 10-m wind data.
+    # mult slp by 0.01 to put in units of hPa.
+    slpin = 0.01*data['Pressure_msl'][:].squeeze()
+    uin = data['u-component_of_wind_height_above_ground'][:].squeeze()
+    vin = data['v-component_of_wind_height_above_ground'][:].squeeze()
+    
+    # add cyclic points manually (could use addcyclic function)
+    slp = np.zeros((slpin.shape[0],slpin.shape[1]+1),np.float64)
+    slp[:,0:-1] = slpin[::-1]; slp[:,-1] = slpin[::-1,0]
+    u = np.zeros((uin.shape[0],uin.shape[1]+1),np.float64)
+    u[:,0:-1] = uin[::-1]; u[:,-1] = uin[::-1,0]
+    v = np.zeros((vin.shape[0],vin.shape[1]+1),np.float64)
+    v[:,0:-1] = vin[::-1]; v[:,-1] = vin[::-1,0]
+    longitudes.append(360.); longitudes = np.array(longitudes)
+    
+    # make 2-d grid of lons, lats
+    lons, lats = np.meshgrid(longitudes,latitudes)
+    
+    # make orthographic basemap.
+    m = Basemap(resolution='c',projection='ortho',lat_0=60.,lon_0=-60.)
+    
+    # set desired contour levels.
+    clevs = np.arange(960,1061,5)
+    # compute native x,y coordinates of grid.        
+    x, y = m(lons, lats)
+
+    # define parallels and meridians to draw.
+    parallels = np.arange(-80.,90,20.)
+    meridians = np.arange(0.,360.,20.)
+    
+    ugrid,newlons = shiftgrid(180.,u,longitudes,start=False)
+    vgrid,newlons = shiftgrid(180.,v,longitudes,start=False)
+    
+    # transform vectors to projection grid.
+    uproj,vproj,xx,yy = m.transform_vector(ugrid,vgrid,newlons,latitudes,31,31,returnxy=True,masked=True)
+    
+    # create 2nd figure, add axes
+    fig2 = plt.figure(figsize=(8,10))
+    ax = fig2.add_axes([0.1,0.1,0.8,0.8])
+    # plot SLP contours
+    CS1 = m.contour(x,y,slp,clevs,linewidths=0.5,colors='k')
+    CS2 = m.contourf(x,y,slp,clevs,cmap=plt.cm.RdBu_r)
+    # plot wind barbs over map.
+    barbs = m.barbs(xx,yy,uproj,vproj,length=5,barbcolor='k',flagcolor='r',linewidth=0.5)
+    # draw coastlines, parallels, meridians.
+    m.drawcoastlines(linewidth=1.5)
+    m.drawparallels(parallels)
+    m.drawmeridians(meridians)
+    # add colorbar
+    cb = m.colorbar(CS2,"bottom", size="5%", pad="2%")
+    cb.set_label('hPa')
+    # set plot title.
+    ax.set_title('SLP and Wind Barbs '+str(date))
+
+    import os
+    output_path = os.path.join(os.path.dirname(FULL_DATA_PATH), f'data_processing_plotting_wind_barbs1.png')
+    plt.savefig(output_path, dpi=300)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Draw great circle between NY and London.
+Explanation:
+This code creates a Mercator-projected map using Basemap, plots the great circle route between New York and London, adds coastlines, continent fills, parallels, and meridians, sets a title, and saves the resulting map as a PNG image.
+
+Code:
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import matplotlib.pyplot as plt
+# create new figure, axes instances.
+fig=plt.figure()
+ax=fig.add_axes([0.1,0.1,0.8,0.8])
+# setup mercator map projection.
+m = Basemap(llcrnrlon=-100.,llcrnrlat=20.,urcrnrlon=20.,urcrnrlat=60.,\
+            rsphere=(6378137.00,6356752.3142),\
+            resolution='l',projection='merc',\
+            lat_0=40.,lon_0=-20.,lat_ts=20.)
+# nylat, nylon are lat/lon of New York
+nylat = 40.78; nylon = -73.98
+# lonlat, lonlon are lat/lon of London.
+lonlat = 51.53; lonlon = 0.08
+# draw great circle route between NY and London
+m.drawgreatcircle(nylon,nylat,lonlon,lonlat,linewidth=2,color='b')
+m.drawcoastlines()
+m.fillcontinents()
+# draw parallels
+m.drawparallels(np.arange(10,90,20),labels=[1,1,0,1])
+# draw meridians
+m.drawmeridians(np.arange(-180,180,30),labels=[1,1,0,1])
+ax.set_title('Great Circle from New York to London')
+plt.show()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Draw day-night terminator on a map.
+Explanation:
+This code uses the Miller cylindrical projection to render a world map with coastlines, parallels, and meridians. 
+It fills land areas with coral color, oceans with aqua, and overlays the night regions based on the current UTC time using the nightshade feature. 
+The map is then displayed with a title showing the exact UTC timestamp.
+
+Code:
+import numpy as np
+from mpl_toolkits.basemap import Basemap
+import matplotlib.pyplot as plt
+from datetime import datetime
+# miller projection 
+map = Basemap(projection='mill',lon_0=180)
+# plot coastlines, draw label meridians and parallels.
+map.drawcoastlines()
+map.drawparallels(np.arange(-90,90,30),labels=[1,0,0,0])
+map.drawmeridians(np.arange(map.lonmin,map.lonmax+30,60),labels=[0,0,0,1])
+# fill continents 'coral' (with zorder=0), color wet areas 'aqua'
+map.drawmapboundary(fill_color='aqua')
+map.fillcontinents(color='coral',lake_color='aqua')
+# shade the night areas, with alpha transparency so the 
+# map shows through. Use current time in UTC.
+date = datetime.utcnow()
+CS=map.nightshade(date)
+plt.title('Day/Night Map for %s (UTC)' % date.strftime("%d %b %Y %H:%M:%S"))
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: cartopy basic map
+Explanation:
+Cartopy has exposed an interface to enable easy map creation using matplotlib. 
+Creating a basic map is as simple as telling matplotlib to use a specific map projection, and then adding some coastlines to the axes:
+
+Code:
+import cartopy.crs as ccrs
+import matplotlib.pyplot as plt
+
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.coastlines()
+
+plt.show()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title:  cartopy map with mollweide projection
+Explanation:
+cartopy stock_img() method to add an underline image to the map
+
+Code:
+import cartopy.crs as ccrs
+import matplotlib.pyplot as plt
+
+ax = plt.axes(projection=ccrs.Mollweide())
+ax.stock_img()
+plt.show()
+=== CHUNK END ===
+
+
+
+=== CHUNK START ===
+Title: cartopy map with data using PlateCarree projection
+Explanation:
+Once you have the map just the way you want it, data can be added to it in exactly the same way as with normal matplotlib axes. 
+By default, the coordinate system of any data added to a GeoAxes is the same as the coordinate system of the GeoAxes itself, 
+to control which coordinate system that the given data is in, you can add the transform keyword with an appropriate cartopy.crs.CRS instance:
+Notice how the line in blue between New York and Delhi is not straight on a flat PlateCarree map, this is because the Geodetic coordinate system is a truly spherical coordinate system, 
+where a line between two points is defined as the shortest path between those points on the globe rather than 2d Cartesian space.
+
+Code:
+import cartopy.crs as ccrs
+import matplotlib.pyplot as plt
+
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.stock_img()
+
+ny_lon, ny_lat = -75, 43
+delhi_lon, delhi_lat = 77.23, 28.61
+
+plt.plot([ny_lon, delhi_lon], [ny_lat, delhi_lat],
+         color='blue', linewidth=2, marker='o',
+         transform=ccrs.Geodetic(),
+         )
+
+plt.plot([ny_lon, delhi_lon], [ny_lat, delhi_lat],
+         color='gray', linestyle='--',
+         transform=ccrs.PlateCarree(),
+         )
+
+plt.text(ny_lon - 3, ny_lat - 12, 'New York',
+         horizontalalignment='right',
+         transform=ccrs.Geodetic())
+
+plt.text(delhi_lon + 3, delhi_lat - 12, 'Delhi',
+         horizontalalignment='left',
+         transform=ccrs.Geodetic())
+
+plt.show()
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy PlateCarree projection
+
+Explanation:
+class cartopy.crs.PlateCarree(central_longitude=0.0, globe=None)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=180))
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy PlateCarree projection with central_longitude
+
+Explanation:
+class cartopy.crs.PlateCarree(central_longitude=0.0, globe=None)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.PlateCarree(central_longitude=180))
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy AlbersEqualArea projection
+Explanation:
+class cartopy.crs.AlbersEqualArea(central_longitude=0.0, central_latitude=0.0, false_easting=0.0, false_northing=0.0, standard_parallels=(20.0, 50.0), globe=None)[source]
+An Albers Equal Area projection
+
+This projection is conic and equal-area, and is commonly used for maps of the conterminous United States.
+
+Kwargs:
+
+central_longitude - The central longitude. Defaults to 0.
+
+central_latitude - The central latitude. Defaults to 0.
+
+false_easting - X offset from planar origin in metres.
+Defaults to 0.
+
+false_northing - Y offset from planar origin in metres.
+Defaults to 0.
+
+standard_parallels - The one or two latitudes of correct scale.
+Defaults to (20, 50).
+
+globe - A cartopy.crs.Globe.
+If omitted, a default globe is created.
+
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(5.12985642927, 3))
+ax = plt.axes(projection=ccrs.AlbersEqualArea())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy AzimuthalEquidistant projection
+Explanation:
+class cartopy.crs.AzimuthalEquidistant(central_longitude=0.0, central_latitude=0.0, false_easting=0.0, false_northing=0.0, globe=None)[source]
+An Azimuthal Equidistant projection
+
+This projection provides accurate angles about and distances through the central position. Other angles, distances, or areas may be distorted.
+
+Kwargs:
+
+central_longitude - The true longitude of the central meridian in
+degrees. Defaults to 0.
+
+central_latitude - The true latitude of the planar origin in
+degrees. Defaults to 0.
+
+false_easting - X offset from the planar origin in metres.
+Defaults to 0.
+
+false_northing - Y offset from the planar origin in metres.
+Defaults to 0.
+
+globe - An instance of cartopy.crs.Globe. If omitted, a
+default globe is created.
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.AzimuthalEquidistant(central_latitude=90))
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy LambertConformal projection
+Explanation:
+class cartopy.crs.LambertConformal(central_longitude=-96.0, central_latitude=39.0, false_easting=0.0, false_northing=0.0, secant_latitudes=None, standard_parallels=None, globe=None, cutoff=-30)[source]
+A Lambert Conformal conic projection.
+
+Kwargs:
+central_longitude - The central longitude. Defaults to 0.
+central_latitude - The central latitude. Defaults to 0.
+false_easting - X offset from planar origin in metres. Defaults to 0.
+
+false_northing - Y offset from planar origin in metres. Defaults to 0.
+
+standard_parallels - Standard parallel latitude(s). Defaults to (33, 45).
+
+globe - A cartopy.crs.Globe.
+If omitted, a default globe is created.
+
+cutoff - Latitude of map cutoff.
+The map extends to infinity opposite the central pole so we must cut off the map drawing before then. A value of 0 will draw half the globe. Defaults to -30.
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(4.28969332205, 3))
+ax = plt.axes(projection=ccrs.LambertConformal())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy LambertCylindrical projection
+Explanation:
+class cartopy.crs.LambertCylindrical(central_longitude=0.0)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(9.42477796077, 3))
+ax = plt.axes(projection=ccrs.LambertCylindrical())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Mercator projection
+Explanation:
+class cartopy.crs.Mercator(central_longitude=0.0, min_latitude=-80.0, max_latitude=84.0, globe=None)[source]¶
+A Mercator projection.
+
+Kwargs:
+
+central_longitude - the central longitude. Defaults to 0.
+
+min_latitude - the maximum southerly extent of the projection.
+Defaults to -80 degrees.
+
+max_latitude - the maximum northerly extent of the projection.
+Defaults to 84 degrees.
+
+globe - A cartopy.crs.Globe.
+If omitted, a default globe is created.
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3.50907018473, 3))
+ax = plt.axes(projection=ccrs.Mercator())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Miller projection
+Explanation:
+class cartopy.crs.Miller(central_longitude=0.0)[source]
+
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(4.09152901955, 3))
+ax = plt.axes(projection=ccrs.Miller())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Mollweide projection
+Explanation:
+class cartopy.crs.Mollweide(central_longitude=0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.Mollweide())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Orthographic projection
+Explanation:
+class cartopy.crs.Orthographic(central_longitude=0.0, central_latitude=0.0, globe=None)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.Orthographic())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Robinson projection
+Explanation:
+
+class cartopy.crs.Robinson(central_longitude=0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(5.91496652704, 3))
+ax = plt.axes(projection=ccrs.Robinson())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Stereographic projection
+Explanation:
+
+class cartopy.crs.Stereographic(central_latitude=0.0, central_longitude=0.0, false_easting=0.0, false_northing=0.0, true_scale_latitude=None, globe=None)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.Stereographic())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy TransverseMercator projection
+Explanation: 
+
+class cartopy.crs.TransverseMercator(central_longitude=0.0, central_latitude=0.0, false_easting=0.0, false_northing=0.0, scale_factor=1.0, globe=None)[source]
+A Transverse Mercator projection.
+
+Kwargs:
+
+central_longitude - The true longitude of the central meridian in
+degrees. Defaults to 0.
+
+central_latitude - The true latitude of the planar origin in
+degrees. Defaults to 0.
+
+false_easting - X offset from the planar origin in metres.
+Defaults to 0.
+
+false_northing - Y offset from the planar origin in metres.
+Defaults to 0.
+
+scale_factor - Scale factor at the central meridian. Defaults
+to 1.
+
+globe - An instance of cartopy.crs.Globe. If omitted, a
+default globe is created.
+
+
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.TransverseMercator())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy UTM projection
+Explanation:
+class cartopy.crs.UTM(zone, southern_hemisphere=False, globe=None)[source]
+Universal Transverse Mercator projection.
+
+Kwargs:
+
+zone - the numeric zone of the UTM required.
+
+globe - An instance of cartopy.crs.Globe. If omitted, a
+default globe is created.
+
+southern_hemisphere - set to True if the zone is in the southern
+hemisphere, defaults to False.
+
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(0.128571428571, 3))
+ax = plt.axes(projection=ccrs.UTM(zone=30))
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Cartopy InterruptedGoodeHomolosine projection
+Explanation:
+class cartopy.crs.InterruptedGoodeHomolosine(central_longitude=0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6.92280629527, 3))
+ax = plt.axes(projection=ccrs.InterruptedGoodeHomolosine())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy RotatedPole projection
+Explanation:
+class cartopy.crs.RotatedPole(pole_longitude=0.0, pole_latitude=90.0, central_rotated_longitude=0.0, globe=None)[source]
+Defines a rotated latitude/longitude projected coordinate system with cylindrical topology and projected distance.
+
+Coordinates are measured in projection metres.
+
+Create a RotatedPole CRS.
+
+The class uses proj4 to perform an ob_tran operation, using the pole_longitude to set a lon_0 then performing two rotations based on pole_latitude and central_rotated_longitude. 
+This is equivalent to setting the new pole to a location defined by the pole_latitude and pole_longitude values in the GeogCRS defined by globe, then rotating this new CRS about it’s pole using the central_rotated_longitude value.
+
+Args:
+
+pole_longitude - Pole longitude position, in unrotated degrees.
+
+pole_latitude - Pole latitude position, in unrotated degrees.
+
+central_rotated_longitude - Longitude rotation about the new
+pole, in degrees.
+
+Kwargs:
+
+globe - An optional cartopy.crs.Globe.
+Defaults to a “WGS84” datum.
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(6, 3))
+ax = plt.axes(projection=ccrs.RotatedPole(pole_latitude=37.5, pole_longitude=177.5))
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy OSGB projection
+Explanation:
+class cartopy.crs.OSGB
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(1.61538461538, 3))
+ax = plt.axes(projection=ccrs.OSGB())
+ax.coastlines(resolution='50m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy EuroPP projection
+Explanation:
+class cartopy.crs.EuroPP[source]
+UTM Zone 32 projection for EuroPP domain.
+
+Ellipsoid is International 1924, Datum is ED50.
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(2.61538461538, 3))
+ax = plt.axes(projection=ccrs.EuroPP())
+ax.coastlines(resolution='50m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Geostationary projection
+Explanation:
+class cartopy.crs.Geostationary(central_longitude=0.0, satellite_height=35785831, false_easting=0, false_northing=0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(2.99893683337, 3))
+ax = plt.axes(projection=ccrs.Geostationary())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy Gnomonic projection
+Explanation:
+class cartopy.crs.Gnomonic(central_latitude=0.0, globe=None)
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.Gnomonic())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy NorthPolarStereo projection
+Explanation:
+class cartopy.crs.NorthPolarStereo(central_longitude=0.0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.NorthPolarStereo())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy OSNI projection
+Explanation:
+
+class cartopy.crs.OSNI
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(2.43233741378, 3))
+ax = plt.axes(projection=ccrs.OSNI())
+ax.coastlines(resolution='10m')
+ax.gridlines()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Cartopy SouthPolarStereo projection
+Explanation:
+class cartopy.crs.SouthPolarStereo(central_longitude=0.0, globe=None)[source]
+
+Code:
+import matplotlib.pyplot as plt
+import cartopy.crs as ccrs
+
+plt.figure(figsize=(3, 3))
+ax = plt.axes(projection=ccrs.SouthPolarStereo())
+ax.coastlines(resolution='110m')
+ax.gridlines()
+=== CHUNK END ===

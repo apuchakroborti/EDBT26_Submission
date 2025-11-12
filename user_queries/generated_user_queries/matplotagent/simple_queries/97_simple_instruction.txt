@@ -1,0 +1,15 @@
+Create two ternary phase diagrams from the dataset "97_h5_data.h5", containing 'No.', 'IL (25°C)', 'toluene (25°C)', and 'n-heptane (25°C)'. Each same index data from each datasets indicates a mixture composition of these components at 25°C, with 'No.' indicating different groups or conditions.
+
+For both diagrams:
+- Title: "Liquid-Liquid Phase Diagram".
+
+1. Equilateral Triangle Diagram:
+  - Plot with 'toluene' at the top, 'n-heptane' at the bottom left, and 'IL' at the bottom right.
+  - Transform component fractions to Cartesian coordinates for an equilateral layout.
+  - Plot data points as circles, connect same 'No.' group points with dashed lines, and use different colors for each group.
+  - Label each vertex with the component name and draw borders for the triangle and remove axis ticks and labels for a clean look.
+2. Right-Angled Triangle Diagram:
+  - Plot with 'IL' on the vertical axis, 'toluene' on the horizontal axis, right angle at the bottom left.
+  - Transform for a right-angled layout, similarly plot and connect points, using the same color scheme.
+  - Label axes with 'IL' and 'toluene', and draw borders for the triangle and remove axis ticks and labels for a clean look.
+Display both diagrams side-by-side, maintaining an equal aspect ratio for comparison.

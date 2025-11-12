@@ -1,0 +1,88 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkInteractionStyle`  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`  
+   - `VTK_VERSION_NUMBER`, `vtkLookupTable`, and `vtkVersion` from `vtkmodules.vtkCommonCore`  
+   - `vtkSphere` from `vtkmodules.vtkCommonDataModel`  
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes`, and `vtkProbeFilter` from `vtkmodules.vtkFiltersCore`  
+   - `vtkClipDataSet` from `vtkmodules.vtkFiltersGeneral`  
+   - `vtkSphereSource` from `vtkmodules.vtkFiltersSources`  
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`  
+   - `vtkActor`, `vtkCamera`, `vtkDataSetMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`.
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define File Path:  
+   - Set the file path to `'TissueLens_FullHead.mhd'`.
+
+3. Initialize Variables:  
+   - Create a `colors` object using `vtkNamedColors`.  
+   - Define colors:  
+     - SkinColor: `[240, 184, 160, 255]`  
+     - BackfaceColor: `[255, 229, 200, 255]`  
+     - BkgColor: `[51, 77, 102, 255]`.
+
+4. Read Volume Data:  
+   - Use `vtkMetaImageReader` to read the file `'TissueLens_FullHead.mhd'`.  
+   - Update the reader to process the data.
+
+5. Extract Skin Isosurface:  
+   - Check if VTK version is 8.2 or higher using `vtk_version_ok(8, 2, 0)`.  
+   - Use `vtkFlyingEdges3D` if available; otherwise, use `vtkMarchingCubes`.  
+   - Set the contour value to 500 for skin extraction.
+
+6. Clip Isosurface with Sphere:  
+   - Define a sphere with radius 50 and center at `(73, 52, 15)`.  
+   - Use `vtkClipDataSet` to clip the isosurface using the sphere.  
+   - Enable clip scalars and update the clipper.
+
+7. Create Skin Actor:  
+   - Create a mapper for the clipped skin data.  
+   - Create an actor for the skin, set its diffuse color to SkinColor, and define backface properties.
+
+8. Define Lens Model:  
+   - Use `vtkSphereSource` to create a sphere matching the clipper's geometry (radius 50, center at `(73, 52, 15)`).  
+   - Set resolution parameters for the sphere.
+
+9. Probe Volume with Lens Geometry:  
+   - Use `vtkProbeFilter` to sample the input volume using the lens model as geometry.  
+   - Connect the probe filter to the reader and lens model.
+
+10. Clip Lens Data:  
+    - Use `vtkClipDataSet` to clip the lens data at the isosurface value of 500.  
+    - Disable clip scalars and update the clipper.
+
+11. Define Grayscale Lookup Table:  
+    - Create a lookup table (`bw_lut`) with range `[0, 2048]`, saturation `[0, 0]`, hue `[0, 0]`, and value `[0.2, 1]`.  
+    - Build the lookup table.
+
+12. Create Lens Actor:  
+    - Create a mapper for the clipped lens data using the grayscale lookup table.  
+    - Set the scalar range from the lens clipper output.  
+    - Create an actor for the lens and set its mapper.
+
+13. Set Up Camera and Renderer:  
+    - Define a camera with view up direction `(0, 0, -1)`, position `(0, -1, 0)`, and focal point `(0, 0, 0)`.  
+    - Compute the view plane normal, set azimuth to 30 degrees, and elevation to 30 degrees.
+
+14. Create Renderer and Window:  
+    - Create a renderer (`a_renderer`), render window (`ren_win`), and interactor (`iren`).  
+    - Add the lens and skin actors to the renderer.  
+    - Set the active camera, reset the camera view, and dolly the camera by 1.5 times.
+
+15. Finalize Renderer Settings:  
+    - Set the background color to BkgColor.  
+    - Set the render window size to `(640, 480)` and window name to `'TissueLens'`.  
+    - Reset the camera clipping range.
+
+16. Start Event Loop:  
+    - Render the scene.  
+    - Initialize and start the interactor event loop.
+
+17. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "TissueLens_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.

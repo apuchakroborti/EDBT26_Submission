@@ -1,0 +1,52 @@
+This Python script visualizes letter frequency in a text file using VTK (Visualization Toolkit) to create a 3D representation of letters extruded based on their frequency. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `re`: For regular expressions
+   - `Counter` from `collections`: To count letter frequencies
+   - Various modules from `vtkmodules` for VTK visualization
+
+2. **Define File Name**:
+   - `fileName = 'AlphaFrequency_Gettysburg.txt'`: The text file to analyze
+
+3. **Initialize Colors**:
+   - `colors = vtkNamedColors()`: Create a color object for VTK
+
+4. **Read and Process the Text File**:
+   - Open the specified file
+   - Initialize a `Counter` object named `freq`
+   - Read each line, remove digits, convert to lowercase, and count letter frequencies using regular expressions
+   - Calculate the maximum frequency (`maxFreq`)
+   - Create a list of keys representing all lowercase letters (`keys = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.lower())`)
+
+5. **Setup VTK Rendering**:
+   - Create renderer, render window, and interactor objects:
+     - `ren = vtkRenderer()`
+     - `renWin = vtkRenderWindow()`
+     - `iren = vtkRenderWindowInteractor()`
+   - Add the renderer to the render window
+   - Set the render window for the interactor
+
+6. **Setup Letters**:
+   - Initialize empty lists for letters, extrusions, mappers, and actors
+   - Loop through each letter in `keys`:
+     - Create a `vtkVectorText` object for each letter (`letters[i]`)
+     - Set the text of the vector text to the uppercase version of the current key
+     - Create a `vtkLinearExtrusionFilter` object (`extrude[i]`) and configure it with the vector text as input, set extrusion type, vector direction, and scale factor based on frequency
+     - Create a `vtkPolyDataMapper` object (`mappers[i]`) and set its input to the extruded letter
+     - Create a `vtkActor` object (`actors[i]`), set its mapper, color, and visibility (off if frequency is zero)
+     - Add each actor to the renderer
+
+7. **Position Actors**:
+   - Loop through actors in a grid pattern:
+     - Set positions for each actor based on x and y coordinates
+     - Adjust y position after every 13 letters
+
+8. **Configure Renderer**:
+   - Reset camera, set background color, adjust camera elevation, azimuth, dolly, and reset clipping range
+   - Set render window size and name
+
+9. **Start Interaction**:
+   - `iren.Start()`: Begin the rendering process
+
+10. **Main Function Execution**:
+    - If this script is run directly (`if __name__ == '__main__'`), call the `main()` function to execute all steps above

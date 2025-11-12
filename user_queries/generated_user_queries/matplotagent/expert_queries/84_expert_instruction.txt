@@ -1,0 +1,24 @@
+Write a python script to draw the phase diagram of water with the provided data, named "84_h5_data.h5":
+1. Prepare the Axes:
+- Create a horizontal axis for temperature, marking one scale in Celsius (0°C to 100°C) and another in Kelvin (273.15 K to 647.396 K). 
+    These scales should be aligned so that each temperature in Celsius matches its corresponding value in Kelvin.
+- Create a vertical axis for pressure, marking one scale in Pascals (from 611.657 Pa to 22.064 MPa, possibly using a logarithmic scale for better visualization) 
+    and another in bars and millibars. Align these scales so that, for example, 100 kPa corresponds with 1 bar.
+- Set X1 to x1 - 273.15 to convert Kelvin to Celsius for the top X-axis. Set Y1 to y1/100000 to convert Pascals to bars for the right Y-axis. 
+    Adjust the right Y-axis to have a Log10 scale type.
+2. Plot the Phase Boundaries:
+- Utilize datasets `Pressure(Gas)` and `Pressure(Liquid)` from your data to plot the boundary line between the solid, liquid, and gas phases, curving from the triple point to the critical point.
+- Use datasets `Temperature(K)` and `Temperature(K).1` to plot the boundary between solid and liquid phases, which typically curves less dramatically than the solid-liquid-gas line.
+3. Highlight Special Points:
+- Mark the triple point at 273.16 K and 611.657 Pa, where solid, liquid, and gas coexist.
+- Indicate the critical point at 647.396 K and 22.064 MPa, where the distinction between liquid and gas phases ends.
+4. Insert Red Lines:
+- Draw a vertical red line at 0°C and 273.15 K to represent the freezing point at 1 atm, intersecting the solid-liquid boundary.
+- Add another vertical red line at 100°C and 373.15 K for the boiling point at 1 atm, intersecting the liquid-gas boundary.
+5. Label and Color-Code:
+- Clearly label each axis with its respective units.
+- Color the different regions of the diagram to represent the solid (blue), liquid (green), and gas (yellow) phases.
+- Annotate the diagram with the special points and the red lines, including their corresponding temperature and pressure values.
+6. Grid and Scale:
+- It may be helpful to include a grid to accurately read off pressures and temperatures at various points on the diagram.
+- Ensure that the scale is logarithmic for pressure if you are spanning wide ranges, as phase diagrams often do.

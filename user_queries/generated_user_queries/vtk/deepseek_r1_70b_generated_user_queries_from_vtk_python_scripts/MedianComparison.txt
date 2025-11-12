@@ -1,0 +1,91 @@
+1. Import Libraries:  
+   - `vtkmodules.vtkRenderingOpenGL2`  
+   - `vtkImageData` from `vtkmodules.vtkCommonDataModel`  
+   - `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`  
+   - `vtkImageCast` and `vtkImageThreshold` from `vtkmodules.vtkImagingCore`  
+   - `vtkImageGaussianSmooth` and `vtkImageMedian3D` from `vtkmodules.vtkImagingGeneral`  
+   - `vtkImageMathematics` from `vtkmodules.vtkImagingMath`  
+   - `vtkImageNoiseSource` from `vtkmodules.vtkImagingSources`  
+   - `vtkInteractorStyleImage` from `vtkmodules.vtkInteractionStyle`  
+   - `vtkImageActor`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. Define File Name:  
+   - Set the file name to `'MedianComparison_FullHead.mhd'`.
+
+3. Read Image Data:  
+   - Create a `readerFactory` using `vtkImageReader2Factory`.  
+   - Create a `reader` object and set its file name.  
+   - Update the reader to load the image data.
+
+4. Extract Scalar Range:  
+   - Get the scalar range from the image data and store it in `scalarRange`.
+
+5. Calculate Middle Slice:  
+   - Compute the middle slice index based on the image extent.
+
+6. Cast Image Data:  
+   - Create a `cast` object using `vtkImageCast`.  
+   - Set the input to the reader's output and cast the data to double precision.  
+   - Update the cast operation.  
+   - Copy the casted output to `originalData`.
+
+7. Create Noisy Data:  
+   - Declare an empty `noisyData` image.
+
+8. Add Shot Noise:  
+   - Call the `AddShotNoise` function with parameters:  
+     - Input image: `originalData`  
+     - Output image: `noisyData`  
+     - Noise amplitude: `2000.0`  
+     - Noise fraction: `0.1`  
+     - Extent from the reader's output.
+
+9. Apply Median Filter:  
+   - Create a `median` object using `vtkImageMedian3D`.  
+   - Set the input to `noisyData`.  
+   - Set the kernel size to `(5, 5, 1)`.
+
+10. Apply Gaussian Filter:  
+    - Create a `gaussian` object using `vtkImageGaussianSmooth`.  
+    - Set the dimensionality to `2`.  
+    - Set the input to `noisyData`.  
+    - Set standard deviations to `(2.0, 2.0)`.  
+    - Set radius factors to `(2.0, 2.0)`.
+
+11. Set Up Actors:  
+    - Create actors for original, noisy, Gaussian-smoothed, and median-filtered data:  
+      - `originalActor`, `noisyActor`, `gaussianActor`, `medianActor`.  
+    - Set the input data or connection for each actor.  
+    - Set color window, color level, and interpolation type to nearest for all actors.  
+    - Set the Z-slice to the middle slice for all actors.
+
+12. Set Up Renderers:  
+    - Create four renderers: `originalRenderer`, `noisyRenderer`, `gaussRenderer`, `medianRenderer`.  
+    - Add the corresponding actor to each renderer.
+
+13. Organize Renderers in a Grid:  
+    - Define the number of grid dimensions (2x2).  
+    - Set the size of the render window based on the number of renderers and grid dimensions.  
+    - Calculate viewports for each renderer and add them to the render window.
+
+14. Set Up Interactor:  
+    - Create a `renderWindowInteractor` and set its style to `vtkInteractorStyleImage`.  
+    - Set the render window and initialize the interactor.
+
+15. Synchronize Cameras:  
+    - Render the scene.  
+    - Dolly the camera in the first renderer.  
+    - Reset the camera clipping range.  
+    - Share the active camera across all renderers.
+
+16. Start Interaction:  
+    - Start the interaction loop with `renderWindowInteractor.Start()`.
+
+17. Define AddShotNoise Function:  
+    - Create a noise source using `vtkImageNoiseSource`.  
+    - Set up two threshold filters to generate shot noise.  
+    - Combine the thresholds using `vtkImageMathematics` to add the noise.  
+    - Add the noise to the input image and update the output.
+
+18. Run Main Function:  
+    - Execute the `main()` function if the script is run as the main module.

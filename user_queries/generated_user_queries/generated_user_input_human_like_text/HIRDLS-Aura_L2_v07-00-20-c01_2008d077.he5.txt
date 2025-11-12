@@ -1,0 +1,15 @@
+Here's a rewritten version of the description, condensed by about 40% while keeping as many implementation details as possible:
+
+"I'm trying to understand a Python script that reads an HDF-EOS5 file and creates a plot. Here's what it does:
+
+It starts by importing necessary libraries like `datetime`, `os`, `matplotlib`, `numpy`, and `h5py`.
+
+The script defines a constant `FILE_NAME` for the HDF-EOS5 file to be read.
+
+Next, it opens the file in read-only mode using `h5py.File` and reads three datasets: ozone (O3) data, pressure data, and time data. It also reads attributes like units, titles, and fill values from each dataset.
+
+The script then processes the data by replacing fill values with NaNs and converting the time data to a `datetime` object.
+
+It creates a plot using `matplotlib`, where it plots ozone (O3) data against pressure data. The x-axis tick labels are formatted to use scientific notation, and the y-axis scale is set to logarithmic. The plot title includes the file name, ozone title, and date string.
+
+Finally, the script saves the plot to a PNG file with a customized name based on the HDF5 file's base name."

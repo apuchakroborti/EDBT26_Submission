@@ -1,0 +1,90 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file and generates visualizations based on specific datasets and attributes.
+
+1. Read Datasets:
+   - Extract latitude data from `d_lat`, longitude data from `d_lon` from the sub group path `Data_1HZ/Geolocation`.
+   - Extract surface temperature data from `Atmosphere/d_Surface_temp`, time data from `Time/d_UTCTime_1` from the group`from Data_1HZ`
+
+3. Extract Attributes:
+   - For latitude, read `valid_min` and `valid_max`, combine into `latitude_valid`.
+   - For longitude, read `valid_min` and `valid_max`, combine into `longitude_valid`.
+   - For surface temperature, read `valid_min`, `valid_max`, `units`, and `long_name`, combining ranges into `surfacetemperature_valid`.
+
+4. Data Validation:
+   - Replace latitude values outside `latitude_valid[0]` and `latitude_valid[1]` with NaN.
+   - Apply similar validation to longitude using `longitude_valid`.
+   - Apply similar validation to surface temperature using `surfacetemperature_valid`.
+
+5. Plotting Setup:
+   - Create a figure of size 15x6 inches with two subplots arranged horizontally (1 row, 2 columns).
+   - Configure the first subplot with labels: x-axis as 'Elapsed Time (Minutes)', y-axis using the units from surface temperature data.
+
+6. Map Visualization:
+   - Use cylindrical projection with low resolution.
+   - Set latitude from -90 to 90 and longitude from -180 to 180.
+   - Add coastlines with linewidth 0.5, parallels at intervals of 30 degrees from -90 to 120, and meridians every 45 degrees from -180 to 180.
+
+7. Scatter Plot on Map:
+   - Use longitude and latitude for coordinates, surface temperature data for color.
+   - Set markers size to 0.1, colormap to jet, no edges or linewidth.
+
+8. Colorbar and Title:
+   - Add a colorbar labeled with the units from surface temperature.
+   - Set plot title combining HDF5 file basename and surface temperature's long_name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the user's request carefully.
+
+The main task is a Python script that processes an HDF5 file and generates visualizations. The steps include reading datasets, extracting attributes, validating data, setting up plots, visualizing maps, creating scatter plots, adding colorbars, and titles.
+
+First, I'll tackle the HDF5 Dataset Access part. The user needs to access specific groups and datasets within the HDF5 file. They mention accessing latitude and longitude from 'Data_1HZ/Geolocation', surface temperature from 'Atmosphere/d_Surface_temp', and time data from 'Time/d_UTCTime_1'. Also, they need to extract attributes like valid_min and valid_max for each dataset.
+
+Next, the NumPy-based Data Preprocessing involves handling invalid values. They want to replace latitude, longitude, and surface temperature values outside their valid ranges with NaN. This means using numpy functions to apply masks or where conditions based on the extracted attributes.
+
+Lastly, the Plotting and Visualization part requires setting up a figure with two subplots. The first subplot is for time vs. surface temperature, while the second is a map visualization. They specify using a cylindrical projection, adding coastlines, parallels, meridians, and a colorbar for the scatter plot of surface temperature data.
+
+I need to make sure each sub-query is focused on its specific domain without overlapping with others. So, I'll structure each part clearly, ensuring all required elements are included as per the user's instructions.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access latitude and longitude datasets from the subgroup path `Data_1HZ/Geolocation` in an HDF5 file using h5py? How to extract surface temperature data from `Atmosphere/d_Surface_temp` and time data from `Time/d_UTCTime_1` within the group `Data_1HZ`? How to read attributes such as `valid_min`, `valid_max`, `units`, and `long_name` for these datasets?
+
+NumPy Data Preprocessing Sub-query:
+How to replace latitude values outside a specified range with NaN using NumPy? How to apply similar validation to longitude and surface temperature data using their respective valid ranges? How to handle `_FillValue` and use functions like `np.where` or `np.ma.masked_where` for masking invalid data?
+
+Plotting and Visualization Sub-query:
+How to create a figure of size 15x6 inches with two horizontal subplots using matplotlib? How to configure the first subplot with x-axis as 'Elapsed Time (Minutes)' and y-axis using surface temperature units? How to visualize geospatial data on a cylindrical projection map with coastlines, parallels every 30 degrees from -90 to 120, and meridians every 45 degrees from -180 to 180? How to create a scatter plot on the map using longitude and latitude coordinates with surface temperature as color, marker size 0.1, colormap jet, no edges or linewidth? How to add a colorbar labeled with surface temperature units and set the plot title combining HDF5 file basename and surface temperature's long_name?

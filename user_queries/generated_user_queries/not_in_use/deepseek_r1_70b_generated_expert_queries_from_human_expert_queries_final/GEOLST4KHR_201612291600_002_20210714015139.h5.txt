@@ -1,0 +1,25 @@
+Create a Python script that reads an HDF5 file and generates a map visualization following these steps:
+
+1. Import Libraries: Include necessary libraries such as `os`, `re`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Read HDF5 File: Open the HDF5 file in read-only mode.
+
+3. Extract Data and Attributes:
+   - Extract datasets including `/lst` (data of interest), `/lon` (longitude values), and `/lat` (latitude values).
+   - Update data types for `/lst`, `/lon`, and `/lat` to `np.float64`.
+   - Extract attributes: 'scale_factor', 'add_offset', 'units' (decode using `decode()`), '_FillValue', and 'long_name' (description, decode using `decode()`).
+
+4. Preprocess Data:
+   - Replace `_FillValue` in `/lst` data with `np.NaN`.
+   - Apply scaling: `lst_data = scale_factor  lst_data + add_offset`.
+   - Mask data using `numpy.masked_array` with `np.isnan` for `/lst`, `/lat`, and `/lon`.
+
+5. Create Map Visualization:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals of [-90, -60, -30, 0, 30, 60, 90] and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+   - Use `scatter` function with parameters: longitude, latitude, data, marker size 0.1, colormap `plt.cm.jet`, no edge colors, and linewidth 0.
+   - Add a colorbar with label set to the decoded 'units' attribute.
+
+This structure ensures all steps are clear for generating the required code.

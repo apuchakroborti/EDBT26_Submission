@@ -1,0 +1,13 @@
+A Python script. It reads an HDF-EOS5 file, extracts specific datasets, manipulates the data, and creates a contour plot.
+
+The script starts by opening the HDF-EOS5 file and reading various datasets: 
+    `HDFEOS INFORMATION/NO2Ascending` (a 3D dataset containing NO2 data), 
+    `HDFEOS INFORMATION/Latitude` (a 1D dataset containing latitude values), 
+    `HDFEOS INFORMATION/Pressure` (a 1D dataset containing pressure values), 
+    `HDFEOS INFORMATION/Time` (a scalar dataset containing the time of measurement), 
+    and `HDFEOS INFORMATION/nCoeffs` (a scalar dataset containing the number of coefficients).
+
+The script then reads attributes associated with each dataset, such as units, titles, and fill values. 
+It performs some data manipulation, including converting the date stored in `Time`, replacing fill values with NaN values, and creating a masked array for the `NO2Ascending` dataset.
+
+Finally, the script creates a contour plot of the `NO2Ascending` dataset using latitude on the x-axis and pressure on the y-axis, adds a colorbar, labels the axes, and saves the plot as a PNG file.

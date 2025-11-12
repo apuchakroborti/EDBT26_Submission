@@ -1,0 +1,36 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code imports several Python modules: `os`, `matplotlib.pyplot` (as `plt`), `numpy` (as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Defining constants and file paths**
+
+The code defines a constant `FILE_NAME`, the path to an HDF5 file, specifically an ICESat-2 ATL06 version 6 L3A file.
+
+**Opening the HDF5 file and accessing datasets**
+
+The code opens the HDF5 file using `h5py` and accesses several datasets:
+
+1. **Ground Track L1**: `latvar = f['/gt1l/land_ice_segments/latitude']` and `longitude = lonvar[:]`.
+2. **Land ice height**: `datavar = f['/gt1l/land_ice_segments/h_li']`, `data = datavar[:]`, and retrieves attributes like units, long name, and fill value.
+
+**Handling FillValue**
+
+The code replaces the fill value with NaN values: `data[data == _FillValue] = np.nan` and `data = np.ma.masked_where(np.isnan(data), data)`.
+
+**Creating a map using Basemap**
+
+The code creates a map using Basemap with an equidistant cylindrical projection, low-resolution coastline database, and draws coastlines, parallels, and meridians.
+
+**Plotting data on the map**
+
+The code plots the land ice height data on the map using `m.scatter` with colors representing the land ice height values.
+
+**Adding a colorbar and title**
+
+The code adds a colorbar with label set to the units of the data and sets the title of the plot to include the file name and long name of the data.
+
+**Saving the plot**
+
+Finally, the code saves the plot as a PNG file with the same base name as the HDF5 file but with a `.py.png` extension.

@@ -1,0 +1,110 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a script that performs the following steps:
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Define a constant FILE_NAME with the name of the HDF5 file to be processed.
+
+3. Open the specified HDF5 file in read-only mode.
+
+4. Extract datasets from the file:
+   - `/RetrievalResults/xco2` for xCO2 data
+   - `/SoundingGeometry/sounding_latitude_geoid` for latitude data
+   - `/SoundingGeometry/sounding_longitude_geoid` for longitude data
+   - `/SoundingGeometry/sounding_altitude` for altitude data
+   - `/RetrievalHeader/sounding_time_tai93` for time data
+
+5. Retrieve the 'Units' attribute from both xco2 and altitude datasets at index 0.
+
+6. Create a figure with two subplots:
+   - First subplot: Orthographic projection map with low resolution, centered at lat_0 = -55 and lon_0 = 120, displaying the sounding trajectory using latitude and longitude coordinates.
+   - Second subplot: Line plot showing time vs xco2 data, with a twin axis for time vs altitude data.
+
+7. Customize the map by adding:
+   - Coastlines with a line width of 0.5
+   - Parallels at latitudes [-80, 0, 20]
+   - Meridians at longitudes [-180, 181, 20]
+
+8. Customize both plots by setting appropriate axis labels, titles, and tick formats.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+FILE_NAME = 'your_file.h5'
+with h5py.File(FILE_NAME, 'r') as f:
+    xco2 = f['/RetrievalResults/xco2'][0]
+    altitude = f['/SoundingGeometry/sounding_altitude'][0]
+    time = f['/RetrievalHeader/sounding_time_tai93'][0]
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+masked_xco2 = np.ma.masked_where(xco2 == xco2._FillValue, xco2)
+min_xco2 = np.nanmin(masked_xco2)
+max_xco2 = np.nanmax(masked_xco2)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap, cm
+
+# Create figure with two subplots
+fig = plt.figure()
+ax1 = fig.add_subplot(211)
+ax2 = fig.add_subplot(212, sharex=ax1)
+
+# Set up the map
+map = Basemap(projection='ortho', lat_0=-55, lon_0=120, resolution='l')
+map.drawcoastlines(linewidth=0.5)
+map.drawparallels([-80, 0, 20], labels=[True, False, False, True])
+map.drawmeridians([-180, 181, 20], labels=[False, False, True, True])
+
+# Plot the trajectory on the map
+x, y = map(latitude_data, longitude_data)
+map.plot(x, y, 'r', latlon=True)
+
+# Plot time vs xco2 and altitude data in twin axes
+ax1.plot(time, masked_xco2, 'b')
+ax2.plot(time, altitude, 'g')
+
+# Set up the labels for the plots
+ax1.set_ylabel('XCO2', fontsize=14)
+ax2.twinx().set_ylabel('Altitude', fontsize=14)
+ax1.tick_params(axis='both', which='major', labelsize=14)
+ax2.tick_params(axis='both', which='major', labelsize=14)
+plt.show()
+```

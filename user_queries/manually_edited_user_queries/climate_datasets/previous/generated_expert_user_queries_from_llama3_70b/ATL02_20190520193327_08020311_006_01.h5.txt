@@ -1,0 +1,52 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `datetime`: for working with dates and times
+2. `os`: for interacting with the operating system (e.g., getting the current working directory)
+3. `cartopy.crs` as `ccrs`: for creating map projections
+4. `matplotlib.pyplot` as `plt`: for plotting data
+5. `h5py`: for reading and manipulating HDF5 files
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME` which is the name of the HDF5 file to be read: `"ATL02_20190520193327_08020311_006_01.h5"`.
+
+**Reading HDF5 File**
+
+The code opens the HDF5 file in read mode (`"r"`), using the `h5py` library, and assigns it to a variable `f`.
+
+**Extracting Data from HDF5 File**
+
+The code extracts several datasets from the HDF5 file:
+
+1. `/gpsr/navigation/latitude`: extracted as `latvar`, then converted to a NumPy array `latitude`
+2. `/gpsr/navigation/longitude`: extracted as `lonvar`, then converted to a NumPy array `longitude`
+3. `/atlas/pce1/background/bg_cnt_50shot_s`: extracted as `elevvar`, then converted to a NumPy array `elev`. Additionally, the code extracts the units and long name of this dataset.
+4. `/atlas/pce1/background/delta_time`: extracted as `timevar`, then converted to a NumPy array `time`
+
+**Plotting Data**
+
+The code creates two subplots using `matplotlib`:
+
+**Subplot 1: Time vs. Counts**
+
+1. Creates a figure with a single subplot (`ax1`)
+2. Plots the elapsed time (relative to the first time value) against the elevation data (`elev`) using blue circles (`"bo"`).
+3. Sets the x-axis label to "Seconds from <timestamp>" and y-axis label to the units of the elevation data.
+4. Sets the title of the subplot to include the file name, dataset name, and long name.
+
+**Subplot 2: Trajectory**
+
+1. Creates a second subplot (`ax3`) with an Orthographic projection centered at the middle location (latitude and longitude).
+2. Adds grid lines and coastlines to the plot.
+3. Plots the trajectory of the flight path using blue lines.
+4. Marks the starting point of the flight path with a red circle and adds an annotation text "START" offset by 200 km.
+
+**Saving Plot**
+
+The code saves the figure as a PNG file, named after the HDF5 file with a `.py.png` extension.
+
+Overall, this code reads data from an HDF5 file, extracts specific datasets, and visualizes them using two subplots: one showing time vs. counts and another showing the trajectory of the flight path.

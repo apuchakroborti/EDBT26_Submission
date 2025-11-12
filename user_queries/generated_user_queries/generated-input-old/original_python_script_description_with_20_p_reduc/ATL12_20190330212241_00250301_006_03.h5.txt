@@ -1,0 +1,40 @@
+Here is the reduced description while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports several Python libraries: `os`, `matplotlib.pyplot` (aliased as `plt`), `numpy` (aliased as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Defining constants**
+
+Two constants are defined: `FILE_NAME`, the path to an HDF5 file, and `basename`, obtained using `os.path.basename(FILE_NAME)`.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read-only mode using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    ...
+```
+**Accessing datasets within the HDF5 file**
+
+Three datasets are accessed:
+
+1. **Latitude dataset**: `/gt1l/ssh_segments/latitude`
+2. **Longitude dataset**: `/gt1l/ssh_segments/longitude`
+3. **Height dataset**: `/gt1l/ssh_segments/heights/swh`
+
+**Visualizing the data using Basemap**
+
+The code creates an equidistant cylindrical projection using `Basemap` and adds features to the map:
+
+1. **Coastlines**
+2. **Parallels and meridians**
+3. **Scatter plot**: displaying height data at each location
+4. **Colorbar**
+5. **Title**
+
+**Saving the plot to a PNG file**
+
+Finally, the code saves the plot to a PNG file with the same name as the HDF5 file, but with a `.py.png` extension.
+
+I removed some of the redundant explanations and focused on keeping the essential implementation details. Let me know if you'd like me to make any further adjustments!

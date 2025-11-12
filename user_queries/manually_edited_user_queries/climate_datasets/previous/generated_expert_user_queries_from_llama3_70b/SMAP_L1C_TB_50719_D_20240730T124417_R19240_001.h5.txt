@@ -1,0 +1,57 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Step 1: Importing necessary libraries**
+
+The code starts by importing several libraries:
+* `os`: for operating system-related functions
+* `matplotlib.pyplot` (as `plt`): for creating plots and visualizations
+* `numpy` (as `np`): for numerical computations and array operations
+* `mpl_toolkits.basemap` (as `Basemap`): for creating maps and geospatial visualizations
+* `h5py`: for working with HDF5 files
+
+**Step 2: Defining constants**
+
+The code defines a constant `FILE_NAME` which is the name of the HDF5 file to be read.
+
+**Step 3: Opening the HDF5 file**
+
+The code opens the HDF5 file in read mode (`"r"`), using the `h5py.File` function. The file object is assigned to the variable `f`.
+
+**Step 4: Reading dataset metadata and data**
+
+The code reads metadata and data from a specific dataset within the HDF5 file:
+* `name`: the path to the dataset `/Global_Projection/cell_tb_h_fore`
+* `data`: the actual data values in the dataset
+* `units`, `long_name`, `_FillValue`, `valid_max`, and `valid_min`: metadata attributes of the dataset, decoded from ASCII using the `decode` method
+
+**Step 5: Data processing**
+
+The code performs some data processing:
+* It identifies invalid data points by checking if they are outside the valid range or equal to the fill value.
+* It replaces these invalid points with NaN (Not a Number) values.
+* It creates a masked array using `np.ma.masked_where` to ignore NaN values.
+
+**Step 6: Reading geolocation data**
+
+The code reads geolocation data from two separate datasets:
+* `latitude`: `/Global_Projection/cell_lat`
+* `longitude`: `/Global_Projection/cell_lon`
+
+**Step 7: Creating a map**
+
+The code creates a map using the `Basemap` library:
+* It sets up a cylindrical projection with a resolution of "l" (low).
+* It defines the map boundaries and draws coastlines, parallels, and meridians.
+* It scatters the data points on the map using `m.scatter`, with colors representing the data values.
+
+**Step 8: Adding a colorbar**
+
+The code adds a colorbar to the map using `m.colorbar`.
+
+**Step 9: Setting up the plot title**
+
+The code sets up the plot title by combining the file name and long name of the dataset, using `plt.title`.
+
+**Step 10: Saving the plot**
+
+Finally, the code saves the plot as a PNG image file with a name derived from the HDF5 file name, using `fig.savefig`.

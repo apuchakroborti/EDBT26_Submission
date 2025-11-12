@@ -1,0 +1,81 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. File Input and Constants
+   - Specify the input file `MOP02N-20180311-L2V19.9.2.he5` stored in the constant `FILE_NAME`.
+   - Import necessary libraries: `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Extracting Data
+   - Extract data from the HDF5 dataset at `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn`.
+   - Read the contents into an array called `data`, taking only the first column.
+   - Retrieve the `units` and `_FillValue` attributes associated with this dataset.
+   - Replace the `_FillValue` in the `RetrievedCOTotalColumn` data with `numpy.nan`.
+
+3. Extracting Geolocation Data
+   - Extract latitude values from `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude`.
+   - Extract longitude values from `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude`.
+
+4. Creating a Map
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels using `numpy.arange(-90, 91, 45)`.
+   - Draw meridians using `numpy.arange(-180, 181, 45)` and set labels to `[True, False, False, True]`.
+
+5. Scatter Plot
+   - Create a scatter plot with parameters: longitude, latitude, data array `c=data`, marker size `s=1`, colormap `plt.cm.jet`, no edge colors (`edgecolors=None`), and line width `linewidth=0`.
+
+6. Customizing the Map
+   - Add a colorbar to represent the units of the data.
+   - Set the colorbar label using the `units` attribute from the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the user's task, they're dealing with an HDF5 file named `MOP02N-20180311-L2V19.9.2.he5`. They want to access this file using h5py and extract specific datasets like `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn` along with its attributes such as units and _FillValue. So, the first sub-query should focus on how to use h5py to open the file, access these datasets, retrieve their attributes, and handle metadata.
+
+Next, they're dealing with data preprocessing using NumPy. They need to replace the _FillValue in their data array with NaNs. This involves understanding how to identify and manipulate masked values or specific fill values in a NumPy array. So, the second sub-query should cover techniques for handling _FillValue, applying masks, and any necessary preprocessing steps like min, max, etc.
+
+Lastly, they want to visualize this data on a map using matplotlib's Basemap toolkit. They need to create a scatter plot with longitude and latitude, add coastlines, draw parallels and meridians at specific intervals, and include a colorbar labeled with the units from their dataset. The third sub-query should focus on how to set up the map projection, customize the plot elements, and ensure all these visual aspects are correctly implemented.
+
+I need to make sure each sub-query is clear and targets only one technical domain as specified. Let me structure them accordingly.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to access an HDF5 file named MOP02N-20180311-L2V19.9.2.he5, extract the dataset at /HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn, retrieve its units and _FillValue attributes, and access latitude and longitude datasets from their respective paths.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue in a NumPy array with NaNs, handle masked data using np.where or np.ma.masked_where, and process the first column of an HDF5 dataset for visualization.
+
+Plotting and Visualization Sub-query:
+How to create a map plot using matplotlib's Basemap toolkit, add coastlines, draw parallels and meridians at specified intervals, generate a scatter plot with longitude and latitude data, customize the colorbar with units from the dataset, and set appropriate labels.

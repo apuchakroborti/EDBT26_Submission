@@ -1,0 +1,35 @@
+Create a Python script to process and visualize data from an HDF5 file. The script should:
+
+1. Import necessary libraries: os, matplotlib.pyplot, numpy, mpl_toolkits.basemap.
+
+2. Define a constant FILE_NAME pointing to the HDF5 file located at "ATL04_20181117090604_07600101_006_02.h5".
+
+3. Open the HDF5 file in read mode and access three datasets:
+   - `/profile_1/latitude` for latitude data
+   - `/profile_1/longitude` for longitude data
+   - `/profile_1/dem_h` for the main data
+
+4. Extract attributes from the main dataset:
+   - 'units' and 'long_name' using decode('ascii', 'replace')
+   - '_FillValue'
+
+5. Process the main data by converting it to float, replacing _FillValue with numpy NaN, and masking NaN values using numpy.ma.masked_where.
+
+6. Create a map using an equidistant cylindrical projection with low resolution, setting latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+
+7. Customize the map by adding:
+   - Coastlines with a line width of 0.5
+   - Parallels at latitudes [-90, -60, -30, 0, 30, 60, 90]
+   - Meridians at longitudes [-180, -135, -90, -45, 0, 45, 90, 135, 180]
+
+8. Generate a scatter plot on the map with parameters:
+   - x = longitude data
+   - y = latitude data
+   - c = main data
+   - marker size (s) of 0.1
+   - colormap 'jet'
+   - no edge colors or linewidth
+
+9. Add a colorbar to the bottom of the map, labeled with the units from the main dataset.
+
+10. Set the title of the visualization to include the base filename and long_name attribute of the main dataset.

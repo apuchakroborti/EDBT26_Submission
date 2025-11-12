@@ -1,0 +1,70 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            File Input and Constants
+- Specify the input file as `MOP02J-20131129-L2V19.9.3.he5` stored in the constant `FILE_NAME`.
+
+Extracting Data
+- Extract data from the HDF5 dataset at `RetrievedSurfaceTemperature` from the group `/HDFEOS/SWATHS/MOP02/Data Fields`.
+- Read the first column of this dataset into an array named `data`.
+- Retrieve the `units` and `_FillValue` attributes.
+- Decode the `units` string using the `decode()` function.
+
+Data Preprocessing and Cleaning
+- Replace values in `data` that match `_FillValue` with `numpy.nan`.
+
+Extracting Geolocation Data
+- Extract latitude data from `Latitude`, longitude data from `Longitude` from the group `/HDFEOS/SWATHS/MOP02/Geolocation Fields`
+
+Creating a Map
+- Add coastlines with a line width of 0.5.
+- Draw parallels from -90 to 90 with interval of 45 degree.
+- Draw meridians using from -180 to 180 with interval of 45 degree and set labels to left and bottom
+
+Scatter Plot Configuration
+- Use the `scatter` function with parameters: longitude, latitude, `c=data`, marker size `s=1`, colormap `plt.cm.jet`, no edge colors (`edgecolors=None`), and line width `linewidth=0`.
+
+Customizing the Map
+- Add a colorbar to represent data units.
+- Set the colorbar label using the decoded `units` value.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to access datasets within an HDF5 file using `h5py`, specifically accessing data at a path like `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedSurfaceTemperature`, and retrieving attributes such as `units` and `_FillValue`.
+
+NumPy Data Preprocessing Sub-query:
+How to replace specific values (identified by `_FillValue`) with `numpy.nan` in a NumPy array, and how to handle masked arrays using `np.ma.masked_where`.
+
+Plotting and Visualization Sub-query:
+How to create a map using `matplotlib` and `mpl_toolkits.basemap` or `cartopy`, including drawing coastlines, parallels, and meridians, configuring projections, adding a colorbar with a custom label, and creating a scatter plot with specified color map, marker size, and edge color settings.

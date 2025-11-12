@@ -1,0 +1,18 @@
+A Python program to access and visualize radiometer data from a SMAP L1A HDF5 file. 
+The program should import necessary libraries such as os, datetime, h5py, numpy, matplotlib, and Basemap.
+
+The program defines a function `run` that takes a filename as input. This function reads the specified HDF5 file and extracts datasets:
+- `moments16_right_ascension`
+- `moments16_lat` (latitude data)
+- `moments16_lon` (longitude data)
+from the group `HighResolution_Moments_Data`
+
+It retrieves attributes from the `moments16_right_ascension` dataset, including units, long_name, _FillValue, valid_max, and valid_min.
+
+The program calculates invalid data using logical comparisons for values exceeding valid ranges and matching fill values. It sets invalid data points to NaN and creates a masked array.
+
+For visualization, it initializes a Basemap with cylindrical projection, sets up the map boundaries such latitude values from -90 to 90 and longitude values from -180 to 180,
+ adds coastlines, draws parallels and meridians with specific labels, 
+and plots the data as a scatter plot with a jet colormap.
+
+Finally, it adds a colorbar with a label derived from the dataset's long_name attribute.

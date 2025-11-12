@@ -1,0 +1,68 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Loading Data
+The code loads an HDF5 file located at `9_fastMRI_brain_first_10_dcm_to_h5.h5`. 
+This file is opened in read-only mode.
+
+Accessing Data
+The script accesses a specific dataset within the HDF5 file, located at `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`, which represents brain MRI data. 
+This dataset is assigned to the variable `brain_vol`.
+
+Reshaping Data
+The 2D dataset `brain_vol` is reshaped into a 3D array with dimensions `(16, 32, 512)`, representing a volume of brain MRI data.
+
+Smoothing Data
+A Gaussian filter from scipy.ndimage is applied to the reshaped 3D dataset `brain_vol` to reduce noise and make it suitable for segmentation.
+
+Plotting Smoothed Images
+A subset of smoothed images from the 3D volume is plotted, displaying every 4th slice starting from the middle of the volume. Each image is displayed in grayscale.
+
+Segmenting Smoothed Images
+The smoothed images are segmented by applying another Gaussian filter and plotting the histogram of filtered values. 
+Based on the histogram, a range of bins for grey matter (16-25) is selected and a mask for the brain region is created.
+
+Plotting Brain Mask
+Finally, the brain mask is plotted, displaying a 2D slice of the mask in grayscale with the axis turned off to focus on the brain region.
+The code appears to be focused on processing and analyzing MRI data from the FAST_MRI_BRAIN dataset, specifically segmenting brain regions from smoothed images.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py` in read-only mode and access a dataset specified by a path like `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`.
+
+NumPy Data Preprocessing Sub-query:
+How to reshape a 2D NumPy array into a 3D array with specific dimensions (e.g., `(16, 32, 512)`), and how to apply a Gaussian filter using `scipy.ndimage` to a 3D NumPy array.
+
+Plotting and Visualization Sub-query:
+How to display 2D slices of a 3D NumPy array using `matplotlib`, configure the plot to show grayscale images, and turn off the axes for a cleaner visualization.

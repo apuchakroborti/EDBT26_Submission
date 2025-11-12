@@ -1,0 +1,67 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+1. `datetime`: for working with dates and times
+2. `os`: for interacting with the operating system (e.g., getting the current working directory)
+3. `matplotlib` and `matplotlib.pyplot`: for creating plots and visualizations
+4. `mpl_toolkits.basemap`: for creating maps and geospatial visualizations
+5. `numpy`: for numerical computations and data manipulation
+
+**Defining the `run` Function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is the path to an HDF5 file.
+
+**Reading Data from HDF5 File**
+
+The code checks if the `USE_NETCDF4` flag is set. If it is:
+
+1. It uses the `netCDF4` library to read data from the HDF5 file.
+2. It opens the file using `Dataset` and accesses the `Data_Fields` group.
+3. It reads various datasets (e.g., `ProfileOzone`, `Latitude`, `ProfilePressureLevels`, and `Date`) into NumPy arrays.
+4. It extracts attributes (e.g., units, long names) from each dataset.
+
+If `USE_NETCDF4` is not set:
+
+1. It uses the `h5py` library to read data from the HDF5 file.
+2. It opens the file using `h5py.File` and accesses the same datasets as above.
+3. It reads the data into NumPy arrays and extracts attributes in a similar manner.
+
+**Data Manipulation and Visualization**
+
+The code then performs the following operations:
+
+1. Converts the date from a six-digit number (YYYYMM) to a string using `datetime`.
+2. Applies a log scale to the y-axis (pressure levels) for better visualization.
+3. Creates a contour plot of the ozone data using `matplotlib`.
+4. Adds labels, titles, and a colorbar to the plot.
+
+**Saving the Plot**
+
+Finally, the code saves the plot as a PNG file with a name derived from the input HDF5 file name.
+
+**Main Script**
+
+The script checks if it's being run directly (i.e., not imported as a module) and:
+
+1. Sets the input HDF5 file name.
+2. Checks if an environment variable `HDFEOS_ZOO_DIR` is set; if so, it uses that directory to find the input file.
+3. Calls the `run` function with the input file name.
+
+**Program Perspective**
+
+The program's perspective is to read and visualize ozone data from an HDF5 file using Python. It provides a way to access and plot the data, including applying a log scale to the y-axis for better visualization. The code is designed to be flexible, allowing users to switch between `netCDF4` and `h5py` libraries for reading HDF5 files.
+
+**HDF5 Hierarchy**
+
+The code accesses datasets within the following hierarchy:
+
+* `/Data_Fields`
+	+ `ProfileOzone`
+	+ `Latitude`
+	+ `ProfilePressureLevels`
+	+ `Date`
+
+Each dataset has attributes (e.g., units, long names) that are extracted and used in the visualization.

@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks using the specified libraries and steps:
+
+1. Import necessary Libraries
+
+2. Read HDF5 File: Open the file 'SMAP_L2B_SSS_32221_20210211T162812_R17000_V5.0.h5' in read-only mode using h5py.
+
+3. Extract Datasets and Attributes:
+   - Extract datasets: '/lat', '/lon', and '/smap_spd'.
+   - Retrieve attributes from 'smap_spd': units, long_name, and _FillValue.
+
+4. Data Processing:
+   - Replace _FillValue in 'smap_spd' with NaN.
+   - Apply a mask using masked_where with parameters: isnan(smap_spd) and smap_spd itself.
+
+5. Create Map Visualization:
+   - Use Basemap to create an equidistant cylindrical projection map with low resolution ('l').
+   - Draw coastlines with a line width of 0.5.
+   - Set parallels from -180 to 91 with interval 45 and meridians from -180 to 180 with interval of 45
+
+6. Plot Data:
+   - Use scatter plot with longitude vs latitude, data from smap_spd, marker size 1, colormap 'jet', no edge colors or linewidths.
+
+7. Enhance Visualization:
+   - Add a colorbar labeled with the units of 'smap_spd'.
+   - Set the title as the concatenation of the HDF5 file's basename and the long_name attribute from 'smap_spd'.
+
+8. Save and Cleanup:
+   - Save the plot as a PNG file.
+   - Close the figure properly.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per their instructions. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open a specific file and extract certain datasets and attributes. So, the sub-query should focus on using h5py to access these elements. I'll make sure to mention opening the file in read-only mode, extracting 'lat', 'lon', and 'smap_spd' datasets, and retrieving the attributes from 'smap_spd'.
+
+Next, for NumPy-based Data Preprocessing, the user needs to handle _FillValue by replacing it with NaN and then apply a mask. I'll structure the sub-query around these two main tasks: replacing values and masking using np.where or np.ma.masked_where.
+
+Lastly, the Plotting and Visualization part involves creating a map using Basemap with specific projections and features like coastlines, parallels, and meridians. The user also wants to plot data as a scatter plot and enhance the visualization with a colorbar and title. I'll ensure the sub-query covers all these aspects, including saving the plot.
+
+I need to make sure each sub-query is clear and focused on its respective domain without overlapping information. This way, when someone uses these sub-queries for further research or code retrieval, they can efficiently find relevant resources.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file named 'SMAP_L2B_SSS_32221_20210211T162812_R17000_V5.0.h5' in read-only mode, extract datasets '/lat', '/lon', and '/smap_spd', and retrieve attributes 'units', 'long_name', and '_FillValue' from the 'smap_spd' dataset.
+
+NumPy Data Preprocessing Sub-query:
+How to replace _FillValue in a NumPy array with NaN and apply a mask using np.where or np.ma.masked_where to filter data based on isnan conditions.
+
+Plotting and Visualization Sub-query:
+How to create a map visualization using Basemap with an equidistant cylindrical projection, draw coastlines, parallels, and meridians, plot data as a scatter plot with specified parameters, add a colorbar with units, set the title, save the plot as PNG, and close the figure.

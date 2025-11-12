@@ -1,0 +1,46 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+This Python code accesses and visualizes a GES DISC HIRDLS HDF-EOS5 swath file.
+
+**Importing necessary modules**
+
+The first four lines import necessary modules:
+- `datetime` for date and time operations
+- `os` for operating system-specific functions
+- `matplotlib` (imported as `mpl`) and its sub-module `pyplot` for creating plots
+- `numpy` (`np`) for numerical operations
+
+**Setting the file name**
+
+The next line sets the file name to `'HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5'`.
+
+**Opening and accessing datasets**
+
+The code opens the HDF5 file in read mode using `h5py`. It accesses three datasets:
+- `dset_var`: ozone concentration data
+- `dset_pres`: pressure data
+- `dset_time`: time data
+
+**Reading and handling data**
+
+The code reads data from these datasets. It handles fill values by replacing them with NaN (Not a Number) in the ozone concentration data.
+
+**Converting date and time**
+
+The code converts the six-digit number stored as `time` into a string using `datetime`.
+
+**Creating the plot**
+
+The code creates a plot of ozone concentration versus pressure.
+
+**Customizing the plot**
+
+The code customizes the plot:
+- Sets x-axis labels to use scientific notation
+- Sets title and axis labels
+- Inverts y-axis for high pressures at the bottom
+- Uses log scale on y-axis with formatted tick labels
+
+**Saving the plot**
+
+Finally, the code saves the plot as a PNG file with the same name as the HDF5 file but with a `.py.png` extension.

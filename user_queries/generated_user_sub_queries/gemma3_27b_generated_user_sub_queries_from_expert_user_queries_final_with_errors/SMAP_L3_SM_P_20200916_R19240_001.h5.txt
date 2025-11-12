@@ -1,0 +1,69 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Import Libraries
+
+2. Read Data from HDF5 File:
+   - Open an HDF5 file.
+   - Read datasets: soil_moisture from `soil_moisture`, 
+      latitude from `latitude`, and longitude from `longitude` from the group `Soil_Moisture_Rettrieval_Data_AM`.
+   - Retrieve attributes: units, long_name, _FillValue, valid_max, and valid_min.
+
+3. Decode Units and Long Name: Decode byte strings using decode('ascii', 'replace') for units and long_name.
+
+4. Calculate Invalid Data:
+   - Use numpy.logical_or to find data where soil_moisture is outside valid_min and valid_max.
+   - Update invalid data where it equals _FillValue.
+   - Replace invalid points with NaNs.
+
+5. Create Masked Array: Use numpy.masked_where with isnan(soil_moisture) to mask the data.
+
+6. Create Map and Visualize Data:
+   - Set up an equidistant cylindrical projection map using Basemap with low resolution.
+   - Draw coastlines with line width 0.5, parallels at [-180, -135, -90, -45, 0, 45, 90], and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+   - Create a scatter plot of soil_moisture data using longitude and latitude coordinates, with markers size 1, colormap jet, no edge color, and linewidth 0.
+   - Add a colorbar labeled with the decoded units.
+   - Set the title as the HDF5 file's basename concatenated with the long_name attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py`, access datasets within a specific group (e.g., `Soil_Moisture_Rettrieval_Data_AM`), retrieve dataset paths (like `/Grid/cloudWater`), and read attributes such as 'units', 'long_name', '_FillValue', 'valid_max', and 'valid_min' from the datasets.
+
+NumPy Data Preprocessing Sub-query:
+How to use `numpy.logical_or` to identify data points outside a specified range (defined by `valid_min` and `valid_max`), how to handle `_FillValue`, and how to replace invalid data with `NaN` values using `numpy.isnan`. Also, how to create a masked array using `numpy.masked_where` with `isnan`.
+
+Plotting and Visualization Sub-query:
+How to use `mpl_toolkits.basemap` to create an equidistant cylindrical projection map with low resolution, draw coastlines with a specified line width, and draw parallels and meridians at specific degree intervals. Also, how to create a scatter plot with specified marker size, colormap ('jet'), edge color, and linewidth, and how to add a colorbar with a label and set the map title.

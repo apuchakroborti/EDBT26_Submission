@@ -1,0 +1,38 @@
+Step-by-Step Code Requirements
+
+1. Import Necessary Libraries
+   - Import libraries for OS functions (os), plotting (matplotlib, matplotlib.pyplot), numerical operations (numpy), map projections (mpl_toolkits.basemap).
+
+2. Define Constants
+   - Set `FILE_NAME` to "ATL12_20190330212241_00250301_006_03.h5".
+
+3. Open HDF5 File and Access Datasets
+   - Open the file in read mode.
+   - Extract datasets: latitude (`/gt1l/ssh_segments/latitude`), longitude (`/gt1l/ssh_segments/longitude`), and swh data (`/gt1l/ssh_segments/heights/swh`).
+
+4. Read Dataset Attributes
+   - Retrieve 'units' and 'long_name' attributes, decoding them with ASCII and replacing errors.
+   - Extract the '_FillValue' attribute from the main dataset.
+
+5. Data Processing and Cleaning
+   - Convert data to float type.
+   - Replace _FillValue with numpy NaN.
+   - Mask data where values are NaN using numpy's masked_where.
+
+6. Create Map Projection
+   - Use an equidistant cylindrical projection.
+   - Set resolution to 'low'.
+   - Define latitude and longitude bounds from -90 to 90 and -180 to 180, respectively.
+
+7. Customize Map Features
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at latitudes [-90, 30, 90] using numpy.arange.
+   - Draw meridians at longitudes [-180, 45, 180] using numpy.arange.
+
+8. Plot Data on Map
+   - Use scatter plot with longitude and latitude coordinates.
+   - Set marker size (s=0.1), colormap (jet), remove edge colors, and set linewidth to 0.
+
+9. Add Colorbar and Title
+   - Attach a colorbar below the map, labeled with dataset units.
+   - Set the title to include the filename, dataset path, and long_name attribute.

@@ -1,0 +1,73 @@
+dataset,model,error type,config,count
+MatPlotBench Datasets,DeepSeek-R1-70B,1,w/o Corrector,12
+MatPlotBench Datasets,DeepSeek-R1-70B,2,w/o Corrector,1
+MatPlotBench Datasets,DeepSeek-R1-70B,3,w/o Corrector,0
+MatPlotBench Datasets,DeepSeek-R1-70B,4,w/o Corrector,8
+MatPlotBench Datasets,DeepSeek-R1-70B,1,w/Corrector,6
+MatPlotBench Datasets,DeepSeek-R1-70B,2,w/Corrector,1
+MatPlotBench Datasets,DeepSeek-R1-70B,3,w/Corrector,1
+MatPlotBench Datasets,DeepSeek-R1-70B,4,w/Corrector,9
+MatPlotBench Datasets,Llama-3-70B,1,w/o Corrector,15
+MatPlotBench Datasets,Llama-3-70B,2,w/o Corrector,1
+MatPlotBench Datasets,Llama-3-70B,3,w/o Corrector,0
+MatPlotBench Datasets,Llama-3-70B,4,w/o Corrector,5
+MatPlotBench Datasets,Llama-3-70B,1,w/Corrector,3
+MatPlotBench Datasets,Llama-3-70B,2,w/Corrector,0
+MatPlotBench Datasets,Llama-3-70B,3,w/Corrector,0
+MatPlotBench Datasets,Llama-3-70B,4,w/Corrector,12
+MatPlotBench Datasets,Magicoder,1,w/o Corrector,7
+MatPlotBench Datasets,Magicoder,2,w/o Corrector,1
+MatPlotBench Datasets,Magicoder,3,w/o Corrector,0
+MatPlotBench Datasets,Magicoder,4,w/o Corrector,15
+MatPlotBench Datasets,Magicoder,1,w/Corrector,8
+MatPlotBench Datasets,Magicoder,2,w/Corrector,1
+MatPlotBench Datasets,Magicoder,3,w/Corrector,0
+MatPlotBench Datasets,Magicoder,4,w/Corrector,12
+NASA's EOS Datasets,DeepSeek-R1-70B,1,w/o Corrector,41
+NASA's EOS Datasets,DeepSeek-R1-70B,2,w/o Corrector,13
+NASA's EOS Datasets,DeepSeek-R1-70B,3,w/o Corrector,1
+NASA's EOS Datasets,DeepSeek-R1-70B,4,w/o Corrector,11
+NASA's EOS Datasets,DeepSeek-R1-70B,1,w/Corrector,17
+NASA's EOS Datasets,DeepSeek-R1-70B,2,w/Corrector,14
+NASA's EOS Datasets,DeepSeek-R1-70B,3,w/Corrector,5
+NASA's EOS Datasets,DeepSeek-R1-70B,4,w/Corrector,25
+NASA's EOS Datasets,Llama-3-70B,1,w/o Corrector,44
+NASA's EOS Datasets,Llama-3-70B,2,w/o Corrector,10
+NASA's EOS Datasets,Llama-3-70B,3,w/o Corrector,3
+NASA's EOS Datasets,Llama-3-70B,4,w/o Corrector,7
+NASA's EOS Datasets,Llama-3-70B,1,w/Corrector,21
+NASA's EOS Datasets,Llama-3-70B,2,w/Corrector,9
+NASA's EOS Datasets,Llama-3-70B,3,w/Corrector,10
+NASA's EOS Datasets,Llama-3-70B,4,w/Corrector,15
+NASA's EOS Datasets,Magicoder,1,w/o Corrector,49
+NASA's EOS Datasets,Magicoder,2,w/o Corrector,6
+NASA's EOS Datasets,Magicoder,3,w/o Corrector,2
+NASA's EOS Datasets,Magicoder,4,w/o Corrector,7
+NASA's EOS Datasets,Magicoder,1,w/Corrector,19
+NASA's EOS Datasets,Magicoder,2,w/Corrector,12
+NASA's EOS Datasets,Magicoder,3,w/Corrector,7
+NASA's EOS Datasets,Magicoder,4,w/Corrector,18
+fastMRI Datasets,DeepSeek-R1-70B,1,w/o Corrector,3
+fastMRI Datasets,DeepSeek-R1-70B,2,w/o Corrector,4
+fastMRI Datasets,DeepSeek-R1-70B,3,w/o Corrector,0
+fastMRI Datasets,DeepSeek-R1-70B,4,w/o Corrector,2
+fastMRI Datasets,DeepSeek-R1-70B,1,w/Corrector,1
+fastMRI Datasets,DeepSeek-R1-70B,2,w/Corrector,6
+fastMRI Datasets,DeepSeek-R1-70B,3,w/Corrector,0
+fastMRI Datasets,DeepSeek-R1-70B,4,w/Corrector,1
+fastMRI Datasets,Llama-3-70B,1,w/o Corrector,7
+fastMRI Datasets,Llama-3-70B,2,w/o Corrector,0
+fastMRI Datasets,Llama-3-70B,3,w/o Corrector,0
+fastMRI Datasets,Llama-3-70B,4,w/o Corrector,2
+fastMRI Datasets,Llama-3-70B,1,w/Corrector,2
+fastMRI Datasets,Llama-3-70B,2,w/Corrector,0
+fastMRI Datasets,Llama-3-70B,3,w/Corrector,0
+fastMRI Datasets,Llama-3-70B,4,w/Corrector,2
+fastMRI Datasets,Magicoder,1,w/o Corrector,8
+fastMRI Datasets,Magicoder,2,w/o Corrector,0
+fastMRI Datasets,Magicoder,3,w/o Corrector,0
+fastMRI Datasets,Magicoder,4,w/o Corrector,2
+fastMRI Datasets,Magicoder,1,w/Corrector,3
+fastMRI Datasets,Magicoder,2,w/Corrector,1
+fastMRI Datasets,Magicoder,3,w/Corrector,0
+fastMRI Datasets,Magicoder,4,w/Corrector,4

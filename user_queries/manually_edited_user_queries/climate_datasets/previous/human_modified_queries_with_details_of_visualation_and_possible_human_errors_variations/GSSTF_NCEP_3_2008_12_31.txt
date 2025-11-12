@@ -1,0 +1,16 @@
+Python script that visualizes Sea Surface Temperature (SST) data from a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file.
+
+`FILE_NAME` which is GSSTF_NCEP_3_2008_12_31.he5 for the input HDF-EOS file.
+
+The `run` function takes a single argument, `FILE_NAME`. 
+In both cases, it navigates through the group hierarchy to access the `SST` dataset, extracts data, long name, and units, 
+and applies a fill value to the data by reading 0th index of the fill value data.
+
+The script then constructs latitude and longitude arrays, creates an equidistant cylindrical projection with a low-resolution coastline database using Basemap, 
+and plots the SST data. It adds a colorbar with units and sets the plot title.
+
+Finally, it saves the plot to a PNG file by extracting the basename of the input HDF-EOS file, 
+creating a PNG file with the same name but with a `.py.png` extension, and saving the figure using `fig.savefig`.
+
+The main program defines the input HDF-EOS file name, checks an environment variable `HDFEOS_ZOO_DIR`, 
+appends the input file path to that directory if set, and calls the `run` function with the input file name as an argument.

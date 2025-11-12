@@ -1,0 +1,68 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for interacting with the operating system
+2. `matplotlib.pyplot` (aliased as `plt`): for creating plots and visualizations
+3. `numpy` (aliased as `np`): for numerical computations
+4. `mpl_toolkits.basemap` (aliased as `Basemap`): for creating maps and geographic visualizations
+5. `h5py`: for working with HDF5 files
+
+**Defining File Names**
+
+The code defines two file names:
+
+1. `FILE_NAME`: the name of an ECOSTRESS L2 HDF5 file, which contains Land Surface Temperature (LST) data.
+2. `FILE_NAME_GEO`: the name of an ECOSTRESS L1B GEO HDF5 file, which contains geolocation data.
+
+**Reading HDF5 Files**
+
+The code uses the `h5py` library to open both HDF5 files in read-only mode (`mode="r"`). The files are opened using a `with` statement, which ensures that the files are properly closed when they go out of scope.
+
+**Reading LST Data and Attributes**
+
+From the `FILE_NAME` file, the code reads:
+
+1. The `/SDS/LST` dataset, which contains the LST data.
+2. Several attributes associated with the LST dataset:
+	* `scale_factor`: a scaling factor for the data
+	* `add_offset`: an offset value to add to the scaled data
+	* `units`: a string describing the units of the data
+	* `_FillValue`: a fill value indicating missing or invalid data
+	* `long_name`: a longer description of the dataset
+
+**Reading Geolocation Data**
+
+From the `FILE_NAME_GEO` file, the code reads:
+
+1. The `/Geolocation/longitude` and `/Geolocation/latitude` datasets, which contain the longitude and latitude values associated with each LST data point.
+
+**Data Processing**
+
+The code applies several transformations to the LST data:
+
+1. Replaces fill values with NaN (Not a Number) values.
+2. Scales the data using the `scale_factor` attribute.
+3. Adds an offset value to the scaled data using the `add_offset` attribute.
+4. Creates a masked array for the LST data, which allows for efficient handling of missing or invalid values.
+
+The code also creates masked arrays for the longitude and latitude values, based on the NaN values in the LST data.
+
+**Creating a Map**
+
+The code uses the `Basemap` library to create a map with the following features:
+
+1. A cylindrical projection (`projection="cyl"`).
+2. Coastlines drawn at a linewidth of 0.5.
+3. Parallel lines (latitude) and meridian lines (longitude) drawn at intervals of 30° and 45°, respectively.
+4. A scatter plot of the LST data, with colors representing the data values.
+
+**Adding a Colorbar**
+
+The code adds a colorbar to the map, with a label indicating the units of the LST data.
+
+**Saving the Plot**
+
+Finally, the code saves the plot as a PNG file using `matplotlib`. The file name is constructed by appending `.py.png` to the base name of the input HDF5 file.

@@ -1,0 +1,18 @@
+a Python script that reads and visualizes data from an HDF-EOS5 file, specifically a LAADS VNP46A1 Geographic projection Grid file. Here's what it does:
+
+Reading the HDF5 file
+
+The script opens the file in read-only mode and reads three datasets: 
+ `HDFEOS/GRID/VNP_Grid_DNB` (grid dataset) with attrite of units and long name and decoded using decode function
+ `HDFEOS/SWATHS/BrightnessTemperature/M12/BrightnessTemperature_M12` (data field dataset) with its values
+ `StructMetadata.0` (metadata dataset)
+
+Extracting grid information
+The script extracts the upper-left and lower-right coordinates of the grid from the metadata string.
+
+Constructing the grid and plot
+It constructs a 2D grid and creates meshgrid arrays for plotting. The data is then plotted on a cylindrical map projection specifying latitude of -90 to 90 and longitude of -180 to 180
+with coastlines, parallels, and meridians added.
+
+Saving the plot
+Finally, the script saves the plot as a PNG file with a name derived from the input HDF5 file name.

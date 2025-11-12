@@ -1,0 +1,38 @@
+I'm trying to understand this Python code. Here's what it does:
+
+**Importing modules**
+
+The code starts by importing `os`, `matplotlib.pyplot` (as `plt`), `numpy` (as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Defining constants and file names**
+
+It defines a constant `FILE_NAME` for the HDF5 file to be read.
+
+**Opening and reading the HDF5 file**
+
+The code opens the HDF5 file in read-only mode using `h5py` and reads data from it:
+
+* It accesses the `/Geophysical_Data/sm_profile` dataset and retrieves its attributes (units, long name, fill value, valid max/min).
+* It decodes attribute values from ASCII to Unicode.
+
+**Data processing**
+
+The code identifies invalid data points, replaces them with `NaN`, and creates a masked array using `np.ma.masked_where()`.
+
+**Getting geolocation data**
+
+It reads geolocation data from the HDF5 file: `/cell_lat` and `/cell_lon`.
+
+**Creating a map visualization**
+
+The code uses `Basemap` to create a cylindrical projection, sets up latitude/longitude ranges, draws coastlines/parallels/meridians, and scatters data points on the map.
+
+**Adding colorbar and title**
+
+It adds a colorbar with units as the label and sets the plot title using the file name and long description of the data.
+
+**Saving the plot to a PNG file**
+
+The code saves the plot to a PNG file by constructing the file name from the HDF5 base name and appending `.py.png`.
+
+Let me know if you can help me understand this code!

@@ -1,0 +1,12 @@
+The script starts by reading the file. It then accesses several datasets within the file: 
+- `/HDFEOS/GRIDS/MOP03/Data Fields/RetrievedSurfaceTemperatureDay`, which contains 2D surface temperature data
+- `/HDFEOS/GRIDS/MOP03/Data Fields/Latitude`, which contains latitude values
+- `/HDFEOS/GRIDS/MOP03/Data Fields/Longitude`, which contains longitude values
+
+The script preprocesses the data by replacing fill values with `NaN` and creating a masked array. 
+
+Next, it creates a map using `Basemap` library with a cylindrical projection and sets the latitude and longitude limits. It then plots the surface temperature data on the map as a scatter plot.
+
+Finally, the script saves the plot to a PNG file by constructing the filename from the HDF-EOS file name and using the current figure to save the plot.
+
+I'd like to know more about how this script works!

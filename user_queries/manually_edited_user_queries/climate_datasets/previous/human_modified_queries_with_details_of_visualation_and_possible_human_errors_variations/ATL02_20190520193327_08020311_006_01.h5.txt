@@ -1,0 +1,29 @@
+Here's a step-by-step explanation of how to process and visualize data from an HDF5 file:
+
+Step 1: Open the HDF5 File
+Open the HDF5 file "ATL02_20190520193327_08020311_006_01.h5" in read-only mode.
+
+Step 2: Read Data from HDF5 File
+Read the following datasets from the HDF5 file:
+extract latitude and longitude values into arrays from the subgroup /gpsr/navigation
+
+`/atlas/pce1/background/bg_cnt_50shot_s`: extract elevation data, it also acces attibutes such as units and long name, 
+then decode using decode function with parameters ascii and replace
+`/atlas/pce1/background/delta_time`: extract time data into an array
+
+Step 3: Create Plots
+Create two plots:
+
+Plot 1: Time vs. Counts
+Plot elapsed time against elevation data
+Set x-axis label to "Seconds from <timedatum>" and y-axis label to the units of the elevation data
+Set title to include file name, dataset name, and long name
+
+Plot 2: Trajectory
+Create a map projection with coastlines and gridlines
+Plot the trajectory using latitude and longitude values
+Annotate the starting point of the trajectory with a red marker and text
+
+Step 4: Save the Plot
+Save the plot to a PNG file named after the HDF5 file.
+This process reads data from an HDF5 file, creates two plots (time vs. counts and trajectory), and saves the plot to a PNG file.

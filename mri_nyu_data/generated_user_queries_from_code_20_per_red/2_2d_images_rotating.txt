@@ -1,0 +1,13 @@
+Here's a rewritten version of the description with 20% less text while keeping implementation details:
+
+I'm trying to understand some Python code, and I'd appreciate it if you could break it down for me.
+
+The code starts by importing necessary libraries. Then, it defines two file paths: one for an HDF5 file containing MRI brain data, and another for a specific dataset within that file.
+
+Next, the code reads data from the HDF5 file using h5py. It opens the file in read-only mode and assigns it to a variable. The code then reads two datasets from the file: a 2D slice of brain data called "brain_slice" located at "/brain_2d" within the HDF5 file, and a 3D volume of brain data called "brain_vol" located at "/brain_3d".
+
+The code prints some information about these datasets, including their contents, type, and shape.
+
+Then, it rotates a 2D slice of the brain volume by 270 degrees counter-clockwise using an image processing function. The rotated image is displayed with a bone-like grayscale color map and without axis labels or ticks.
+
+Finally, the code repeats this process for a coronal plane (a 2D slice of the brain volume in the coronal direction).

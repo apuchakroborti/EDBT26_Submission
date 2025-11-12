@@ -1,0 +1,36 @@
+Create a Python script that processes an HDF5 file containing geophysical data and generates a trajectory plot. The script should follow these steps:
+
+1. Import Libraries: Include os, matplotlib, matplotlib.pyplot, numpy, and mpl_toolkits.basemap for handling OS functions, plotting, numerical operations, map projections, and HDF5 processing.
+
+2. Define Constants: Set FILE_NAME to "ATL10-02_20181227215113_13790101_006_02.h5".
+
+3. Open HDF5 File: Open the file in read mode and access datasets at paths:
+   - /gt1r/freeboard_segment/geophysical/latitude (latitude data)
+   - /gt1r/freeboard_segment/geophysical/longitude (longitude data)
+   - /gt1r/freeboard_segment/beam_fb_height (main data)
+   - /gt1r/freeboard_segment/geophysical/delta_time (time data)
+
+4. Extract Attributes: From the beam_fb_height dataset, read 'units' and 'long_name' attributes using decode('ascii', 'replace') and retrieve '_FillValue' attribute data.
+
+5. Data Processing:
+   - Convert beam_fb_height data to float.
+   - Replace _FillValue with numpy NaN.
+   - Mask data where values are NaN using numpy.ma.masked_where.
+
+6. Create Map: Use an orthographic projection with low resolution, setting lat_0 and lon_0 to the first values of latitude and longitude data. 
+Add coastlines (linewidth 0.5), parallels at [-80.0, -60.0, -40.0, -20.0, 0.0], and meridians from -180.0 to 181.0 with a 20.0 interval.
+
+7. Plot Configuration:
+   - Set figure size to 10x10.
+   - Create subplot ax1 (2 rows, 1 column, first position).
+   - Calculate elapsed_time by subtracting the first time value from the time data.
+   - Plot main data against elapsed_time using blue circles ('bo').
+   - Label axes with time units and main data units.
+   - Set title combining file basename, dataset name, and long_name.
+
+8. Map Projection and Markers:
+   - Project longitude and latitude to map coordinates (x, y).
+   - Plot trajectory on the map.
+   - Add a red marker at the starting point (first x, y values).
+
+9. Finalize Plot: Set plot title to "Trajectory of Flight Path".

@@ -1,0 +1,58 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various Python libraries:
+
+1. `os`: The operating system library, used for interacting with the file system.
+2. `h5py`: A library for working with HDF5 files in Python.
+3. `numpy` (as `np`): A library for numerical computing and data analysis.
+4. `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`): Libraries for creating visualizations and plots.
+5. `Basemap`: A toolkit for creating maps and geospatial visualizations.
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, which is the name of the HDF-EOS5 swath file to be accessed and visualized.
+
+**Opening the HDF File**
+
+The code opens the specified HDF file in read-only mode (`mode='r'`) using the `h5py` library. The file is assigned to a variable `f`.
+
+**Accessing Datasets**
+
+The code accesses various datasets within the HDF file:
+
+1. `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn`: This dataset contains the main data of interest, which is stored in a 2D array.
+2. `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude` and `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude`: These datasets contain geolocation information (latitude and longitude) for the data.
+
+**Processing Data**
+
+The code processes the main dataset:
+
+1. It extracts the units attribute from the dataset, which is stored as an array of strings.
+2. It replaces fill values in the dataset with NaN (Not a Number) values.
+3. It extracts the geolocation data (latitude and longitude) from their respective datasets.
+
+**Creating a Map**
+
+The code creates a map using the `Basemap` toolkit:
+
+1. It defines a cylindrical projection (`projection='cyl'`) with a low resolution (`resolution='l'`) and sets the latitude and longitude limits.
+2. It draws coastlines, parallels, and meridians on the map.
+
+**Visualizing Data**
+
+The code visualizes the main dataset on the map:
+
+1. It creates a scatter plot of the data using the `scatter` method, with colors representing the values in the dataset.
+2. It adds a colorbar to the plot, labeling it with the units of the dataset.
+
+**Saving the Plot**
+
+The code saves the plot as a PNG file:
+
+1. It gets the base name of the input file using the `os.path.basename` function.
+2. It sets the title of the plot to include the base name and a description of the dataset.
+3. It saves the figure as a PNG file with a name based on the input file name.
+
+Note that the last line, `plt.show()`, is commented out, which means the plot will not be displayed interactively. Instead, it will be saved to a file.

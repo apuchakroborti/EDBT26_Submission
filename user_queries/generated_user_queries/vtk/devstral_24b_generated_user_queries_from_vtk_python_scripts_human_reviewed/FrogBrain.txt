@@ -1,0 +1,91 @@
+A Python script is designed to visualize 3D models of frog tissues using VTK (Visualization Toolkit), with a specific focus on comparing smoothed versus non-smoothed representations of these tissues.
+
+### Overall Purpose and Functionality
+The primary purpose of this script is to:
+1. Load a 3D image dataset representing different frog tissues.
+2. Extract and visualize specific tissue structures in two forms: one without smoothing (left side) and one with smoothing applied (right side).
+3. Display the results using VTK's rendering capabilities.
+
+### Major Components
+
+#### Modules Used
+- Pathlib: For handling file paths.
+- VTK Modules:
+  - `vtkInteractionStyle`, `vtkRenderingOpenGL2`: For rendering and interaction.
+  - `vtkNamedColors` from `vtkmodules.vtkCommonColor`, `vtkLookupTable`, `vtkVersion`: For color management and version checking.
+  - Various VTK classes for image processing, surface extraction, smoothing, and visualization.
+  - VTK_VERSION_NUMBER, vtkLookupTable, vtkVersion vtkmodules.vtkCommonCore
+  - vtkFlyingEdges3D, vtkMarchingCubes, vtkPolyDataNormals, vtkStripper, and vtkWindowedSincPolyDataFilter from vtkmodules.vtkFiltersCore 
+  - vtkMetaImageReader from vtkmodules.vtkIOImage
+  - vtkImageThreshold from vtkmodules.vtkImagingCore
+  - vtkImageGaussianSmooth from vtkmodules.vtkImagingGeneral 
+  - vtkActor, vtkPolyDataMapper, vtkRenderWindow, vtkRenderWindowInteractor, vtkRenderer from vtkmodules.vtkRenderingCore
+   
+
+#### Functions
+1. main(data_folder, tissue):
+   - Sets up the rendering environment.
+   - Creates actors (3D objects) for both smoothed and non-smoothed tissues.
+   - Configures camera settings and background colors.
+   - Initiates the rendering process.
+   - Should read a `.mhd` file named `FrogBrain_frogtissue.mhd`
+
+2. create_smooth_frog_actor(file_name, tissue, use_flying_edges):
+   - Reads the 3D image data.
+   - Selects specific tissue values using thresholding.
+   - Applies Gaussian smoothing to the selected tissue.
+   - Extracts isosurfaces and applies additional smoothing.
+   - Creates a VTK actor for rendering.
+
+3. create_frog_actor(file_name, tissue, use_flying_edges):
+   - Similar to `create_smooth_frog_actor` but without applying Gaussian smoothing or additional smoothing filters.
+
+4. create_frog_lut(colors):
+   - Creates a lookup table (LUT) for mapping tissue types to colors in the visualization.
+
+5. create_tissue_map():
+   - Defines a dictionary that maps tissue names to their corresponding integer values used in the dataset.
+
+6. vtk_version_ok(major, minor, build):
+   - Checks if the installed VTK version meets or exceeds a specified version number.
+
+### Workflow
+
+1. Initialization and Input Handling:
+   - The script starts by defining default parameters for `data_folder` and `tissue`.
+   - It then calls the `main()` function with these parameters.
+
+2. Rendering Setup in main():
+   - Creates actors for both smoothed and non-smoothed tissue representations.
+   - Configures camera settings to provide a consistent view of both models.
+   - Sets background colors and window properties.
+   - Initiates rendering using VTK's interactor.
+
+3. Actor Creation:
+   - `create_smooth_frog_actor()`:
+     - Reads the image data.
+     - Applies thresholding to isolate specific tissue values.
+     - Smooths the selected tissue using Gaussian smoothing and additional polydata filtering.
+     - Creates an isosurface and applies further smoothing if needed.
+     - Returns a VTK actor for rendering.
+
+   - `create_frog_actor()`:
+     - Similar process but without applying Gaussian or additional smoothing filters.
+
+4. Color Mapping:
+   - `create_frog_lut(colors)`: Defines colors for different tissue types using a lookup table.
+
+5. Tissue Mapping:
+   - `create_tissue_map()`: Maps human-readable tissue names to integer values used in the dataset.
+
+6. Version Checking:
+   - `vtk_version_ok(major, minor, build)`: Ensures compatibility with required VTK version features.
+
+### Key Features
+
+- Dual Visualization: The script provides a side-by-side comparison of smoothed and non-smoothed tissue models.
+- VTK Compatibility: Includes checks to ensure the correct VTK version is used.
+- Modular Design: Functions are well-defined for specific tasks, making the code easier to maintain and extend.
+
+### Conclusion
+This script leverages VTK's powerful visualization capabilities to create detailed 3D renderings of frog tissues. It provides a clear comparison between smoothed and non-smoothed models, which can be useful for scientific visualization or educational purposes. The modular design ensures that each component of the process is clearly defined and easily modifiable.

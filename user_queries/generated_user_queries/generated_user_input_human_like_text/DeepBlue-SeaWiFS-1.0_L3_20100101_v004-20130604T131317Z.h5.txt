@@ -1,0 +1,25 @@
+Here is a rewritten version of the description with 40% less text while keeping as many implementation details as possible:
+
+"I need help understanding a Python code. Here's what it does:
+
+**Importing Modules**
+
+The code imports `os`, `matplotlib`, `mpl_toolkits.basemap`, `numpy`, and `h5py` for various tasks.
+
+**Defining Constants**
+
+It defines two constants: `FILE_NAME` (the HDF5 file name) and `DATAFIELD_NAME` aerosol_optical_thickness_550_ocean (the dataset name within the HDF5 file).
+
+**Reading HDF5 File & Extracting Metadata**
+
+The code opens the HDF5 file using `h5py` in read-only mode, reads datasets like `data`, `latitude`, and `longitude`, and extracts metadata like `long_name` and `_FillValue`.
+
+**Data Processing & Visualization**
+
+It replaces fill values with `NaN`, creates a masked array using `numpy.ma`, and visualizes the data on an equidistant cylindrical projection map using `Basemap`. The color range is set to `[0, 1]`.
+
+**Saving the Plot**
+
+Finally, it adds a title including the file name and dataset long name, and saves the plot as a PNG file using `matplotlib`.
+
+Can you help me understand this code?"

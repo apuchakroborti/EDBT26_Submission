@@ -1,0 +1,18 @@
+I'm working with an HDF5 file containing SMAP L1C data. 
+Here's what I've done so far:
+First, I defined the file name as "SMAP_L1C_TB_50719_D_20240730T124417_R19240_001.h5". 
+Then, I opened the file in read mode and accessed a dataset named "/Global Projection/cell_tb_h_fore", which contains the main data.
+
+I also extracted attributes from this dataset, including units of measurement, long description, fill value, and valid range. 
+I decoded these attribute values from ASCII to Unicode and identified invalid data points by checking if they're outside the valid range or equal to the fill value. 
+These points were set to NaN (Not a Number).
+It then decodes the long name by using decode function with ascii and replace parameters
+It the calculates invalid data using numpy logical or method using comparison with data greater than valid max and less than valid min 
+Then the resulted invalid calculates again with parameters invalid and comparison with data and fill value
+Then it sets numpy NaN values to invalid data
+After that it creates masked array of data using numpy masked array and checking numpy isnan
+
+Next, I accessed geolocation datasets "/cell_lat" and "/cell_lon" from the group Global_Projection, which contain latitude and longitude values respectively.
+
+Using this data, I created a map with a cylindrical projection, drew coastlines, parallels, and meridians, and scattered the data points on the map. 
+I also added a colorbar of bottom location and 10 percent padding represent the data values.

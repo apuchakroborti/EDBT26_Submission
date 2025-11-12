@@ -1,0 +1,41 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing Libraries**
+
+The code imports several libraries: `os`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap`.
+
+**Defining Constants**
+
+A constant `FILE_NAME` is defined with the value of an HDF5 file name.
+
+**Opening the HDF5 File**
+
+The code opens the HDF5 file using `h5py` in read-only mode.
+
+**Reading Data**
+
+Data is read from the `/lst` dataset into a NumPy array `data`, converting it to float64 type.
+
+**Reading Attributes**
+
+Attributes associated with the `/lst` dataset are read, including `scale_factor`, `add_offset`, `units`, `_FillValue`, and `long_name`.
+
+**Applying Fill Value and Scale Factor**
+
+The code applies the fill value and scale factor to the data by setting values equal to the fill value to NaN, scaling the data, and creating masked arrays for latitude and longitude.
+
+**Creating a Map**
+
+A cylindrical projection map is created using Basemap, covering the entire globe. Coastlines, parallels, and meridians are drawn on the map.
+
+**Plotting Data**
+
+The data is plotted on the map using a scatter plot with the jet colormap.
+
+**Adding Colorbar and Title**
+
+A colorbar and title are added to the plot, including the units attribute and the base name of the HDF5 file.
+
+**Saving the Plot**
+
+The plot is saved to a PNG file.

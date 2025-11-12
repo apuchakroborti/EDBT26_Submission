@@ -1,0 +1,22 @@
+At first it imports some libraries such as os, h5py, matplotlib, matplotlib.pyplot, mpl_toolkits.basemap, numpy
+
+Step 1: Setting up
+The code should read a HDF5 data file which is located at DeepBlue-SeaWiFS-1.0_L3_20100101_v004-20130604T131317Z.h5
+
+Step 2: Reading Dataset
+It reads the aerosol_optical_thickness_550_ocean dataset, latitude and longitude data, 
+and retrieves attributes named long_name and _FillValue from the aerosol_optical_thickness_550_ocean dataset, 
+then it decodes the long_name data, using decode() function
+
+Step 3: Preparing Data
+The by comparing the aerosol_optical_thickness_550_ocean and _FillValue it replaces _FillValue data points nan value
+After that it masked the aerosol_optical_thickness_550_ocean data using the numpy masked_array function with the parameters data itself and the result of numpy isnan of data
+
+Step 4: Creating the Map
+Next, it creates a cylindrical projection map with specific settings (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc.). 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 120, and 30.
+After that it also add meridians using numpy of arrange -180, 180, and 45
+
+Step 5: Visualizing Data
+The code creates a pcolormesh plot of the data on the map using parameters such as longitude, latitude, data, vmin=0, vmax=1, latlon=True, 
+The it adds a colorbar

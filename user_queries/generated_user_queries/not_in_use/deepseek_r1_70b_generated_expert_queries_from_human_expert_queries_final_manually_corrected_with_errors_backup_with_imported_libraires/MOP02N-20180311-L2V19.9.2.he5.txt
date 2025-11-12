@@ -1,0 +1,24 @@
+1. File Input and Constants
+   - Specify the input file `MOP02N-20180311-L2V19.9.2.he5` stored in the constant `FILE_NAME`.
+   - Import necessary libraries: `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Extracting Data
+   - Extract data from the HDF5 dataset at `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn`.
+   - Read the contents into an array called `data`, taking only the first column.
+   - Retrieve the `units` and `_FillValue` attributes associated with this dataset.
+   - Replace the `_FillValue` in the `RetrievedCOTotalColumn` data with `numpy.nan`.
+
+3. Extracting Geolocation Data
+   - Extract latitude values from `Latitude`, longitude values from `Longitude` from the group `/HDFEOS/SWATHS/MOP02/Geolocation Fields`
+
+4. Creating a Map
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels using `numpy.arange(-90, 91, 45)`.
+   - Draw meridians using `numpy.arange(-180, 181, 45)` and set labels to `[True, False, False, True]`.
+
+5. Scatter Plot
+   - Create a scatter plot with parameters: longitude, latitude, data array `c=data`, marker size `s=1`, colormap `plt.cm.jet`, no edge colors (`edgecolors=None`), and line width `linewidth=0`.
+
+6. Customizing the Map
+   - Add a colorbar to represent the units of the data.
+   - Set the colorbar label using the `units` attribute from the dataset.

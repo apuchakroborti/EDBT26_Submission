@@ -1,0 +1,27 @@
+Read an HDF-EOS5 file and plot BrO data against pressure levels with the following specifications:
+
+1. Import Libraries: Include os, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap.Basemap, numpy as np, datetime, matplotlib.ticker.FormatStrFormatter, and matplotlib.ticker.ScalarFormatter.
+
+2. Read HDF-EOS5 File: 
+   - Extract BrO data from the path `/HDFEOS/SWATHS/BrO/Data Fields/BrO`.
+   - Retrieve pressure data from `/Geolocation Fields/Pressure`.
+   - Obtain time data from `/Geolocation Fields/Time`.
+
+3. Data Extraction:
+   - Slice BrO data to get the 399th index along the x-axis and all data along the y-axis.
+   - Convert BrO and pressure data into 1D arrays for plotting.
+
+4. Attributes Handling: Extract attributes like MissingValue, _FillValue, Title, and Units from the BrO dataset.
+
+5. Plotting:
+   - Use matplotlib to plot BrO data (indices 12-16) against corresponding pressure values.
+   - Set the x-axis label using BrO's title and units.
+   - Set the y-axis label using pressure units.
+   - Title the plot with BrO's title and the file's basename.
+
+6. Plot Configuration:
+   - Invert the y-axis.
+   - Apply a logarithmic scale to the y-axis.
+   - Use ScalarFormatter for minor ticks and FormatStrFormatter for major ticks.
+
+This structured approach ensures clarity and technical accuracy, enabling LLMs to generate the required code effectively.

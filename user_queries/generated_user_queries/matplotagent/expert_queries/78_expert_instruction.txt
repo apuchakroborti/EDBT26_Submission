@@ -1,0 +1,29 @@
+I have data of car named "78_h5_data.h5". The available datasets list is ['0-60 mph(sec)', 'Gas Mileage(mpg)', 'Power(kW)', 'Weight(kg)', 'Engine Displacement(cc)'].
+Write a python code to draw a plot.
+1. Type of Plot: This is a 3D scatter plot.
+
+2. Axes Description:
+   - The X-axis represents "0-60 mph (sec)".
+   - The Y-axis represents "Gas Mileage (mpg)".
+   - The Z-axis represents "Power (kW)".
+
+3. Data Points:
+   - Each data point in the 3D space represents a car, plotted according to its 0-60 mph time, gas mileage, and power.
+   - The size of each point correlates positively with the engine displacement (cc) of the car. Larger points signify larger engine displacements.
+   - The color of the points also represents engine displacement, using a gradient color scheme (like viridis), where one color end (like purple) indicates smaller displacement, and the other end (like yellow) indicates larger displacement.
+
+4. Projections:
+   - There are projections of these data points on three planes: XY, ZX, and YZ.
+   - Each projection uses dots of a single color for all points on that plane.
+   - The XY plane projection is at the bottom (below the main data points), colored blue.
+   - The ZX plane projection is on one side, colored red.
+   - The YZ plane projection is on another side, colored green.
+
+5. Additional Elements:
+   - A color bar is present, showing the correlation between color and engine displacement in cc.
+   - The plot has labels for each axis, clearly stating what each axis represents.
+   - The plot uses a 3D perspective, allowing the axes and projections to be viewed at an angle rather than straight on.
+
+6. Style:
+   - The plot should have a modern, clean look, with a focus on readability and clarity.
+   - The scatter points are solid and well-defined, with a slightly transparent look to prevent overcrowding visually.

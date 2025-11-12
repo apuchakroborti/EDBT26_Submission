@@ -1,0 +1,69 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkInteractionStyle` and `vtkRenderingOpenGL2` from `vtkmodules`.
+   - Import `vtkNamedColors` from `vtkCommonColor`.
+   - Import `vtkDataObject` and `vtkDataSetAttributes` from `vtkCommonDataModel`.
+   - Import `vtkTransform` from `vtkCommonTransforms`.
+   - Import `vtkThreshold` from `vtkFiltersCore`.
+   - Import `vtkTransformFilter` from `vtkFiltersGeneral`.
+   - Import `vtkGeometryFilter` from `vtkFiltersGeometry`.
+   - Import `vtkMetaImageReader` from `vtkIOImage`.
+   - Import `vtkImageWrapPad` from `vtkImagingCore`.
+   - Import `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkRenderingCore`.
+
+2. Define Variables:
+   - Set `file_name` to `'GenerateCubesFromLabels_frogtissue.mhd'`.
+   - Set `start_label` to 1.
+   - Set `end_label` to 29.
+
+3. Read the Meta File:
+   - Create a `vtkMetaImageReader` object named `reader`.
+   - Set the file name using `SetFileName(file_name)`.
+   - Update the reader with `Update()`.
+
+4. Pad the Volume:
+   - Get the extent of the output from the reader.
+   - Create a `vtkImageWrapPad` object named `pad`.
+   - Set the input to the reader's output port.
+   - Set the output whole extent by adding 1 to the upper bounds of x and y dimensions.
+   - Update the pad with `Update()`.
+
+5. Copy Scalar Data:
+   - Copy scalar point data from the reader’s output to the padded volume’s cell data using `SetScalars()`.
+
+6. Apply Threshold:
+   - Create a `vtkThreshold` object named `selector`.
+   - Set input array to process cell data scalars.
+   - Set input connection to the padded output port.
+   - Set lower and upper thresholds to `start_label` and `end_label`, respectively.
+   - Update the selector with `Update()`.
+
+7. Transform Geometry:
+   - Create a `vtkTransform` object named `transform`.
+   - Translate by (-0.5, -0.5, -0.5).
+   - Apply this transform using `vtkTransformFilter` named `transform_model`, setting its input to the selector’s output port.
+
+8. Extract Geometry:
+   - Use `vtkGeometryFilter` named `geometry` to process the transformed data.
+
+9. Map and Create Actor:
+   - Create a `vtkPolyDataMapper` named `mapper`.
+   - Set input to geometry filter's output.
+   - Set scalar range, mode to use cell data, and color mode to map scalars.
+   - Create an `actor` using this mapper.
+
+10. Set Up Renderer and Window:
+    - Create a `vtkRenderer` object.
+    - Create a `vtkRenderWindow` named `render_window`, add the renderer, set size to 640x480, and window name.
+    - Add the actor to the renderer.
+    - Set background color using `colors.GetColor3d('DarkSlateBlue')`.
+
+11. Interactor and Rendering:
+    - Create a `vtkRenderWindowInteractor` named `render_window_interactor`, attaching it to the render window.
+    - Render the window with `Render()`.
+    - Adjust camera position, focal point, view up, distance, and clipping range.
+    - Start interaction with `Start()`.
+
+12. Run Main Function:
+    - Execute `main()` when script is run as main program.

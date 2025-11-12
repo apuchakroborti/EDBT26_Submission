@@ -1,0 +1,27 @@
+A Python code to read and visualize data from an HDF-EOS5 file located at HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5.
+
+The code should:
+1. Import necessary libraries: os, datetime, h5py, numpy as np, FormatStrFormatter and ScalarFormatter from matplotlib.ticker, matplotlib as mpl, matplotlib.pyplot as plt, and Basemap from mpl_toolkits.basemap.
+
+2. Read three datasets:
+   - O3 data from `O3` (extract 0th index along x-axis and all y-axis data) from the group `/HDFEOS/SWATHS/HIRDLS/Data Fields`
+   - Pressure data from `Pressure`, Time data from `Time` (only 0th index) from the group `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields`
+
+3. Read attributes:
+   - Units from O3 and Pressure datasets
+   - Title from O3, Time, and Pressure datasets
+   - _FillValue from O3 dataset
+
+4. Decode attribute values using decode().
+
+5. Replace O3 data with NaN where it matches _FillValue.
+
+6. Create datestr variable by initializing a datetime object at 1993-01-01 and adding seconds from the Time dataset.
+
+7. Generate a plot of O3 vs Pressure:
+   - Customize x-axis with scientific notation
+   - Set y-axis to log scale and invert it
+   - Format axis labels using dataset Titles and Units
+   - Set title combining filename, O3 Title, and Units
+
+8. At the end, the gca of the plot is set such as invert yaxis, yscale value of log, and major formatter is FormatStrFormatter with the value of '%g'. Display the plot. 

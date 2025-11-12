@@ -1,0 +1,37 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports various Python libraries, including `os`, `matplotlib`, `Basemap`, and `h5py`.
+
+**Defining constants and variables**
+
+The code defines several constants and variables, such as `FILE_NAME`, `path`, and `DATAFIELD_NAME`.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file using `h5py` in read-only mode.
+
+**Reading the dataset**
+
+The code reads a specific dataset from the HDF5 file, converts it to a NumPy array, and sets missing values to NaN.
+
+**Retrieving attributes**
+
+The code retrieves various attributes associated with the dataset, such as scale, offset, and units.
+
+**Processing the data**
+
+The code scales and offsets the data according to the `ScaleFactor` and `Offset` attributes.
+
+**Creating a map**
+
+The code creates an equidistant cylindrical projection using Basemap, draws coastlines, parallels, and meridians, and creates a scatter plot of data points on the map.
+
+**Creating a color bar**
+
+The code creates a color bar for the scatter plot with a label set to the units attribute value.
+
+**Saving the plot**
+
+The code saves the plot as an image file with a title that includes the base name of the HDF5 file and the title attribute value.

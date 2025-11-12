@@ -1,0 +1,43 @@
+a Python script that reads an HDF5 file and creates a map plot. 
+
+Here's how it works:
+
+Importing Libraries
+The script starts by importing necessary libraries such as os, re, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt
+ for file system operations, parsing metadata strings, 
+working with HDF5 files, performing cartographic transformations, numerical computations, and creating visualizations.
+
+Reading HDF5 File
+'/HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields/BrightnessTemperature_M12' which is called name and read all data and call the function astype(np.float)
+
+the below attributes are accessed from this dataset
+# Read attributes.
+'scale_factor', 'add_offset', 'units', '_FillValue', 'long_name', the decode function is needed for the units and long_name
+
+Another is gridmeta dataset the path in the file is '/HDFEOS INFORMATION/StructMetadata.0'
+
+
+The script opens the specified HDF5 file, accesses the desired grid and data field datasets, 
+and reads the actual data values into a NumPy array and convert datatype to numpy float64.
+
+Reading Attributes
+Various attributes associated with the data field dataset are read, including scaling factor, offset, units of measurement, fill value, and descriptive name.
+It then decoded the inits and long name by using decode function
+
+Constructing Grid
+Grid extent information is extracted from metadata using regular expressions. The script then creates linearly spaced arrays and meshgrid arrays from the grid extent coordinates.
+
+from the gridmeta data it extracts data of upper_left_x and and upper_left_y using group match of regex ''UpperLeftPointMtrs=\((?P<upper_left_x>[+-]?\d+\.\d+),(?P<upper_left_y>[+-]?\d+\.\d+)\)''', re.VERBOSE
+Then using line space it reads data that is used for constructing meshgrid data and that are used later for forming longitude and latitude data
+
+Coordinate Transformations
+A coordinate transformation from Sinusoidal to WGS84 (Latitude-Longitude) is performed using a projection library.
+
+Data Processing
+The script applies the fill value and scaling factor to the data values, replacing fill values with NaN and scaling the data.
+
+Visualization
+A zoomed-in map plot is created using a mapping toolkit. The plot includes transformed longitude and latitude coordinates, parallels and meridians, and a pseudocolor mesh plot of the data values with a colorbar.
+
+While plotting it adds parallels with values of min of lat, max of lat and 1
+for meridians it uses min of lon, max of lon and 2

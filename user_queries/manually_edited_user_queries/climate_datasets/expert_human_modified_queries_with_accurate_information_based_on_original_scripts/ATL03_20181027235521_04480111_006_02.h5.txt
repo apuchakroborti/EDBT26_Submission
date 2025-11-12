@@ -1,0 +1,31 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+To be more specific the libraries are os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL03_20181027235521_04480111_006_02.h5
+which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/gt1l/geolocation/reference_photon_lat` latitude data, 
+`/gt1l/geolocation/reference_photon_lon` longitude data, 
+and `/gt1l/geolocation/tx_pulse_energy` main data 
+
+Reads attributes named units and long_name with decoding using decode() function with parameters ascii and replace, 
+and _FillValue from the main data
+
+Creating a Map
+Using an equidistant cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30, 
+and meridians with parameters numpy arrange -180, 180, 45
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+
+Adding Colorbar and Title
+A colorbar is added to the map with format value of %.2e, 
+labeled with main dataset's units, and a title is set including the file basename and long_name

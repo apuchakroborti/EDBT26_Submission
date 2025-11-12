@@ -1,0 +1,83 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python code to read and visualize data from an HDF-EOS5 file located at HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5.
+
+The code should:
+1. Read three datasets:
+   - O3 data from `O3` (extract 0th index along x-axis and all y-axis data) from the group `/HDFEOS/SWATHS/HIRDLS/Data Fields`
+   - Pressure data from `Pressure`, Time data from `Time` (only 0th index) from the group `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields`
+
+2. Read attributes:
+   - units from O3 and Pressure datasets
+   - title from O3, Time, and Pressure datasets
+   - fillValue from O3 dataset
+
+3. Decode attribute values using decode().
+
+4. Replace O3 data with NaN where it matches _FillValue.
+
+5. Create datestr variable by initializing a datetime object at 1993-01-01 and adding seconds from the Time dataset.
+
+6. Generate a plot of O3 vs Pressure:
+   - Customize x-axis with scientific notation
+   - Set y-axis to log scale and invert it
+   - Format axis labels using dataset Titles and Units
+   - Set title combining filename, O3 Title, and Units
+
+7. At the end, the gca of the plot is set such as invert yaxis, yscale value of log, and major formatter is FormatStrFormatter with the value of '%g'. Display the plot. 
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the problem again carefully.
+
+The user wants a Python code that reads data from an HDF-EOS5 file and visualizes it. The tasks include reading datasets, handling attributes, preprocessing data, and plotting. 
+
+First, for the HDF5 Dataset Access part, I need to focus on using h5py. The user is accessing specific groups and datasets within the HDF5 file. They mention extracting O3, Pressure, and Time datasets from different groups. Also, they need to read various attributes like units, titles, and _FillValue. So, my sub-query should cover opening the file with h5py, navigating through the groups, accessing these datasets, reading their attributes, and decoding them using decode(). 
+
+Next, for NumPy-based Data Preprocessing, the main tasks are handling the _FillValue by replacing it with NaN in the O3 data. This involves using np.where or masked arrays. Also, creating a datestr variable by initializing a datetime object from 1993-01-01 and adding seconds from the Time dataset is part of this preprocessing step. So, I need to include how to replace _FillValue and handle the time conversion.
+
+Lastly, for Map Plotting and Visualization, the user wants to plot O3 vs Pressure with specific customizations. This includes setting the x-axis to scientific notation, y-axis as log scale inverted, formatting labels with dataset titles and units, and setting a combined title. They also mention using matplotlib functions like gca to adjust the axes. So, my sub-query should cover all these plotting specifics.
+
+I need to make sure each sub-query is focused on its respective domain without overlapping. Let me structure them clearly.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to read datasets O3, Pressure, and Time from specific groups in an HDF-EOS5 file? How to access attributes like units, title, and _FillValue for these datasets?
+
+NumPy Data Preprocessing Sub-query:
+How to replace values in a NumPy array with NaN where they match a specified _FillValue? How to create a date string by initializing a datetime object at 1993-01-01 and adding seconds from a dataset?
+
+Plotting and Visualization Sub-query:
+How to plot O3 vs Pressure using matplotlib, customize x-axis with scientific notation, set y-axis to log scale and invert it, format axis labels with titles and units, and set the plot title?

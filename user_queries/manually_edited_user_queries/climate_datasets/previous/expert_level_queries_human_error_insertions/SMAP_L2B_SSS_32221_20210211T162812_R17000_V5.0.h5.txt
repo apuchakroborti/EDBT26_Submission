@@ -1,0 +1,13 @@
+a Python code that reads an HDF5 file, extracts specific datasets, visualizes the data on a map, and saves the plot to a PNG file. 
+
+The code starts by defining constants, including the HDF5 file name `SMAP_L2B_SSS_32221_20210211T162812_R17000_V5.0.h5`. 
+It then reads the HDF5 file in read-only mode and extracts three datasets: 
+`/lat` for latitude values, `/lon` for longitude values, and `/smap_spd` for data values, 
+then it access attributes from the units, long name, and fill value.
+
+The code replaces the fill value with `NaN` and masks NaN values. 
+It then creates an equidistant cylindrical projection map using Basemap, drawing coastlines, parallels, and meridians, 
+and scatters the data points on the map colored by their values. A colorbar is added to the map with a label indicating the units of the data.
+
+Finally, the code sets the title of the plot using the HDF5 file base name and dataset long name, 
+and saves the figure to a PNG file with the same base name as the HDF5 file but with a `.py.png` extension.

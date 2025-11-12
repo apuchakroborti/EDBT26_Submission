@@ -1,0 +1,31 @@
+It reads and visualizes data from an HDF-EOS5 file which is located at GSSTFYC_3_Year_1988_2008.he5. 
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+For reading data, it reads `SST` dataset from the path /HDFEOS/GRIDS/NCEP/Data Fields/SST
+It then reads attributes from the SST dataset such as units and long_name and decodes them using decode() function 
+
+It also accesses the _FillValue of 0th index only from the SST dataset
+After that it read the 0th index data from the _FillValue attribute of SST data
+
+Then the _FillValue data is applied to SST data for replacing _FillValue data by numpy nan value
+After that it masked the SST data using the numpy masked_array function with the parameters data itself and the result of numpy isnan of data
+
+Geo location data 
+Since there are no latitude and longitude data in the data file, 
+it should construct the longitude and latitude data based on the shape of the SST dataset
+such as it first declares scaleX and scaleY variables then it sets the
+scaleX = 360.0/ SST data shape from first index
+scaleY = 180.0/ SST data shape from 0th index
+In the next step it formed the latitude and longitude data such as 
+longitude = numpy arange of SSTdata shape from first index * scaleX - 180 + scaleX/2
+latitude = numpy arange of SSTdata shape from 0th index  * scaleY - 90 + scaleY/2
+
+Visualizing the Data
+The script creates a map with equidistant cylindrical projection, sets up its boundaries (low resolution, -90 to 90 latitude range, -180 to 180 longitude range ), 
+It also adds parrallels with the numpy arrange of values -90, 120, and 30 with the labels of [1, 0, 0, 0].
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [0, 0, 0, 1] 
+
+While rendering the image it gets the x and y data from the result of basemap with parameters of longitude and latitude data
+Then of Basemap's pcolormesh is set with values x, y, and SST data
+
+At the end it set the colorbar to the basemap with label SST Units value using set_label function, and the plots title is set with value of file basename and SST data LongName value

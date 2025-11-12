@@ -1,0 +1,15 @@
+Here is the rewritten description with 40% of the text reduced while keeping as many implementation details as possible:
+
+"Can you explain this Python script step by step?
+
+The script starts with a copyright notice and comments explaining its purpose: to access and visualize a GESDISC MEaSUREs Ozone Zonal Average HDF5 file in Python.
+
+It imports several modules, including `datetime`, `os`, `matplotlib`, and `numpy`.
+
+The script defines a global variable `USE_NETCDF4` set to `False`, which determines whether to use NetCDF4 or h5py to read HDF5 files.
+
+The `run()` function takes an HDF5 file path as an argument and reads data from the file, creating a plot. It uses either NetCDF4 or h5py depending on the `USE_NETCDF4` variable. If using NetCDF4, it opens the file with `Dataset` and extracts variables like `ProfileOzone` and `Latitude`. If using h5py, it opens the file with `h5py.File` and extracts datasets like `/Data_Fields/ProfileOzone`.
+
+After reading the data, the script performs common operations: converting dates to strings, applying a log scale to the y-axis, creating a contour plot, adding labels and a title, and saving the plot to a PNG file.
+
+The main script checks for an environment variable `HDFEOS_ZOO_DIR` to find the input HDF5 file. Finally, it calls the `run()` function with the HDF5 file path as an argument."

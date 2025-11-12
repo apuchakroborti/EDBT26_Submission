@@ -1,0 +1,37 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Overview**
+The code is designed to access and visualize data from a LaRC ASDC CALIPSO L2 HDF5 Swath file using Python. It reads data from the file, plots it on a map, and saves the image as a PNG file.
+
+**Importing Libraries**
+The code starts by importing several libraries:
+
+1. `h5py`: for working with HDF5 files
+2. `os`: for interacting with the operating system (e.g., getting the current working directory)
+3. `cartopy.crs` and `cartopy.mpl.gridliner`: for creating maps and gridlines
+4. `matplotlib.pyplot` and `numpy`: for plotting and numerical computations
+
+**Opening the HDF5 File**
+The code opens an HDF5 file named "CAL_LID_L2_BlowingSnow_Antarctica-Standard-V2-00.2023-06.hdf5" in read mode (`mode="r"`). The file is assumed to be in the current working directory.
+
+**Reading Data and Attributes**
+The code reads data from a dataset called "/Snow_Fields/Blowing_Snow_Depol_Profile" and converts it to a NumPy array with float64 precision. It also extracts an attribute called "units" from the same dataset, which is decoded as a string.
+
+Additionally, the code sets an attribute called "long_name" to "Blowing_Snow_Depol_Profile".
+
+**Reading Geolocation Data**
+The code reads geolocation data (latitude and longitude) from datasets "/Geolocation_Fields/Latitude" and "/Geolocation_Fields/Longitude", respectively.
+
+**Handling Fill Values**
+The code identifies fill values in the data (i.e., values equal to 0.0) and replaces them with NaN (Not a Number). It then masks these NaN values using NumPy's `masked_where` function.
+
+**Plotting Data on a Map**
+The code uses Cartopy's Orthographic projection to create a map. It plots the data as a scatter plot, where each point is colored according to its value in the "Blowing_Snow_Depol_Profile" dataset. The x-axis represents longitude, and the y-axis represents latitude.
+
+**Adding Gridlines, Coastlines, and Labels**
+The code adds gridlines, coastlines, and degree labels (N/E) to the map using Cartopy's `gridlines` and `coastlines` functions. It also adjusts the colorbar size and location.
+
+**Saving the Image**
+Finally, the code saves the plot as a PNG file with a filename based on the input HDF5 file name.
+
+Overall, this code is designed to provide a visual representation of data from a specific HDF5 file, highlighting the blowing snow depolarization profile over Antarctica.

@@ -1,0 +1,9 @@
+The code starts by loading an HDF5 file named "1C.F19.SSMIS.XCAL2021-V.20160105-S214106-E232259.009078.V07A.HDF5" in read-only mode.
+
+It then accesses the "/S1/Tc" dataset within the HDF5 file, extracting data values, units, long name, and fill value. 
+The code replaces fill values with NaN, creates a masked array to ignore NaN values, and extracts geolocation data (latitude and longitude).
+
+Next, it creates a map using Basemap with a cylindrical projection, low resolution, and sets latitude and longitude limits. 
+It draws coastlines, parallels, and meridians, and plots the data as a scatter plot with a jet colormap.
+
+Finally, it creates a plot title using the file name and dataset long name, and saves the figure to a PNG file named after the input HDF5 file.

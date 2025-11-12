@@ -1,0 +1,73 @@
+This Python script performs edge enhancement on a 3D medical image using VTK (Visualization Toolkit) modules. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`
+   - `vtkImageMapToWindowLevelColors` from `vtkmodules.vtkImagingColor`
+   - `vtkImageCast` from `vtkmodules.vtkImagingCore`
+   - `vtkImageLaplacian` from `vtkmodules.vtkImagingGeneral`
+   - `vtkImageMathematics` from `vtkmodules.vtkImagingMath`
+   - `vtkInteractorStyleImage` from `vtkmodules.vtkInteractionStyle`
+   - `vtkImageActor`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function is defined as `main()`.
+
+3. **File Name**:
+   - Set the variable `fileName` to `'EnhanceEdges_FullHead.mhd'`.
+
+4. **Read the Image**:
+   - Create an instance of `vtkImageReader2Factory()` and assign it to `readerFactory`.
+   - Use `readerFactory.CreateImageReader2(fileName)` to create a reader for the image file.
+   - Set the filename using `reader.SetFileName(fileName)`.
+   - Update the reader with `reader.Update()`.
+
+5. **Get Scalar Range**:
+   - Create an array `scalarRange` of size 2 and populate it with the scalar range from the image data.
+   - Print the scalar range.
+
+6. **Set Middle Slice**:
+   - Set `middleSlice` to 22.
+
+7. **Work with Triple Images**:
+   - Create a `vtkImageCast()` instance named `cast`.
+   - Set its input connection and output scalar type to double, then update it.
+   - Create a `vtkImageLaplacian()` instance named `laplacian` and set its input connection from the cast object. Set dimensionality to 3.
+
+8. **Enhance Image**:
+   - Create a `vtkImageMathematics()` instance named `enhance`.
+   - Set its input connections for both the original image (from cast) and the Laplacian-filtered image.
+   - Set the operation to subtract.
+
+9. **Map Colors**:
+   - Calculate color window and level based on scalar range.
+   - Create three instances of `vtkImageMapToWindowLevelColors()`: `originalColor`, `laplacianColor`, and `enhancedColor`.
+   - Configure each with appropriate window, level, and input connections.
+
+10. **Create Image Actors**:
+    - Create three `vtkImageActor` instances: `originalActor`, `laplacianActor`, and `enhancedActor`.
+    - Set their mappers to the corresponding color-mapped outputs.
+    - Configure display extents for each actor based on the original image's extent.
+
+11. **Setup Renderers**:
+    - Create three renderer instances: `originalRenderer`, `laplacianRenderer`, and `enhancedRenderer`.
+    - Add the respective actors to these renderers.
+    - Store them in a list called `renderers`.
+
+12. **Configure Viewports**:
+    - Set up a render window with size based on grid dimensions (400x3 for this example).
+    - Configure viewports for each renderer within the render window.
+
+13. **Setup Interactor and Rendering**:
+    - Create a `vtkRenderWindowInteractor()` instance named `renderWindowInteractor`.
+    - Set its interactor style to `vtkInteractorStyleImage()`.
+    - Assign the render window to the interactor.
+    - Share camera settings across all renderers.
+
+14. **Start Interaction**:
+    - Initialize and start the rendering interaction loop with `renderWindowInteractor.Start()`.
+
+15. **Entry Point**:
+    - If this script is run as the main module, call the `main()` function.
+
+This script reads a 3D medical image file, applies a Laplacian filter to enhance edges, and displays the original, filtered, and enhanced images in a VTK visualization window.

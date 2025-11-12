@@ -1,0 +1,30 @@
+It reads an HDF5 file which is located at OMI-Aura_L2-OMNO2_2008m0720t2016-o21357_v003-2016m0820t102252.he5, 
+extracts a dataset and its attributes, processes the data, and visualizes it on a map. 
+
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+The file path and dataset name are defined as constants: `/HDFEOS/SWATHS/ColumnAmountNO2/Data Fields/CloudFraction` as data 
+The code then reads all data and appl astype with parameters of numpy float64
+
+It retrieves several attributes from the dataset, 
+including 'ScaleFactor', 'Offset', 'MissingValue', '_FillValue', 'Title' with decode(), 'Units' with decode() 
+
+The geolocation data is also read from the file: 
+latitude and longitude arrays from the paths respectively 
+/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields/Latitude
+/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields/Longitude
+
+The code replaces MissingValue and _FillValue by numpy nan 
+then applies scaling and offset to the data such as data = ScaleFactor * (data - Offset), 
+and masked the data using numpy masked_where function with parameters of numpy isnan of data and data itself
+
+Using an equidistant cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30 and labels is list [1, 0, 0, 0], 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [0, 0, 0, 1]
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+At the end, I added a colorbar with using set_label function with the values of Units 

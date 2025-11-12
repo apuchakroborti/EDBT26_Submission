@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that reads ozone data from an HDF5 file and generates a visualization.
+
+1. Import Libraries: Include datetime, os, matplotlib, matplotlib.pyplot, mpl_toolkits.basemap, numpy, and h5py.
+
+2. Read HDF5 File: Open the specified HDF5 file using h5py to access its contents.
+
+3. Extract Datasets:
+   - Retrieve the 3D ProfileOzone data from /Data_Fields/ProfileOzone.
+   - Extract Latitude data from /Data_Fields/Latitude.
+   - Obtain ProfilePressureLevels from /Data_Fields/ProfilePressureLevels.
+   - Fetch Date data from /Data_Fields/Date.
+
+4. Extract Attributes: From the ProfileOzone, Latitude, and ProfilePressureLevels datasets, extract the 'units' and 'long_name' attributes for labeling purposes.
+
+5. Data Processing:
+   - Slice ProfileOzone to get the 0th index along the x-axis (ProfileOzone[0, :, :]).
+   - Extract the 0th index from Date data.
+   - Replace _FillValue in ProfileOzone with NaN using numpy's masked_where function.
+
+6. Transform Pressure Levels: Apply log10 transformation to ProfilePressureLevels.
+
+7. Create Visualization:
+   - Use contourf to plot latitude vs. transformed pressure levels with ozone data.
+   - Add a colorbar labeled with ozone units.
+   - Set x-axis label to Latitude's long name and units.
+   - Set y-axis label to a combination of Pressure Levels' long name and units.
+   - Set the title to include the HDF5 filename and ProfileOzone's long name.
+
+8. Display Plot: Render the plot using matplotlib's show function.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants a Python script that reads ozone data from an HDF5 file and generates a visualization. They've provided a detailed breakdown of the steps, so I need to extract three specific sub-queries based on the given categories.
+
+First, the HDF5 Dataset Access sub-query. The user mentions using h5py to open the file and access datasets like /Data_Fields/ProfileOzone. I need to focus on how to open the file, access specific datasets, and extract attributes like 'units' and 'long_name'. The key points here are the dataset paths and attributes.
+
+Next, the NumPy-based Data Preprocessing. The user wants to handle _FillValue by replacing it with NaN using masked_where. Also, slicing the ProfileOzone array and applying log10 to pressure levels. I should mention the functions like np.ma.masked_where and np.log10, along with data slicing.
+
+For the Plotting and Visualization part, the user is using contourf with matplotlib and basemap. They need to set labels, colorbar, and title. The sub-query should include using contourf, setting projections (if any), adding coastlines, and configuring labels and titles. Since they mentioned mpl_toolkits.basemap, I should include that even though it's deprecated, but the user might still be using it.
+
+I need to make sure each sub-query is focused on its respective domain without overlapping. Also, avoid any code examples and just state the technical aspects. Let me check the user's note again to ensure I'm following the format correctly. They want only the sub-queries in the specified format, no explanations or code. Alright, time to structure each part clearly.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to open an HDF5 file using h5py, access datasets at paths like `/Data_Fields/ProfileOzone`, extract 3D data arrays, and retrieve attributes such as `units` and `long_name` from datasets.  
+
+NumPy Data Preprocessing Sub-query:  
+How to replace `_FillValue` in a NumPy array with NaN using `np.ma.masked_where`, slice a 3D array to extract a 2D subset (e.g., `ProfileOzone[0, :, :]`), and apply `np.log10` to transform pressure levels.  
+
+Plotting and Visualization Sub-query:  
+How to use `matplotlib.pyplot.contourf` with `mpl_toolkits.basemap` to plot latitude vs. log-transformed pressure levels, add a colorbar with custom labels, set axis labels using dataset metadata, and include a title combining filename and dataset attributes.

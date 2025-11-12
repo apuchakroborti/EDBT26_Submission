@@ -1,0 +1,38 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to take a 3D model (in this case, a map of Honolulu) and simplify it. It then shows both the original and simplified versions side by side on your screen.
+
+### Step-by-Step Explanation
+
+1. Setting Up:
+   - The script starts by importing some tools that help with creating and displaying 3D models.
+   - It also sets up a color palette to use for different parts of the model.
+
+2. Loading the Model:
+   - The script loads a file named 'DecimateHawaii_honolulu.vtk', which contains the 3D map data of Honolulu.
+
+3. Simplifying the Model:
+   - It uses a tool called `vtkDecimatePro` to simplify (or "decimate") the model.
+   - The script tells this tool to reduce the model by 90%, meaning it will keep only 10% of the original details while trying not to create any cracks or holes in the model.
+
+4. Smoothing and Normals:
+   - After simplifying, the script smooths out the simplified model using `vtkPolyDataNormals`.
+   - It flips the normals (which are like tiny arrows pointing outward from each surface) and sets a feature angle to make sure the model looks good.
+
+5. Preparing for Display:
+   - The script creates two versions of the map: one is the original, and the other is the simplified version.
+   - It assigns colors to these maps using a color called 'Sienna'.
+   - For the original map, it sets it to be displayed as a solid surface.
+   - For the simplified map, it sets it to be displayed as a wireframe (like a skeleton of lines).
+
+6. Setting Up the View:
+   - The script creates two windows side by side on your screen: one for the original map and one for the simplified map.
+   - It sets up a camera to view these maps from a specific angle.
+
+7. Displaying the Maps:
+   - Finally, it displays both maps in their respective windows.
+   - You can see how much detail was removed when simplifying the model by comparing the two side-by-side views.
+
+### Summary
+In simple terms, this script takes a detailed 3D map of Honolulu and reduces its complexity by 90%. It then shows you both the original detailed map and the simplified version next to each other on your screen. This helps you see how much detail was lost in the simplification process.

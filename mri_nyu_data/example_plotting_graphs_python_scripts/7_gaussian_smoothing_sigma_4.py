@@ -1,0 +1,48 @@
+import scipy.ndimage as ndi
+import numpy as np
+import matplotlib.pyplot as plt
+import h5py
+
+FAST_MRI_BRAIN_H5_FILE = '/Users/apukumarchakroborti/gsu_research/llam_test/mri_nyu_data/fastMRI_brain_dcm_to_h5/fastMRI_brain_first_10_dcm_to_h5.h5'
+FAST_MRI_BRAIN_H5_FILE_DATA_PATH = 'FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data'
+
+
+with h5py.File(FAST_MRI_BRAIN_H5_FILE, 'r') as f:
+    # reshaping start
+    # dataset_2d = f[FAST_MRI_BRAIN_H5_FILE_DATA_PATH][()]
+    dataset_2d = f[FAST_MRI_BRAIN_H5_FILE_DATA_PATH][::]
+    print("Original shape:", dataset_2d.shape)
+
+    # Reshape to 3D (e.g., group every 512 columns into slices)
+    # The total number of elements must match
+    dataset_3d = dataset_2d.reshape((16, 32, 512))  # Example: 4 slices, 4 rows, 512 columns
+    print("Reshaped to 3D:", dataset_3d.shape)
+    
+    print('Brain vol is assigned by 3D dataset')
+    brain_vol = dataset_3d
+
+    print('Below we increase sigma to 4, resulting in a more smoothed image: ')
+
+
+    sigma = 4
+    smoothed = ndi.gaussian_filter(brain_vol, sigma)
+
+    fig_rows = 4
+    fig_cols = 4
+    n_subplots = fig_rows * fig_cols
+    n_slice = brain_vol.shape[0]
+    step_size = n_slice // n_subplots
+    plot_range = n_subplots * step_size
+
+    start_stop = int((n_slice - plot_range) / 2)
+
+
+    # fig, axs = plt.subplots(fig_rows, fig_cols, figsize=[10, 10])
+    fig, axs = plt.subplots(fig_rows, fig_cols, figsize=[15, 15])
+
+    for idx, img in enumerate(range(start_stop, plot_range, step_size)):
+        axs.flat[idx].imshow(smoothed[img, :, :], cmap='gray')
+        axs.flat[idx].axis('off')
+            
+    plt.tight_layout()
+    plt.show()

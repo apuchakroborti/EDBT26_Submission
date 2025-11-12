@@ -1,0 +1,28 @@
+Importing Libraries
+The script starts by importing necessary libraries.
+
+Defining Constants
+It defines a constant `FILE_NAME` for the HDF5 file to be read which is located at SBUV2-NOAA17_L2-SBUV2N17L2_2011m1231_v01-02-2013m0828t143157.h5
+
+Reading Data
+The script opens the HDF5 file and reads various datasets:
+- `/SCIENCE_DATA/ProfileO3Retrieved`: 2D ozone profile data
+- `/GEOLOCATION_DATA/Latitude`: 1D latitude values
+- `/ANCILLARY_DATA/PressureLevels`: 1D pressure level values
+- `nTimes`: 1D time values in seconds since 1993-01-01
+
+Data Processing
+The script processes the ozone profile data by replacing invalid values with NaN, and creating a masked array.
+
+Sorting Latitude Values
+It sorts latitude values in ascending order.
+
+Converting Time Values
+Time values are converted from seconds to datetime objects.
+
+Plotting the Data
+A contour plot is created using latitude on the x-axis and pressure levels on the y-axis. The colorbar is labeled with ozone profile data units.
+
+Customizing the Plot
+The script customizes the plot by setting axis labels, adding a title, and annotating start and end times. It also inverts the y-axis, applies a log scale, 
+and removes scientific notation from tick labels.

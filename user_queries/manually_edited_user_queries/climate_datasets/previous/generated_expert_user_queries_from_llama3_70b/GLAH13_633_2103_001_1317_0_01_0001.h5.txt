@@ -1,0 +1,67 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+1. `os`: for interacting with the operating system (e.g., getting the current working directory).
+2. `matplotlib` and `matplotlib.pyplot` (aliased as `mpl` and `plt`): for creating plots.
+3. `Basemap`: a toolkit for creating maps.
+4. `numpy` (aliased as `np`): for numerical computations.
+
+**Defining the `run` Function**
+
+The `run` function is defined, which takes a single argument `FILE_NAME`. This function will read and process data from an HDF5 file specified by `FILE_NAME`.
+
+**Reading Data from HDF5 File**
+
+The code uses either `netCDF4` or `h5py` to read data from the HDF5 file, depending on the value of `USE_NETCDF4`. If `USE_NETCDF4` is `True`, it uses `netCDF4`; otherwise, it uses `h5py`.
+
+**Using netCDF4**
+
+If using `netCDF4`, the code:
+1. Opens the HDF5 file using `Dataset`.
+2. Extracts variables from the file:
+	* `latvar`: latitude values.
+	* `lonvar`: longitude values.
+	* `tempvar`: surface temperature values.
+	* `timevar`: UTC time values.
+3. Retrieves data from these variables:
+	* `latitude` and `longitude`: 1D arrays of values.
+	* `temp`: 1D array of surface temperature values.
+	* `time`: 1D array of UTC time values.
+
+**Using h5py**
+
+If using `h5py`, the code:
+1. Opens the HDF5 file in read mode (`'r'`) using `File`.
+2. Extracts variables from the file:
+	* `latvar`: latitude values.
+	* `lonvar`: longitude values.
+	* `tempvar`: surface temperature values.
+	* `time`: UTC time values.
+3. Retrieves data from these variables:
+	* `latitude` and `longitude`: 1D arrays of values.
+	* `temp`: 1D array of surface temperature values.
+	* `time`: 1D array of UTC time values.
+
+**Data Processing**
+
+The code applies valid minimum and maximum values to the latitude, longitude, and temperature data by setting values outside these ranges to NaN (Not a Number).
+
+**Plotting**
+
+The code creates two plots:
+1. A line plot of surface temperature vs. elapsed time (in minutes).
+2. A map plot showing the trajectory of the satellite using Basemap.
+
+**Saving the Plot**
+
+The code saves the plot as a PNG file with a filename based on the input HDF5 file name.
+
+**Main Program**
+
+The main program:
+1. Checks if an environment variable `HDFEOS_ZOO_DIR` is set; if so, it uses that directory to find the input HDF5 file.
+2. Calls the `run` function with the input HDF5 file name as an argument.
+
+Overall, this code reads data from an HDF5 file, processes it, and creates plots to visualize the data.

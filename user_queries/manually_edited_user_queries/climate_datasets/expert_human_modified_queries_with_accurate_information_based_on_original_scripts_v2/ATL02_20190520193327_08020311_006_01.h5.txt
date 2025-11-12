@@ -1,0 +1,50 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+To be more specific the libraries are os, cartopy.crs, matplotlib, matplotlib.pyplot, numpy, datetime
+
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL12_20190330212241_00250301_006_03.h5 
+which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/gpsr/navigation/latitude` latitude data, 
+`/gpsr/navigation/longitude` longitude data, 
+`/atlas/pce1/background/bg_cnt_50shot_s` main data
+and /atlas/pce1/background/delta_time time data 
+
+Reads attributes named units and long_name with decoding using decode() function with parameters ascii and replace, 
+
+The program should make a split window plot.  First plot is time vs. counts.
+plt figure size is 10 by 10
+ax1 subplot with value 2, 1, 1
+elapsed_time is the result of subtractting 0th index value of time from time iteself
+
+ax1 plot is set with parameters of elapsed_time, main datam and string of "bo"
+
+ax1 xlabel is set to time_units
+ax1 y label is set to string value of main data units
+ax1 title is set by the comining result of data file basename, main datasetname and main dataset's long_name
+
+it should find the mid point location of latitude and longitude such as lat_m and lon_m
+
+It uses cartopy's ortho projection with parameters central_longitude=lon_m, central_latitude=lat_m, globe=None
+
+The 2nd plot is the trajectory.
+ax3 ploting with subplot function is set with parameters 2, 1, 2 and projection= orth
+
+ax3 gridlines is set with parameters such as draw_labels=True and dms=True
+
+ax3 global and coastlines should be set
+
+ax3 plot with parameters longitude, latitude, color="blue", linewidth="2", transform=ccrs.Geodetic(),
+
+Annotate the starting point.  Offset the annotation text by 200 km:
+could be done via ax3 plot setting with values 0th index of longitude, 0th index of latitude, marker="o", color="red", transform=ccrs.Geodetic(),
+
+ax3 text value is 0th index of longitude + 1.0, 0th index of latitude, "START", color="red", transform=ccrs.Geodetic()
+
+ax3 title is Trajectory of Flight Path
+
+figure layout is tight and with padding 3.0

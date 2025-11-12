@@ -1,0 +1,14 @@
+It starts by loading an HDF5 file located at `8_fastMRI_brain_first_10_dcm_to_h5.h5` in read-only mode.
+
+The code then accesses a dataset named fastMRI_brain_data where the dataset is located by full path `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`, 
+which represents 16 slices, 32 rows, and 512 columns. 
+
+Next, Gaussian smoothing from scipy.ndimage is applied to the original MRI volume with a sigma value of 2, reducing noise in the image.
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing using step_size,
+set imshow by slicing data from the x axis, 
+Multiple slices of the smoothed MRI volume are plotted using multiple subplots.
+
+In summary, this code loads an HDF5 file containing MRI data, reshapes the data into 3D, applies Gaussian smoothing, and visualizes the results.

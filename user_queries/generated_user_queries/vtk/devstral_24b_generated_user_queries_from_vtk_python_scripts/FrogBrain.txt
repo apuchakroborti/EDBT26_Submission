@@ -1,0 +1,50 @@
+1. **Import Libraries**:
+   - Import `Path` from the `pathlib` module.
+   - Import various VTK modules:
+     - `vtkInteractionStyle` and `vtkRenderingOpenGL2` for visualization interaction and rendering.
+     - `vtkNamedColors`, `VTK_VERSION_NUMBER`, `vtkLookupTable`, and `vtkVersion` from common VTK modules.
+     - Various filters like `vtkFlyingEdges3D`, `vtkMarchingCubes`, `vtkPolyDataNormals`, `vtkStripper`, and `vtkWindowedSincPolyDataFilter`.
+     - Image readers and processors like `vtkMetaImageReader`, `vtkImageThreshold`, and `vtkImageGaussianSmooth`.
+     - Rendering components like `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer`.
+
+2. **Define Main Function**:
+   - The function `main(data_folder, tissue)` is defined to set up the visualization.
+   - Check if VTK version supports `vtkFlyingEdges3D` using `vtk_version_ok`.
+   - Validate the data folder path and check for the existence of the file 'frogtissue.mhd'.
+   - Create a lookup table (LUT) for tissue colors with `create_frog_lut(colors)`.
+   - Create a mapping of tissues to their respective values using `create_tissue_map()`.
+   - Set up the rendering window, cameras, and background color.
+   - Render the scene and start the interactor.
+
+3. **Create Smooth Frog Actor**:
+   - The function `create_smooth_frog_actor(file_name, tissue, use_flying_edges)` reads the image data using `vtkMetaImageReader`.
+   - Selects specific tissue values with `vtkImageThreshold`.
+   - Applies Gaussian smoothing to the selected tissue with `vtkImageGaussianSmooth`.
+   - Generates an isosurface using either `vtkFlyingEdges3D` or `vtkMarchingCubes`.
+   - Smoothes the surface further with `vtkWindowedSincPolyDataFilter`.
+   - Computes normals and strips polygons to create a mapper for the actor.
+   - Returns the created actor.
+
+4. **Create Frog Actor**:
+   - The function `create_frog_actor(file_name, tissue, use_flying_edges)` reads the image data using `vtkMetaImageReader`.
+   - Selects specific tissue values with `vtkImageThreshold`.
+   - Generates an isosurface using either `vtkFlyingEdges3D` or `vtkMarchingCubes`.
+   - Strips polygons to create a mapper for the actor.
+   - Returns the created actor.
+
+5. **Create Lookup Table (LUT)**:
+   - The function `create_frog_lut(colors)` creates and configures a lookup table with predefined colors for different tissues.
+   - Sets the number of colors, range, and individual color values for each tissue type.
+   - Returns the configured lookup table.
+
+6. **Create Tissue Map**:
+   - The function `create_tissue_map()` creates a dictionary mapping tissue names to their respective integer values.
+   - Returns this dictionary.
+
+7. **Check VTK Version**:
+   - The function `vtk_version_ok(major, minor, build)` checks if the current VTK version is greater than or equal to the specified version.
+   - Compares the needed version with the actual VTK version number and returns a boolean result.
+
+8. **Main Execution Block**:
+   - If the script is run as the main module, it sets default values for `data_folder` and `tissue`.
+   - Calls the `main(data_folder, tissue)` function to start the visualization process.

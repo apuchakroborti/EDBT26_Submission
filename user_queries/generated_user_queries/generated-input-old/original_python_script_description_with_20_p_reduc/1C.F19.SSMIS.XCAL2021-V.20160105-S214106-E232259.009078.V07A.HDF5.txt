@@ -1,0 +1,37 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The code imports several Python modules: `os`, `matplotlib` and `matplotlib.pyplot` (as `mpl` and `plt`), `numpy` (as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+**Configuring matplotlib**
+
+The font size of matplotlib plots is set to 9 using `mpl.rcParams.update({"font.size": 9})`.
+
+**Defining constants and variables**
+
+The code defines several constants and variables: `FILE_NAME` (the name of the HDF5 file), `name` (a string representing the path to the dataset within the HDF5 file, "/S1/Tc").
+
+**Reading HDF5 file and accessing dataset**
+
+The code opens the HDF5 file in read mode using `h5py.File(FILE_NAME, mode="r") as f:` and accesses the dataset at `/S1/Tc`. It reads the entire dataset into a NumPy array `data` and retrieves its units, long name, and fill value from its attributes.
+
+**Replacing fill values with NaN**
+
+The code replaces all occurrences of the fill value in `data` with NaN (Not a Number) values using `data[data == _FillValue] = np.nan`.
+
+**Creating masked array**
+
+A masked array `data` is created using `np.ma.masked_where(np.isnan(data), data)` to handle missing or invalid values.
+
+**Accessing geolocation data and creating map projection**
+
+The code accesses the latitude and longitude datasets within the HDF5 file and creates a Basemap object `m` with a cylindrical projection, setting its resolution to `"l"` and defining its boundaries.
+
+**Visualizing data**
+
+The code visualizes the data using a scatter plot of the data on the map projection, creating a colorbar at the bottom of the plot with a label set to the units of the dataset.
+
+**Saving plot to file**
+
+The code saves the plot to a PNG file named after the HDF5 file with a `.py.png` extension.

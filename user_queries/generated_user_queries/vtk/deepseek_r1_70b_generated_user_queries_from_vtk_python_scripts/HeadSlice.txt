@@ -1,0 +1,59 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkInteractionStyle` from `vtkmodules`.
+   - Import `vtkRenderingOpenGL2` from `vtkmodules`.
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`.
+   - Import `vtkContourFilter` from `vtkmodules.vtkFiltersCore`.
+   - Import `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`.
+   - Import `vtkMetaImageReader` from `vtkmodules.vtkIOImage`.
+   - Import `vtkExtractVOI` from `vtkmodules.vtkImagingCore`.
+   - Import the following from `vtkmodules.vtkRenderingCore`: 
+     - `vtkActor`
+     - `vtkPolyDataMapper`
+     - `vtkRenderWindow`
+     - `vtkRenderWindowInteractor`
+     - `vtkRenderer`
+
+2. Define Main Function:
+   - Set variable `fileName` to `'HeadSlice_FullHead.mhd'`.
+   - Create an instance of `vtkNamedColors` and assign it to variable `colors`.
+
+3. Create Visualization Components:
+   - Instantiate `vtkRenderer` and assign it to variable `ren1`.
+   - Create a render window (`renWin`) using `vtkRenderWindow` and add renderer `ren1` to it.
+   - Create an interactor (`iren`) using `vtkRenderWindowInteractor` and set its render window to `renWin`.
+
+4. Set Up Data Processing Pipeline:
+   - Read the image file using `vtkMetaImageReader`, setting the filename to `fileName`.
+   - Update the reader to process the data.
+   - Extract a specific volume of interest (VOI) from the read data using `vtkExtractVOI`, defining the VOI with parameters `(0, 255, 0, 255, 45, 45)`.
+
+5. Generate Contour Surfaces:
+   - Use `vtkContourFilter` to generate iso-surfaces from the extracted VOI.
+   - Set contour values with `GenerateValues(12, 500, 1150)`.
+   - Create a mapper (`isoMapper`) for the contours and disable scalar visibility.
+
+6. Create Actor for Contours:
+   - Instantiate an actor (`isoActor`) for the contours.
+   - Set the mapper to `isoMapper` and set the color to 'Wheat' using `colors.GetColor3d('Wheat')`.
+
+7. Generate Outline of Data:
+   - Apply `vtkOutlineFilter` to the extracted VOI to create an outline.
+   - Create a mapper (`outlineMapper`) for the outline.
+
+8. Create Actor for Outline:
+   - Instantiate an actor (`outlineActor`) for the outline and set its mapper to `outlineMapper`.
+
+9. Configure Renderer and Render Window:
+   - Add both actors (`outlineActor` and `isoActor`) to renderer `ren1`.
+   - Set the background color of the renderer to 'SlateGray'.
+   - Reset the camera, dolly in by 1.5 times, and reset the clipping range.
+   - Set the render window size to 640x640 pixels and title to 'HeadSlice'.
+
+10. Render and Start Interaction:
+    - Render the scene using `renWin.Render()`.
+    - Start the interactor with `iren.Start()`.
+
+11. Run Main Function:
+    - Check if the script is run as the main program and execute `main()` function.

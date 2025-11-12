@@ -1,0 +1,80 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The script starts by importing several libraries:
+* `os`
+* `h5py`
+* `datetime`
+* `numpy` (as `np`)
+* `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`)
+
+**Defining constants and variables**
+
+The script defines:
+* `FILE_NAME`: the name of the HDF5 file
+* Variables to store datasets from the file: `dset_var`, `dset_lat`, `dset_lev`, and `dset_time`
+
+**Opening the HDF5 file**
+
+The script opens the HDF5 file using `h5py`:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    ...
+```
+This code ensures that the file is closed when we're done with it.
+
+**Accessing datasets**
+
+The script accesses four datasets from the HDF5 file:
+* `dset_var`: contains ozone zonal average data
+* `dset_lat`, `dset_lev`, and `dset_time`: contain latitude, pressure level, and time data, respectively
+
+Each dataset is accessed using the `f['/path/to/dataset']` syntax.
+
+**Reading data**
+
+The script reads data from each dataset:
+```python
+data = dset_var[:, :]
+lat = dset_lat[:]
+lev = dset_lev[:]
+time = dset_time[:]
+```
+This code extracts the data and assigns it to a variable.
+
+**Applying attribute information**
+
+The script applies attribute information to the data:
+```python
+data[data < data_vmin] = np.nan
+data[data > data_vmax] = np.nan
+data[data == data_fillvalue] = np.nan
+```
+This code sets values outside the valid range or equal to the fill value to NaN.
+
+**Creating a plot**
+
+The script creates a contour plot using `matplotlib`:
+```python
+plt.contourf(lat[idx], lev, data[idx, :].T, levels=np.arange(0, 60, 5))
+```
+This code creates a contour plot with latitude on the x-axis and pressure level on the y-axis.
+
+**Customizing the plot**
+
+The script customizes the plot:
+* Sets title using file name and long name
+* Adds axis labels and color bar
+* Inverts y-axis to put high pressure at the bottom
+* Applies log scale along y-axis
+
+**Saving the plot as an image**
+
+The script saves the plot as a PNG image file:
+```python
+fig = plt.gcf()
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This code creates a figure object and then saves it to a PNG file with the same name as the HDF5 file.

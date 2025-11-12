@@ -1,0 +1,58 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+* `datetime` for working with dates and times
+* `os` for interacting with the operating system (e.g., getting the current working directory)
+* `matplotlib` and `matplotlib.pyplot` for creating plots
+* `mpl_toolkits.basemap` for creating maps (not used in this code, but imported anyway)
+* `numpy` for numerical computations
+* `h5py` for reading HDF5 files
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME` with the value `'HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5'`, which is the name of the HDF-EOS5 file to be read.
+
+**Opening the HDF5 File**
+
+The code opens the HDF5 file using `h5py` in read-only mode (`mode='r'`) and assigns it to a variable `f`. This creates a context manager that ensures the file is properly closed when we're done with it.
+
+**Reading Data from the HDF5 File**
+
+The code reads data from three datasets within the HDF5 file:
+
+* `dset_var` corresponds to the `/HDFEOS/SWATHS/HIRDLS/Data Fields/O3` dataset, which contains ozone (O3) data.
+* `dset_pres` corresponds to the `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Pressure` dataset, which contains pressure data.
+* `dset_time` corresponds to the `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Time` dataset, which contains time data.
+
+The code reads the entire datasets into memory using `[0,:]`, `[:]`, and `[0]`, respectively. These indexing operations extract specific parts of the datasets.
+
+**Reading Attributes from the HDF5 File**
+
+The code reads various attributes associated with each dataset:
+
+* `data_units`, `pres_units`, `data_title`, `time_title`, and `pres_title` are read from the respective datasets' attributes.
+* `fillvalue` is read from the `dset_var` dataset's attributes, which represents a fill value (e.g., NaN) used in the data.
+
+**Data Processing**
+
+The code performs some data processing:
+
+* It replaces any occurrences of the fill value with NaN (`np.nan`) in the ozone data.
+* It converts the date stored as a six-digit number (YYYYMM) into a string using `datetime`.
+
+**Plotting**
+
+The code creates a plot using `matplotlib`:
+
+* It plots the ozone data against pressure using `plt.plot`.
+* It customizes the x-axis tick labels to use scientific notation with a specific format.
+* It sets the x-axis label, y-axis label, and title of the plot using various attributes read from the HDF5 file.
+
+**Saving the Plot**
+
+The code saves the plot to a PNG file with a name based on the input file name (`basename`) and appends `.py.png` to it. The `fig.savefig` method is used to save the figure.
+
+Overall, this code reads data from an HDF-EOS5 file, processes it, and creates a plot of ozone concentration against pressure.

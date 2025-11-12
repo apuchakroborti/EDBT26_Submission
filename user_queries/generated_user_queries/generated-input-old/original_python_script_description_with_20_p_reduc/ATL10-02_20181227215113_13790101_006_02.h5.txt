@@ -1,0 +1,35 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Comments and Import Statements**
+
+The code starts with comments explaining how to use the script, including the required input file format and library versions used.
+
+The next few lines import necessary libraries:
+* `datetime` for date and time operations
+* `os` for operating system-related functions
+* `matplotlib.pyplot` as `plt` for plotting
+* `numpy` as `np` for numerical computations
+* `mpl_toolkits.basemap` as `Basemap` for mapping and visualization
+* `h5py` for reading HDF5 files
+
+**File Path, HDF5 File Handling, and Dataset Access**
+
+The code sets the file path to an HDF5 file using a variable `FILE_NAME`. The file is opened in read mode (`"r"`), and a context manager (`with` statement) ensures that the file is properly closed.
+
+Within the `with` block, the code accesses various datasets:
+* `/gt1r/freeboard_segment/geophysical/latitude`
+* `/gt1r/freeboard_segment/geophysical/longitude`
+* `/gt1r/freeboard_segment/beam_fb_height`
+* `/gt1r/freeboard_segment/geophysical/delta_time`
+
+**Data Processing and Plotting**
+
+The code processes the data by handling fill values with NaN and masking the data using `np.ma.masked_where`. It then creates two plots:
+1. **Time vs. Height Plot**: A plot is created with time on the x-axis and beam FB height on the y-axis.
+2. **Trajectory Plot**: A Basemap plot is created, showing the trajectory of the flight path.
+
+**Saving the Plot**
+
+The final plot is saved as a PNG file with a name derived from the input HDF5 file name.
+
+This script reads an HDF5 file, extracts specific datasets, processes the data, and creates two plots.

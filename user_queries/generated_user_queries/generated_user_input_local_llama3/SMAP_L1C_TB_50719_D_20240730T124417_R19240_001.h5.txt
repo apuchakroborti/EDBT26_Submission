@@ -1,0 +1,63 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports the following libraries:
+- `os`: for operating system dependent functionality
+- `matplotlib.pyplot as plt`: for creating plots
+- `numpy as np`: for large arrays and matrices
+
+**Defining constants and opening HDF5 file**
+
+The code defines the name of the HDF5 file (`FILE_NAME`) and opens it in read mode (`"r"`):
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    # Code inside this block is executed when the file is open,
+    # and it's automatically closed when we exit the block.
+```
+
+**Accessing data from HDF5 file**
+
+Inside the `with` block, the code accesses some data from the HDF5 file, including:
+- `name`: the path to the dataset (`"/Global_Projection/cell_tb_h_fore"``)
+- `data`: the actual data
+- Various attributes (units, long_name, _FillValue, valid_max, and valid_min)
+
+The code then:
+1. Gets the data and stores it in the `data` variable
+2. Decodes units, long name, and fill value from ASCII to Python strings
+3. Creates a mask for invalid values and replaces them with NaN
+4. Uses `np.ma.masked_where` to create a masked array
+
+**Getting geolocation data**
+
+The code also accesses some geolocation data:
+- `latitude`: the latitude data
+- `longitude`: the longitude data
+
+**Creating a map and plotting data**
+
+The code creates a Basemap object with:
+- Projection type: cylindrical (`"cyl"``)
+- Resolution: low (`"l"``)
+- Latitudes and longitudes for the bottom-left and top-right corners of the map
+
+The code then:
+1. Draws coastlines
+2. Draws parallels at -90, 0, and 90 degrees north
+3. Draws meridians at -180, 0, and 180 degrees east
+
+**Plotting data on the map**
+
+The code plots the data on the map using `m.scatter` with:
+- Longitude values as x-coordinates
+- Latitude values as y-coordinates
+- Data values as colors
+- Color bar with label set to units
+
+**Saving the plot**
+
+Finally, the code saves the plot as an image file:
+1. Gets the base name of the HDF5 file using `os.path.basename`
+2. Creates a title for the plot including the base name and long name
+3. Saves the plot as an image file

@@ -1,0 +1,86 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Define Constants:  
+   Set a constant `FILE_NAME` to the path of the HDF5 file: `ATL17_20201201000814_10360901_005_01.h5`.
+
+3. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access three datasets: `/global_grid_lat` (latitude data), `/global_grid_lon` (longitude data), and `/global_asr` (main data).
+
+4. Read Dataset Attributes:  
+   Extract attributes `units` and `long name` from the global_asr dataset using `decode('ascii', 'replace')`. Also, retrieve the `FillValue` attribute.
+
+5. Data Processing and Cleaning:  
+   - Convert the global_asr dataset's `_FillValue` to `numpy NaN`.
+   - Mask the data using `numpy.ma.masked_where` with conditions `numpy.isnan(data)` and `data`.
+
+6. Create Map Projection:  
+   Use a cylindrical projection map with low resolution, setting latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+
+7. Customize Map Features:  
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at [-90, -60, -30, 0, 30, 60, 90].
+   - Draw meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+8. Adjust Longitude Values:  
+   Subtract 180 from longitude values before plotting to ensure correct map projection.
+
+9. Plot Data on Map:  
+   Use `pcolormesh` to plot the data with parameters: longitude, latitude, data, and `latlon=True`.
+
+10. Add Colorbar and Title:  
+    - Add a colorbar to the map, positioned at the bottom, labeled with the global_asr dataset's units.
+    - Set the title of the map to include the file basename and the `long name` attribute from the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me go through each part step by step.
+
+First, looking at the HDF5 Dataset Access section. The user wants to open an HDF5 file and access certain datasets. They mention using h5py, which is the library for handling HDF5 files in Python. So I should focus on how to use h5py to open the file, read the datasets like '/global_grid_lat', '/global_grid_lon', and '/global_asr'. Also, they need to extract attributes such as units, long name, and FillValue from the global_asr dataset. I'll make sure to include decoding these attributes using 'ascii' with replace errors.
+
+Next, for NumPy-based Data Preprocessing, the user wants to handle _FillValue by converting it to NaNs. They also need to mask the data where values are NaN or not valid. So I should outline how to use numpy functions like np.isnan and np.ma.masked_where to process the data correctly.
+
+Lastly, the Plotting and Visualization part involves using matplotlib with basemap or cartopy for geospatial plotting. The user needs a cylindrical projection map with specific bounds, coastlines, parallels, meridians, and a colorbar. They also want to adjust longitude values by subtracting 180 before plotting. I'll make sure the sub-query includes all these elements, like setting up the projection, adding features, and labeling the plot appropriately.
+
+I need to ensure each sub-query is clear and focused on its respective domain without overlapping with others. That way, when someone uses a vector database, they can retrieve relevant information for each part efficiently.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file named 'ATL17_20201201000814_10360901_005_01.h5' and access datasets '/global_grid_lat', '/global_grid_lon', and '/global_asr'? Also, how to extract attributes 'units', 'long name', and '_FillValue' from the global_asr dataset using decode('ascii', 'replace').
+
+NumPy Data Preprocessing Sub-query:
+How to convert _FillValue in a NumPy array to NaN? How to use np.ma.masked_where with conditions np.isnan(data) and data for masking?
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical projection map with matplotlib, set latitude bounds from -90 to 90 and longitude bounds from -180 to 180, add coastlines with linewidth 0.5, draw parallels at [-90, -60, -30, 0, 30, 60, 90], draw meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180], adjust longitude values by subtracting 180 before plotting, use pcolormesh to plot data with latlon=True, add a colorbar at the bottom labeled with units, and set the title with file basename and long name attribute?

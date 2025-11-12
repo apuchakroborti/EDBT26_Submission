@@ -1,0 +1,53 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkCommonColor`
+   - `vtkTransform` from `vtkCommonTransforms`
+   - `vtkGlyph3D`, `vtkMaskPoints`, and `vtkPolyDataNormals` from `vtkFiltersCore`
+   - `vtkTransformPolyDataFilter` from `vtkFiltersGeneral`
+   - `vtkConeSource` from `vtkFiltersSources`
+   - `vtkPolyDataReader` from `vtkIOLegacy`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkRenderingCore`
+
+2. Define the Main Function:
+   - Set the filename for input data as `fileName = 'SpikeFran_fran_cut.vtk'`.
+   - Create a color object using `vtkNamedColors()` named `colors`.
+
+3. Read Input Data:
+   - Initialize a `vtkPolyDataReader` named `fran` and set its filename to `fileName`.
+
+4. Compute Surface Normals:
+   - Use `vtkPolyDataNormals` named `normals`, connect it to the reader's output, and flip the normals.
+
+5. Create Actor for Original Data:
+   - Create a mapper `franMapper` connected to `normals`.
+   - Create an actor `franActor`, set its mapper, and color it using 'Flesh' from `colors`.
+
+6. Subsample Points Using Mask:
+   - Apply `vtkMaskPoints` named `ptMask` to the normals output.
+   - Set the ratio to 10 and enable random mode.
+
+7. Create Glyph Shape (Cone):
+   - Generate a cone using `vtkConeSource` named `cone` with resolution set to 6.
+   - Transform the cone's base to the origin using `vtkTransform` and apply it via `vtkTransformPolyDataFilter`.
+
+8. Generate Glyphs:
+   - Use `vtkGlyph3D` named `glyph`, connecting it to masked points and transformed cones.
+   - Set glyph orientation by normals, scaling mode by vector, and scale factor.
+
+9. Create Actor for Glyphs:
+   - Create a mapper `spikeMapper` connected to the glyph output.
+   - Create an actor `spikeActor`, set its mapper, and color it using 'Emerald_Green' from `colors`.
+
+10. Set Up Rendering Environment:
+    - Create a renderer `ren1`, a render window `renWin`, and an interactor `iren`.
+    - Add both actors to the renderer.
+    - Set window size to 640x480, window name to 'SpikeFran', and background color to 'SlateGray'.
+
+11. Render and Display:
+    - Render the scene, adjust camera zoom and azimuth for better view, then start interaction.
+
+12. Run Main Function:
+    - Execute `main()` when script is run as the main program.

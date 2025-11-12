@@ -1,0 +1,76 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkSphere` from `vtkmodules.vtkCommonDataModel`
+   - `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`
+   - `vtkImageCast`, `vtkImageShiftScale` from `vtkmodules.vtkImagingCore`
+   - `vtkImageGaussianSmooth` from `vtkmodules.vtkImagingGeneral`
+   - `vtkSampleFunction` from `vtkmodules.vtkImagingHybrid`
+   - `vtkImageMathematics` from `vtkmodules.vtkImagingMath`
+   - `vtkInteractorStyleImage` from `vtkmodules.vtkInteractionStyle`
+   - `vtkImageActor`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+   - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define the Main Function:
+   - Initialize `colors` using `vtkNamedColors()`.
+
+3. Set File Path:
+   - Define `fileName` as `'Attenuation_AttenuationArtifact.pgm'`.
+
+4. Read Image Data:
+   - Create a reader factory with `vtkImageReader2Factory()`.
+   - Generate a reader and set its filename to `fileName`.
+   - Update the reader to load the image data.
+
+5. Cast Image Data:
+   - Use `vtkImageCast()` to cast the image data.
+   - Set input from the reader's output port.
+   - Set output scalar type to double.
+
+6. Apply Gaussian Smoothing:
+   - Create a smoother with `vtkImageGaussianSmooth()`.
+   - Set input from the cast's output port.
+   - Configure standard deviations as `(0.8, 0.8, 0)`.
+
+7. Create Sampling Function:
+   - Define a sphere `m1` with center at `(310, 130, 0)` and radius `0`.
+   - Sample the sphere using `vtkSampleFunction()` with model bounds `(0, 264, 0, 264, 0, 1)` and dimensions `(264, 264, 1)`.
+
+8. Scale Sampled Data:
+   - Apply scaling to sampled data using `vtkImageShiftScale()` with scale factor `0.000095`.
+
+9. Perform Image Mathematics Operation:
+   - Use `vtkImageMathematics()` to multiply the smoothed image and scaled sample.
+   - Set operation to multiply.
+
+10. Create Actors for Display:
+    - Original Actor: Connect to cast output, set color window to `256.0` and level to `127.5`.
+    - Filtered Actor: Connect to division output.
+
+11. Define Viewports:
+    - Original viewport: `[0.0, 0.0, 0.5, 1.0]`
+    - Filtered viewport: `[0.5, 0.0, 1.0, 1.0]`
+
+12. Configure Renderers:
+    - Original Renderer: Set viewport, add original actor, reset camera, set background to "SlateGray".
+    - Filtered Renderer: Set viewport, add filtered actor, reset camera, set background to "LightSlateGray".
+
+13. Set UpRenderWindow:
+    - Create window of size `600x300`, add both renderers, name it 'Attenuation'.
+
+14. Initialize Interaction:
+    - Use `vtkInteractorStyleImage()` for interaction.
+    - Link interactor to render window and start interaction.
+
+15. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "Attenuation_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.
+16. Run Main Function:
+    - Execute if script is run as main.

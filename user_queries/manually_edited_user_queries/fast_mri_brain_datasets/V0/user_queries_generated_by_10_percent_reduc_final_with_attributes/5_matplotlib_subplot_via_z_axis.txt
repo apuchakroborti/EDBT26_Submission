@@ -1,0 +1,27 @@
+The code starts by defining file paths: 
+`FAST_MRI_BRAIN_H5_FILE` located at fastMRI_brain_first_10_dcm_to_h5.h5 for an HDF5 file containing brain MRI data 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` where the path is sub group path is 100099070170/279 where the dataset fastMRI_brain_data is located to access the brain MRI data within the HDF5 file.
+
+Also print the below information by acessing attributes data from the metadata sub group from the group FAST_MRI_BRAIN_ROOT/100099070170/279 
+Patient age, Patient BirthDate, Patient id, Patient_Identity_Removed, Patientname, Sex
+
+It then loads the HDF5 file in read mode and extracts the brain MRI data from the file. 
+The extracted 2D dataset, representing a slice of the brain MRI volume, is assigned to `brain_vol`.
+
+The code reshapes the 2D dataset into a 3D array, where each slice of the brain MRI volume is represented by a 2D array. 
+This is done to group every 512 columns into slices.
+
+Next, it plots the coronal plane of the brain MRI volume using matplotlib. 
+It defines the number of rows and columns for the plot, calculates the step size to iterate over the slices, 
+and creates a figure with subplots. Each slice is rotated by 270 degrees using scipy.ndimage and displayed in a subplot with the axis turned off.
+
+It sets the values of fig and axs from subplots of fig_rows, fig_cols, and fig_size of values 15 and 31
+
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing by step_size,
+set imshow by slicing data from the z axis,
+
+Finally, the code displays the plot. The goal is to load brain MRI data from an HDF5 file, reshape it into a 3D array, 
+and visualize the coronal plane of the brain MRI volume.

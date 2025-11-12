@@ -1,0 +1,12 @@
+The code imports libraries: `datetime`, `os`, `cartopy.crs`, `matplotlib.pyplot`, and `h5py`. It defines a constant `FILE_NAME` for an HDF5 file. Then, it opens the HDF5 file in read mode using `h5py` and reads several datasets:
+
+* `/gpsr/navigation/latitude`
+* `/gpsr/navigation/longitude`
+* `/atlas/pce1/background/bg_cnt_50shot_s`
+* `/atlas/pce1/background/delta_time`
+
+The code extracts attributes and data from these datasets, including latitude, longitude, elevation values with units and long name attributes, and time values. 
+
+It then creates a split window plot with two subplots: one plots elevation values against time, and the other displays the flight path trajectory using an Orthographic cartographic projection. The plot includes grid lines, coastlines, a blue line for the flight path, and a red marker at the starting point.
+
+Finally, it saves the plot as a PNG file based on the original HDF5 file name.

@@ -1,0 +1,64 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Write a Python code to create a combination chart from a dataset named "96_h5_data.h5". 
+The dataset contains sales data for various mobile phone brands (`Samsung`, `Nokia/Microsoft`, `Apple`, `LG`, `ZTE`, and `Huawei`) 
+across different quarters of the year titled "Quarter" (e.g., "Q1 '10" for the first quarter of 2010). 
+The dataset of the h5 file is ["Quarter", "Samsung", "Nokia/Microsoft", "Apple", "LG", "ZTE", "Huawei"]. 
+The chart should include a box plot for each brand showing the distribution of sales data across quarters, with individual sales data points represented as dots. 
+Also, calculate the overall mean sales for each brand and draw a line connecting these points. Ensure the line points align with their respective box plots. 
+Use a consistent color scheme for the same quarter across different years, varying the shades to distinguish between years. 
+Include a legend to aid in understanding the color coding. The box plot should be the underlying layer, and the data points should be on top, ensuring visibility.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per the guidelines. Let me start by understanding each part of their request.
+
+First, they want to access an HDF5 dataset named "96_h5_data.h5". The dataset includes various mobile phone brands and sales data across different quarters. So, for the HDF5 Dataset Access sub-query, I should focus on how to open this file using h5py, access the specific datasets like "Quarter", "Samsung", etc., and retrieve any necessary metadata.
+
+Next, they mentioned preprocessing steps: handling _FillValue, applying masks with NumPy functions, calculating means, and filtering data. So, the NumPy Data Preprocessing sub-query should cover how to handle missing or invalid data using _FillValue, compute the mean sales for each brand, and possibly filter out any anomalies.
+
+Lastly, they want a combination chart with box plots, data points as dots, and lines connecting the means. The visualization needs consistent colors per quarter across years, varying shades for different years, and a legend. So, the Plotting sub-query should focus on using matplotlib to create these elements, ensuring proper alignment of line points with box plots, and setting up the color scheme correctly.
+
+I need to make sure each sub-query is clear and targets only its specific domain without overlapping into others.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access the dataset "96_h5_data.h5" using h5py, retrieve the datasets for "Quarter", "Samsung", "Nokia/Microsoft", "Apple", "LG", "ZTE", and "Huawei", and extract metadata.
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue in NumPy arrays, compute mean sales for each brand, and prepare data for box plots with individual data points as dots.
+
+Plotting and Visualization Sub-query:
+How to create a combination chart using matplotlib with box plots, overlay data points as dots, draw lines connecting mean sales points, set consistent colors per quarter across years, vary shades for different years, and include a legend.

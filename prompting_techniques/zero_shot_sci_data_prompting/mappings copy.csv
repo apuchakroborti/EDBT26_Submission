@@ -1,0 +1,7 @@
+model_name,path
+deepseek-r1:32b,/data/deepseek-r1:32b
+deepseek-r1:70b,/data/deepseek-r1:70b
+devstral:24b,/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector
+gemma3:27b,/data/gemma3:27b
+llama3:70b,/data/llama3:70b
+magicoder:7b,/data/magicoder:7b

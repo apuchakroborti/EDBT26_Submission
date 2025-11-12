@@ -1,0 +1,67 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that reads an HDF5 file and generates a map visualization following these steps:
+
+1. Import Libraries: Include necessary libraries such as `os`, `re`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Read HDF5 File: Open the HDF5 file in read-only mode.
+
+3. Extract Data and Attributes:
+   - Extract datasets including `/lst` (data of interest), `/lon` (longitude values), and `/lat` (latitude values).
+   - Update data types for `/lst`, `/lon`, and `/lat` to `np.float64`.
+   - Extract attributes: 'scale_factor', 'add_offset', 'units' (decode using `decode()`), '_FillValue', and 'long_name' (description, decode using `decode()`).
+
+4. Preprocess Data:
+   - Replace `_FillValue` in `/lst` data with `np.NaN`.
+   - Apply scaling: `lst_data = scale_factor  lst_data + add_offset`.
+   - Mask data using `numpy.masked_array` with `np.isnan` for `/lst`, `/lat`, and `/lon`.
+
+5. Create Map Visualization:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude bounds from -90 to 90 and longitude bounds from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals of [-90, -60, -30, 0, 30, 60, 90, 120] and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+   - Use `scatter` function with parameters: longitude, latitude, data, marker size 0.1, colormap `plt.cm.jet`, no edge colors, and linewidth 0.
+   - Add a colorbar with label set to the decoded 'units' attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to use `h5py` to open an HDF5 file in read-only mode, extract datasets like `/lst`, `/lon`, and `/lat`, convert their data types to `np.float64`, and retrieve attributes such as 'scale_factor', 'add_offset', 'units' (decoded), '_FillValue', and 'long_name' (description, decoded)?
+
+NumPy Data Preprocessing Sub-query:
+How to replace `_FillValue` in a dataset with `np.NaN`, apply scaling using `scale_factor` and `add_offset`, and create masked arrays for `/lst`, `/lat`, and `/lon` datasets using `numpy.masked_array` with `np.isnan`?
+
+Plotting and Visualization Sub-query:
+How to use `matplotlib` and `mpl_toolkits.basemap.Basemap` to create a map visualization with an equidistant cylindrical projection, set latitude/longitude bounds, add coastlines, draw parallels and meridians at specified intervals, plot data using the `scatter` function, and add a colorbar with a label?

@@ -1,0 +1,35 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+To be more specific the libraries are os, cartopy.crs, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, h5py, LATITUDE_FORMATTER, LONGITUDE_FORMATTER from cartopy.mpl.gridliner 
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL08_20210114234518_03361001_006_01.h5 
+which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/gt1l/land_segments/latitude` latitude data, 
+`/gt1l/land_segments/longitude` longitude data, 
+and `/gt1l/land_segments/dem_h` main data 
+
+Reads attributes named units and long_name with decoding using decode() function with parameters ascii and replace, 
+and _FillValue from the main data
+
+main data's _FillValue is set to numpy NaN
+and masked the data using numpy masked_where function with parameters of numpy isnan of data and data itself
+
+The latitude and longitude midpoint localtion is calculated with two variables such as lat_m and lon_m
+
+Creating a Map
+It uses cartopy's ortho projection with parameters central_longitude=lon_m, central_latitude=lat_m, globe=None
+The plot's scatter is set with parameters lon, lat, c=data, s=1, cmap=plt.cm.jet, transform=ccrs.PlateCarree()
+
+Plots grid is set using ax of global and using gridlines() function with parameter of draw_labels=True, dms=True
+The ax should have the coastlines
+the grid top and right label should be False
+The grids xformatter and yformatter should be LONGITUDE_FORMATTER and LATITUDE_FORMATTER respectively
+
+Adding Colorbar and Title
+A colorbar is added with fraction value of 0.022 and padding value of 0.01  
+labeled with main dataset's units and fontsize of 8, 
+and a title is set including the file basename, main dataset's long_name

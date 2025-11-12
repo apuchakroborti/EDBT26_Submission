@@ -1,0 +1,11 @@
+Utilize the following datasets from '87_h5_data.h5' to create a sunburst plot:
+- 'country': for the names of the countries,
+- 'continent': to indicate which continent each country is in,
+- 'lifeExp': showing the expected lifespan in each country,
+- 'pop': representing the population of each country.
+Your chart should:
+- Organize the data hierarchically, starting with continents and then breaking down into countries.
+- Use the population of each country to determine the size of its segment in the chart.
+- Color code each segment by the country's expected lifespan, transitioning from red to blue across the range of values.
+- Set the central value of the color scale to the average lifespan, weighted by the population of the countries.
+- Finally, include a legend to help interpret the lifespan values as indicated by the color coding.

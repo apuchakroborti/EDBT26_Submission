@@ -1,0 +1,54 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Step 1: Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+* `os`: for interacting with the operating system
+* `matplotlib.pyplot` as `plt`: for creating visualizations (plots)
+* `numpy` as `np`: for numerical computations
+* `mpl_toolkits.basemap` as `Basemap`: for creating map visualizations
+* `h5py`: for reading and manipulating HDF5 files
+
+**Step 2: Defining the HDF5 file name**
+
+The code defines a variable `FILE_NAME` with the value `"ATL22_20210712003905_02811201_003_01.h5"`, which is the name of an HDF5 file.
+
+**Step 3: Opening the HDF5 file**
+
+The code uses the `h5py` library to open the HDF5 file in read-only mode (`mode="r"`). The file is opened using a context manager (`with` statement), which ensures that the file is properly closed when the script finishes executing.
+
+**Step 4: Reading latitude and longitude datasets**
+
+The code reads two datasets from the HDF5 file:
+* `latvar`: a dataset named `/gt1l/transect_lat`, which contains latitude values
+* `lonvar`: a dataset named `/gt1l/transect_lon`, which contains longitude values
+
+The `[:]` syntax is used to read the entire dataset into memory.
+
+**Step 5: Reading inland water body type dataset**
+
+The code reads another dataset from the HDF5 file:
+* `datavar`: a dataset named `/gt1l/inland_water_body_type`, which contains data values
+* The code also reads attributes associated with this dataset, such as `units`, `long_name`, and `_FillValue`
+
+**Step 6: Handling FillValue**
+
+The code handles the `_FillValue` attribute by replacing it with NaN (Not a Number) values in the data array. This is done to avoid plotting issues.
+
+**Step 7: Creating a map visualization**
+
+The code creates a map visualization using `Basemap`. The map is an equidistant cylindrical projection with a low-resolution coastline database.
+* The code sets up the map boundaries and draws coastlines, parallels, and meridians.
+* It then scatters the latitude and longitude values on the map, coloring them according to the inland water body type data.
+
+**Step 8: Adding a colorbar**
+
+The code adds a colorbar to the map visualization using `m.colorbar`. The colorbar is labeled with the units of the dataset.
+
+**Step 9: Setting up the plot title**
+
+The code sets up the plot title by combining the file name, dataset name, and long name of the dataset.
+
+**Step 10: Saving the plot as a PNG image**
+
+Finally, the code saves the plot as a PNG image using `fig.savefig`. The image is named based on the HDF5 file name.

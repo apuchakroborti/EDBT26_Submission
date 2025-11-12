@@ -1,0 +1,70 @@
+### Step-by-Step Description of the Python Script
+
+#### 1. Import Required Libraries
+   - Import `os` and `sys` for system operations.
+   - Import `vtkmodules.vtkInteractionStyle`, `vtkmodules.vtkRenderingOpenGL2`.
+   - Import specific classes from various VTK modules:
+     - From `vtkCommonCore`: `VTK_VERSION_NUMBER`, `vtkVersion`.
+     - From `vtkCommonDataModel`: `vtkDataObject`, `vtkDataSetAttributes`.
+     - From `vtkFiltersCore`: `vtkMaskFields`, `vtkThreshold`, `vtkWindowedSincPolyDataFilter`.
+     - From `vtkFiltersGeneral`: `vtkDiscreteFlyingEdges3D`, `vtkDiscreteMarchingCubes`.
+     - From `vtkFiltersGeometry`: `vtkGeometryFilter`.
+     - From `vtkIOImage`: `vtkMetaImageReader`.
+     - From `vtkIOXML`: `vtkXMLPolyDataWriter`.
+     - From `vtkImagingStatistics`: `vtkImageAccumulate`.
+
+#### 2. Define the Main Function
+   - Check if VTK version is 8.2 or higher using `vtk_version_ok(8, 2, 0)`.
+   - Set initial parameters:
+     - `file_name = 'GenerateModelsFromLabels_frogtissue.mhd'`
+     - `start_label = 1`, `end_label = 29`
+     - Swap `start_label` and `end_label` if `start_label > end_label`.
+
+#### 3. Create VTK Objects
+   - Create a `vtkMetaImageReader` object named `reader`.
+   - Create a `vtkImageAccumulate` object named `histogram`.
+   - Based on the VTK version, create either:
+     - `vtkDiscreteFlyingEdges3D` (if VTK >= 8.2) or
+     - `vtkDiscreteMarchingCubes` (if VTK < 8.2).
+   - Create a `vtkWindowedSincPolyDataFilter` object named `smoother`.
+   - Create a `vtkThreshold` object named `selector`.
+   - Create a `vtkMaskFields` object named `scalars_off`.
+   - Create a `vtkGeometryFilter` object named `geometry`.
+   - Create a `vtkXMLPolyDataWriter` object named `writer`.
+
+#### 4. Set Variables
+   - Set `file_prefix = 'Label'`.
+   - Set `smoothing_iterations = 15`.
+   - Set `pass_band = 0.001`.
+   - Set `feature_angle = 120.0`.
+
+#### 5. Generate Models from Labels
+   - Connect the pipeline:
+     1. Read the meta file using `reader.SetFileName(file_name)`.
+     2. Generate a histogram of labels using `histogram.Update()`.
+     3. Generate polydata models for each label range.
+     4. Smooth the generated models.
+     5. Output each model into a separate file.
+
+#### 6. Configure and Connect VTK Pipeline
+   - Set up the `reader` to read the input file.
+   - Configure the `histogram` to analyze label distribution.
+   - Configure the `discrete_cubes` (either FlyingEdges or MarchingCubes) to generate models for labels in the range `[start_label, end_label]`.
+   - Configure the `smoother` with parameters:
+     - Number of iterations: 15
+     - Pass band: 0.001
+     - Feature angle: 120 degrees
+   - Connect the pipeline components in sequence.
+
+#### 7. Process Each Label
+   - For each label from `start_label` to `end_label`:
+     - Check if the label exists using the histogram.
+     - Skip processing if the label does not exist (frequency = 0).
+     - Set thresholds on `selector` to isolate the current label.
+     - Generate output file name as `{file_prefix}{label}.vtp`.
+     - Write the polydata for the current label to the output file.
+
+#### 8. Run the Script
+   - Execute the script by running `main()` when the script is called as the main program.
+
+This description provides a clear, step-by-step guide to reproducing the functionality of the original Python script.

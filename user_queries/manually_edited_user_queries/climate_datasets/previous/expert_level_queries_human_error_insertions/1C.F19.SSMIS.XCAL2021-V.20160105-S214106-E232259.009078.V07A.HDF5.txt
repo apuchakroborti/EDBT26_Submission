@@ -1,0 +1,16 @@
+The code starts by loading an HDF5 file named "1C.F19.SSMIS.XCAL2021-V.20160105-S214106-E232259.009078.V07A.HDF5" in read-only mode.
+
+It then accesses the "/S1/Tc" dataset within the HDF5 file, it is a 3 dimensional data so take all data from x and y axis and 0th slice from z axis, 
+extracting data values, units, long name, and fill value. 
+The code replaces fill values with NaN by comparing the main data from the dataset named Tc by comparing with the _Fill Value data, 
+It should then process the Tc data by checking where numpy data is nan and previously accessed Tc data. 
+and extracts geolocation data (latitude and longitude).
+
+Next, it creates a cylindrical projection map with specific settings (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc.). 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 91, and 45.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [True, False, False, True] 
+
+The code then plots the dataset values as a scatter plot on the map, using the `jet` colormap for color and setting point size to 1.
+the colorbar location is bottom and the padding is 10 percent with the label units which is accessed previously from the main dataset Tc
+
+Finally, it creates a plot title using the file name and dataset long name, and saves the figure to a PNG file named after the input HDF5 file.

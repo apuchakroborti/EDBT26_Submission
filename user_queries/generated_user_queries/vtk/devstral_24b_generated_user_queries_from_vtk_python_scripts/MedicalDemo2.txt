@@ -1,0 +1,72 @@
+This Python script performs the following steps:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `VTK_VERSION_NUMBER`, `vtkVersion` from `vtkmodules.vtkCommonCore`
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes`, `vtkStripper` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkProperty`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function is defined as `main()`.
+
+3. **Check VTK Version**:
+   - Determine if VTK version >= 8.2 to use `vtkFlyingEdges3D`.
+
+4. **Set Colors**:
+   - Create a `colors` object using `vtkNamedColors()`.
+   - Set colors for 'SkinColor', 'BackfaceColor', and 'BkgColor'.
+
+5. **Create Renderer, Window, and Interactor**:
+   - Create `a_renderer` (vtkRenderer).
+   - Create `ren_win` (vtkRenderWindow) and add the renderer to it.
+   - Create `iren` (vtkRenderWindowInteractor) and set its render window.
+
+6. **Read Volume Dataset**:
+   - Create a reader (`reader`) using `vtkMetaImageReader()`.
+   - Set the file name for the reader as 'MedicalDemo2_FullHead.mhd'.
+
+7. **Extract Skin Isosurface**:
+   - If VTK version >= 8.2, try to use `vtkFlyingEdges3D` for skin extraction; otherwise, use `vtkMarchingCubes`.
+   - Set input connection and isosurface value (500) for the skin extractor.
+   - Create a stripper (`skin_stripper`) using `vtkStripper()` to optimize rendering.
+   - Map the stripped data with `skin_mapper` (vtkPolyDataMapper).
+   - Create an actor (`skin`) and set its properties including color, specularity, opacity, and backface property.
+
+8. **Extract Bone Isosurface**:
+   - Similar steps as skin extraction but for bone with isosurface value 1150.
+   - Create a stripper (`bone_stripper`), mapper (`bone_mapper`), and actor (`bone`).
+
+9. **Create Outline**:
+   - Use `vtkOutlineFilter` to create an outline of the dataset.
+   - Map the outline data using `map_outline` (vtkPolyDataMapper).
+   - Create an actor (`outline`) for the outline.
+
+10. **Set Camera View**:
+    - Create a camera (`a_camera`) and set its view up, position, focal point, azimuth, and elevation.
+    - Compute the view plane normal and adjust the camera's orientation.
+
+11. **Add Actors to Renderer**:
+    - Add `outline`, `skin`, and `bone` actors to the renderer.
+    - Set the active camera and reset it.
+    - Adjust the camera's position using Dolly() method.
+
+12. **Set Background Color and Window Size**:
+    - Set background color for the renderer.
+    - Set size of the render window (640x480 pixels).
+    - Name the render window 'MedicalDemo2'.
+
+13. **Adjust Clipping Planes**:
+    - Reset camera clipping range to ensure proper rendering.
+
+14. **Initialize and Start Event Loop**:
+    - Initialize and start the interactor event loop with `iren.Initialize()` and `iren.Start()`.
+
+15. **Define VTK Version Check Function**:
+    - Define a function `vtk_version_ok(major, minor, build)` to check if the current VTK version meets or exceeds the specified version.
+
+16. **Run Main Function**:
+    - If this script is run as the main module, call the `main()` function.

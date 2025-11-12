@@ -1,0 +1,85 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            This code is part of an application for visualizing and analyzing brain MRI data stored in HDF5 files. Here's how it works:
+
+File Paths and Variables
+The code defines two file paths: `FAST_MRI_BRAIN_H5_FILE` is located at 4_fastMRI_brain_first_10_dcm_to_h5.h5 and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`, 
+which points to a specific dataset  such as `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data` within the HDF5 file.
+
+Reading Data from HDF5 File
+The code reads data from the HDF5 file. It opens the file in read mode and assigns it to a variable. 
+Then, it reads the dataset at the specified path and assigns it to a variable `brain_vol`.
+
+Reshaping Data
+The 2D dataset is reshaped into a 3D array with shape `(16, 32, 512)` using the `reshape()` method.
+
+Plotting Data
+The code sets up a figure with multiple subplots using `matplotlib`. It defines the number of rows and columns for the subplot grid, as well as the total number of subplots. 
+Then, it iterates over a range of slice indices and plots each slice using `imshow()`, applying a 270-degree rotation to align the slices with the correct orientation using scipy.ndimage.
+
+Implementation Details
+The HDF5 file contains a dataset at the path `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`, which is read into memory as a 2D array.
+The 2D array is reshaped into a 3D array with shape `(16, 32, 512)`.
+Each slice is rotated by 270 degrees to align it with the correct orientation.
+
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing by step_size,
+set imshow by slicing data from the y axis,  
+
+plots brain MRI slices as grayscale images, and turns off axis labels for each subplot. 
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries based on the given categories: HDF5 Dataset Access, NumPy-based Data Preprocessing, and Map Plotting and Visualization. 
+
+First, looking at the user's description, they're working with HDF5 files for MRI data. They mention accessing a dataset using a specific path like `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`. So, the first sub-query should focus on how to access this dataset using h5py, including opening the file and reading the dataset.
+
+Next, the preprocessing part involves reshaping a 2D array into a 3D shape (16, 32, 512) and rotating each slice by 270 degrees. This suggests that the second sub-query should cover using NumPy functions for reshaping and applying transformations like rotation.
+
+Lastly, the visualization part uses matplotlib to create multiple subplots of MRI slices. They set up a grid with specific rows and columns, plot each slice after rotation, and adjust the display settings. The third sub-query should focus on how to structure these plots, including setting up the figure, iterating through slices, applying rotations, and customizing the visual elements.
+
+I need to ensure each sub-query is clear and targets only one technical domain without overlapping with others.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access a specific dataset in an HDF5 file using h5py, including opening the file, reading the dataset at path `FAST_MRI_BRAIN_H5_FILE_DATA_PATH`, and handling metadata.
+
+NumPy Data Preprocessing Sub-query:
+How to reshape a 2D NumPy array into a 3D array with shape (16, 32, 512) and apply a 270-degree rotation using scipy.ndimage for MRI slice alignment.
+
+Plotting and Visualization Sub-query:
+How to create multiple subplots in matplotlib for visualizing MRI slices, including setting figure rows and columns, calculating step size and plot range, rotating slices by 270 degrees, and displaying grayscale images with axis labels turned off.

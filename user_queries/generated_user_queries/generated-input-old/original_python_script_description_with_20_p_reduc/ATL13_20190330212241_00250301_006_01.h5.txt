@@ -1,0 +1,55 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Comments and Docstrings**
+
+The code starts with comments and docstrings providing information about the script, its purpose, and how to use it.
+
+**Importing Modules**
+
+The code imports several modules: `os`, `matplotlib.pyplot` as `plt`, `numpy` as `np`, `mpl_toolkits.basemap` as `Basemap`, and `h5py`.
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME` for the HDF5 file to be read.
+
+**Reading the HDF5 File**
+
+The code opens the HDF5 file using `h5py` in read-only mode:
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    ...
+```
+**Reading Datasets and Attributes**
+
+The code reads three datasets: `/gt1l/segment_lat`, `/gt1l/segment_lon`, and `/gt1l/segment_geoid`. It also extracts attributes `units`, `long_name`, and `_FillValue` from the last dataset.
+
+**Handling Fill Values**
+
+The code replaces fill values with NaN values:
+```python
+data[data == _FillValue] = np.nan
+```
+**Creating a Map**
+
+The code creates an equidistant cylindrical projection map using `Basemap`:
+```python
+m = Basemap(
+    projection="cyl",
+    resolution="l",
+    llcrnrlat=-90,
+    urcrnrlat=90,
+    llcrnrlon=-180,
+    urcrnrlon=180,
+)
+```
+**Drawing the Map and Scattering Data Points**
+
+The code draws coastlines, parallels, and meridians on the map. It also scatters data points using `m.scatter`.
+
+**Creating a Colorbar and Setting Labels**
+
+The code creates a colorbar at the bottom of the map and sets its label using the `units` attribute.
+
+**Setting the Plot Title and Saving the Plot**
+
+The code sets the plot title using file and dataset names, and saves the plot to a PNG file.

@@ -1,0 +1,57 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### What This Script Does
+This script takes a 3D image (like a CT scan) of a person's head and creates a visual representation of the skin on that head. It then displays this 3D model so you can see it on your screen.
+
+### Step-by-Step Explanation
+
+#### 1. Setting Up the Tools
+First, the script gets ready by importing all the necessary tools (libraries) to work with 3D images and display them. Think of these as different specialized tools in a toolbox that help us read, process, and show 3D data.
+
+#### 2. Defining Colors
+The script sets up some colors for different parts of the model:
+- SkinColor: The color used to represent the skin.
+- BackfaceColor: A slightly different shade for the backside of the skin (so it looks more realistic).
+- BkgColor: The background color when you look at the 3D model.
+
+#### 3. Creating a Window to Display the Model
+The script creates a window where we'll see our 3D model. This is like setting up a TV screen:
+- It sets up a renderer (like the part of the TV that actually shows images).
+- It connects this renderer to a window.
+- It also sets up an interactor, which lets you move around and look at different parts of the 3D model with your mouse.
+
+#### 4. Reading the 3D Image
+The script reads in the actual 3D image file (a CT scan of a head) from a file called 'MedicalDemo1_FullHead.mhd'. This is like loading a picture into an app, but instead of a flat picture, it's a complex 3D model.
+
+#### 5. Extracting the Skin
+The script then extracts just the skin part from this 3D image:
+- It looks for a specific value (500) that represents where the skin is in the scan.
+- Depending on which version of the tools we're using, it uses either `vtkFlyingEdges3D` or `vtkMarchingCubes` to do this extraction.
+
+#### 6. Preparing the Skin for Display
+Now that we have just the skin part:
+- The script sets up a mapper (like a guide) that tells the computer how to show this skin on the screen.
+- It creates an actor (think of it as a character in a movie) that represents the skin and gives it the color defined earlier.
+
+#### 7. Adding an Outline
+To give context, the script also adds an outline around the model:
+- This helps you see where the edges are and understand what's inside.
+- It maps this outline to be shown on the screen just like the skin.
+
+#### 8. Setting Up the Camera View
+The script sets up a virtual camera to look at our 3D model:
+- It positions the camera so it's looking at the right spot.
+- It adjusts the angle and distance to give us a good view of the head.
+
+#### 9. Putting Everything Together
+Now, all these pieces (the skin, the outline, and the background) are added to our renderer:
+- The script sets up the initial camera position and makes sure everything fits nicely in the window.
+- It adjusts the clipping planes so only what we want to see is shown.
+
+#### 10. Displaying the Model
+Finally, it starts showing the model on your screen:
+- You can interact with it using your mouse (zoom in/out, rotate).
+- The script keeps running and updating the display until you close the window.
+
+### Summary
+In simple terms, this script takes a complex 3D scan of a head, extracts just the skin part, colors it appropriately, adds an outline for context, sets up a virtual camera to view it, and then displays everything on your screen in a way that you can interact with. It's like creating a detailed 3D model of someone's head and being able to look at it from different angles on your computer.

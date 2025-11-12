@@ -1,0 +1,69 @@
+Purpose
+This script creates a visual representation (like a 3D model) of how a surface, such as skin, would look if it were cut with multiple planes. It then wraps the resulting lines from these cuts into tubes to make them easier to see.
+
+Step-by-Step Explanation
+
+1. Setting Up:
+   - The script starts by importing some tools (modules) that will help it create and display 3D models.
+   - These tools are like different specialized kits in a workshop, each with its own purpose for handling colors, shapes, or rendering.
+
+2. Main Function:
+   - This is where the main action happens. Think of this as the central workspace where everything gets put together.
+
+3. Input File and Number of Cuts:
+   - The script specifies an input file named 'CutWithScalars_Torso.vtp' which contains a 3D model.
+   - It also sets how many cuts (20) it will make on this model.
+
+4. Colors:
+   - It creates a palette of colors to use for different parts of the model, like having a box of crayons ready.
+
+5. Reading the Model:
+   - The script reads the 3D model from the input file.
+   - This is like opening a blueprint to see what you're working with.
+
+6. Finding Bounds:
+   - It determines the boundaries (limits) of the model in all three dimensions (length, width, height).
+   - Imagine measuring the edges of a box to know its size.
+
+7. Setting Up a Plane:
+   - A plane is created that will be used for cutting.
+   - This plane has an origin point and a direction (normal), like deciding where and how you'll slice through with a knife.
+
+8. Creating Scalars:
+   - The script calculates values at each point of the model to determine how far they are from the plane.
+   - Think of this as marking distances on a map, showing how close or far points are from a central line.
+
+9. Making Cuts:
+   - A tool (cutter) is set up to make cuts based on the values calculated earlier.
+   - It decides where to cut by looking at those distance marks.
+
+10. Preparing for Visualization:
+    - The script sets up how these cuts will be displayed:
+      - It creates a mapper that translates the model and cuts into something that can be drawn on screen.
+      - It assigns colors to different parts: one color (Banana) for the cuts, another (Flesh) for the original model.
+
+11. Creating Actors:
+    - These are like characters in a play who will represent the model and its cuts on stage.
+    - The script creates an actor for the cuts and another for the whole model.
+
+12. Setting Up the Stage:
+    - A renderer is created, which acts as the stage where everything will be displayed.
+    - It adds both actors (the model and the cuts) to this stage.
+
+13. Creating a Window:
+    - The script sets up a window where you'll see the final 3D visualization.
+    - This window has a specific size (600x600 pixels) and is named 'CutWithCutScalars'.
+
+14. Interactivity:
+    - An interactor is created to allow interaction with the model, like rotating or zooming in on it.
+
+15. Camera Setup:
+    - The script sets up a virtual camera to view the scene from a specific angle.
+    - It adjusts the position and orientation of this camera for the best view.
+
+16. Rendering:
+    - Finally, everything is drawn in the window using the renderer.
+    - The interactor starts, allowing you to interact with the 3D model on your screen.
+
+Summary
+In simple terms, this script takes a 3D model (like a digital sculpture), makes multiple cuts through it at specified intervals, and then displays these cuts along with the original model in a window where you can view and interact with them. It's like having a virtual workshop where you can slice up a digital object and see how it looks from different angles.

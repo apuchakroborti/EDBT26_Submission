@@ -1,0 +1,27 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing modules and setting up constants**
+
+The script starts by importing various Python modules: `datetime`, `os`, `matplotlib` and its submodules, `mpl_toolkits.basemap`, and `numpy`. It sets a constant `USE_NETCDF4` to `True`, determining how the HDF-EOS file is read.
+
+**Defining the `run` function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is the path to an HDF-EOS file. Depending on `USE_NETCDF4`, it uses either `netCDF4` or `h5py` to read the file:
+
+* It opens the file and navigates through the HDF-EOS hierarchy to access the desired dataset.
+* It reads the data into a NumPy array `data` and extracts metadata (long name and units).
+* If using `h5py`, it applies a fill value to the data, replacing missing values with NaN.
+
+**Processing and plotting the data**
+
+The script calculates scale factors for the x- and y-axes based on the shape of the data array. It creates arrays for longitude and latitude, sets up a Basemap instance, and plots the data as a pseudocolor mesh using `pcolormesh`. It adds a colorbar to the plot, labeling it with the units of the data.
+
+**Saving the plot**
+
+The script gets the base name of the input file and sets up a figure title combining the base name and long name of the dataset. It saves the plot as a PNG file with a name derived from the input file name.
+
+**Main script execution**
+
+The script checks if an environment variable `HDFEOS_ZOO_DIR` is set; if so, it uses that directory to find the input HDF-EOS file. Otherwise, it looks for the file in the current working directory and calls the `run` function with the path to the input file.
+
+Note that this script assumes a specific structure and naming convention for the HDF-EOS file and its contents.

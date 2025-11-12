@@ -1,0 +1,37 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports four libraries: `datetime`, `os`, `cartopy.crs`, and `matplotlib.pyplot`.
+
+**Defining the file name and opening the HDF5 file**
+
+The file name `"ATL02_20190520193327_08020311_006_01.h5"` is defined, and the HDF5 file is opened using `h5py.File()` in read-only mode.
+
+**Accessing datasets within the HDF5 file**
+
+The code accesses several datasets:
+* `/gpsr/navigation/latitude`
+* `/gpsr/navigation/longitude`
+* `/atlas/pce1/background/bg_cnt_50shot_s`
+* `/atlas/pce1/background/delta_time`
+
+Each dataset is accessed using `f[]` syntax, and the values are extracted using `[:]` syntax.
+
+**Creating a plot**
+
+The code creates two plots:
+* A time vs. counts plot showing elevation values over time.
+* A trajectory plot showing the flight path.
+
+The plots use `cartopy.crs` and `matplotlib.pyplot`.
+
+**Customizing the plots**
+
+The code customizes the plots by setting labels, titles, adding grids and coastlines to the second plot, and plotting the flight path.
+
+**Saving the plots**
+
+The plots are saved as an image file named after the input HDF5 file in PNG format using `fig.savefig(pngfile)`.
+
+Note that I removed some of the details about extracting attribute values and kept the main implementation details. Let me know if you have any further requests!

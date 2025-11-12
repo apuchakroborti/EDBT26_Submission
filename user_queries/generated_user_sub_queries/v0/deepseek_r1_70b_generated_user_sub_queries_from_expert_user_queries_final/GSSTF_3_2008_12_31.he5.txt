@@ -1,0 +1,68 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a Python script to visualize data from a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file.
+
+Steps:
+1. Import necessary libraries: os, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and mpl_toolkits.basemap import Basemap.
+2. Read the HDF file located at 'GSSTF_3_2008_12_31.he5'.
+3. Extract the 'E' dataset from '/HDFEOS/GRIDS/SET1/Data Fields/E', including its attributes ('units' and 'long_name') using decode(), and retrieve the _FillValue attribute.
+4. Preprocess data by replacing _FillValue with np.nan and create a masked array using np.masked_array with conditions based on np.isnan(data).
+5. Construct longitude and latitude arrays based on the shape of the 'E' dataset since they are not provided in the file.
+6. Create a cylindrical projection map with boundaries set for low resolution, latitudes from -90 to 90, and longitudes from -180 to 180.
+7. Add parallels at [-90, 120, 30] degrees latitude with labels [1,0,0,0], and meridians at [-180, 180, 45] degrees longitude with labels [0,0,0,1].
+8. Visualize the data using pcolormesh with parameters longitude, latitude, data, and latlon=True.
+9. Add a colorbar and a descriptive title to the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. The main task is to create a Python script that visualizes data from an HDF-EOS5 file. Let me think about each part step by step.
+
+First, for the HDF5 Dataset Access, the user wants to access the 'E' dataset in a specific path within the HE5 file. They also need to get attributes like units and long_name, and handle the _FillValue. So I should focus on how h5py can be used to open the file, navigate to that dataset, read its data and attributes.
+
+Next, the NumPy preprocessing part involves replacing the fill value with NaNs and creating a masked array where data is invalid. The user mentioned using np.where or np.ma.masked_where, so I need to frame this as a sub-query about handling these specific operations in NumPy.
+
+Lastly, for plotting, they're using Basemap to create a cylindrical projection. They want to set boundaries, draw coastlines, add meridians and parallels with specific labels, and use pcolormesh to visualize the data. The sub-query should target how to configure this setup correctly in Matplotlib or Cartopy.
+
+I need to make sure each sub-query is concise and targets only the relevant technical domain without overlapping. That way, when someone looks up documentation or examples, they can find exactly what they need for each part.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How do I use `h5py` to access the 'E' dataset from the path '/HDFEOS/GRIDS/SET1/Data Fields/E' in an HE5 file, including its attributes like 'units' and 'long_name', and retrieve the _FillValue attribute?
+
+NumPy Data Preprocessing Sub-query:  
+How can I use NumPy to replace the _FillValue with `np.nan` and create a masked array using `np.masked_array` where data is invalid (e.g., based on `np.isnan(data)` conditions)?
+
+Plotting and Visualization Sub-query:  
+How do I use `matplotlib` and `mpl_toolkits.basemap` to create a cylindrical projection map with specified boundaries, add coastlines, draw parallels at [-90, 120, 30] degrees latitude with labels [1,0,0,0], meridians at [-180, 180, 45] degrees longitude with labels [0,0,0,1], and visualize the data using `pcolormesh` with latlon=True?

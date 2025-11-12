@@ -1,0 +1,26 @@
+A Python code that processes an HDF5 file. 
+Here's what it does:
+
+Step 1: Open the HDF5 file
+The code opens an HDF5 file named "SMAP_L1B_TB_50719_D_20240730T124417_R19240_001.h5" in read-only mode.
+
+Step 2: Access and process data
+It accesses several datasets within the HDF5 file:
+`/Brightness_Temperature/tb_h_surface_corrected`: brightness temperature data, 
+Retrieves attributes like units, long description, fill value, valid max/min values
+`/tb_lat` and `/tb_lon`: geolocation data (latitude and longitude) from the group /Brightness_Temperature
+
+The code then processes the data by identifying invalid points, replacing them with NaN values, and creating a masked array to handle missing data.
+It then decodes the long name by using decode function with ascii and replace parameters
+It the calculates invalid data using numpy logical or method using comparison with data greater than valid max and less than valid min 
+Then the resulted invalid calculates again with parameters invalid and comparison with data and fill value
+Then it sets numpy NaN values to invalid data
+After that it creates masked array of data using numpy masked array and checking numpy isnan
+
+Step 3: Create a map
+It creates a map using Basemap of low resolution specifying latitude range of -90 to 90 and longitude range of -180 to 180, 
+specifying projection, resolution, and boundaries. 
+The map includes coastlines, parallels, and meridians, and plots the brightness temperature data as a scatter plot using geolocation data.
+
+Step 4: Add colorbar and title
+The code adds a colorbar with units label and a title including the file name and long description of the data.

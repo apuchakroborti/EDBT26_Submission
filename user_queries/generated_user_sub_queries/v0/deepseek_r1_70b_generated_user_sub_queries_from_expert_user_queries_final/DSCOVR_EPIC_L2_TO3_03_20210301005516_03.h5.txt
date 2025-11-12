@@ -1,0 +1,94 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Write a Python script that accesses and visualizes ozone data from a NASA HDF-EOS file named `DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5`. The script should perform the following steps:
+
+1. Import necessary libraries: os, cartopy.crs, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, h5py, and LATITUDE_FORMATTER and LONGITUDE_FORMATTER from cartopy.mpl.gridlines.
+
+2. Open the HDF5 file in read-only mode and extract the following datasets:
+   - `/Ozone` for ozone data
+   - `/Latitude` for latitude coordinates
+   - `/Longitude` for longitude coordinates
+
+3. Extract attributes such as `units` (expected value: 'DU') and `long_name` (expected value: 'Ozone').
+
+4. Process the ozone data by replacing the static fill value (-999.0) with NaN values using numpy's masked_where function, based on whether the ozone data is not a number.
+
+5. Calculate the midpoint of the latitude and longitude arrays to determine the center point for visualization.
+
+6. Create an orthographic projection map centered at the calculated midpoint using Cartopy's Orthographic class.
+
+7. Plot the ozone data as a scatter plot with parameters:
+   - Longitude as x-coordinates
+   - Latitude as y-coordinates
+   - Ozone values represented by color (using cmap=plt.cm.jet)
+   - Marker size of 1
+   - Data transformation set to PlateCarree coordinates
+
+8. Add map features including gridlines, coastlines, and degree labels for latitude and longitude.
+
+9. Create a colorbar with a width of 0.022 and padding of 0.01.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me start by understanding what the user is asking for.
+
+The main task is to write a Python script that accesses and visualizes ozone data from an HDF-EOS file. The steps are detailed, so I'll go through each one and categorize them into the three technical domains: HDF5 access, NumPy preprocessing, and map plotting.
+
+First, looking at step 1, it's about importing libraries. That's general setup, not specific to any sub-query, so I can skip that for now.
+
+Step 2 involves opening an HDF5 file and extracting datasets like Ozone, Latitude, Longitude. This clearly falls under HDF5 Dataset Access using h5py. So the first sub-query should focus on accessing these datasets and their attributes.
+
+Next, step 3 is about extracting attributes such as units and long_name. Again, this relates to HDF5 access since it's about metadata extraction from the file.
+
+Moving to step 4, processing ozone data with NumPy by replacing a fill value (-999.0) with NaN using masked_where. This is definitely NumPy-based preprocessing. So the second sub-query should cover handling _FillValue and applying masks.
+
+Step 5 calculates midpoints of latitude and longitude arrays for visualization centering. While this uses NumPy, it's more about data manipulation rather than preprocessing, but I think it still fits under NumPy since it's array operations.
+
+Now, steps 6 to 9 are all about plotting with Cartopy. Step 6 creates an orthographic projection map centered at the midpoint. Steps 7 and 8 add features like gridlines, coastlines, etc., and step 9 adds a colorbar. All of these fall under Map Plotting and Visualization using Cartopy.
+
+I need to ensure each sub-query is focused on its domain without overlapping. So for HDF5, it's about accessing data and metadata. For NumPy, it's processing the data, replacing fill values, and calculating midpoints. For plotting, it's setting up the map projection, adding features, and visualizing the data.
+
+I should make sure each sub-query is concise and only includes relevant parts from the user's steps. That way, when someone looks them up in a vector database, they can find precise examples or documentation.
+</think>
+
+HDF5 Dataset Access Sub-query:
+Accessing HDF5 file `DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5` using h5py to extract datasets `/Ozone`, `/Latitude`, and `/Longitude`, and their attributes such as `units` and `long_name`.
+
+NumPy Data Preprocessing Sub-query:
+Processing ozone data by replacing `_FillValue` (-999.0) with NaN using `np.ma.masked_where`, and calculating midpoint of latitude and longitude arrays for visualization.
+
+Plotting and Visualization Sub-query:
+Creating orthographic projection map centered at calculated midpoint using Cartopy's Orthographic class, plotting ozone data as scatter plot with PlateCarree coordinates, adding gridlines, coastlines, degree labels, and creating colorbar.

@@ -1,0 +1,88 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports various Python libraries:
+```python
+import os
+import re
+import h5py
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+```
+These libraries are used for file operations (os, re), HDF5 file handling (h5py), numerical computations (numpy), data visualization (matplotlib and basemap).
+
+**Accessing the 'Data Fields' group**
+
+The code accesses the `'Data Fields'` group:
+```python
+group = f['/HDFEOS/GRIDS/MOP03/Data Fields']
+```
+This group contains datasets related to the MOPITT ASDC MOP03T version 9 HDF-EOS5 Grid file.
+
+**Accessing a specific dataset**
+
+The code accesses a specific dataset within the `'Data Fields'` group:
+```python
+dsname = 'RetrievedSurfaceTemperatureDay'
+data = group[dsname][:].T
+```
+This dataset is named `RetrievedSurfaceTemperatureDay`. The `[:].T` syntax extracts the entire dataset and transposes it (i.e., swaps the row and column indices).
+
+**Handling missing values**
+
+The code handles missing values in the dataset:
+```python
+data[data == fillvalue] = np.nan
+data = np.ma.masked_array(data, np.isnan(data))
+```
+This step replaces the fill value with NaN (Not a Number) and creates a masked array to represent missing data.
+
+**Creating a meshgrid**
+
+The code creates a meshgrid from latitude and longitude datasets:
+```python
+longitude, latitude = np.meshgrid(x, y)
+```
+This grid is used for plotting.
+
+**Plotting with Basemap**
+
+The code uses Basemap to create a plot:
+```python
+m = Basemap(projection='cyl', resolution='l',
+                llcrnrlat=-90, urcrnrlat=90,
+                llcrnrlon=-180, urcrnrlon=180)
+```
+This sets up the map projection and coordinate limits.
+
+The code then adds coastlines, parallels, and meridians to the plot:
+```python
+m.drawcoastlines(linewidth=0.5)
+m.drawparallels(np.arange(-90, 91, 45))
+m.drawmeridians(np.arange(-180, 180, 45), labels=[True,False,False,True])
+```
+Next, it creates a scatter plot with the data:
+```python
+sc = m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet,
+                   edgecolors=None, linewidth=0)
+```
+This plots the data points on the map.
+
+**Adding a colorbar and saving the figure**
+
+The code adds a colorbar to the plot:
+```python
+cb = m.colorbar()
+cb.set_label(units)
+```
+Finally, it sets the title and saves the figure:
+```python
+plt.title('{0}\n{1}'.format(basename,  longname))
+fig = plt.gcf()
+# plt.show()  # comment out to not display the plot
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This sets the title of the plot with the filename and long name, saves the figure as a PNG file, and specifies the filename based on the original file name.

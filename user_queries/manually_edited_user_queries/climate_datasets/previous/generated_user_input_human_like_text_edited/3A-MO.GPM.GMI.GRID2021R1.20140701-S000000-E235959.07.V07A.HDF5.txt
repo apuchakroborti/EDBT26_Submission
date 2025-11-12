@@ -1,0 +1,9 @@
+The code imports necessary libraries, including `os`, `matplotlib.pyplot` (aliased as `plt`), `numpy` (aliased as `np`), `mpl_toolkits.basemap`, and `h5py`.
+
+It then defines the HDF5 file name and opens it in read-only mode using `h5py`. Within the file, it accesses a specific dataset `/Grid/cloudWater` and extracts a 2D slice.
+
+The code handles missing values by replacing them with `NaN` and creates a masked array. It also constructs geolocation data (longitude and latitude arrays) manually since they're not in the HDF5 file.
+
+A `Basemap` instance is created with cylindrical projection, low resolution, and set to cover the entire globe. The code then draws coastlines, parallels, meridians, and creates a pseudocolor mesh plot using the constructed longitude and latitude arrays and masked dataset values.
+
+Finally, it adds a colorbar and title to the plot and saves it to a PNG file using `matplotlib`.

@@ -1,0 +1,29 @@
+Python code that reads and visualizes data from an HDF-EOS5 file which is located at HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5. 
+
+Here's what it does:
+
+Reading the File
+The code opens the HDF-EOS5 file in read-only mode.
+
+Accessing Datasets
+It reads three datasets: 
+ `/Data Fields/O3` containing ozone (O3) data it read 0th index from the x-axis and all data from the y-axis of 2D data
+ `/Geolocation Fields/Pressure` containing pressure data
+ `/Geolocation Fields/Time` containing time data, reads only 0th index of linear data
+from the sub group path /HDFEOS/SWATHS/HIRDLS
+
+Reading Attributes
+The code reads several attributes such as Units from both the O3 and pressure datasets, it then read title data from the O3, time, and pressure datasets 
+it then uses these values by decoding using the decode() function 
+
+After that it accesses fill values data
+Then by comparing the O3 data and fill values it relaces the O3 data by numpy nan value
+
+Converts date stored as a six-digit number to a string using `datetime` from the time dataset
+
+Plotting
+The code creates a plot of ozone (O3) data against pressure, customizing it with scientific notation for x-axis tick labels, log scale for the y-axis, 
+inverted y-axis, and customized axis labels and title.
+
+The plot's x label is set by combining both O3 title and units data 
+The plot's y label is set by combining both pressure title and units data

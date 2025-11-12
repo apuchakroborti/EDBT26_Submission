@@ -1,0 +1,20 @@
+It reads and visualizes data from an HDF-EOS5 file which is located at GSSTFYC_3_Year_1988_2008.he5. 
+
+For reading data, it reads `SST` dataset from the sub group path /HDFEOS/GRIDS/NCEP/Data Fields
+It then reads attributes from the SST dataset such as units and Long Name and decodes them using decode() function 
+It also accesses the fill value of 0th index only from the SST dataset
+
+Then by comparing the SST data and fill values it relaces the SST data by numpy nan value
+After that it masked the SST data using the numpy masked_array function with the parameters data itself and the result of numpy isnan of data
+
+Since there are no latitude and longitude data in the data file, it should construct the longitude and latitude data based on the shape of the SST dataset
+
+Visualizing the Data
+The script creates a map with cylindrical projection, sets up its boundaries (low resolution, -90 to 90 latitude range, -180 to 180 longitude range ), 
+It also adds parrallels with the numpy arrange of values -90, 120, and 30 with the labels of [1, 0, 0, 0].
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [0, 0, 0, 1] 
+
+It also add pcolor mesh with parameters such as longitude, latitude and the SST data
+
+Saving the Plot
+Finally, The script saves the plot to a PNG file by constructing the output file name from the input HDF file base name and the saves it to the same directory as the data file.

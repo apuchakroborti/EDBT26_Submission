@@ -1,0 +1,35 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing Libraries**
+
+The code imports various libraries: `datetime` for dates and times, `os` for interacting with the operating system, `matplotlib` and `matplotlib.pyplot` for plots, `mpl_toolkits.basemap` for maps (not used), `numpy` for numerical computations, and `h5py` for working with HDF5 files.
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, the name of the HDF-EOS5 file to be read.
+
+**Reading HDF-EOS5 File**
+
+The code uses `h5py` to open the HDF-EOS5 file in read-only mode and assigns it to `f`. The file is opened within a `with` statement, ensuring proper closure.
+
+**Accessing Datasets**
+
+The code accesses datasets using their full paths: `/HDFEOS/ZAS/HIRDLS/Data Fields/NO2Ascending`, `/HDFEOS/ZAS/HIRDLS/Data Fields/Latitude`, and others.
+
+**Reading Data and Attributes**
+
+The code reads data from each dataset and their attributes, including units and titles.
+
+**Data Processing**
+
+The code replaces fill values with NaN and creates a masked array from the data.
+
+**Date Conversion and Plotting**
+
+The code converts the time value into a string using `datetime` and creates a contour plot of the data vs. latitude and pressure using `matplotlib`. It sets axis labels, title, and applies a log scale to the y-axis.
+
+**Saving Plot**
+
+The code saves the plot to a PNG file with a name based on the input file name.
+
+This reduced description still conveys the main steps of the code, including importing libraries, reading an HDF-EOS5 file, accessing datasets, processing data, creating a plot, and saving it to a file.

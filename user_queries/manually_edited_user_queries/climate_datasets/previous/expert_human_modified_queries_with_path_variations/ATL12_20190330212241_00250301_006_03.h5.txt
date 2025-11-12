@@ -1,0 +1,37 @@
+Python code that reads an HDF5 file, extracts data and metadata, creates a map, plots the data on it, and saves the figure as a PNG file. 
+Here's what the code does:
+
+Step 1: Importing necessary libraries
+The code starts by importing several libraries for interacting with the operating system, creating plots and visualizations, numerical computations, creating maps, and reading HDF5 files.
+
+Step 2: Defining constants
+A constant `FILE_NAME` is defined as the name of the HDF5 file to be read, "ATL12_20190330212241_00250301_006_03.h5".
+
+Step 3: Opening the HDF5 file
+The code opens the HDF5 file in read mode using a `with` statement to ensure proper closure.
+
+Step 4: Reading datasets from the HDF5 file
+Three datasets are read from the HDF5 file:
+`latitude` from `/latitude`
+`longitude` from `/longitude`
+`data` from `/heights/swh`
+
+from the sub group /gt1l/ssh_segments
+
+Each dataset is read entirely using slicing.
+
+Step 5: Extracting metadata
+Metadata is extracted from the `data` dataset:
+`units`: units of measurement
+`long name`: longer description of the data
+
+Step 6: Creating a map
+
+An equidistant cylindrical projection map is created with a low-resolution coastline database, latitude and longitude limits, and grid lines spaced at 30° 
+and 45° intervals.
+
+Step 7: Plotting the data
+The `data` values are plotted on the map using a scatter plot, colored according to their value. A colorbar is created and labeled with the units of measurement.
+
+Step 8: Adding title and saving the figure
+A title is set for the plot using the file name, dataset name, and long description.

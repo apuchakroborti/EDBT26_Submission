@@ -1,0 +1,172 @@
+This Python script performs the following steps:
+
+1. **Import Libraries**:
+   - `collections`
+   - `vtkmodules.vtkInteractionStyle` (for interaction style in VTK)
+   - `vtkmodules.vtkRenderingOpenGL2` (for OpenGL 2 rendering in VTK)
+   - `vtkNamedColors` from `vtkCommonColor`
+   - `vtkCellTypes`, `vtkPlane` from `vtkCommonDataModel`
+   - `vtkTransform` from `vtkCommonTransforms`
+   - `vtkTableBasedClipDataSet` from `vtkFiltersGeneral`
+   - `vtkUnstructuredGridReader` from `vtkIOLegacy`
+   - `vtkActor`, `vtkDataSetMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function is defined as `main()`.
+
+3. **File Path Definition**:
+   - Define a variable `filename` with the value `'ClipUnstructuredGridWithPlane_treemesh.vtk'`.
+
+4. **Create VTK Reader**:
+   - Create an instance of `vtkUnstructuredGridReader` named `reader`.
+   - Set the file name for the reader using `reader.SetFileName(filename)`.
+   - Update the reader with `reader.Update()`.
+
+5. **Get Bounds and Center**:
+   - Retrieve bounds from the reader's output: `bounds = reader.GetOutput().GetBounds()`.
+   - Retrieve center from the reader's output: `center = reader.GetOutput().GetCenter()`.
+
+6. **Set Up Renderer**:
+   - Create an instance of `vtkNamedColors` named `colors`.
+   - Create a renderer with `renderer = vtkRenderer()`.
+   - Set background color using `renderer.SetBackground(colors.GetColor3d('Wheat'))`.
+   - Enable hidden line removal with `renderer.UseHiddenLineRemovalOn()`.
+
+7. **Set Up Render Window**:
+   - Create a render window with `renderWindow = vtkRenderWindow()`.
+   - Add the renderer to the render window using `renderWindow.AddRenderer(renderer)`.
+   - Set the size of the render window with `renderWindow.SetSize(640, 480)`.
+
+8. **Set Up Interactor**:
+   - Create a render window interactor with `interactor = vtkRenderWindowInteractor()`.
+   - Set the render window for the interactor using `interactor.SetRenderWindow(renderWindow)`.
+
+9. **Define Clip Plane**:
+   - Define a normal vector `xnorm` as `[-1.0, -1.0, 1.0]`.
+   - Create an instance of `vtkPlane` named `clipPlane`.
+   - Set the origin and normal for the clip plane using:
+     ```python
+     clipPlane.SetOrigin(reader.GetOutput().GetCenter())
+     clipPlane.SetNormal(xnorm)
+     ```
+
+10. **Set Up Clipper**:
+    - Create an instance of `vtkTableBasedClipDataSet` named `clipper`.
+    - Set the clipping function with `clipper.SetClipFunction(clipPlane)`.
+    - Set input data for the clipper using `clipper.SetInputData(reader.GetOutput())`.
+    - Set value to 0.0 with `clipper.SetValue(0.0)`.
+    - Enable clipped output generation with `clipper.GenerateClippedOutputOn()`.
+    - Update the clipper with `clipper.Update()`.
+
+11. **Set Up Inside Mapper and Actor**:
+    - Create an instance of `vtkDataSetMapper` named `insideMapper`.
+    - Set input data for the inside mapper using `insideMapper.SetInputData(clipper.GetOutput())`.
+    - Turn off scalar visibility with `insideMapper.ScalarVisibilityOff()`.
+    - Create an actor for the inside mapper with `insideActor = vtkActor()`.
+    - Set the mapper for the inside actor using `insideActor.SetMapper(insideMapper)`.
+    - Configure properties of the inside actor:
+      ```python
+      insideActor.GetProperty().SetDiffuseColor(colors.GetColor3d('Banana'))
+      insideActor.GetProperty().SetAmbient(0.3)
+      insideActor.GetProperty().EdgeVisibilityOn()
+      ```
+
+12. **Set Up Clipped Mapper and Actor**:
+    - Create an instance of `vtkDataSetMapper` named `clippedMapper`.
+    - Set input data for the clipped mapper using `clippedMapper.SetInputData(clipper.GetClippedOutput())`.
+    - Turn off scalar visibility with `clippedMapper.ScalarVisibilityOff()`.
+    - Create an actor for the clipped mapper with `clippedActor = vtkActor()`.
+    - Set the mapper for the clipped actor using `clippedActor.SetMapper(clippedMapper)`.
+    - Configure properties of the clipped actor:
+      ```python
+      clippedActor.GetProperty().SetDiffuseColor(colors.GetColor3d('Tomato'))
+      insideActor.GetProperty().SetAmbient(0.3)
+      clippedActor.GetProperty().EdgeVisibilityOn()
+      ```
+
+13. **Create Transformations**:
+    - Create a transform for the inside actor with `insideTransform = vtkTransform()`.
+    - Apply transformations to the inside transform:
+      ```python
+      insideTransform.Translate(-(bounds[1] - bounds[0]) * 0.75, 0, 0)
+      insideTransform.Translate(center[0], center[1], center[2])
+      insideTransform.RotateY(-120.0)
+      insideTransform.Translate(-center[0], -center[1], -center[2])
+      ```
+    - Set the user transform for the inside actor with `insideActor.SetUserTransform(insideTransform)`.
+
+    - Create a transform for the clipped actor with `clippedTransform = vtkTransform()`.
+    - Apply transformations to the clipped transform:
+      ```python
+      clippedTransform.Translate((bounds[1] - bounds[0]) * 0.75, 0, 0)
+      clippedTransform.Translate(center[0], center[1], center[2])
+      clippedTransform.RotateY(60.0)
+      clippedTransform.Translate(-center[0], -center[1], -center[2])
+      ```
+    - Set the user transform for the clipped actor with `clippedActor.SetUserTransform(clippedTransform)`.
+
+14. **Add Actors to Renderer**:
+    - Add the actors to the renderer:
+      ```python
+      renderer.AddViewProp(clippedActor)
+      renderer.AddViewProp(insideActor)
+      ```
+
+15. **Configure Camera and Render**:
+    - Reset camera with `renderer.ResetCamera()`.
+    - Dolly the active camera with `renderer.GetActiveCamera().Dolly(1.4)`.
+    - Reset clipping range with `renderer.ResetCameraClippingRange()`.
+    - Set window name and render:
+      ```python
+      renderWindow.SetWindowName('ClipUnstructuredGridWithPlane')
+      renderWindow.Render()
+      ```
+
+16. **Start Interactor**:
+    - Start the interactor with `interactor.Start()`.
+
+17. **Generate Report**:
+    - Retrieve number of cells in the inside dataset and print details:
+      ```python
+      numberOfCells = clipper.GetOutput().GetNumberOfCells()
+      print('------------------------')
+      print('The inside dataset contains a \n', clipper.GetOutput().GetClassName(), ' that has ', numberOfCells, ' cells')
+      ```
+    - Create a cell map and count occurrences of each cell type:
+      ```python
+      cellMap = dict()
+      for i in range(0, numberOfCells):
+          cellMap.setdefault(clipper.GetOutput().GetCellType(i), 0)
+          cellMap[clipper.GetOutput().GetCellType(i)] += 1
+      ```
+    - Print sorted cell type occurrences:
+      ```python
+      for k, v in collections.OrderedDict(sorted(cellMap.items())).items():
+          print('\tCell type ', vtkCellTypes.GetClassNameFromTypeId(k), ' occurs ', v, ' times.')
+      ```
+
+    - Retrieve number of cells in the clipped dataset and print details:
+      ```python
+      numberOfCells = clipper.GetClippedOutput().GetNumberOfCells()
+      print('------------------------')
+      print('The clipped dataset contains a \n', clipper.GetClippedOutput().GetClassName(), ' that has ', numberOfCells, ' cells')
+      ```
+    - Create an outside cell map and count occurrences of each cell type:
+      ```python
+      outsideCellMap = dict()
+      for i in range(0, numberOfCells):
+          outsideCellMap.setdefault(clipper.GetClippedOutput().GetCellType(i), 0)
+          outsideCellMap[clipper.GetClippedOutput().GetCellType(i)] += 1
+      ```
+    - Print sorted cell type occurrences:
+      ```python
+      for k, v in collections.OrderedDict(sorted(outsideCellMap.items())).items():
+          print('\tCell type ', vtkCellTypes.GetClassNameFromTypeId(k), ' occurs ', v, ' times.')
+      ```
+
+18. **Execute Main Function**:
+    - If the script is run as the main module, call `main()`:
+      ```python
+      if __name__ == '__main__':
+          main()
+      ```

@@ -1,0 +1,24 @@
+1. Load an HDF5 file named 'CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5' in read-only mode using h5py.
+
+2. Access the following datasets from the HDF5 file:
+   - '/layer_descriptor/Aerosol_Type_Fore_FOV' as a 2D array for aerosol type information.
+   - 'CATS_Fore_FOV_Latitude' and 'CATS_Fore_FOV_Longitude' from the group `geolocation` as 2D arrays for latitude and longitude values.
+
+3. Extract the first column from the Aerosol_Type_Fore_FOV dataset, the second column from the latitude data, and the second column from the longitude data.
+
+4. Create a discrete color map named 'cmap' with nine colors: "grey", "blue", "aqua", "yellow", "orange", "green", "red", "black", and "brown".
+
+5. Set up a geographic map using a cylindrical projection with low resolution, latitude range from -90 to 90, longitude range from -180 to 180, 
+   coastlines with linewidth 0.5, 
+   parallels at [-90, 0, 45, 60, 75, 90], 
+   and meridians at [-180, -120, -60, 0, 60, 120, 180] with labels of left and bottom
+
+6. Create a scatter plot using longitude and latitude data with parameters: c=data, s=0.1, cmap='jet', edgecolors=None, linewidth=0.
+
+7. Set the plot title to the basename of the HDF5 file.
+
+8. Define bins for the colorbar using numpy.linspace(0, 9, 10) and normalize using matplotlib.colors.BoundaryNorm with bounds and N=9.
+
+9. Create a second axes object (ax2) at position [0.1, 0.1, 0.8, 0.02] and add a horizontal colorbar with parameters: ax=ax2, cmap=cmap, normalize=normalize, orientation='horizontal', spacing='proportional', ticks=bounds, boundaries=bounds, format='%1i'.
+
+10. Set x-tick labels for the colorbar as ["invalid", "marine", "p. marine", "dust", "dust mixture", "clean/bg", "p. continental", "smoke", "volcanic"] with font size 5.

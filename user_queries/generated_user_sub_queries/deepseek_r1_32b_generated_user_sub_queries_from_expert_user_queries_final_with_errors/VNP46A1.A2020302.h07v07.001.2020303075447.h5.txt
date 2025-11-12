@@ -1,0 +1,88 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads and visualizes data from an HDF-EOS5 file, specifically a LAADS VNP46A1 Geographic projection Grid file.
+
+The script performs the following tasks:
+
+1. Import Libraries: The script begins by importing necessary libraries
+
+2. Read HDF5 File: The script opens an HDF5 file in read-only mode using `h5py`. It reads three datasets:
+   - `BrightnessTemperature_M12` from the sub group path `/HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields`: This dataset is referred to as "BrightnessTemperature". 
+      All data from this dataset are read and converted to a float type using `astype(np.float)`.
+   - The script accesses specific attributes such as `scale_factor`, `add_offset`, `units` (decoded), `_FillValue`, and `long_name` (decoded).
+
+3. Extract Grid Metadata: The script reads metadata from `/HDFEOS INFORMATION/StructMetadata.0`. It extracts the upper-left and lower-right coordinates of the grid from this metadata string.
+
+4. Construct Grid and Plot:
+   - A 2D grid is constructed using `numpy.meshgrid` to create longitude and latitude arrays for plotting.
+   - The data are plotted on a cylindrical map projection with latitude ranging from -90 to 90 and longitude from -180 to 180.
+   - Coastlines are added with a line width of 0.5.
+   - Parallels are drawn at intervals of 30 degrees (from -90 to 120) with labels at left
+   - Meridians are drawn every 45 degrees with specific labels (from -180 to 180 ) with labels at bottom
+
+5. Visualize Data: 
+   - A `pcolormesh` is added using longitude and latitude coordinates (taking every 10th value for plotting).
+   - A colorbar is included, labeled with the units from the dataset attributes.
+   - The plot title is a concatenation of the data file's basename and the `long_name` attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the problem again carefully.
+
+The user provided a detailed Python script that reads an HDF-EOS5 file, specifically a LAADS VNP46A1 Geographic projection Grid file. The script does several things: it imports libraries, reads the HDF5 file using h5py, extracts some datasets and attributes, constructs a grid for plotting, and then visualizes the data with matplotlib.
+
+The task is to split this into three sub-queries focusing on HDF5 access, NumPy preprocessing, and visualization. Each sub-query should target a specific technical domain so that relevant documentation or code can be retrieved from a vector database.
+
+First, I'll tackle the HDF5 Dataset Access part. The script uses h5py to open an HDF5 file in read-only mode. It reads three datasets: BrightnessTemperature_M12 from /HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields. Then it accesses several attributes like scale_factor, add_offset, units, _FillValue, and long_name. Also, it extracts grid metadata from /HDFEOS INFORMATION/StructMetadata.0 to get upper-left and lower-right coordinates.
+
+So the sub-query for HDF5 should cover accessing the file with h5py, reading datasets by their paths, extracting attributes, and parsing metadata strings.
+
+Next is NumPy-based Data Preprocessing. The script converts the dataset to float using astype(np.float). It handles _FillValue, which implies masking or replacing invalid data points. Then it constructs a grid using numpy.meshgrid for longitude and latitude arrays. So the sub-query should focus on handling _FillValue with NumPy, applying masks, and creating grids.
+
+Lastly, Map Plotting and Visualization. The script uses matplotlib to plot on a cylindrical projection, adds coastlines, parallels every 30 degrees with labels on the left, meridians every 45 degrees with labels at the bottom. It uses pcolormesh for data visualization, includes a colorbar labeled with units, and sets the title from the file basename and long_name attribute.
+
+So the sub-query here should cover using matplotlib or basemap/cartopy for geospatial plots, configuring projections, adding coastlines, meridians, parallels, colorbars, and titles.
+
+I need to make sure each sub-query is clear and specific. Let me structure them accordingly.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to read an HDF-EOS5 file, access datasets like BrightnessTemperature_M12 from /HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields, extract attributes such as scale_factor, add_offset, units, _FillValue, and long_name, and parse metadata from /HDFEOS INFORMATION/StructMetadata.0 to get grid coordinates.
+
+NumPy Data Preprocessing Sub-query:
+How to convert HDF5 dataset to float using np.float, handle _FillValue with NumPy masks or replacements, and create longitude and latitude grids using numpy.meshgrid for plotting.
+
+Plotting and Visualization Sub-query:
+How to plot geospatial data on a cylindrical projection using matplotlib, add coastlines, draw parallels every 30 degrees with left labels, meridians every 45 degrees with bottom labels, use pcolormesh for visualization, include a colorbar labeled with dataset units, and set the title from file basename and long_name.

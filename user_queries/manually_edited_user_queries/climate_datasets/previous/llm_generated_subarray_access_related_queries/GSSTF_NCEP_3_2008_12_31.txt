@@ -1,0 +1,51 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+1. `datetime`: for working with dates and times
+2. `os`: for interacting with the operating system (e.g., file paths)
+3. `matplotlib` and `matplotlib.pyplot`: for creating visualizations
+4. `mpl_toolkits.basemap`: for geospatial plotting
+5. `numpy`: for numerical computations
+
+**Defining Constants**
+
+The code defines a constant `USE_NETCDF4`, which determines whether to use the NetCDF4 library or h5py for reading HDF-EOS files.
+
+**`run()` Function**
+
+The `run()` function takes a file name as input and performs the following steps:
+
+1. **Opening the HDF-EOS File**: Depending on the value of `USE_NETCDF4`, the code either uses NetCDF4's `Dataset` class or h5py's `File` class to open the HDF-EOS file.
+2. **Accessing Data Variables**: The code accesses the "SST" (Sea Surface Temperature) data variable within the HDF-EOS file hierarchy:
+	* With NetCDF4: `grp = nc.groups['HDFEOS'].groups['GRIDS'].groups['NCEP']` and `data_var = grp.groups['Data Fields'].variables['SST']`
+	* With h5py: `dset_var = f['/HDFEOS/GRIDS/NCEP/Data Fields/SST']`
+3. **Reading Data**: The code reads the data from the "SST" variable into a NumPy array.
+4. **Extracting Metadata**: The code extracts metadata (long name and units) associated with the "SST" variable.
+
+**Data Processing**
+
+The code processes the data as follows:
+
+1. **Constructing Lat/Lon Arrays**: The code constructs latitude and longitude arrays based on the shape of the data array.
+2. **Applying Fill Value**: With h5py, the code applies a fill value to the data array (replacing missing values with NaN).
+
+**Visualization**
+
+The code creates a visualization using Basemap:
+
+1. **Creating a Cylindrical Projection**: The code sets up an equidistant cylindrical projection using Basemap.
+2. **Drawing Coastlines and Grid Lines**: The code draws coastlines, parallels, and meridians on the map.
+3. **Plotting Data**: The code plots the SST data as a pseudocolor mesh on the map.
+4. **Adding Colorbar and Title**: The code adds a colorbar with units and a title to the plot.
+
+**Saving the Plot**
+
+The code saves the plot to a PNG file using Matplotlib's `savefig()` function.
+
+**Main Program**
+
+The main program sets up the input HDF-EOS file name and calls the `run()` function. If an environment variable `HDFEOS_ZOO_DIR` is set, the code looks for the input file in that directory; otherwise, it looks in the current working directory.
+
+Overall, this Python script reads an HDF-EOS file containing SST data, extracts metadata, processes the data, and creates a visualization of the data using Basemap.

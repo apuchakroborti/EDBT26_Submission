@@ -1,0 +1,23 @@
+A python script that visualizes data from an HDF5 file. Here's what it does:
+
+Step 1: Load Data
+
+The script loads an HDF5 file and extracts several datasets:
+	`/S2/solarAzimuthAngle` (solar azimuth angle)
+	`/S2/Latitude` and `/S2/Longitude` (geolocation data)
+
+Step 2: Process Solar Azimuth Angle Data
+
+It processes the solar azimuth angle data by replacing fill values with NaN and masking NaN values.
+
+Step 3: Create Map and Plot Data
+
+The script creates a map, sets up its boundaries, and plots the solar azimuth angle data on it. The plot uses color mapping based on the data values.
+
+Step 4: Add Colorbar and Title
+
+It adds a colorbar with a label indicating the units of the data and sets a title for the plot, including the file name and dataset name.
+
+Step 5: Save Plot to PNG File
+
+Finally, it saves the plot to a PNG file. The file name is constructed by appending `.py.png` to the base name of the HDF5 file.

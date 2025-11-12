@@ -1,0 +1,63 @@
+This Python script is designed to visualize the surface of a human bone using the marching cubes algorithm. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `VTK_VERSION_NUMBER`, `vtkVersion` from `vtkmodules.vtkCommonCore`
+   - `vtkMergePoints` from `vtkmodules.vtkCommonDataModel`
+   - `vtkFlyingEdges3D`, `vtkMarchingCubes` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - The main function sets up and runs the visualization pipeline.
+
+3. **Check VTK Version**:
+   - Define a helper function `vtk_version_ok(major, minor, build)` to check if the current VTK version is greater than or equal to the specified version.
+   - This function returns `True` if the condition is met, otherwise `False`.
+
+4. **Set Up File Name and Colors**:
+   - Set the file name for the input data: `'HeadBone_FullHead.mhd'`
+   - Create a `vtkNamedColors` object named `colors` to manage color definitions.
+
+5. **Create Rendering Components**:
+   - Create a renderer (`ren`), render window (`ren_win`), and interactor (`iren`).
+
+6. **Set Up the Pipeline**:
+   - Create a `vtkMetaImageReader` object named `reader` and set its file name.
+   - Update the reader to load the data.
+
+7. **Create Locator for Marching Cubes**:
+   - Create a `vtkMergePoints` object named `locator`.
+   - Set divisions and number of points per bucket, then turn off automatic mode.
+
+8. **Choose Surface Extraction Method**:
+   - Check if VTK version is >= 8.2 to use `vtkFlyingEdges3D`, otherwise fall back to `vtkMarchingCubes`.
+   - Create the appropriate surface extraction filter (`iso`) based on the VTK version.
+   - Set input connection from reader, compute gradients, turn off scalar computation, and set iso-value.
+
+9. **Set Up Mapper and Actor for Surface**:
+   - Create a `vtkPolyDataMapper` named `iso_mapper`.
+   - Connect it to the surface extraction filter's output port and turn off scalar visibility.
+   - Create an actor (`iso_actor`) and set its mapper, then set color using the colors object.
+
+10. **Create Outline Filter**:
+    - Create a `vtkOutlineFilter` named `outline` and connect it to the reader's output port.
+    - Create a mapper (`outline_mapper`) for the outline filter.
+    - Create an actor (`outline_actor`) for the outline and set its mapper.
+
+11. **Add Actors to Renderer**:
+    - Add both actors (surface and outline) to the renderer.
+    - Set background color, camera position, focal point, view up direction, and reset camera settings.
+    - Adjust window size and name.
+
+12. **Render and Start Interaction**:
+    - Call `ren_win.Render()` to render the scene.
+    - Call `iren.Start()` to start the interaction loop.
+
+13. **Entry Point**:
+    - If this script is run as the main module, call the `main()` function.
+
+This description provides a clear step-by-step breakdown of what each part of the script does and how it's structured.

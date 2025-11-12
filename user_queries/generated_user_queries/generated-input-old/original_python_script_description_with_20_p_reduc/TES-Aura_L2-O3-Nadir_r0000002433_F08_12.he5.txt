@@ -1,0 +1,35 @@
+Here is the reduced description while keeping implementation details:
+
+**Importing Libraries**
+
+The code imports several libraries: `os`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`), and `Basemap` from `mpl_toolkits.basemap`.
+
+**Defining File Paths and Names**
+
+Two variables are defined: `FILE_PATH` (the directory path where the HDF5 file is located) and `FILE_NAME` (the full path to the HDF5 file).
+
+**Reading HDF5 File and Extracting Data**
+
+The code opens the HDF5 file in read-only mode using `h5py.File`. It extracts:
+
+* `name`: the path to the dataset `/HDFEOS/SWATHS/O3NadirSwath/Data Fields/O3`.
+* `data`: the values of the dataset at level 5 (`[:, 5]`).
+* `units`, `longname`, and `fillvalue`: extracted from the attributes of the dataset.
+
+The code replaces any values in `data` equal to `fillvalue` with `NaN`.
+
+**Extracting Geolocation Data**
+
+The code extracts `latitude` and `longitude` values from `/HDFEOS/SWATHS/O3NadirSwath/Geolocation Fields/Latitude` and `/Longitude`, respectively.
+
+**Creating a Map**
+
+A Basemap object `m` is created with cylindrical projection, low resolution, and latitude and longitude limits. The code adds coastlines, parallels, meridians, and a scatter plot to the map using `longitude` and `latitude` values, with color corresponding to `data` values.
+
+**Adding a Colorbar and Title**
+
+A colorbar and title are added to the plot, including the file name, long name of the dataset, and level number.
+
+**Saving the Plot**
+
+The code saves the plot as a PNG file using `fig.savefig`, with a file path constructed by concatenating `FILE_PATH` with the file name (without extension) and `.py.png`.

@@ -1,0 +1,32 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+This Python script reads and visualizes data from an NSIDC AMSR_U2 L3 SeaIce25km HDF-EOS5 Grid file.
+
+**Importing modules**
+
+The script imports various Python modules, including `os`, `re`, `matplotlib`, `mpl_toolkits.basemap`, `pyproj`, and `numpy`.
+
+**Defining constants**
+
+The script defines a few constants: `USE_GDAL` (a boolean flag indicating whether to use the GDAL library), `DATAFIELD_NAME` (the name of the data field in the HDF-EOS5 file), and `GRID_NAME` (the name of the grid in the HDF-EOS5 file).
+
+**Defining the `run` function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is the path to the HDF-EOS5 file. The function performs the following steps:
+
+1. Identify the data field using `DATAFIELD_NAME` and `GRID_NAME`.
+2. Read data using GDAL (if enabled) or h5py (if not).
+3. Set projection parameters manually if using GDAL.
+4. Construct the grid by extracting extents from metadata using regular expressions.
+5. Process data by replacing zeros with NaN values, scaling by 0.1, and creating a masked array.
+6. Create x and y coordinates using `np.linspace` and `np.meshgrid`.
+7. Transform EASE Grid to WGS84 using `pyproj`.
+8. Create a Basemap plot, add coastlines, parallels, and meridians, and plot the data using `pcolormesh`.
+9. Add a colorbar and title to the plot.
+10. Save the plot to a PNG file.
+
+**Main script**
+
+The main script calls the `run` function with the HDF-EOS5 file name as an argument.
+
+This script demonstrates how to read data from an HDF-EOS5 file, process it, and visualize it using Basemap.

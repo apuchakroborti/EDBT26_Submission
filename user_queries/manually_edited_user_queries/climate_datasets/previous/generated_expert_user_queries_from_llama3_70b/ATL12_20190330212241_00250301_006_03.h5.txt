@@ -1,0 +1,50 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Comments and Header**
+The code starts with comments explaining what the script does, how to use it, and where to get help if needed. The header also mentions the version of Python used for testing and the last update date.
+
+**Importing Libraries**
+The script imports several libraries:
+1. `os`: for operating system-related functions.
+2. `matplotlib.pyplot` (as `plt`): a plotting library for creating visualizations.
+3. `numpy` (as `np`): a library for numerical computations.
+4. `mpl_toolkits.basemap` (as `Basemap`): a toolkit for creating maps and geospatial visualizations.
+5. `h5py`: a library for reading and writing HDF5 files.
+
+**File Name and HDF5 File Access**
+The script defines the file name of an HDF5 file (`ATL12_20190330212241_00250301_006_03.h5`) and opens it in read mode using `h5py`. The file must be in the current working directory.
+
+**Accessing Datasets in the HDF5 File**
+The script accesses three datasets within the HDF5 file:
+1. `/gt1l/ssh_segments/latitude`: a dataset containing latitude values.
+2. `/gt1l/ssh_segments/longitude`: a dataset containing longitude values.
+3. `/gt1l/ssh_segments/heights/swh`: a dataset containing height data (specifically, "swh" - surface water height).
+
+The script reads the entire datasets into memory using `[:]`.
+
+**Extracting Metadata**
+From the height dataset (`dset_name`), the script extracts:
+1. `units`: the units of measurement for the height data.
+2. `long_name`: a longer description of the height data.
+
+**Creating a Map Visualization**
+The script uses `Basemap` to create an equidistant cylindrical projection map with:
+1. Low-resolution coastline database.
+2. Latitude and longitude limits set to -90° to 90° and -180° to 180°, respectively.
+3. Coastlines drawn with a line width of 0.5.
+4. Parallels (latitude lines) and meridians (longitude lines) drawn at intervals of 30° and 45°, respectively.
+
+**Scatter Plot**
+The script creates a scatter plot on the map using:
+1. Longitude and latitude values as x and y coordinates.
+2. Height data (`data`) as color values.
+3. A jet colormap (`plt.cm.jet`).
+4. No edge colors or line widths.
+
+**Colorbar and Title**
+The script adds:
+1. A colorbar at the bottom of the plot with a label set to the units of measurement.
+2. A title consisting of the file name, dataset name, and long description of the height data.
+
+**Saving the Plot as a PNG File**
+Finally, the script saves the plot as a PNG file using `matplotlib`'s `savefig` method. The file name is constructed by appending `.py.png` to the base name of the HDF5 file.

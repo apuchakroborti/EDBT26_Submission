@@ -1,0 +1,29 @@
+Here's the reduced description with 20% less text while keeping as many implementation details as possible:
+
+**Comments and Copyright Notice**
+
+The first section includes a copyright notice, comments explaining the script's purpose, usage, and help resources.
+
+**Importing Modules**
+
+The script imports several Python modules: `os`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`), and `Basemap`.
+
+**Setting File Path and Name**
+
+Two variables are set: `FILE_PATH` for the directory path of the HDF5 file, and `FILE_NAME` constructed by concatenating `FILE_PATH` with the file name.
+
+**Reading HDF5 File and Extracting Data**
+
+The script opens the HDF5 file in read-only mode using `h5py.File`. Within the `with` block, it extracts data from the `/Sigma0_Data/cell_sigma0_hh_fore` dataset into a NumPy array called `data`, and retrieves attributes like `units`, `longname`, `_FillValue`, `valid_max`, and `valid_min`.
+
+**Data Processing**
+
+The script identifies invalid data points, sets them to `NaN`, and creates a masked array using `np.ma.masked_where`. This allows ignoring `NaN` values in subsequent operations.
+
+**Getting Geolocation Data and Creating a Basemap**
+
+The script extracts latitude and longitude values from the HDF5 file and reads them into NumPy arrays. It then creates a `Basemap` object with a cylindrical projection, sets the latitude and longitude ranges to cover the entire globe, and draws coastlines, parallels, and meridians on the map.
+
+**Plotting Data and Saving Figure**
+
+The script plots the data on the map using `m.scatter`, adds a colorbar, sets the plot title using the file name and long name of the dataset, and saves the figure as a PNG file in the same directory where the HDF5 file is located.

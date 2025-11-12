@@ -1,0 +1,57 @@
+1. Import Libraries: The script begins by importing necessary modules from `vtkmodules`. These include:
+   - `vtkInteractionStyle` and `vtkRenderingOpenGL2` (though not directly used)
+   - `vtkNamedColors` for color definitions
+   - `vtkDoubleArray` for data storage
+   - `vtkPlane` to define cutting planes
+   - `vtkContourFilter` to generate contour lines
+   - `vtkXMLPolyDataReader` to read input data
+   - Rendering components like `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, etc.
+
+2. Define Input Parameters: 
+   - Set `inputFilename` to `'CutWithScalars_Torso.vtp'`
+   - Set `numberOfCuts` to 20
+
+3. Initialize Color Palette: Create a `colors` object using `vtkNamedColors()` for consistent color schemes.
+
+4. Read Input Data:
+   - Use `vtkXMLPolyDataReader()` to read the input file.
+   - Update the reader to process the data and retrieve the model's bounds, which are then printed.
+
+5. Define Cutting Plane: 
+   - Create a `vtkPlane` object named `plane`.
+   - Set the plane's origin to the center of the model using the bounds.
+   - Orient the plane perpendicular to the z-axis by setting its normal vector to (0, 0, 1).
+
+6. Compute Scalar Values:
+   - Initialize a `scalars` array of type `vtkDoubleArray`.
+   - Populate this array by evaluating each point against the cutting plane.
+   - Assign these scalars to the model's point data.
+
+7. Generate Contours:
+   - Create a contour filter (`cutter`) using `vtkContourFilter`.
+   - Set the input to the reader's output, disable scalar and normal computations.
+   - Generate 20 evenly spaced contours between 99% of the scalar range.
+
+8. Create Cutter Actor:
+   - Use `vtkPolyDataMapper` to map the cutter's output.
+   - Create an actor (`cutterActor`) with yellow color (Banana) and line width set to 2.
+
+9. Create Model Actor:
+   - Set up another mapper for the original model data.
+   - Create an actor (`modelActor`) with a flesh-like color (Flesh).
+
+10. Set Up Rendering Environment:
+    - Create a `vtkRenderer` instance, adding both actors to it.
+    - Define a render window of size 600x600 named 'CutWithCutScalars' and add the renderer.
+
+11. Configure Interaction and Camera:
+    - Attach an interactor to the render window.
+    - Set background color to Burlywood.
+    - Position camera at (0, -1, 0), facing the origin with view up along z-axis.
+    - Adjust camera angles: 30 degrees azimuth and elevation.
+
+12. Render and Display:
+    - Reset camera to fit the model.
+    - Render the scene and start the interactor to display the window.
+
+This structured approach ensures that each component is set up correctly, from data reading to visualization, providing a clear visual of contour lines on the model.

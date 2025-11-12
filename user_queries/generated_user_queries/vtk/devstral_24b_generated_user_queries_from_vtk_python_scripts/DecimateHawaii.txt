@@ -1,0 +1,78 @@
+This Python script demonstrates the use of a decimation algorithm to reduce a polygonal mesh while preserving topology and generating surface normals for a pleasing visual result.
+
+### Step-by-Step Description:
+
+1. **Import Libraries:**
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkDecimatePro`, `vtkPolyDataNormals` from `vtkmodules.vtkFiltersCore`
+   - `vtkPolyDataReader` from `vtkmodules.vtkIOLegacy`
+   - `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function:**
+   - Create an instance of `vtkNamedColors` named `colors`.
+
+3. **Set File Name:**
+   - Define a variable `fileName` with the value `'DecimateHawaii_honolulu.vtk'`.
+
+4. **Read Polygonal Mesh Data:**
+   - Create an instance of `vtkPolyDataReader` named `hawaii`.
+   - Set the file name for the reader using `SetFileName(fileName)`.
+
+5. **Apply Decimation Filter:**
+   - Create an instance of `vtkDecimatePro` named `deci`.
+   - Connect the output port of `hawaii` to the input port of `deci` using `SetInputConnection(hawaii.GetOutputPort())`.
+   - Set target reduction to 90% with `SetTargetReduction(0.9)`.
+   - Preserve topology by calling `PreserveTopologyOn()`.
+
+6. **Generate Surface Normals:**
+   - Create an instance of `vtkPolyDataNormals` named `decimatedNormals`.
+   - Connect the output port of `deci` to the input port of `decimatedNormals` using `SetInputConnection(deci.GetOutputPort())`.
+   - Flip normals by calling `FlipNormalsOn()`.
+   - Set feature angle with `SetFeatureAngle(60)`.
+
+7. **Create Mappers and Actors:**
+   - Create an instance of `vtkPolyDataMapper` named `decimatedMapper`.
+   - Connect the output port of `decimatedNormals` to the input port of `decimatedMapper` using `SetInputConnection(decimatedNormals.GetOutputPort())`.
+
+   - Create an instance of `vtkActor` named `decimatedActor`.
+   - Set the mapper for `decimatedActor` with `SetMapper(decimatedMapper)`.
+   - Set color and representation to wireframe for `decimatedActor` using `GetProperty().SetColor(colors.GetColor3d('Sienna'))` and `GetProperty().SetRepresentationToWireframe()`.
+
+   - Create another instance of `vtkPolyDataMapper` named `originalMapper`.
+   - Connect the output port of `decimatedNormals` to the input port of `originalMapper` using `SetInputConnection(decimatedNormals.GetOutputPort())`.
+
+   - Create an instance of `vtkActor` named `originalActor`.
+   - Set the mapper for `originalActor` with `SetMapper(originalMapper)`.
+   - Set color for `originalActor` using `GetProperty().SetColor(colors.GetColor3d('Sienna'))`.
+
+8. **Create Renderers and Render Window:**
+   - Create two instances of `vtkRenderer`, named `renderer1` and `renderer2`.
+   - Set viewports for both renderers with `SetViewport()`.
+   - Create an instance of `vtkRenderWindow` named `renderWindow`.
+   - Add the renderers to the render window using `AddRenderer()`.
+
+9. **Create Interactor:**
+   - Create an instance of `vtkRenderWindowInteractor` named `interactor`.
+   - Set the render window for the interactor with `SetRenderWindow(renderWindow)`.
+
+10. **Configure Rendering Settings:**
+    - Add actors to their respective renderers using `AddActor()`.
+    - Set background colors for both renderers using `SetBackground(colors.GetColor3d('Wheat'))` and `SetBackground(colors.GetColor3d('Papaya_Whip'))`.
+    - Set the size of the render window with `SetSize(800, 400)`.
+    - Set the window name to 'DecimateHawaii' using `SetWindowName('DecimateHawaii')`.
+
+11. **Render and Start Interaction:**
+    - Create an instance of `vtkCamera` named `cam1`.
+    - Set active camera for both renderers with `SetActiveCamera(cam1)`.
+    - Reset the camera settings with `ResetCamera()`.
+    - Adjust camera elevation and dolly with `Elevation(-30)` and `Dolly(1.2)`.
+    - Reset clipping range with `ResetCameraClippingRange()`.
+    - Render the window using `Render()`.
+    - Start interaction loop with `interactor.Start()`.
+
+12. **Execute Main Function:**
+    - If this script is run as the main module, call the `main()` function.
+
+This description provides a clear step-by-step guide to reproduce the functionality of the given Python script.

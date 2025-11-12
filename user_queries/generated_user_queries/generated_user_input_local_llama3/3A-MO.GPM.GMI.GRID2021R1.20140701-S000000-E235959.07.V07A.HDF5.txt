@@ -1,0 +1,84 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing Python modules:
+```python
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.basemap import Basemap
+```
+These libraries are used for file operations, plotting and visualization, numerical computations, and map projections.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read-only mode (`mode="r"`):
+```python
+with h5py.File(FILE_NAME, mode="r") as f:
+    ...
+```
+This block of code is executed when the file is opened and closed automatically when the file is no longer needed.
+
+**Accessing a dataset within the HDF5 file**
+
+The code accesses a specific dataset within the HDF5 file using the following lines:
+```python
+name = "/Grid/cloudWater"
+data = f[name][0, :, :]
+units = f[name].attrs["units"].decode()
+_FillValue = f[name].attrs["_FillValue"]
+```
+Here's what each line does:
+
+1. `name` is set to the path `/Grid/cloudWater`, which is a dataset within the HDF5 file.
+2. `data` is assigned the value of the dataset at row 0, all columns (`[0, :, :]`).
+3. `units` and `_FillValue` are set to the values of the "units" and "_FillValue" attributes associated with the dataset.
+
+**Processing the data**
+
+The code processes the data:
+```python
+data[data == _FillValue] = np.nan
+data = np.ma.masked_where(np.isnan(data), data)
+```
+Here's what each line does:
+
+1. Replace any values equal to `_FillValue` with `np.nan`.
+2. Create a masked array where the mask is set to `True` for NaN values.
+
+**Plotting the data**
+
+The code uses Basemap to create a plot:
+```python
+m = Basemap(projection="cyl", resolution="l",
+            llcrnrlat=-90, urcrnrlat=90,
+            llcrnrlon=-180, urcrnrlon=180)
+m.drawcoastlines(linewidth=0.5)
+m.pcolormesh(lon, lat, data.T, latlon=True)
+cb = m.colorbar()
+cb.set_label(units)
+```
+Here's what each line does:
+
+1. Create a Basemap object with a cylindrical projection.
+2. Draw coastlines and plot the data using `pcolormesh`.
+3. Create a color bar (`cb`) and set its label to the units string.
+
+**Saving the plot**
+
+The final lines save the plot to a PNG file:
+```python
+basename = os.path.basename(FILE_NAME)
+plt.title("{0}\n{1}".format(basename, name))
+fig = plt.gcf()
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+Here's what each line does:
+
+1. Get the base name of the HDF5 file using `os.path.basename`.
+2. Set the title of the plot to include the base name and dataset name.
+3. Save the plot to a PNG file with the same base name as the HDF5 file, but with a `.py.png` extension.
+
+Note that some implementation details have been removed or condensed to reduce the text while keeping the core functionality intact.

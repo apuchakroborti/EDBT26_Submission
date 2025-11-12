@@ -1,0 +1,27 @@
+1. Import Necessary Libraries:  
+   Import `os` for operating system functions, `matplotlib.pyplot` for plotting, `numpy` for numerical computations, and `mpl_toolkits.basemap` for map projections.
+
+2. Define Constants:  
+   Set the constant `FILE_NAME` to the path of the HDF5 file: "ATL03_20181027235521_04480111_006_02.h5".
+
+3. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access these datasets:
+   - `/gt1l/geolocation/reference_photon_lat` for latitude data.
+   - `/gt1l/geolocation/reference_photon_lon` for longitude data.
+   - `/gt1l/geolocation/tx_pulse_energy` for the main data.
+
+4. Extract Dataset Attributes:  
+   For the tx_pulse_energy dataset, read the `units` and `long_name` attributes using `.decode('ascii', 'replace')`. 
+   Also, retrieve the `_FillValue` attribute from the main dataset.
+
+5. Create Map Projection:  
+   Use an equidistant cylindrical projection with low resolution. Set the latitude range from -90 to 90 and longitude range from -180 to 180.
+
+6. Customize Map Features:  
+   Add coastlines with a line width of 0.5. Draw parallels at intervals of [-90, 120, 30] and meridians at intervals of [-180, 180, 45].
+
+7. Plot Data on the Map:  
+   Use the `scatter` function with longitude as x, latitude as y, data for color (c parameter), marker size of 0.1, colormap 'jet', no edge colors, and zero linewidth.
+
+8. Add Colorbar and Title:  
+   Append a colorbar with format '%.2e' labeled using the main dataset's units. Set the plot title to include the HDF5 file's basename and the `long_name` attribute of the main dataset.

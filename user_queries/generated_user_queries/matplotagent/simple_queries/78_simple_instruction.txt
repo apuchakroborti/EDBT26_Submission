@@ -1,0 +1,7 @@
+Create a Python script to generate a 3D scatter plot from a h5 file named "78_h5_data.h5" with datasets ["0-60 mph(sec)", "Gas Mileage(mpg)", "Power(kw)", "Weight(kg)", "Engine Displacement(CC)"]. The plot should meet the following specifications:
+- Plot each car as a point in 3D space using its acceleration time, gas mileage, and power as coordinates.
+- Point sizes should increase with the engine displacement, and colors should vary from one end of the spectrum (like purple) for smaller engines to the other end (like yellow) for larger engines.
+- Add flat projections of these points onto the XY, ZX, and YZ planes below and to the sides of the 3D points, colored blue, red, and green, respectively.
+- Include a color bar to indicate the relationship between color and engine displacement.
+- Label each axis to show what it represents and use a 3D perspective for viewing the plot.
+- Ensure the plot has a modern and clean design, with clear, semi-transparent points to avoid visual clutter.

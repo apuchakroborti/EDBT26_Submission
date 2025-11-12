@@ -1,0 +1,20 @@
+Step 1: Setting up
+
+The code defines two variables: `FILE_NAME` (the HDF5 file name) and `DATAFIELD_NAME` (the dataset within the HDF5 file).
+
+Step 2: Reading Data
+
+It reads the HDF5 file using a context manager, extracts the necessary data into NumPy arrays (`data`, `latitude`, and `longitude`), 
+and retrieves metadata (long name of the dataset and fill value).
+
+Step 3: Preparing Data
+
+The code replaces fill values with NaN, creates a masked array for efficient handling of missing data, and prepares it for visualization.
+
+Step 4: Creating the Map
+
+It sets up an equidistant cylindrical projection map with coastline database, latitudinal/longitudinal limits, and draws coastlines, parallels, and meridians.
+
+Step 5: Visualizing Data
+
+The code creates a pseudocolor plot of the data on the map, adds a colorbar, and saves it as a PNG file with a title that includes the HDF5 file name and dataset long name.

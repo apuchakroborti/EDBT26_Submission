@@ -1,0 +1,61 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+1. `os`: for operating system-specific functionality.
+2. `matplotlib` and `matplotlib.pyplot` (imported as `mpl` and `plt`): for data visualization.
+3. `Basemap` from `mpl_toolkits.basemap`: for creating maps.
+4. `numpy` (imported as `np`): for numerical computations.
+5. `h5py`: for working with HDF5 files.
+
+**Defining Constants**
+
+The code defines two constants:
+1. `FILE_NAME`: the name of the HDF5 file to be read, which is 'DeepBlue-SeaWiFS_L2_20101210T135954Z_v004-20130525T172725Z.h5'.
+2. `DATAFIELD_NAME`: the name of the dataset within the HDF5 file that contains the data of interest, which is 'aerosol_optical_thickness_550_ocean'.
+
+**Reading HDF5 File**
+
+The code opens the specified HDF5 file in read-only mode (`mode='r'`) using `h5py`. It then extracts the following datasets:
+1. `data`: the aerosol optical thickness data from the dataset named `DATAFIELD_NAME`.
+2. `latitude` and `longitude`: the latitude and longitude coordinates associated with the data.
+
+**Extracting Attributes**
+
+The code extracts two attributes from the `DATAFIELD_NAME` dataset:
+1. `long_name`: a string attribute that contains a brief description of the dataset.
+2. `units`: a string attribute that specifies the units of measurement for the dataset.
+
+Since these attributes are stored as bytes in HDF5 files, they need to be decoded to UTF-8 using the `.decode()` method (specific to Python 3.x).
+
+**Data Preprocessing**
+
+The code performs two operations on the data:
+1. Replaces all instances of -999 with `NaN` (Not a Number) values.
+2. Creates a masked array using `numpy.ma.masked_array`, which allows for efficient handling of missing or invalid data.
+
+**Map Visualization**
+
+The code creates an orthographic projection map using `Basemap`:
+1. Calculates the mean latitude and longitude coordinates (`lat_m` and `lon_m`) to center the map.
+2. Creates a `Basemap` object with the specified projection, resolution, and center coordinates.
+3. Draws coastlines, parallels, and meridians on the map.
+4. Plots the data as a pseudocolor mesh using `pcolormesh`, specifying that the longitude and latitude coordinates are in a geographic (lat/lon) coordinate system.
+
+**Colorbar and Plot Customization**
+
+The code:
+1. Creates a colorbar (`cb`) for the plot and sets its label to include the units of measurement.
+2. Sets the title of the plot using the file name and long name attributes.
+
+**Saving the Plot**
+
+Finally, the code saves the plot as a PNG file using `matplotlib`'s `savefig` method:
+1. Gets the current figure object (`gcf`) using `plt`.
+2. Constructs the file name for the PNG file by appending '.py.png' to the base name of the HDF5 file.
+3. Saves the plot to the specified file.
+
+**Program Perspective**
+
+The program's perspective is to visualize aerosol optical thickness data from a SeaWiFS L2 swath file in HDF5 format using Python and its associated libraries for data manipulation, visualization, and mapping.

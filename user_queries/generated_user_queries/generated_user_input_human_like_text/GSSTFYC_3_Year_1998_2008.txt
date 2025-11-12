@@ -1,0 +1,14 @@
+Here is a rewritten version of the text, condensed by about 40% while keeping as many implementation details as possible:
+
+"I need help understanding this Python code. It starts by importing necessary modules: `datetime`, `os`, `matplotlib`, `mpl_toolkits.basemap`, and `numpy`. 
+
+The code defines a constant `USE_NETCDF4` to determine whether to use NetCDF4 or HDF5 (via h5py) to read the HDF-EOS file. The `run` function takes an HDF-EOS file path as input and does the following:
+
+* If `USE_NETCDF4` is True, it uses NetCDF4 to open the file, extract groups (`HDFEOS`, `GRIDS`, `NCEP`, and `Data Fields`), and read the `SST` dataset into a NumPy array.
+* If `USE_NETCDF4` is False, it uses h5py to open the file, extract the `/HDFEOS/GRIDS/NCEP/Data Fields/SST` dataset, and read the data into a NumPy array. It also applies the fill value by replacing it with NaN values.
+
+The code then creates lat/lon arrays, a Basemap instance, and draws coastlines, parallels, and meridians on the map. It renders the SST data as a pseudocolor mesh plot, adds a colorbar and title, and saves the plot to a PNG file.
+
+The main script sets the input HDF-EOS file, checks for an environment variable `HDFEOS_ZOO_DIR`, and calls the `run` function with the input file as an argument. 
+
+Can you help me understand this code better?"

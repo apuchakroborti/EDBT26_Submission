@@ -1,0 +1,56 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing necessary libraries:
+1. `os`: for operating system-related functions.
+2. `matplotlib.pyplot` as `plt`: for creating plots and visualizations.
+3. `numpy` as `np`: for numerical computations and array operations.
+4. `mpl_toolkits.basemap` as `Basemap`: for creating map projections and visualizations.
+5. `h5py`: for working with HDF5 files.
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, which is the name of the HDF5 file to be read: `"3A-MO.GPM.GMI.GRID2021R1.20140701-S000000-E235959.07.V07A.HDF5"`.
+
+**Reading HDF5 File**
+
+The code opens the HDF5 file in read mode (`mode="r"`) using `h5py.File`. The file object is assigned to `f`.
+
+**Accessing Dataset**
+
+Within the HDF5 file, the code accesses a dataset named `/Grid/cloudWater` and assigns it to `name`. It then reads the data from this dataset into a NumPy array `data`, taking only the first slice (`[0, :, :]`) of the 3D array.
+
+**Retrieving Attributes**
+
+The code retrieves two attributes from the dataset:
+1. `units`: the units of the data, decoded from bytes to string using `.decode()`.
+2. `_FillValue`: a special value indicating missing or fill values in the data.
+
+**Data Processing**
+
+The code replaces all instances of `_FillValue` with `NaN` (Not a Number) values in the `data` array using NumPy's broadcasting and indexing capabilities. It then creates a masked array `data` using `np.ma.masked_where`, which masks out NaN values.
+
+**Constructing Geolocation Data**
+
+Since there is no geolocation data in the HDF5 file, the code constructs it manually:
+1. `lon`: an array of longitude values from -180 to 180 degrees, with a step size of 0.25 degrees.
+2. `lat`: an array of latitude values from -90 to 90 degrees, with a step size of 0.25 degrees.
+
+**Creating Map Visualization**
+
+The code creates a map visualization using `Basemap`:
+1. It defines the map projection and boundaries.
+2. It draws coastlines, parallels, and meridians on the map.
+3. It plots the `data` array as a pseudocolor mesh on the map using `m.pcolormesh`.
+4. It adds a colorbar with a label set to the units of the data.
+
+**Saving Plot**
+
+The code saves the plot to a PNG file:
+1. It gets the base name of the HDF5 file using `os.path.basename`.
+2. It sets the title of the plot to include the base name and dataset name.
+3. It retrieves the current figure object using `plt.gcf()`.
+4. It saves the figure to a PNG file with a name constructed by appending `.py.png` to the base name.
+
+Note that the last line, `plt.show()`, is commented out, which means the plot will not be displayed immediately when running the script. Instead, it will be saved to a file.

@@ -1,0 +1,82 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Create a polar coordinate diagram using data from "95_h5_data.h5" to display the highest temperatures on the first of each month in Amherst, spanning from January 1, 2004, to August 1, 2015. The data includes datasets labeled "Year," "Date," and "Temperature." The diagram should include:
+
+- 12 sectors, each representing a month of the year.
+- Temperature data plotted according to the corresponding month.
+- Circular points for the temperature data, slightly offset to prevent alignment along a single radial line.
+- Abbreviated labels for the months (Jan, Feb, Mar, etc.).
+- A blue curve that connects the data points from the year 2015.
+- A legend positioned on the right side of the diagram.
+- A title: "Monthly Highest Temperature in Amherst (2004-2015)."
+The purpose of the diagram is to clearly illustrate the temperature trends and monthly variations over the years, with an emphasis on the data from 2015.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file
+with h5py.File('95_h5_data.h5', 'r') as f:
+    # Accessing datasets or attributes, dataset paths (like '/Grid/cloudWater'), and metadata
+    print(f.attrs)  # Print all attributes of the file
+    print(list(f.keys()))  # List all groups in the file
+    print(f['Year'])  # Access a specific dataset
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Assuming 'data' is your Numpy array and '_FillValue' is the fill value for missing data.
+masked_array = np.ma.masked_equal(data, _FillValue)  # Masking out the values equal to `_FillValue`
+filtered_data = np.where(masked_array > min_value, masked_array, min_value)  # Filter data using a minimum value
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Assuming 'lat' and 'lon' are your latitude and longitude arrays, respectively.
+fig = plt.figure(figsize=(10, 8))
+m = Basemap(projection='npstere', boundinglat=35, lon_0=-95)
+m.drawcoastlines()
+m.drawcountries()
+m.drawstates()
+x, y = m(lon, lat)
+plt.plot(x, y, 'ro')  # Plotting the data points
+plt.title('Monthly Highest Temperature in Amherst (2004-2015)')  # Setting title
+plt.legend(loc='right')  # Adding a legend on the right side of the plot
+plt.show()  # Displaying the plot
+```

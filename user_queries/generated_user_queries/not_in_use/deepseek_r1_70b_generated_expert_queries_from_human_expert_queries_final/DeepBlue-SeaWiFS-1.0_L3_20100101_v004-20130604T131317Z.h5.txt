@@ -1,0 +1,37 @@
+Write a Python script that performs the following tasks:
+
+1. Import necessary libraries: os, h5py, matplotlib, matplotlib.pyplot, mpl_toolkits.basemap, numpy.
+
+2. Read data from an HDF5 file named "DeepBlue-SeaWiFS-1.0_L3_20100101_v004-20130604T131317Z.h5".
+
+3. Extract the following datasets:
+   - aerosol_optical_thickness_550_ocean
+   - latitude
+   - longitude
+
+4. Retrieve attributes from the aerosol_optical_thickness_550_ocean dataset:
+   - long_name
+   - _FillValue
+
+5. Decode the long_name attribute using the decode() function.
+
+6. Replace all data points matching _FillValue with NaN values in the aerosol_optical_thickness_550_ocean dataset.
+
+7. Create a masked array of the aerosol_optical_thickness_550_ocean data where NaN values are masked.
+
+8. Generate a cylindrical projection map with:
+   - Low resolution
+   - Latitude range from -90 to 90
+   - Longitude range from -180 to 180
+
+9. Add map features:
+   - Coastlines with line width 0.5
+   - Parallels at latitudes [-90, 30, 60]
+   - Meridians at longitudes [-180, -45, 45, 180]
+
+10. Create a pcolormesh plot of the masked aerosol data on the map:
+    - Use longitude and latitude coordinates
+    - Set color scale from 0 to 1 (vmin=0, vmax=1)
+    - Ensure latlon=True for geographic projection
+
+11. Add a colorbar to the plot.

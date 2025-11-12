@@ -1,0 +1,67 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script that reads and visualizes data from an HDF-EOS5 file, specifically a LAADS VNP46A1 Geographic projection Grid file.
+
+The script performs the following tasks:
+
+1. Import Libraries: The script begins by importing necessary libraries: `os`, `re`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, and `matplotlib.pyplot` as `plt`.
+
+2. Read HDF5 File: The script opens an HDF5 file in read-only mode using `h5py`. It reads three datasets:
+   - `/HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields/BrightnessTemperature_M12`: This dataset is referred to as "BrightnessTemperature". All data from this dataset are read and converted to a float type using `astype(np.float)`.
+   - The script accesses specific attributes from the "BrightnessTemperature" dataset: `scale_factor`, `add_offset`, `units` (decoded), `_FillValue`, and `long_name` (decoded).
+
+3. Extract Grid Metadata: The script reads metadata from `/HDFEOS INFORMATION/StructMetadata.0`. It extracts the upper-left and lower-right coordinates of the grid from this metadata string.
+
+4. Construct Grid and Plot:
+   - A 2D grid is constructed using `numpy.meshgrid` to create longitude and latitude arrays for plotting.
+   - The data are plotted on a cylindrical map projection with latitude ranging from -90 to 90 and longitude from -180 to 180.
+   - Coastlines are added with a line width of 0.5.
+   - Parallels are drawn at intervals of 30 degrees (from -90 to 90) with specific labels.
+   - Meridians are drawn every 45 degrees with specific labels.
+
+5. Visualize Data: 
+   - A `pcolormesh` is added using longitude and latitude coordinates (taking every 10th value for plotting).
+   - A colorbar is included, labeled with the units from the dataset attributes.
+   - The plot title is a concatenation of the data file's basename and the `long_name` attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with `h5py`, access datasets by path (e.g., `/HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields/BrightnessTemperature_M12`), read dataset attributes like `scale_factor`, `add_offset`, `units`, `_FillValue`, and `long_name`, and convert dataset values to a specific data type (e.g., `np.float`).
+
+NumPy Data Preprocessing Sub-query:
+How to handle `_FillValue` in a NumPy array, apply masks using `np.ma.masked_where`, and perform data transformations based on `scale_factor` and `add_offset`.
+
+Plotting and Visualization Sub-query:
+How to create a cylindrical map projection using `matplotlib` or `cartopy`, draw coastlines, parallels, and meridians, configure plot limits (-90 to 90 latitude, -180 to 180 longitude), create a `pcolormesh` plot with specified coordinates, add a colorbar with labels, and set the plot title.

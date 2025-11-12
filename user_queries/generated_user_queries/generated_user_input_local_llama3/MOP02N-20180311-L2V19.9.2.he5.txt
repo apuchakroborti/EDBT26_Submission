@@ -1,0 +1,29 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code starts by importing several Python libraries:
+1. `os`: for working with operating system-specific functions
+2. `h5py`: a library for reading and writing HDF5 files
+3. `numpy` (`np`): a library for efficient numerical computations
+4. `matplotlib` (`mpl`): a plotting library
+
+**Defining the file name**
+
+The code defines the file name as `'MOP02N-20180311-L2V19.9.2.he5'`.
+
+**Opening and accessing data**
+
+Within the `with` block, the code opens the HDF5 file using `h5py`, accesses a specific dataset, extracts values, retrieves units and fill value attributes, and replaces fill values with NaN.
+
+**Getting geolocation data**
+
+The code extracts latitude and longitude values from the HDF5 file.
+
+**Creating and plotting data**
+
+The code uses the `Basemap` toolkit to create a map, sets latitude and longitude limits, draws coastlines, parallels, and meridians, plots retrieved CO total column data on the map, and adds an edgecolor and linewidth to points. The colormap is set to `plt.cm.jet`, and a colorbar is added with the units attribute as its label.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file by getting the current figure and saving it to a PNG file with the same name as the HDF5 file, but with a `.png` extension.

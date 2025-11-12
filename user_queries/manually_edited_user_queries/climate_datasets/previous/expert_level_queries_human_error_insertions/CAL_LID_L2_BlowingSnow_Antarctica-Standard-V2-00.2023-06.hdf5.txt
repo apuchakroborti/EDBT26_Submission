@@ -1,0 +1,19 @@
+"I'm working with an HDF5 file and I'd like to explain how I'm processing it. 
+
+First, I open the file "CAL_LID_L2_BlowingSnow_Antarctica-Standard-V2-00.2023-06.hdf5" in read-only mode.
+
+Next, I read three datasets: 
+    `/Snow_Fields/Blowing_Snow_Depol_Profile` containing blowing snow depolarization profile data, 
+    and `/Latitude` and `/Longitude` containing geolocation data from the group Geolocation_Fields. 
+
+I then read the "units" attribute from the `/Snow_Fields/BlowingSnowDepol Profile` dataset then decode the attribute and set a long name for it as "Blowing_Snow_Depol_Profile". 
+After reading the blowing snow depol profile data it convert the type of numpy to float64
+then slices data such as all data from the x-axis and 0th index data from y-index of 2D data
+
+After that, I replace any FillValue (0.0) in the data array with NaN and mask these values.
+
+Using Cartopy, I create an orthographic projection map and add a scatter plot of the data points at specific latitudes and longitudes. 
+I also add gridlines, coastlines, and degree labels to the map.
+
+Finally, I add a colorbar displaying the range of values in the dataset, set the label for the colorbar to be the units of the dataset, 
+and add a title including the file name and long name of the dataset. The resulting plot is saved as a PNG image file."

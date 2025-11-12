@@ -1,0 +1,39 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The script starts by importing several libraries:
+- `os`: for operating system-related functions
+- `matplotlib` and its sub-module `pyplot`: for creating plots
+- `Basemap`: for mapping and plotting geographical data
+
+**Defining the `run()` function**
+
+The `run()` function is defined to process a specific HDF5 file. This function takes one argument, `FILE_NAME`, which is the name of the HDF5 file.
+
+**Processing the HDF5 file using either netCDF4 or h5py**
+
+The script uses either `netCDF4` or `h5py` to read the HDF5 file, depending on the value of the `USE_NETCDF4` variable. If `USE_NETCDF4` is `True`, it uses `netCDF4`; otherwise, it uses `h5py`.
+
+**Extracting data from the HDF5 file**
+
+The script extracts several variables:
+- `latitude`, `longitude`, and `temp`: coordinates of the data points and surface temperature values
+- `time`: time values
+
+These variables are extracted using either `netCDF4` or `h5py`, depending on the value of `USE_NETCDF4`.
+
+**Applying valid minimum and maximum values**
+
+The script applies valid minimum and maximum values to the extracted data:
+- For latitude, longitude, and temperature, it sets values outside the valid range to NaN (Not a Number).
+
+**Creating plots and saving them as PNG files**
+
+The script creates two plots:
+- A time series of surface temperature vs. elapsed time
+- An equidistant cylindrical projection of the trajectory, with color representing temperature
+
+These plots are saved as PNG files using `matplotlib`.
+
+Overall, this script demonstrates how to access and visualize an NSIDC ICESat/GLAS L2 swath data file in Python using either `netCDF4` or `h5py`.

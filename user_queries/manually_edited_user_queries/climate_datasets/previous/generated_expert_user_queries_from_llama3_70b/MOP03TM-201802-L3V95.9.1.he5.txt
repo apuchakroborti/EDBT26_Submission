@@ -1,0 +1,60 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+1. `os`: for operating system-specific functionality, such as getting the current working directory.
+2. `re`: for regular expression matching (not used in this script).
+3. `h5py`: a library for reading and writing HDF5 files.
+4. `numpy` (imported as `np`): a library for numerical computations.
+5. `matplotlib` (imported as `mpl`) and `matplotlib.pyplot` (imported as `plt`): libraries for creating plots and visualizations.
+6. `Basemap`: a toolkit for creating maps.
+
+**Defining Constants**
+
+The script defines two constants:
+
+1. `FILE_NAME`: the name of the HDF-EOS5 Grid file to be read, which is 'MOP03TM-201802-L3V95.9.1.he5'.
+
+**Reading the HDF File**
+
+The script opens the specified HDF file in read-only mode (`mode='r'`) using `h5py`. It then accesses various datasets and attributes within the file:
+
+1. `/HDFEOS/GRIDS/MOP03/Data Fields`: a group containing data fields.
+2. `RetrievedSurfaceTemperatureDay`: a dataset within the group, which is read into memory as a NumPy array (`data`).
+3. `long_name` and `units` attributes of the dataset are retrieved and decoded from bytes to strings.
+4. `_FillValue` attribute is retrieved, which represents missing or fill values in the dataset.
+
+**Data Processing**
+
+The script performs some data processing:
+
+1. Replace fill values with NaN (Not a Number) using NumPy's `nan` constant.
+2. Create a masked array (`data`) using NumPy's `ma` module, where NaN values are masked out.
+
+**Geolocation Information**
+
+The script retrieves geolocation information from the HDF file:
+
+1. `/HDFEOS/GRIDS/MOP03/Data Fields/Latitude` and `/HDFEOS/GRIDS/MOP03/Data Fields/Longitude`: datasets containing latitude and longitude values, respectively.
+2. `longitude` and `latitude` arrays are created by meshgridding the latitude and longitude values using NumPy's `meshgrid` function.
+
+**Visualization**
+
+The script creates a map visualization using Basemap:
+
+1. A cylindrical projection (`projection='cyl'`) is used with a low-resolution coastline (`resolution='l'`).
+2. The map boundaries are set to cover the entire globe (`llcrnrlat=-90`, `urcrnrlat=90`, `llcrnrlon=-180`, and `urcrnrlon=180`).
+3. Coastlines, parallels, and meridians are drawn using Basemap's functions.
+4. A pseudocolor plot (`pcolormesh`) is created using the retrieved data, with latitude and longitude as coordinates.
+5. A colorbar is added to the plot with a label set to the units of the dataset.
+
+**Plot Customization**
+
+The script customizes the plot:
+
+1. The title of the plot is set to include the filename and long name of the dataset.
+2. The figure is saved to a PNG file with a filename based on the input HDF file's basename, using Matplotlib's `savefig` function.
+
+Overall, this script reads an HDF-EOS5 Grid file, extracts specific datasets and attributes, performs some data processing, and creates a map visualization of the retrieved data using Basemap.

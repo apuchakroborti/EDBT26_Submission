@@ -1,0 +1,14 @@
+It starts by loading an HDF5 file named 'CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5'. The file is opened in read-only mode.
+
+The code then accesses two datasets: 
+'/layer_descriptor/Aerosol_Type_Fore_FOV' (a 2D array with aerosol type information) 
+and '/geolocation/CATS_Fore_FOV_Latitude' 
+and '/geolocation/CATS_Fore_FOV_Longitude' (2D arrays with latitude and longitude values).
+
+Next, it creates a discrete color map with 9 colors, each representing a specific aerosol type. 
+A geographic map is created using a cylindrical projection, set up with coastlines, parallels, and meridians.
+
+The code then scatters the aerosol type data onto the map, coloring each point according to its corresponding aerosol type value. 
+A colorbar is created with 9 bins, each representing a specific aerosol type.
+
+Finally, the figure is saved as a PNG file named after the input HDF5 file (with a '.py.png' extension)."

@@ -1,0 +1,60 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            It starts by loading an HDF5 file located at `8_fastMRI_brain_first_10_dcm_to_h5.h5` in read-only mode.
+
+The code then accesses a dataset named fastMRI_brain_data where the dataset is located by full path `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`, 
+which represents 16 slices, 32 rows, and 512 columns. 
+
+Next, Gaussian smoothing from scipy.ndimage is applied to the original MRI volume with a sigma value of 2, reducing noise in the image.
+Set the fig_rows and fig_cols to 4, then calculate the n_subplots by multiplying fig_rows and fig_cols, calculates step_size dividing n_slice by n_subplots,
+then calculates plot_range by multiplying n_subplots and step_size, then it calculates start_stop from the difference of n_slice and plot_range and divides by 2
+
+The program creates a figure with multiple subplots by using a loop by enumerating from the range of start_stop to plot_range by increasing using step_size,
+set imshow by slicing data from the x axis, 
+Multiple slices of the smoothed MRI volume are plotted using multiple subplots.
+
+In summary, this code loads an HDF5 file containing MRI data, reshapes the data into 3D, applies Gaussian smoothing, and visualizes the results.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+Here are the 3 sub-queries:
+
+HDF5 Dataset Access Sub-query:
+Access HDF5 file with extension h5, read-only mode, dataset path FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data, and metadata.
+
+NumPy Data Preprocessing Sub-query:
+Apply Gaussian smoothing from scipy.ndimage to 3D NumPy array, set _FillValue, apply masks using np.where or np.ma.masked_where, compute min, max, and filter data.
+
+Plotting and Visualization Sub-query:
+Visualize 3D geospatial data with multiple subplots using matplotlib, mpl_toolkits.basemap, or cartopy, configure projections, draw coastlines, meridians, parallels, and apply colorbars or titles.

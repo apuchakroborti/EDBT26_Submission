@@ -1,0 +1,32 @@
+Here is the rewritten description:
+
+I have a Python script that reads an HDF5 file and creates a map visualization. Here's what it does:
+
+**File Input**
+
+The script starts by opening an HDF5 file called `ATL09_20181117090604_07600101_006_02.h5` in read-only mode.
+
+**Data Extraction**
+
+Within the file, the script extracts three datasets:
+the root group is /profile_1 and the datasets are `/high_rate/latitude`, containing latitude values,
+`/high_rate/longitude`, containing longitude values, `/high_rate/apparent_surf_reflec`, containing surface reflectance values
+
+For each dataset, it retrieves the data values and attribute values like `valid_min`, `valid_max`, `units`, and `long_name`.
+
+**Map Visualization**
+
+The script creates an equidistant cylindrical projection map with a latitude range of -90 to 90 and longitude range of -180 to 180. It then plots the surface reflectance values on the map using a scatter plot, with longitude and latitude as coordinates.
+
+**Additional Map Features**
+
+The script adds coastlines and gridlines to the map.
+
+**Colorbar and Title**
+
+It creates a colorbar for the scatter plot, labeling it with the units of the surface reflectance values. 
+The title includes the file name and dataset long name.
+
+**Saving the Plot**
+
+Finally, the script saves the plot as a PNG image, appending `.py.png` to the original file name.

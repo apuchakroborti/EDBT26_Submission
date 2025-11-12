@@ -1,0 +1,12 @@
+a code that reads an HDF5 file and visualizes its contents. 
+The code starts by importing necessary libraries.
+It then defines two constants: `FILE_NAME` which is located at DeepBlue-SeaWiFS_L2_20101210T135954Z_v004-20130525T172725Z.h5 for the HDF5 file to be read, 
+and `DATAFIELD_NAME` for the dataset within the HDF5 file containing the data of interest (`aerosol_optical_thickness_550_ocean`).
+Next, it reads the HDF5 file using a context manager, extracting the data, latitude, and longitude coordinates. It also extracts the long name and units of the dataset as attributes.
+
+The code prepares the data for visualization by replacing -999 values with NaN and creating a masked array.
+
+It then creates an orthographic map projection using mean latitude and longitude coordinates, draws the coastline, adds parallels and meridians, 
+and creates a pseudocolor mesh plot of the data. A colorbar is added to the plot with a label indicating the units.
+
+Finally, the code customizes the plot by setting the title and saving it as a PNG file in the same directory of the data file.

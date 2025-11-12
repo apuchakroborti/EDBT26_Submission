@@ -1,0 +1,29 @@
+A Python script that processes an HDF5 file to generate a geospatial visualization. The script follows these steps:
+
+1. Import Libraries: Include necessary modules for OS operations (os), plotting (matplotlib and matplotlib.pyplot), 
+numerical computations (numpy), map projections (mpl_toolkits.basemap), and handling HDF5 files.
+
+2. Define Constants: Set the FILE_NAME constant to "ATL13_20190330212241_00250301_006_01.h5".
+
+3. Open HDF5 File: Open the file in read mode and access datasets at paths "/gt1l/segment_lat", "/gt1l/segment_lon", and "/gt1l/segment_geoid" 
+   for latitude, longitude, and main data respectively.
+
+4. Extract Attributes: From the segment_geoid dataset, read 'units' and 'long_name' attributes using decode('ascii', 'replace') and retrieve '_FillValue' from the main data. 
+   Convert segment_geoid data to float type.
+
+5. Data Processing:
+   - Replace _FillValue in segment_geoid data with numpy NaN.
+   - Mask data where values are NaN using numpy's masked_where function.
+
+6. Map Setup: Create a cylindrical projection map with low resolution, setting latitude and longitude bounds from -90 to 90 and -180 to 180 respectively. 
+   Add coastlines with line width 0.5, parallels at intervals [-90, -60, -30, 0, 30, 60, 90, 120], and meridians at intervals [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+7. Adjust Longitude: Subtract 180 degrees from longitude values before plotting.
+
+8. Plot Data: Use scatter plot with parameters: longitude and latitude coordinates, data as color values (c=data), marker size 0.1, colormap 'jet', no edge colors, and zero linewidth.
+
+9. Add Visualization Elements:
+   - Include a colorbar at the bottom labeled with the main dataset's units.
+   - Set the title to include the HDF5 file's basename and its long_name attribute.
+
+This structured approach ensures clarity for code generation by an LLM.

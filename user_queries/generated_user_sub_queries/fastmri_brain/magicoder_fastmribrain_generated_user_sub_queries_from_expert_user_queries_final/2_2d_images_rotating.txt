@@ -1,0 +1,84 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python code that works with MRI brain data stored in an HDF5 file. Here's what I've gathered so far:
+
+The code starts by defining two important file paths: 
+`FAST_MRI_BRAIN_H5_FILE` which is located at 2_fastMRI_brain_first_10_dcm_to_h5.h5 and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` whole path is located below:
+`FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`
+
+Next, it reads data from the HDF5 file. Specifically, it extracts two datasets: `brain_2D_data` (a 2D slice of brain data). 
+Both are read into memory using slicing notation.
+
+The code then prints information about these datasets, including their contents, types, and shapes.
+
+After that, it rotates the brain images for better visualization. 
+For instance, a 2D slice of both rows and columns from 10 to 502 of the brain data is rotated by 270 degrees counter-clockwise using scipy.ndimage and displayed with a bone colormap. 
+The axis labels are turned off, and the resulting plot is displayed. The code repeats this process for the coronal plane.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file
+with h5py.File(FAST_MRI_BRAIN_H5_FILE, 'r') as f:
+    # Accessing datasets or attributes
+    print("Datasets in HDF5 File: ", list(f.keys()))
+    
+    brain_2D_data = f[FAST_MRI_BRAIN_H5_FILE_DATA_PATH][...]  # Load the data into memory
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Apply masks using NumPy
+masked_brain = np.ma.masked_where(brain_2D_data == brain_2D_data._FillValue, brain_2D_data)  # Mask the _FillValue
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Create a figure and basemap object
+fig = plt.figure(figsize=(12, 6))
+m = Basemap(projection='ortho', lat_0=45, lon_0=-100)
+
+# Plot the rotated slices
+for i in range(brain_2D_data.shape[0]):
+    m.imshow(np.rot90(masked_brain[i]), cmap='bone')  # Rotate and display each slice
+    
+plt.title('Rotated Brain Slices')
+plt.show()
+```

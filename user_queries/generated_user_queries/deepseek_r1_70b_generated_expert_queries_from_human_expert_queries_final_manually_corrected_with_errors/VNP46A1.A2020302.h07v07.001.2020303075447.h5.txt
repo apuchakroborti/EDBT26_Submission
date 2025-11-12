@@ -1,0 +1,24 @@
+A Python script that reads and visualizes data from an HDF-EOS5 file, specifically a LAADS VNP46A1 Geographic projection Grid file.
+
+The script performs the following tasks:
+
+1. Import Libraries: The script begins by importing necessary libraries
+
+2. Read HDF5 File: The script opens an HDF5 file in read-only mode using `h5py`. It reads three datasets:
+   - `BrightnessTemperature_M12` from the sub group path `/HDFEOS/GRIDS/VNP_Grid_DNB/Data Fields`: This dataset is referred to as "BrightnessTemperature". 
+      All data from this dataset are read and converted to a float type using `astype(np.float)`.
+   - The script accesses specific attributes such as `scale_factor`, `add_offset`, `units` (decoded), `_FillValue`, and `long_name` (decoded).
+
+3. Extract Grid Metadata: The script reads metadata from `/HDFEOS INFORMATION/StructMetadata.0`. It extracts the upper-left and lower-right coordinates of the grid from this metadata string.
+
+4. Construct Grid and Plot:
+   - A 2D grid is constructed using `numpy.meshgrid` to create longitude and latitude arrays for plotting.
+   - The data are plotted on a cylindrical map projection with latitude ranging from -90 to 90 and longitude from -180 to 180.
+   - Coastlines are added with a line width of 0.5.
+   - Parallels are drawn at intervals of 30 degrees (from -90 to 120) with labels at left
+   - Meridians are drawn every 45 degrees with specific labels (from -180 to 180 ) with labels at bottom
+
+5. Visualize Data: 
+   - A `pcolormesh` is added using longitude and latitude coordinates (taking every 10th value for plotting).
+   - A colorbar is included, labeled with the units from the dataset attributes.
+   - The plot title is a concatenation of the data file's basename and the `long_name` attribute.

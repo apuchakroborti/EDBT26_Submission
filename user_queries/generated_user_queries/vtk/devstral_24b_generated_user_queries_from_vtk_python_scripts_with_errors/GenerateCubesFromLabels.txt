@@ -1,0 +1,52 @@
+Purpose
+This script takes some 3D data (like a medical scan) and turns it into a visual representation where you can see different parts of the data as cubes. It then displays these cubes on your screen.
+
+Step-by-Step Explanation
+
+1. Setting Up:
+   - The script starts by importing various tools that will help it read, process, and display 3D data.
+   - These tools are like specialized gadgets in a workshop, each with its own job to do.
+
+2. Main Function:
+   - This is where the main action happens. Think of it as the central workspace where all the tasks get done.
+
+3. Reading the Data File:
+   - The script first reads a file called 'GenerateCubesFromLabels_frogtissue.mhd'. Imagine this file like a blueprint that contains information about a 3D object (in this case, frog tissue).
+   - It uses a tool to read this file and update its memory with the data.
+
+4. Padding the Volume:
+   - The script then adds some extra space around the data. This is like putting padding around a gift box so that it fits nicely into another container.
+   - This step ensures that when we convert the point data (individual points in 3D space) to cell data (groups of points forming shapes), everything fits correctly.
+
+5. Copying Data:
+   - The script copies the important information from the points to the cells. Think of it like transferring labels from individual dots on a map to areas on that map.
+
+6. Selecting Specific Labels:
+   - It then selects only the parts of the data that fall within a certain range (from label 1 to label 29). This is like highlighting specific regions on a map that you're interested in.
+   - If the start and end labels are mixed up, it swaps them so that the lower number comes first.
+
+7. Shifting the Geometry:
+   - The script slightly shifts the position of all the points by half a unit in each direction (x, y, z). This is like nudging everything just a little bit to make sure they align properly.
+
+8. Converting to Geometry:
+   - It then converts this data into a format that can be displayed as 3D shapes on your screen.
+   - Think of it like turning a flat map into a 3D model you can look at from different angles.
+
+9. Setting Up the Display:
+   - The script sets up a window where the 3D model will be shown. It's like setting up a TV screen to watch something.
+   - It also sets the size of this window and gives it a title: 'GenerateCubesFromLabels'.
+
+10. Adding the Model to the Screen:
+    - It adds the 3D model (the cubes) to the display window. This is like placing your 3D model on the TV screen for everyone to see.
+    - It also sets the background color of the display to a dark blue.
+
+11. Setting Up the Camera:
+    - The script then sets up a virtual camera to view the 3D model from a specific angle and distance. This is like positioning a camera in a studio to get the best shot of your subject.
+    - It adjusts the position, focal point, viewing direction, and how close or far the camera should be.
+
+12. Displaying Everything:
+    - Finally, it shows everything on the screen. You can now see the 3D model with all its cubes displayed in the window.
+    - The script also starts an interactive mode where you can move around and look at the model from different angles.
+
+Summary
+In simple terms, this script takes a complex 3D data file, processes it to highlight specific parts, converts it into a viewable format, and then displays it on your screen with all the necessary adjustments for the best viewing experience. It's like turning a medical scan into a 3D model that you can examine closely.

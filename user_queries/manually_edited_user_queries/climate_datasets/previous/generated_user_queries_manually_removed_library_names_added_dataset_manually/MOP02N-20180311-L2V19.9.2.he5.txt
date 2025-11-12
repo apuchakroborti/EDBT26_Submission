@@ -1,0 +1,27 @@
+**File Input and Constants**
+
+We start by specifying the input file, `MOP02N-20180311-L2V19.9.2.he5`, which is stored in the constant `FILE_NAME`.
+
+**Reading the File**
+
+The file is opened in read mode using a context manager to ensure it's properly closed when we're done.
+
+**Extracting Data**
+
+Within the `with` block, we extract data from the `/HDFEOS/SWATHS/MOP02/Data Fields/RetrievedCOTotalColumn` dataset. We read its contents into an array called `data`, taking only the first column. We also retrieve the units and fill value attributes associated with this dataset.
+
+**Extracting Geolocation Data**
+
+We extract geolocation data from the `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Latitude` and `/HDFEOS/SWATHS/MOP02/Geolocation Fields/Longitude` datasets, which contain latitude and longitude values, respectively.
+
+**Creating a Map**
+
+Using Basemap, we create a cylindrical map with low resolution. We set the boundaries to cover the entire globe and draw coastlines, parallels, and meridians on the map. Then, we create a scatter plot of the retrieved CO total column data using the geolocation coordinates.
+
+**Customizing the Map**
+
+We add a colorbar to the map, representing the units of the data, and set the title of the plot to include the file name and a brief description of the data.
+
+**Saving the Plot**
+
+Finally, we save the plot to a PNG file by constructing the output file name from the input HDF-EOS5 file.

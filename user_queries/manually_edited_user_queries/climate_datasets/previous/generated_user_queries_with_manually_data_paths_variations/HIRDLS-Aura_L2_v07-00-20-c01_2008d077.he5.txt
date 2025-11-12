@@ -1,0 +1,32 @@
+Python code that reads and visualizes data from an HDF-EOS5 file. Here's what it does:
+
+Reading the File
+
+The code opens the HDF-EOS5 file in read-only mode and assigns it to a variable.
+
+Accessing Datasets
+
+It reads three datasets: 
+
+ `/HDFEOS/GRIDS/O3/dset_var` containing ozone (O3) data
+ `/HDFEOS/GRIDS/PRES/dset_pres` containing pressure data
+ `/HDFEOS/GRIDS/TIME/dset_time` containing time data
+
+Reading Data and Attributes
+
+The code reads the data from each dataset, along with their associated attributes like units, titles, and fill values.
+
+Data Processing
+
+It performs some tasks:
+
+Replaces fill values in ozone (O3) data with NaN
+Converts date stored as a six-digit number to a string using `datetime`
+
+Plotting
+
+The code creates a plot of ozone (O3) data against pressure, customizing it with scientific notation for x-axis tick labels, log scale for the y-axis, inverted y-axis, and customized axis labels and title.
+
+Saving Plot
+
+Finally, it saves the plot to a PNG file.

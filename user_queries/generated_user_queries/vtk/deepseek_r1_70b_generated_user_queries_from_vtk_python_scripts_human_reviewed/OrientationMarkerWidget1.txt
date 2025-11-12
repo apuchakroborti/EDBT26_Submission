@@ -1,0 +1,53 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkInteractionStyle` and `vtkRenderingOpenGL2` from `vtkmodules`.
+   - Import specific modules:
+     - `vtkNamedColors` from `vtkCommonColor`
+     - `vtkSuperquadricSource` from `vtkFiltersSources`
+     - `vtkXMLPolyDataReader` from `vtkIOXML`
+     - `vtkOrientationMarkerWidget` from `vtkInteractionWidgets`
+     - Various rendering core classes (`vtkActor`, `vtkDataSetMapper`, etc.) from `vtkRenderingCore`.
+     - From `vtkmodules.vtkIOImage`, import `vtkPNGWriter`
+     - From `vtkmodules.vtkRenderingCore`, import `vtkWindowToImageFilter`
+
+2. Define the Main Function:
+   - Initialize a `vtkNamedColors` object named `colors` for color management.
+
+3. Set File Path:
+   - Define `file_name` as `'OrientationMarkerWidget1_Bunny.vtp'`.
+
+4. Read Polydata for Icon:
+   - Create a `vtkXMLPolyDataReader` instance named `reader`.
+   - Set the file name to `file_name`.
+
+5. Create Icon Mapper and Actor:
+   - Instantiate `icon_mapper` as `vtkDataSetMapper`, connecting it to `reader`'s output.
+   - Create `icon_actor` as `vtkActor`, setting its mapper to `icon_mapper` and color to Silver.
+
+6. Configure Renderer, Window, and Interactor:
+   - Create a `vtkRenderer` named `renderer` with a SlateGray background.
+   - Set up `ren_win` (RenderWindow) with renderer added, size 400x400 pixels, and window name 'OrientationMarkerWidget1'.
+   - Initialize interactor `iren`, linking it to `ren_win`.
+
+7. Set Widget Properties:
+   - Retrieve Wheat color into `rgb`.
+   - Create `widget` as `vtkOrientationMarkerWidget`, setting its orientation marker, interactor, viewport position (0.0, 0.0) with size 20%, outline color from `rgb`, and enable it.
+
+8. Create Superquadric:
+   - Instantiate `superquadric_source` with specified roundness parameters.
+   - Create `superquadric_mapper` connected to the source's output.
+   - Develop `superquadric_actor` with mapper set, adjusting properties for color (Carrot, White), interpolation, and specular settings.
+
+9. Add Actor and Render:
+   - Add `superquadric_actor` to renderer, reset camera, render window, initialize interactor, and start interaction.
+
+10. Save the rendered window as a PNG file:
+   - The code captures the current visual contents of a VTK render window by using `vtkWindowToImageFilter`, 
+      a specialized filter that takes the active render window as input and converts its contents into an image format. 
+      This filter is then updated to process the render window's image data and prepare it for output. 
+      To save the captured image, `vtkPNGWriter` is used—an image writer that writes the processed image data to disk in PNG format. 
+      The writer is configured with a desired filename (e.g., "OrientationMarkerWidget1_output.png") and connected to the output of the image filter. 
+      Finally, the writer executes the saving process, writing the render window’s image to a PNG file.
+
+This structured approach ensures the script can be accurately reproduced by following each step sequentially.

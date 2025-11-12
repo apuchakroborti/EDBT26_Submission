@@ -1,0 +1,14 @@
+It starts with comments about the script's purpose, usage, and testing. Then it imports some libraries.
+
+The script opens an HDF5 file in read-only mode and extracts several datasets: 
+    `/global_grid_lat` (latitude values), `/global_grid_lon` (longitude values), and `/global_asr` (data values). 
+It also gets metadata from `/global_asr`: units, long name, and fill value.
+
+Next, it replaces the fill value with NaNs, creates a masked array for efficient handling of missing data, 
+and makes a map using an equidistant cylindrical projection with latitude and longitude boundaries (such as -90 to 90 and -180 to 180) respectively. 
+The script draws coastlines, parallels, and meridians on the map and creates a pseudocolor mesh plot of the data.
+
+Finally, it customizes the plot by setting the colorbar label to the units value, sets the title using the file name and long name, 
+and saves the plot as a PNG image with a filename derived from the input HDF5 file name. 
+
+The script is designed to visualize data from an NSIDC ICESat-2 ATL17 L3B HDF5 file, specifically the `/global_asr` dataset."

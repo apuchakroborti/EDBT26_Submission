@@ -1,0 +1,21 @@
+A Python code. 
+Here's what it does:
+Importing Libraries such as os, matplotlib.pyplot as plt, numpy as np, and mpl_toolkits.basemap import Basemap
+
+Reading Data from HDF5 File
+It opens the HDF5 file, reads data from `/Soil_Moisture_Retrieval_Data_AM/soil_moisture`, 
+retrieves attributes like units, long_name, _FillValue, valid_max and valid_min, creates a mask for invalid data by comparing with valid max and valid min, and replaces it with NaN values.
+
+It then decodes the long_name by using decode function with ascii and replace parameters
+It the calculates invalid data using numpy logical or method using comparison with data greater than valid max and less than valid min 
+Then the resulted invalid calculates again with parameters invalid and comparison with data and fill value
+Then it sets numpy NaN values to invalid data
+After that it creates masked array of data using numpy masked array and checking numpy isnan
+
+Reading Geolocation Data
+It reads geolocation data from `/Soil_Moisture_Retrieval_Data_AM/latitude` and `/Soil_Moisture_Retrieval_Data_AM/longitude`.
+
+Creating a Map and Visualizing Data
+The code creates a map using Basemap using cylindrical projection map, draws coastlines with linewidth of 0.5 and parallels with values of numpy arrange -180, 91, 45, meridians with values of numpy -180, 180, 45 with labels True, False, False, True,
+scatters the data points based on longitude, latitude, data, s and projection map, 
+and adds a colorbar with label named units.

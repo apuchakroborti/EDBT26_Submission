@@ -1,0 +1,65 @@
+This Python script compares Gaussian and Median smoothing techniques for reducing low-probability high-amplitude noise in image data. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - From `vtkmodules.vtkCommonDataModel`: `vtkImageData`
+   - From `vtkmodules.vtkIOImage`: `vtkImageReader2Factory`
+   - From `vtkmodules.vtkImagingCore`:
+     - `vtkImageCast`
+     - `vtkImageThreshold`
+   - From `vtkmodules.vtkImagingGeneral`:
+     - `vtkImageGaussianSmooth`
+     - `vtkImageMedian3D`
+   - From `vtkmodules.vtkImagingMath`: `vtkImageMathematics`
+   - From `vtkmodules.vtkImagingSources`: `vtkImageNoiseSource`
+   - From `vtkmodules.vtkInteractionStyle`: `vtkInteractorStyleImage`
+   - From `vtkmodules.vtkRenderingCore`:
+     - `vtkImageActor`
+     - `vtkRenderWindow`
+     - `vtkRenderWindowInteractor`
+     - `vtkRenderer`
+
+2. **Define the Main Function**:
+   - Set up variables and read an image file named 'MedianComparison_FullHead.mhd' using `vtkImageReader2Factory` and `reader`.
+   - Determine scalar range and middle slice of the image.
+   - Convert the image to double precision using `vtkImageCast`.
+
+3. **Create Original and Noisy Data**:
+   - Create a deep copy of the original data as `originalData`.
+   - Add shot noise to create `noisyData` by calling the `AddShotNoise` function.
+
+4. **Apply Smoothing Filters**:
+   - Apply Median smoothing using `vtkImageMedian3D` with kernel size (5, 5, 1).
+   - Apply Gaussian smoothing using `vtkImageGaussianSmooth` with standard deviations (2.0, 2.0) and radius factors (2.0, 2.0).
+
+5. **Set Up Image Actors**:
+   - Create image actors for original, noisy, Gaussian-smoothed, and median-smoothed images.
+   - Set color window, level, interpolation type, and z-slice for each actor.
+
+6. **Setup Renderers**:
+   - Create renderers for each of the four images (original, noisy, Gaussian-smoothed, median-smoothed).
+   - Add actors to their respective renderers.
+
+7. **Configure Viewports**:
+   - Set up a 2x2 grid layout for rendering.
+   - Configure viewport positions and add renderers to `renderWindow`.
+
+8. **Initialize Rendering**:
+   - Create a render window interactor with image interaction style.
+   - Share the camera among all renderers.
+   - Initialize and start the rendering process.
+
+9. **Define AddShotNoise Function**:
+   - This function adds shot noise to an input image by creating noise using `vtkImageNoiseSource` and applying thresholds with `vtkImageThreshold`.
+   - Combine the noise with the original image using `vtkImageMathematics`.
+
+10. **Run Main Function**:
+    - If this script is run as the main module, call the `main()` function to execute the entire process.
+
+The file name used in this script is 'MedianComparison_FullHead.mhd'. The key variables and objects include:
+- `readerFactory`, `reader` for reading images
+- `cast` for converting image types
+- `originalData`, `noisyData` for storing image data
+- `median`, `gaussian` for smoothing filters
+- `originalActor`, `noisyActor`, `gaussianActor`, `medianActor` for rendering actors
+- `renderers`, `renderWindow`, `renderWindowInteractor` for visualization setup

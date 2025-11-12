@@ -1,0 +1,22 @@
+A Python code that reads an HDF-EOS5 file and plots BrO data against pressure. Here's what it does:
+
+First, it imports necessary libraries such as os, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap, numpy as np, datetime, matplotlib.ticker import FormatStrFormatter and ScalarFormatter
+
+Then it reads datasets such as,
+Br0 data from the path within the file is (`/HDFEOS/SWATHS/BrO/Data Fields/BrO`).
+Pressure values from the path `/Geolocation Fields/Pressure`
+Time values from the path `/Geolocation Fields/Time` in the file
+
+The program reads Br0 data of 399th index from the x axis and all data from the y axis
+After that the program reads attributes such as MissingValue, _FillValue, Title, and Units from the Br0 dataset
+
+Plotting
+using plot function it pass two parameters one is Br0 data from 12 to 16th index from the converted 1D array and
+pressure value from 12th to 16th index of 1D data
+
+Then it sets the ylabel with value of Pressure Units
+and ylabel with the value of Br0 Title and Br0 units
+Also the plot title is set with the value of Br0 data Title and file basename
+
+At the end, the gca is set with invert_yaxis, yscale value of log, minor formatter is ScalarFormatter, and major formatter is FormatStrFormatter
+

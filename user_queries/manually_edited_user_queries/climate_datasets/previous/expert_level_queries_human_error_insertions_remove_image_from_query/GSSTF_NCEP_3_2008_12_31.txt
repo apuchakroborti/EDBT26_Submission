@@ -1,0 +1,20 @@
+A Python script to visualize a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file. 
+
+Here's how it works:
+Reading the HDF File which is located at GSSTF_NCEP_3_2008_12_31.he5
+
+The script reads the HDF file. It navigates through the HDF hierarchy to reach the `Data Fields` group, retrieves the `sst` dataset.
+Then it read its attributes such as units and long name and calls the decode function. It also reads fill value attribute from the 0th index of same dataset named SST 
+
+Then by comparing the SST data and fill values it relaces the SST data by numpy nan value
+After that it masked the SST data using the numpy masked_array function with the parameters data itself and the result of numpy isnan of data
+
+Since there are no latitude and longitude data in the data file, it should construct the longitude and latitude data based on the shape of the SST dataset
+
+Visualizing the Data
+The script creates a map with cylindrical projection, sets up its boundaries (low resolution, -90 to 90 latitude range, -180 to 180 longitude range ), 
+It also adds parrallels with the numpy arrange of values -90, 120, and 30 with the labels of [1, 0, 0, 0].
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 and labels are list of [0, 0, 0, 1] 
+
+Step 4: Add Colorbar and Title
+It also adds colorbar, then it adds pcolormesh with the parameters named longitude, latitude, data, latlon=True

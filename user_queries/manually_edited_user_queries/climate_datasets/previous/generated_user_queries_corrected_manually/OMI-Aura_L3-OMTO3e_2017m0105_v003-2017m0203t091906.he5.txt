@@ -1,0 +1,13 @@
+Python code
+
+First, I define two constants: `FILE_NAME` for the input file name and `DATAFIELD_NAME` /HDFEOS/GRIDS/OMI Column Amount O3/Data Fields grid and dataset ColumnAmountO3 for the path to the dataset containing column amount of ozone (O3) data for the dataset path within the file.
+
+Next, I open the file in read mode and access the dataset using the defined path. I then read the entire dataset into memory and handle fill values by replacing them with `NaN` and creating a masked array.
+
+I also retrieve two attributes from the dataset: `title` and `units`, which I decode from bytes to UTF-8.
+
+Since there's no geolocation data in the file, I construct it manually using NumPy arrays for longitude and latitude.
+
+Using Basemap, I create an equidistant cylindrical projection with specified resolution and boundaries. I draw the coastline, parallels, and meridians on the map.
+
+I then plot the data using `pcolormesh` with a specified colormap and lat/lon coordinates, adding a colorbar to the plot. Finally, I set the plot title using the file name and dataset title, and save the figure as a PNG file with the same base name as the input file."

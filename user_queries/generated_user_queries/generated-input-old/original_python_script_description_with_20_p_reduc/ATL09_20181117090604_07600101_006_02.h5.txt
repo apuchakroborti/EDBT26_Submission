@@ -1,0 +1,23 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The first four lines import necessary libraries: `os` for operating system-specific functionality, `matplotlib.pyplot` as `plt` for creating plots and visualizations, `numpy` as `np` for numerical computations, and `mpl_toolkits.basemap` as `Basemap` for creating maps.
+
+**Defining the file path and opening the HDF5 file**
+
+The code defines the file path of the HDF5 file to be accessed and opens it in read-only mode (`mode='r'`) using `h5py`.
+
+**Accessing datasets and extracting metadata**
+
+The code accesses various datasets within the HDF5 file, including `latitude`, `longitude`, and `apparent_surf_reflec`. It also extracts metadata from each dataset, such as valid ranges, units, and long names.
+
+**Creating a map and plotting data**
+
+The code creates an equidistant cylindrical projection using the low-resolution coastline database and plots the data using the created map. It draws coastlines, parallels, and meridians, and plots the data as a scatter plot with colors based on the `apparent_surf_reflec` values.
+
+**Creating a title and saving the plot**
+
+The code creates a title for the plot by extracting the base name of the HDF5 file and decoding the long name string. It then saves the plot as a PNG file with the specified file name.
+
+I removed some redundant information and condensed similar steps together to reduce the text by about 20%.

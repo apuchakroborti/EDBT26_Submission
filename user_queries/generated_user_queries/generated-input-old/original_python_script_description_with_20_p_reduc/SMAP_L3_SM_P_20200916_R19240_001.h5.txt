@@ -1,0 +1,47 @@
+Here is the reduced description while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports several Python libraries: `os`, `matplotlib.pyplot` as `plt`, `numpy` as `np`, `mpl_toolkits.basemap` as `Basemap`, and `h5py`.
+
+**Defining constants and opening the HDF5 file**
+
+A constant `FILE_NAME` is defined with the value of an HDF5 file name. The code opens this file in read-only mode using `h5py` and assigns it to `f`.
+
+**Reading and processing soil moisture data**
+
+The code reads the soil moisture data from the HDF5 file:
+
+1. It accesses the dataset at `/Soil_Moisture_Retrieval_Data_AM/soil_moisture`.
+2. It retrieves attribute values, decodes them, and creates a mask for invalid data.
+3. It sets invalid data to NaN and masks the array using `np.ma.masked_where`.
+
+**Reading geolocation data**
+
+The code reads latitude and longitude datasets from the HDF5 file:
+
+1. It accesses datasets at `/Soil_Moisture_Retrieval_Data_AM/latitude` and `/Soil_Moisture_Retrieval_Data_AM/longitude`.
+2. It assigns the read data to `latitude` and `longitude`.
+
+**Creating a map and colorbar**
+
+The code creates a map using `Basemap`:
+
+1. It defines the map projection, resolution, and boundaries.
+2. It draws coastlines, parallels, and meridians on the map.
+3. It scatters soil moisture data on the map with color representation based on data values.
+
+It also creates a colorbar for the map:
+
+1. It adds a colorbar to the bottom of the plot.
+2. It sets the label for the colorbar to the units of the soil moisture data.
+
+**Setting up the plot**
+
+The code sets up the plot title and saves the figure to a PNG file:
+
+1. It gets the base name of the HDF5 file using `os.path.basename`.
+2. It sets the plot title to include the base name and long name of the soil moisture dataset.
+3. It saves the figure to a PNG file with the same base name as the HDF5 file, but with a `.py.png` extension.
+
+In summary, this code reads an HDF5 file containing soil moisture data, processes the data, creates a map with geolocation information, and visualizes the data on the map with a colorbar.

@@ -1,0 +1,68 @@
+Here's a step-by-step explanation of the Python code:
+
+**Importing Libraries**
+
+The code starts by importing various libraries:
+
+1. `os`: for operating system-related functions
+2. `re`: for regular expression matching
+3. `h5py`: for working with HDF5 files
+4. `numpy` (as `np`): for numerical computations
+5. `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`): for plotting and visualization
+6. `Basemap`: a toolkit for creating maps
+
+**Defining Constants**
+
+The code defines several constants:
+
+1. `FILE_NAME`: the name of the HDF5 file to be read (`VNP46A1.A2020302.h07v07.001.2020303075447.h5`)
+2. `GRID_NAME`: the name of the grid dataset within the HDF5 file (`VNP_Grid_DNB`)
+3. `DATAFIELD_NAME`: the name of the data field dataset within the HDF5 file (`BrightnessTemperature_M12`)
+
+**Reading HDF5 File**
+
+The code opens the HDF5 file in read mode using `h5py.File()` and assigns it to a variable `f`. It then reads various datasets and attributes from the file:
+
+1. The grid dataset is read into a NumPy array `data`.
+2. Attributes such as `scale`, `offset`, `units`, `fill_value`, and `long_name` are read from the dataset.
+
+**Reading Metadata**
+
+The code reads metadata from the HDF5 file, specifically the `StructMetadata.0` dataset, which contains information about the grid. The metadata is decoded from UTF-8 to a string `s`.
+
+**Constructing Grid**
+
+Using regular expressions, the code extracts the upper-left and lower-right coordinates of the grid from the metadata string `s`. These coordinates are used to construct the grid:
+
+1. `x0` and `y0` are set to the upper-left coordinates.
+2. `x1` and `y1` are set to the lower-right coordinates.
+3. The grid shape is determined from the data array `data`.
+4. `x` and `y` arrays are created using `np.linspace()` to span the grid extent.
+5. `xv` and `yv` arrays are created using `np.meshgrid()` to create a 2D grid.
+6. Longitude (`lon`) and latitude (`lat`) arrays are calculated from the grid coordinates.
+
+**Applying Fill Value and Scale Factor**
+
+The code applies the fill value and scale factor to the data:
+
+1. Values equal to the fill value are set to NaN (Not a Number).
+2. The data is scaled by multiplying with the scale factor and adding the offset.
+3. A masked array `data` is created using `np.ma.masked_array()`.
+
+**Plotting**
+
+The code uses Basemap to create a map plot:
+
+1. A cylindrical projection is set up with `Basemap()`.
+2. Coastlines, parallels, and meridians are drawn using various `m.draw*()` methods.
+3. The data is plotted as a pseudocolor mesh using `m.pcolormesh()`, with every 10th point rendered to reduce the dataset size.
+4. A colorbar is added with a label set to the units of the data.
+
+**Saving Plot**
+
+Finally, the code saves the plot to a PNG file:
+
+1. The base name of the HDF5 file is used as the title of the plot.
+2. The plot is saved using `fig.savefig()` with a filename constructed from the base name and `.py.png`.
+
+Overall, this code reads an HDF5 file containing grid data, extracts metadata, constructs the grid, applies fill values and scale factors, and plots the data using Basemap.

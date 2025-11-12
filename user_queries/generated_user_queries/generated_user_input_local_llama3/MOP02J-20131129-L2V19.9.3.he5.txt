@@ -1,0 +1,23 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The script starts by importing several libraries: `os`, `h5py`, `matplotlib` and its sub-module `mpl_toolkits.basemap`, and `numpy`.
+
+**Defining the file name and opening the HDF5 file**
+
+The script defines a constant `FILE_NAME` with the value `'MOP02J-20131129-L2V19.9.3.he5'`, which is the name of an HDF5 file containing MOPITT data. The script opens the HDF5 file using `h5py.File` in read-only mode (`mode='r'`).
+
+**Accessing and processing data**
+
+The script accesses a specific dataset within the HDF5 file, extracts the first column (`[:, 0]`) of this dataset, which contains retrieved surface temperature values. It retrieves the units and fill value associated with this dataset from its attributes.
+
+**Creating a Basemap plot and scatter plot**
+
+The script uses `Basemap` to create a cylindrical map projection (`projection='cyl'`) with latitude and longitude limits set using various methods. It draws coastlines, parallels, and meridians on the map. Then, it plots retrieved surface temperature values as colored points using `scatter`. The color map is set to `plt.cm.jet`, and the point size is set to 1.
+
+**Adding a color bar and saving the plot**
+
+The script adds a color bar to the plot using `colorbar` and sets the label for the color bar. Finally, it saves the plot as a PNG image file using `savefig`.
+
+I removed some of the repetitive details while keeping the most important implementation details. Let me know if you'd like me to make any further changes!

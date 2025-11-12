@@ -1,0 +1,24 @@
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Load Data:
+   - Open the HDF5 file using h5py.
+   - Extract datasets:
+     - 'solarAzimuthAngle' from path /S2/solarAzimuthAngle.
+     - 'latitude' from path /S2/Latitude.
+     - 'longitude' from path /S2/Longitude.
+   - Retrieve attributes 'units' and '_FillValue' from the solarAzimuthAngle dataset.
+
+3. Process Solar Azimuth Angle Data:
+   - Replace _FillValue with NaN in the solarAzimuthAngle data.
+   - Mask NaN values to handle missing data appropriately.
+
+4. Create Map and Plot Data:
+   - Initialize a cylindrical map projection using Basemap.
+   - Set map boundaries with low resolution, latitude range from -90 to 90, and longitude range from -180 to 180.
+   - Add coastlines with line width 0.5.
+   - Draw parallels at intervals of every 45 degrees (using numpy.arange for values -90, 91) and meridians at the same intervals with labels [True, False, False, True].
+
+5. Add Colorbar and Title:
+   - Use matplotlib's scatter function to plot longitude and latitude data points.
+   - Apply colormap plt.cm.jet with no edge color and linewidth 0.
+   - Create a colorbar below the plot with padding of 10% and label it using the 'units' attribute from solarAzimuthAngle.

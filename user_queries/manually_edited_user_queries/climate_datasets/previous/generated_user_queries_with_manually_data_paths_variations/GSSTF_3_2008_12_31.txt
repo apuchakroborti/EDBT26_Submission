@@ -1,0 +1,19 @@
+a Python script to visualize a GESDISC MEaSUREs GSSTF HDF-EOS5 grid file. Here's how it works:
+
+Reading the HDF File
+
+The script reads the HDF file. It navigates through the HDF hierarchy to reach the `Data Fields` group, retrieves the `E` dataset and its attributes, and reads the data into a NumPy array.
+
+Visualizing the Data
+
+The script uses Basemap to create an equidistant cylindrical projection map. It draws coastlines, parallels, and meridians on the map, plots the data as a pseudocolor mesh, and adds a colorbar with the units of the data.
+
+Saving the Plot
+
+The script saves the plot to a PNG file by constructing the output file name from the input HDF file base name.
+
+Main Program
+
+The main program sets the input HDF file name, checks for an environment variable to construct the full path, and calls the `run` function with the input HDF file name as an argument.
+
+The script assumes the input HDF file has a specific structure, with groups named `HDFEOS`, `GRIDS`, `SET1`, and `Data Fields`, and a dataset named `E` within the `Data Fields` group."

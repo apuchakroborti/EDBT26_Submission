@@ -1,0 +1,58 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+**Importing necessary modules**
+
+The script starts by importing several Python modules:
+```python
+import os
+import h5py
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+```
+These modules are used for file I/O, HDF5 handling, plotting, and numerical computations.
+
+**Defining the `run` function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is expected to be the name of an HDF5 file:
+```python
+def run(FILE_NAME):
+    ...
+```
+This function will access the HDF5 file, extract relevant data, and create a plot using Matplotlib.
+
+**Processing the data**
+
+The script applies some processing to the data:
+```python
+invalid = np.logical_or(data > valid_max,
+                        data < valid_min)
+invalid = np.logical_or(invalid, data == _FillValue)
+data[invalid] = np.nan
+data = np.ma.masked_where(np.isnan(data), data)
+```
+This code checks for invalid values (outside the valid range or equal to the fill value) and sets them to NaN. Then, it creates a masked array using `np.ma.masked_where`.
+
+**Creating a plot**
+
+The script uses Matplotlib to create a plot:
+```python
+m = Basemap(projection='cyl', resolution='l',
+            llcrnrlat=-90, urcrnrlat=90,
+            llcrnrlon=-180, urcrnrlon=180)
+m.drawcoastlines(linewidth=0.5)
+m.scatter(longitude, latitude, c=data, s=1, cmap=plt.cm.jet,
+            edgecolors=None, linewidth=0)
+cb = m.colorbar(location="bottom", pad='10%')
+units = units.decode('ascii', 'replace')    
+cb.set_label(units)
+
+basename = os.path.basename(FILE_NAME)
+plt.title('{0}\n{1}'.format(basename, longname))
+fig = plt.gcf()
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This code creates a Basemap object with a cylindrical projection and draws coastlines, parallels, and meridians. It then scatter-plots the data using `m.scatter`, color-coded by the values in the `data` array.
+
+I removed some of the less important details, such as opening the HDF5 file, accessing geolocation data, and defining the main program. Let me know if you have any further questions!

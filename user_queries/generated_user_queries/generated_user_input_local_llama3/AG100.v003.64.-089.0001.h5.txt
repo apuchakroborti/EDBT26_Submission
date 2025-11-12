@@ -1,0 +1,37 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+This Python code accesses and visualizes an LP DAAC ASTER GED (AG100) v3 HDF5 file.
+
+The code defines a variable `USE_NETCDF4` and sets it to `False`. A function `run(FILE_NAME)` is defined, which takes the name of an HDF5 file as input.
+
+Inside the function:
+
+* If `USE_NETCDF4` is `True`, the code uses `netCDF4`:
+	+ Opens the HDF5 file using `Dataset` from `netCDF4`.
+	+ Retrieves geolocation data (latitude and longitude) from the 'Geolocation' group.
+	+ Reads an attribute description from the 'Mean' dataset.
+* If `USE_NETCDF4` is `False`, the code uses `h5py`:
+	+ Opens the HDF5 file in read mode using a context manager.
+	+ Retrieves geolocation data (latitude and longitude) from the '/Geolocation/Latitude' and '/Geolocation/Longitude' groups, respectively.
+
+The code then:
+
+* Applies fillvalue (-9999) and scaling to the `data` array:
+	+ Replaces -9999 with NaN (Not a Number).
+	+ Multiplies the data by 0.001.
+	+ Creates a masked version of the data (`datam`) using `np.ma.masked_where`.
+* Creates an equidistant cylindrical projection map using `Basemap`:
+	+ Sets up a Basemap object with a resolution of 'h' and specifies latitude and longitude limits.
+	+ Draws coastlines, parallels, and meridians on the map.
+	+ Fills the map with the masked data (`datam`) using `pcolormesh`.
+* Adds labels and titles to the plot:
+	+ Sets the title based on the file name and the long name of the 'Mean Emissivity for Band 10' dataset.
+	+ Adds a text label with the description of the dataset below the title.
+	+ Saves the plot as a PNG file.
+
+The code includes many implementation details, including:
+
+* Parent group names for each dataset to identify them within the HDF5 hierarchy.
+* Use of `netCDF4` or `h5py` depending on the value of `USE_NETCDF4`.
+* Reading and applying fillvalue and scaling to the data array.
+* Creating a masked version of the data using `np.ma.masked_where`.

@@ -1,0 +1,11 @@
+Can you explain this Python code step by step?
+
+The code starts by importing necessary modules: `os`, `h5py`, `numpy` (`np`), `matplotlib` (`mpl`) and `matplotlib.pyplot` (`plt`), and `Basemap` from `mpl_toolkits.basemap`.
+
+It defines a constant `FILE_NAME` with the value of an HDF5 file name. Then, it opens this file in read mode using `h5py` and extracts data from a dataset named `/Sigma0_Data/cell_sigma0_hh_fore`. It retrieves units, long name, fill value, valid max/min values, and creates a mask for invalid data points.
+
+The code also extracts geolocation data (latitude and longitude) from the HDF5 file. Using Basemap, it creates a map with cylindrical projection, low resolution, and specific latitude/longitude ranges.
+
+It plots the data on the map by drawing coastlines, parallels, meridians, and scattering data points with colors based on dataset values. The code adds a colorbar with units as the label and a title including the file name and long name of the dataset.
+
+Finally, it saves the plot as a PNG image file without displaying it on screen.

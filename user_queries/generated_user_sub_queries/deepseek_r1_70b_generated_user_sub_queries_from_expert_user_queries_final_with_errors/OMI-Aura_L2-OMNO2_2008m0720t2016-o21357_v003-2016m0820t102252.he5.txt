@@ -1,0 +1,96 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Read an HDF5 file located at "OMI-Aura_L2-OMNO2_2008m0720t2016-o21357_v003-2016m0820t102252.he5". 
+Extract a dataset and its attributes, process the data, and visualize it on a map.
+
+1. Import Libraries: Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Define Constants: Set the file path and dataset name to `CloudFraction` from the group `/HDFEOS/SWATHS/ColumnAmountNO2/Data Fields`.
+
+3. Read Data: Extract all data from the dataset and convert it to a NumPy float64 type.
+
+4. Retrieve Attributes: Obtain attributes including 'ScaleFactor', 'Offset', 'MissingValue', '_FillValue', 'Title' (decoded), and 'Units' (decoded) from the `CloudFraction` dataset.
+
+5. Geolocation Data: Read latitude and longitude arrays from their respective paths:
+   - Latitude: `Latitude`
+   - Longitude: `Longitude`
+   from the group `/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields`
+
+6. Data Preprocessing:
+   - Replace `MissingValue` and `_FillValue` with NumPy NaN in the CloudFraction data.
+   - Apply scaling and offset using the formula: `data = ScaleFactor  (data - Offset)`.
+   - Mask the data where values are NaN using `numpy.ma.masked_where`.
+
+7. Map Setup:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude limits from -90 to 90 and longitude from -180 to 180.
+
+8. Add Map Features:
+   - Draw coastlines with a line width of 0.5.
+   - Add parallels at latitudes values from the numpy arrange of [-90, 120, 30] with labels [1, 0, 0, 0].
+   - Add meridians at longitudes values from the numpy arrange of [-180, 180, 45] with labels [0, 0, 0, 1].
+
+9. Visualization:
+   - Use `scatter` function with parameters: longitude, latitude, data `c`, marker size `s=0.1`, colormap `jet`, no edge colors, and linewidth `0`.
+
+10. Colorbar: Add a colorbar and set its label to the dataset's 'Units' attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three focused sub-queries. Let me start by understanding what the user is asking for.
+
+The main task is to read an HDF5 file, extract a dataset, process it with NumPy, and then visualize it on a map using specific libraries. The user provided detailed steps, so I need to parse each part carefully.
+
+First, looking at step 1: importing libraries like h5py, numpy, matplotlib, etc. But the sub-queries should focus on technical domains, not just listing imports.
+
+Step 2 defines constants for file path and dataset name. That's more about setup than a specific task.
+
+Steps 3 to 5 involve reading data and attributes from the HDF5 file. This clearly falls under HDF5 Dataset Access. So I'll need to create a sub-query that focuses on using h5py to access datasets, their paths, and metadata like attributes.
+
+Next, steps 6 deals with preprocessing: replacing missing values with NaNs, applying scaling factors, masking data. These are NumPy operations, so the second sub-query should target how to handle these specific tasks using NumPy functions.
+
+Finally, steps 7-10 are about setting up a map and visualizing data. The user mentions using Basemap or Cartopy for projections, adding coastlines, meridians, parallels, and creating a scatter plot with a colorbar. So the third sub-query should focus on these visualization aspects using the specified libraries.
+
+I need to ensure each sub-query is concise and targets only one technical domain. I'll avoid including code or explanations, just the focused questions that can be used to retrieve relevant documentation.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How do I use `h5py` to read datasets and attributes from an HDF5 file located at "OMI-Aura_L2-OMNO2_2008m0720t2016-o21357_v003-2016m0820t102252.he5"? Specifically, how can I access the dataset `/HDFEOS/SWATHS/ColumnAmountNO2/Data Fields/CloudFraction` and its attributes like 'ScaleFactor', 'Offset', 'MissingValue', '_FillValue', 'Title', and 'Units'? Additionally, how do I read latitude and longitude arrays from `/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields/Latitude` and `/Longitude`?
+
+NumPy Data Preprocessing Sub-query:  
+How can I preprocess the CloudFraction data using NumPy? This includes replacing `MissingValue` and `_FillValue` with NaN, applying scaling and offset using the formula `data = ScaleFactor * (data - Offset)`, and masking NaN values using `numpy.ma.masked_where`.
+
+Plotting and Visualization Sub-query:  
+How do I use `matplotlib` or `mpl_toolkits.basemap.Basemap` to create a map visualization of the CloudFraction data? This includes setting up an equidistant cylindrical projection, adding coastlines, parallels at specific latitudes with custom labels, meridians at specific longitudes with custom labels, and creating a scatter plot with longitude and latitude coordinates. Additionally, how do I add a colorbar with a label based on the dataset's 'Units' attribute?

@@ -1,0 +1,45 @@
+# Ignore virtual environment directory
+venv/
+*.log
+
+*.tar.xz
+# Ignore HDF5 files
+*.HDF5
+*.hdf5
+*.H5
+*.h5
+*.he5
+*.HE5
+
+# Ignore PNG files
+*.png
+
+ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
+
+#Ignore also .dcm file
+*.dcm
+
+#ignore the .DS_Store files
+.DS_Store
+**.DS_Store
+.pdf
+**.pdf
+
+# Ignore Python cache
+**/__pycache__/
+
+**/tracking_file/
+
+**/error_categorization_evaluation_result/previous_results/
+**/models/**
+# Ignore generated python code from the experiment
+**/prompting_techniques/llm_rag_generated_python_scripts/
+
+
+# ignore vtk data
+**/vtk_data/
+
+# ignore vtk examples
+**/vtk/examples/
+**/vtk/vtk_data/
+

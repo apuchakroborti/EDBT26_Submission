@@ -1,0 +1,15 @@
+Here is a rewritten version of the description, reduced by 40% while keeping as many implementation details as possible:
+
+"Can you explain how this Python code works? 
+
+It starts by importing necessary libraries: `os`, `h5py` for HDF5 files, `numpy` and `matplotlib` for numerical computations and plotting, and `mpl_toolkits.basemap` for creating maps.
+
+The script defines constants like the HDF5 file name (`FILE_NAME`) and paths to specific datasets within the file (`METADATA_FIELD` and `DATA_FIELD`).
+
+It then reads the HDF5 file in read-only mode using `h5py.File`, retrieves metadata from `/HDFEOS INFORMATION/StructMetadata.0`, and data from `/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure`. It also gets additional attributes like fill value, missing value, title, and units.
+
+The script converts the data to a NumPy float64 array, replaces invalid values with NaN, and retrieves longitude and latitude datasets.
+
+Next, it creates a Basemap object with a cylindrical projection, sets resolution to 'l', and defines latitude and longitude ranges. It draws coastlines, parallels, and meridians on the map.
+
+The script plots the data using `pcolormesh`, adds a colorbar with units label, and sets the title to include the file name and dataset title. Finally, it saves the plot to a PNG file named after the input HDF5 file."

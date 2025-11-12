@@ -1,0 +1,28 @@
+1. Import Required Libraries: 
+   Import necessary libraries including `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `Basemap` from `mpl_toolkits.basemap`.
+
+2. Read HDF5 File: Open the HDF5 file named `SMAP_L1C_S0_HIRES_02298_A_20150707T160502_R13080_001.h5`.
+
+3. Access Datasets:
+   - Retrieve `/Sigma0_Data/cell_sigma0_hh_fore` for sigma-0 data.
+   - Extract latitude and longitude from `/Sigma0_Data/cell_lat` and `/Sigma0_Data/cell_lon` respectively.
+
+4. Extract Attributes: Obtain attributes `long_name`, `_FillValue`, `valid_max`, and `valid_min` from the `cell_sigma0_hh_fore` dataset. 
+   Decode `long_name` using ASCII with replace error handling.
+
+5. Data Cleaning:
+   - Identify invalid data where sigma-0 values exceed `valid_max` or are below `valid_min`.
+   - Update invalid flags to include data equal to `_FillValue`.
+   - Set identified invalid sigma-0 values to `NaN`.
+   - Mask the dataset using `masked_where` for NaNs.
+
+6. Create Map Projection: Use cylindrical projection with boundaries set from latitude -90 to 90 and longitude -180 to 180, low resolution.
+
+7. Customize Map:
+   - Add coastlines with line width 0.5.
+   - Draw parallels at latitudes -90, -45, 0, 45, and 90.
+   - Draw meridians at longitudes -180, -135, -90, -45, 0, 45, 90, 135, and 180 with labels `[True, False, False, True]`.
+
+8. Plot Data: Use scatter plot with longitude, latitude coordinates, sigma-0 data, colormap `plt.cm.jet`, no edge color, and linewidth 0.
+
+9. Add Colorbar: Position the colorbar at the bottom with 10% padding and label it using the units from the sigma-0 dataset's `long_name` attribute.

@@ -1,0 +1,89 @@
+<think>
+Okay, so I need to describe this Python script step by step. Let me start by looking at the imports.
+
+First, it's using pathlib with Path. Then there are several vtkmodules imported: InteractionStyle, RenderingOpenGL2, CommonColor, CommonCore, FiltersCore, IOImage, ImagingCore, ImagingGeneral, and RenderingCore. Each of these modules has specific classes being imported.
+
+The script defines a main function that takes data_folder and tissue as arguments. It checks if VTK version is at least 8.2 using vtk_version_ok. Then it sets up colors with vtkNamedColors.
+
+Next, it checks if the data_folder exists and looks for 'frogtissue.mhd'. If not found, it prints an error and exits.
+
+It creates a tissue map and a lookup table (lut) for colors. Then, it sets up two renderers, left and right, each taking half the viewport. The main window is created with these renderers and an interactor.
+
+The script then creates two actors: one regular and one smoothed. These are added to the left and right renderers respectively. Each actor uses properties from the lut for coloring.
+
+Cameras are set up in both renderers, with the left camera's view adjusted. Background colors are set to LightSteelBlue. The window size is 640x480, titled 'FrogBrain', and then rendered.
+
+The create_smooth_frog_actor function reads the image file, applies a threshold, smooths it with Gaussian filter, extracts surfaces, smoothes the data, computes normals, strips polygons, maps, and creates an actor.
+
+Similarly, create_frog_actor does similar steps but without smoothing. It uses FlyingEdges3D if available, else MarchingCubes.
+
+The create_frog_lut function sets up color mappings for different tissues using vtkLookupTable with predefined colors from vtkNamedColors.
+
+create_tissue_map assigns numerical values to each tissue type as keys in a dictionary.
+
+vtk_version_ok checks if the VTK version meets the required version by comparing version numbers.
+
+Finally, when run as main, it uses default data_folder and tissue='brain', then calls main.
+</think>
+
+### Step-by-Step Description of the Python Script
+
+#### 1. Import Required Libraries
+The script begins by importing necessary libraries:
+- `pathlib.Path` for file path handling.
+- Various VTK modules for 3D rendering, image processing, and visualization.
+
+#### 2. Main Function Setup
+The `main` function is defined to accept two parameters: `data_folder` (path to data) and `tissue` (specific tissue to visualize).
+
+#### 3. VTK Version Check
+It checks if the installed VTK version is 8.2 or higher using `vtk_version_ok`.
+
+#### 4. Color Setup
+Utilizes `vtkNamedColors` for predefined color schemes.
+
+#### 5. File Path Validation
+Verifies that `data_folder` exists and contains the required file `frogtissue.mhd`. If not, it displays an error message.
+
+#### 6. Tissue Mapping and Lookup Table Creation
+- Creates a mapping of tissue names to numerical IDs using `create_tissue_map`.
+- Generates a color lookup table (`lut`) with specific colors for each tissue type via `create_frog_lut`.
+
+#### 7. Renderer and Window Setup
+Configures the rendering environment:
+- Two renderers (`renderer_left` and `renderer_right`) are created, each occupying half of the viewport.
+- A render window of size 640x480 is set up with both renderers and an interactor for user interaction.
+
+#### 8. Actor Creation
+Two actors are created:
+- **Left Actor**: Uses `create_frog_actor` to generate a non-smoothed model, added to the left renderer.
+- **Right Actor**: Uses `create_smooth_frog_actor` to generate a smoothed model, added to the right renderer. This actor has additional properties for visual enhancement.
+
+#### 9. Camera and View Configuration
+Adjusts camera settings:
+- The left renderer's camera is positioned to view the model from a specific angle.
+- Both renderers have their backgrounds set to 'LightSteelBlue'.
+
+#### 10. Rendering
+The render window is displayed with the title "FrogBrain" and starts the interaction loop.
+
+### Helper Functions
+
+1. **create_smooth_frog_actor**
+   - Reads the medical image file.
+   - Applies thresholding, Gaussian smoothing, surface extraction, and additional smoothing to create a visually smooth actor.
+
+2. **create_frog_actor**
+   - Similar to the above but without smoothing, using either FlyingEdges3D or MarchingCubes for surface extraction.
+
+3. **create_frog_lut**
+   - Defines a color palette for different tissues using VTK's named colors.
+
+4. **create_tissue_map**
+   - Maps tissue names (e.g., 'blood', 'brain') to numerical IDs for lookup purposes.
+
+5. **vtk_version_ok**
+   - Checks if the current VTK version meets or exceeds a specified version, handling both old and new VTK versioning schemes.
+
+### Execution
+When run, the script defaults to visualizing the 'brain' tissue from the file `FrogBrain_frogtissue.mhd`, displaying both smoothed and unsmoothed models side by side.

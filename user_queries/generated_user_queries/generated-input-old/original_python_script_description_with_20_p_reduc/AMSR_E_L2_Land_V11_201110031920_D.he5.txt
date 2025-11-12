@@ -1,0 +1,43 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Comments and Docstrings**
+
+The code starts with comments and docstrings providing information about the script, its purpose, and how to use it.
+
+**Importing Modules**
+
+The code imports several Python modules: `os`, `h5py`, `numpy` (as `np`), `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`), and `Basemap`.
+
+**Defining Constants**
+
+The code defines constants: `FILE_NAME`, `DATA_NAME`, and `FIELD_NAME`.
+
+**Reading HDF-EOS File**
+
+The code opens the HDF-EOS file in read-only mode using `h5py` and extracts several datasets.
+
+**Data Processing**
+
+The code replaces `_FillValue` with `NaN` and creates a masked array from the data.
+
+**Creating a Basemap**
+
+The code creates a Basemap instance with a cylindrical projection and low-resolution coastline database.
+
+**Drawing the Map**
+
+The code draws coastlines, parallels, and meridians on the map.
+
+**Scattering Data Points**
+
+The code scatters the data points on the map using `m.scatter`.
+
+**Creating a Colorbar**
+
+The code creates a colorbar using `m.colorbar()`.
+
+**Saving the Plot**
+
+Finally, the code saves the plot to a PNG file with a name derived from the input file name.
+
+I removed some of the explanatory text and condensed the descriptions of each section while keeping the implementation details intact.

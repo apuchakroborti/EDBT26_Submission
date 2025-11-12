@@ -1,0 +1,17 @@
+The code starts by importing necessary libraries and defining the file name as "ATL19_20181001010615_00370101_003_02.h5".
+
+Next, it opens the HDF5 file in read-only mode and accesses several datasets within the file: 
+`/mid_latitude/latitude`, `/mid_latitude/longitude`, and `/mid_latitude/beam_1/dot_avg`. 
+It reads the entire contents of each dataset into memory.
+
+The code then extracts metadata attributes from the `/mid_latitude/beam_1/dot_avg` dataset, including units, long name, and fill value. 
+It replaces any missing values with NaN and creates a masked array for efficient handling.
+
+A map projection is created using an equidistant cylindrical projection with specific parameters such as latitude and longitude boundaries (such as -90 to 90 and -180 to 180). 
+The code draws coastlines, parallels, and meridians on the map.
+
+The data is then plotted using a pseudocolor plot with longitude and latitude as coordinates. 
+A colorbar is added with a label set to the units of measurement, 
+and the title of the plot includes the base name of the HDF5 file and the long description of the data.
+
+Finally, the code saves the plot to a PNG file with the same base name as the HDF5 file but with a `.py.png` extension.

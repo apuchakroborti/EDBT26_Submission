@@ -1,0 +1,34 @@
+A Python code. 
+Here's what it does:
+
+Importing Libraries and Defining File Names
+The code starts by importing necessary libraries such as os, matplotlib.pyplot as plt, numpy as np, mpl_toolkits.basemap import Basemap, and h5py
+ 
+FILE_NAME and `FILE_NAME_GEO` which are located at ECOSTRESS_L2_LSTE_30192_017_20231102T165047_0601_01.h5 and ECOSTRESS_L1B_GEO_30192_017_20231102T165047_0601_01.h5 respectively
+
+Opening HDF5 Files and Accessing Data
+It opens both files in read-only mode and accesses the following data:
+From the first file 
+ `/SDS/LST` dataset (Land Surface Temperature data) with attributes like scale_factor, add_offset, units, _FillValue, and long_name
+
+From the 2nd file 
+`longitude` from the path Geolocation/longitude and `latitude` from the path /Geolocation/latitude datasets which are Geolocation data
+
+While reading land_surface_temperature, logitude, and latitude data the type should be set as numpy float64
+
+Data Processing
+The code processes the LST data by replacing _FillValue with NaN, 
+then the lst data should be updated based on information such as scale_factor * lst_data + add_offset
+
+It creats a masked array using numpy masked_array function for the lst_data, latitude and longitude data with parameters the data itself and checking of numpy isnan of each data itself
+
+Using an equidistant cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30, 
+and meridians with parameters numpy arrange -180, 180, 45
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+At the end, I added a colorbar with using set_label function with the values of Units 

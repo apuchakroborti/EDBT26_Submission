@@ -1,0 +1,54 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for interacting with the operating system (e.g., getting the current working directory)
+2. `h5py`: for reading and manipulating HDF5 files
+3. `numpy` (`np`): for numerical computations and data manipulation
+4. `matplotlib` (`mpl`) and `matplotlib.pyplot` (`plt`): for creating visualizations
+5. `Basemap` (from `mpl_toolkits.basemap`): for creating maps
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, which is the name of the HDF-EOS5 Swath file to be read.
+
+**Reading HDF File**
+
+The code opens the HDF file in read mode (`mode='r'`) using `h5py`. The file object is assigned to `f`.
+
+**Extracting Data**
+
+The code extracts several datasets from the HDF file:
+
+1. `/HDFEOS/SWATHS/O3NadirSwath/Data Fields/O3`: This dataset contains ozone (O3) data.
+	* `data` is extracted as a 2D array, taking only the 6th column (`[:, 5]`) of the dataset.
+	* `units`, `longname`, and `fillvalue` are extracted from the dataset's attributes.
+2. `/HDFEOS/SWATHS/O3NadirSwath/Geolocation Fields/Latitude`: This dataset contains latitude data.
+	* `latitude` is extracted as a 1D array.
+3. `/HDFEOS/SWATHS/O3NadirSwath/Geolocation Fields/Longitude`: This dataset contains longitude data.
+	* `longitude` is extracted as a 1D array.
+
+**Data Processing**
+
+The code replaces any values in the O3 data that match the fill value with NaN (Not a Number) using NumPy's broadcasting capabilities.
+
+**Creating Map Visualization**
+
+The code creates a map visualization using Basemap:
+
+1. A cylindrical projection (`projection='cyl'`) is used, with a low resolution (`resolution='l'`).
+2. The map boundaries are set to cover the entire globe (`llcrnrlat=-90`, `urcrnrlat=90`, `llcrnrlon=-180`, and `urcrnrlon=180`).
+3. Coastlines, parallels, and meridians are drawn using Basemap's methods.
+4. The O3 data is plotted as a scatter plot on the map, with colors representing the values (using `c=data` and `cmap=plt.cm.jet`). The marker size is set to 1 (`s=1`).
+
+**Adding Colorbar and Title**
+
+The code adds a colorbar to the map using Basemap's `colorbar` method and sets its label to the units of the O3 data.
+
+A title is added to the plot, which includes the file name and the long name of the O3 dataset.
+
+**Saving Plot to File**
+
+Finally, the code saves the plot to a PNG file with a name based on the input file name (`basename`) and appends `.py.png` to it. The `gcf()` function is used to get the current figure object, which is then saved using `savefig()`.

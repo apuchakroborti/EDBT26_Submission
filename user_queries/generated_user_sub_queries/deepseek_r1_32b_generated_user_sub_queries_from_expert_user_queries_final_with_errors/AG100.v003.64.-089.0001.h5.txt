@@ -1,0 +1,87 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads an HDF5 file containing ASTER GED data, extracts specific datasets, and visualizes them on a map.
+
+1. Read the input HDF5 file in read-only mode.
+
+2. Extract datasets:
+   - 'Mean Emissivity for Band 10' from '/Emissivity/Mean' as a 2D slice (1st index along x-axis).
+   - Retrieve the Description attribute's 0th value.
+   - Set units to None and long name to 'Mean emissivity for Band 10'.
+
+3. Extract geolocation data:
+   - Latitude from 'Latitude'.
+   - Longitude from 'Longitude'.
+
+4. Process mean data:
+   - Replace -9999 with NaN.
+   - Scale by multiplying with 0.001.
+   - Apply mask using numpy's masked_where.
+
+5. Create an equidistant cylindrical projection map with Basemap, setting latitude (62.5-64.5) and longitude (89.5-87.5) ranges.
+
+6. Add map features:
+   - Coastlines with linewidth 0.5.
+   - Parallels at 62, 63, 64 with left labels only
+   - Meridians at -89, -88, -87 with bottom labels only
+
+7. Plot data using pcolormesh with latlon=True.
+
+8. Add colorbar labeled 'None' and a title combining the filename's base name with 'Mean Emissivity for Band 10'.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down this user query into three specific sub-queries. Let me read through the problem again to make sure I understand each part.
+
+The user wants a Python script that does several things: reads an HDF5 file with ASTER GED data, extracts some datasets, processes them, and then visualizes them on a map. The task is to split this into three parts focusing on HDF5 access, NumPy preprocessing, and plotting.
+
+First, for the HDF5 part, I need to identify all the steps related to accessing the file and extracting datasets. That includes opening the file in read-only mode, extracting specific datasets like 'Mean Emissivity for Band 10' from a particular path, getting attributes such as the Description, and retrieving geolocation data (latitude and longitude). So the sub-query should cover all these aspects using h5py.
+
+Next, the NumPy preprocessing part involves handling the mean data. This includes replacing -9999 values with NaNs, scaling the data by multiplying with 0.001, and applying a mask using numpy's masked_where function. I need to make sure this sub-query focuses solely on these processing steps without mentioning how the data is accessed or visualized.
+
+Lastly, for plotting and visualization, the user wants to create a map using Basemap with an equidistant cylindrical projection. The map should have specific latitude and longitude ranges, coastlines, parallels, meridians, and use pcolormesh to plot the data. Additionally, adding a colorbar and title are part of this step. So the sub-query here should cover all these visualization aspects using matplotlib and Basemap.
+
+I need to ensure each sub-query is clear and focused on its respective domain without overlapping with other parts. Let me structure them accordingly.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to read an HDF5 file in Python, extract specific datasets like 'Mean Emissivity for Band 10' from '/Emissivity/Mean', retrieve attributes such as Description, and access geolocation data (Latitude and Longitude) using h5py.
+
+NumPy Data Preprocessing Sub-query:
+How to replace -9999 values with NaN in a NumPy array, scale the data by multiplying with 0.001, and apply a mask using numpy's masked_where function for preprocessing ASTER GED mean emissivity data.
+
+Plotting and Visualization Sub-query:
+How to create an equidistant cylindrical projection map using Basemap, add coastlines, parallels at 62, 63, 64 with left labels, meridians at -89, -88, -87 with bottom labels, plot data with pcolormesh, and add a colorbar and title in Python.

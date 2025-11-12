@@ -1,0 +1,52 @@
+This Python script is used to access and visualize data from a GES DISC MLS O3 HDF-EOS5 file, which is a type of Hierarchical Data Format (HDF) file. Here's a step-by-step breakdown:
+
+**Importing necessary libraries**
+
+The script starts by importing several Python libraries:
+
+* `os`: for working with the operating system and file paths
+* `h5py`: for reading and manipulating HDF5 files
+* `datetime`: for handling dates and times
+* `numpy` (as `np`): for numerical computations
+* `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`): for creating plots
+
+**Defining the file name and path**
+
+The script defines a variable `FILE_NAME` with the name of the HDF-EOS5 file to be read. In this case, it's "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5". The file is assumed to be in the current working directory.
+
+**Opening the HDF-EOS5 file**
+
+The script opens the HDF-EOS5 file using `h5py` in read-only mode (`mode='r'`). This creates a file object `f`.
+
+**Accessing datasets and attributes**
+
+The script accesses several datasets within the HDF-EOS5 file:
+
+* `HDFEOS/SWATHS/O3/Data Fields/L2gpValue`: a dataset containing O3 data values
+* `HDFEOS/SWATHS/O3/Geolocation Fields/Latitude`: a dataset containing latitude values
+* `HDFEOS/SWATHS/O3/Geolocation Fields/Pressure`: a dataset containing pressure values
+* `HDFEOS/SWATHS/O3/Geolocation Fields/Time`: a dataset containing time values
+
+The script also accesses attributes associated with each dataset, such as units, titles, and fill values.
+
+**Reading data and subsetting**
+
+The script reads the data from each dataset and subsets it to reduce its size. For example, it only reads the first 70 elements of the O3 data and latitude datasets.
+
+**Handling fill values and missing data**
+
+The script handles fill values by replacing them with NaN (Not a Number) values and creating a masked array using `numpy.ma`.
+
+**Converting dates and times**
+
+The script converts the time dataset from seconds since January 1, 1993, to a human-readable format using `datetime`.
+
+**Creating a plot**
+
+The script creates a pseudocolor plot using `matplotlib` with the O3 data on the x-axis, pressure on the y-axis, and latitude on the colorbar. The title of the plot includes the file name, data title, and date range.
+
+**Saving the plot to a PNG file**
+
+Finally, the script saves the plot to a PNG file with a name based on the input file name.
+
+Overall, this script demonstrates how to access and visualize data from an HDF-EOS5 file using Python.

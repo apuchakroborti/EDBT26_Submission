@@ -1,0 +1,9 @@
+a Python program that accesses and visualizes data from a SMAP L1A HDF5 file. The file contains radiometer data from the Soil Moisture Active Passive (SMAP) mission.
+
+The program defines a `run` function that takes a file name as input, which is expected to be a SMAP L1A HDF5 file. It reads the file using HDF5, accessing datasets like `/HighResolution_Moments_Data/moments16_right_ascension`, `/HighResolution_Moments_Data/moments16_lat`, and `/HighResolution_Moments_Data/moments16_lon`.
+
+The program processes the data by identifying invalid points, setting them to NaN, and creating a masked array. It then retrieves geolocation data from the latitude and longitude datasets.
+
+For visualization, the program creates a Basemap object with a cylindrical projection, sets up the map boundaries, and scatters the data points on the map using colors representing the values of the `data` array. A colorbar is added to the plot.
+
+Finally, the program saves the plot as a PNG file with a name based on the input file name. The title of the plot includes the base name of the input file and the long description of the dataset."

@@ -1,0 +1,76 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            This program reads MRI brain data from an HDF5 file, prints information about the data, and visualizes it using Matplotlib.
+
+Defining File Paths
+Two file paths are defined: `FAST_MRI_BRAIN_H5_FILE` which reads data from the location 0_fastMRI_brain_first_10_dcm_to_h5.h5 (the path to the HDF5 file) 
+and `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` (the path within the HDF5 file to a specific dataset) which is located below: 
+`FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`
+
+Reading Data from HDF5 File
+The program opens the HDF5 file in read-only mode. 
+It accesses the dataset at the specified path and reads its contents into a NumPy array called `brain_slice`.
+
+Printing Information about the Data
+The program prints:
+The type of the `brain_slice` object (a NumPy array)
+The shape of the `brain_slice` array (its dimensions)
+
+Plotting the Data:
+The program creates a figure with using Matplotlib. It displays the `brain_slice` data as an image, and applies a gray colormap to enhance feature visibility.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me read through their problem again.
+
+The user is working on a program that reads MRI brain data from an HDF5 file using h5py. They then print information about the data and visualize it with Matplotlib. The task is to split this into three parts: accessing the HDF5 dataset, preprocessing with NumPy, and plotting with visualization tools.
+
+First, for the HDF5 part, they mention opening a file in read-only mode and accessing a specific dataset path. So I should focus on how to use h5py to open the file, access that exact path, and retrieve the data into a NumPy array. Also, including metadata might be useful since they print information about the data.
+
+Next, the NumPy preprocessing part involves handling _FillValue. The user's code reads the data into brain_slice and prints its type and shape. So I need to think about how to handle any fill values in the dataset using NumPy functions like np.where or masked arrays. Maybe applying a mask where the data is invalid or filling missing values.
+
+Lastly, for visualization, they use Matplotlib to create an image plot with a gray colormap. They also mention enhancing feature visibility, so I should consider aspects like setting the figure size, adjusting the colorbar, and possibly adding titles or labels for clarity.
+
+Putting it all together, each sub-query needs to be specific enough to retrieve relevant documentation without overlapping too much. The HDF5 part is about accessing data and metadata, NumPy handles preprocessing steps including fill values, and visualization focuses on plotting with Matplotlib.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file in read-only mode, access a specific dataset at the path 'FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data', and retrieve its contents into a NumPy array while also accessing metadata.
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue in NumPy arrays, apply masks using np.where or np.ma.masked_where, and print the type and shape of a NumPy array after reading data from an HDF5 file.
+
+Plotting and Visualization Sub-query:
+How to use Matplotlib to create a figure, display a NumPy array as an image with a gray colormap, enhance feature visibility, and add colorbars or titles for clarity.

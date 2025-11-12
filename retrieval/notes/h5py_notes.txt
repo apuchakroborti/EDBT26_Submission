@@ -1,0 +1,171 @@
+=== CHUNK START ===
+Title: Accessing an Attribute from a Dataset
+
+Explanation:
+This example demonstrates how to open an HDF5 file using `h5py`, access a dataset named `'Elevation'`, and retrieve a simple attribute named `'_FillValue'`. 
+The purpose of this code is to fetch metadata commonly used to indicate missing or invalid data points in scientific datasets. The file is opened in read-only mode (`'r'`), 
+and the dataset is accessed like a dictionary using `f['Elevation']`. Then by f['Elevation'].attrs['_FillValue'] the attribute `_FillValue` is accessed through the `attrs` dictionary of the dataset. 
+After retrieving and printing the value, the file is properly closed using `f.close()` to ensure system resources are released.
+
+Code:
+import h5py
+
+f = h5py.File('data.h5', 'r')
+dset = f['Elevation']
+
+#accessing `_FillValue` attribute from the dataset `Elevation`
+fill_value = f['Elevation'].attrs['_FillValue']
+
+#do some operations
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Reading a Simple Float Attribute from a Dataset
+
+Explanation:
+This example demonstrates how to open an HDF5 file using `h5py`, access a dataset named `/groupName/Elevation`, and retrieve a simple attribute named `'_FillValue'`. 
+The purpose of this code is to fetch metadata commonly used to indicate missing or invalid data points in scientific datasets. The file is opened in read-only mode (`'r'`), 
+and the dataset is accessed like a dictionary using `f['Elevation']`. The attribute itself is then accessed through the `attrs` dictionary of the dataset. 
+After retrieving and printing the value, the file is properly closed using `f.close()` to ensure system resources are released.
+
+Code:
+import h5py
+
+f = h5py.File('data.h5', 'r')
+dset = f['/groupName/Elevation']
+fill_value = f['/groupName/Elevation'].attrs['_FillValue']
+print("Fill value:", fill_value)
+f.close()
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Decoding Byte-Encoded Attributes
+
+Explanation:
+This snippet is designed to access attributes that are stored as byte strings, a common format in HDF5 files created by various scientific tools. 
+Specifically, it reads the `'units'` attribute from the `'Elevation'` dataset. Because this attribute might be stored as a byte string (e.g., `b'meters'`), 
+it checks the type of the attribute and decodes it using UTF-8 if necessary. This is critical when dealing with string attributes, 
+especially those written by Fortran-based libraries or tools using older encodings. 
+The code then prints the decoded string and closes the file. The output is the human-readable string associated with the dataset’s units.
+
+Code:
+import h5py
+f = h5py.File('data.h5', 'r')
+dset = f['Elevation']
+
+units = dset.attrs['units']
+
+#or alternative way
+units = f['Elevation'].attrs['units']
+
+if isinstance(units, bytes):
+    units = units.decode('utf-8')
+print("Units:", units)
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Safely Checking for Attribute Existence
+
+Explanation:
+This example shows how to prevent errors by first checking whether an attribute exists in a dataset before attempting to access it. 
+It accesses the `'Elevation'` dataset and verifies the existence of the `'valid_range'` attribute using Python’s `in` keyword. 
+If the attribute is present, it retrieves and prints it. This defensive programming technique is useful in dynamic or exploratory data workflows where not all datasets are guaranteed to have the same metadata fields. 
+This avoids `KeyError` exceptions and makes the code robust against missing attributes.
+
+
+Code:
+f = h5py.File('data.h5', 'r')
+dset = f['Elevation']
+
+if 'valid_range' in dset.attrs:
+    valid_range = dset.attrs['valid_range']
+    print("Valid range:", valid_range)
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Accessing Attributes from datasets using full path from the hierarchical data storage such as hdf5
+
+Explanation:
+This example shows how to access attributes for example from the 'data.h5' file, the attributes `attribute1` and `attribute2` are accessed from the dataset name `surface_pressure` and group name `root`.
+
+
+Code:
+f = h5py.File('data.h5', 'r')
+dset = f['/root/surface_pressure']
+
+attribute1 = f['/root/surface_pressure'].attrs['attribute1']
+attribute2 = f['/root/surface_pressure'].attrs['attribute2']
+
+#do some operations
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Accessing and Parsing an Array Attribute
+
+Explanation:
+This code demonstrates how to access a metadata attribute that is stored as a NumPy array, specifically the `valid_range` attribute of a dataset. 
+Such attributes typically contain multiple related values—here, the minimum and maximum valid elevation values. The array is retrieved directly from the attribute and accessed using indexing. 
+The code prints out the first and second elements, corresponding to the lower and upper bounds. This pattern is commonly used in climate, satellite, or oceanographic datasets where quality control ranges are needed.
+
+Code:
+f = h5py.File('data.h5', 'r')
+dset = f['Elevation']
+
+valid_range = dset.attrs['valid_range']
+print("Valid range min:", valid_range[0])
+print("Valid range max:", valid_range[1])
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Looping Through All Dataset Attributes
+
+Explanation:
+This example is a general-purpose snippet to iterate over all metadata attributes of a dataset. It opens the HDF5 file, accesses the `'Elevation'` dataset, 
+and loops through the `.attrs.items()` dictionary. Each key–value pair is printed. If an attribute is a byte string, it is decoded to UTF-8. 
+This makes the code flexible and readable for inspecting unknown or dynamically generated datasets, such as those produced by simulations or experiments. 
+It is particularly useful during data exploration or debugging phases when understanding available metadata is crucial.
+
+
+Code:
+f = h5py.File('data.h5', 'r')
+dset = f['Elevation']
+
+print("Attributes for Elevation:")
+for key, value in dset.attrs.items():
+    if isinstance(value, bytes):
+        value = value.decode('utf-8')
+    print(f"  {key}: {value}")
+
+f.close()
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Reading File-Level (Root) Attributes
+
+Explanation:
+This final example focuses on accessing metadata stored at the root level of the HDF5 file, rather than within a specific dataset. 
+Such attributes often include general metadata about the entire file, such as descriptions, creation dates, or data sources. 
+The code reads the `description` attribute from the root object (the file itself), decodes it if necessary, and prints the result. 
+This pattern is useful for extracting summary or provenance information from scientific files and is analogous to reading file headers or documentation.
+
+Code:
+f = h5py.File('data.h5', 'r')
+
+description = f.attrs['description']
+if isinstance(description, bytes):
+    description = description.decode('utf-8')
+print("File description:", description)
+
+f.close()
+=== CHUNK END ===

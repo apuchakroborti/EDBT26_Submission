@@ -1,0 +1,14 @@
+Python script that reads an NSIDC ICESat-2 ATL16 L3B version 5 HDF5 file. Here's what it does:
+
+First, it imports necessary libraries and defines the HDF5 file name.
+
+Then, it opens the HDF5 file in read mode and reads several datasets: 
+`/global_grid_lat` (latitude values), `/global grid lon` (longitude values), and `/global asr` (main data to be visualized).
+
+It also reads attributes from `/global_asr`: `units`, `long name`, and `_Fill value`.
+
+The script handles missing values by replacing them with NaN and creating a masked array.
+
+Next, it creates an equidistant cylindrical projection of the data using a map library. 
+It sets up the map projection with latitude and longitude boundaries (such as -90 to 90 and -180 to 180) respectively, 
+draws coastlines and parallels, and creates a pseudocolor plot of the data.

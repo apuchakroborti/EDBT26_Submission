@@ -1,0 +1,83 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        1. Import Necessary Libraries:  
+   Import `os` for operating system functions, `matplotlib.pyplot` for plotting, `numpy` for numerical computations, and `mpl_toolkits.basemap` for map projections.
+
+2. Define Constants:  
+   Set the constant `FILE_NAME` to the path of the HDF5 file: "ATL03_20181027235521_04480111_006_02.h5".
+
+3. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access these datasets:
+   - `/gt1l/geolocation/reference_photon_lat` for latitude data.
+   - `/gt1l/geolocation/reference_photon_lon` for longitude data.
+   - `/gt1l/geolocation/tx_pulse_energy` for the main data.
+
+4. Extract Dataset Attributes:  
+   For the tx_pulse_energy dataset, read the `units` and `long_name` attributes using `.decode('ascii', 'replace')`. 
+   Also, retrieve the `_FillValue` attribute from the main dataset.
+
+5. Create Map Projection:  
+   Use an equidistant cylindrical projection with low resolution. Set the latitude range from -90 to 90 and longitude range from -180 to 180.
+
+6. Customize Map Features:  
+   Add coastlines with a line width of 0.5. Draw parallels at intervals of [-90, 120, 30] and meridians at intervals of [-180, 180, 45].
+
+7. Plot Data on the Map:  
+   Use the `scatter` function with longitude as x, latitude as y, data for color (c parameter), marker size of 0.1, colormap 'jet', no edge colors, and zero linewidth.
+
+8. Add Colorbar and Title:  
+   Append a colorbar with format '%.2e' labeled using the main dataset's units. Set the plot title to include the HDF5 file's basename and the `long_name` attribute of the main dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, let's tackle this user query. The user wants to break down their task into three specific sub-queries for HDF5 access, NumPy preprocessing, and plotting. 
+
+First, for the HDF5 part. They mentioned using h5py to open an HDF5 file and access specific datasets. The datasets have paths like /gt1l/geolocation/... So the sub-query should focus on how to open the file with h5py, access those exact datasets, and read attributes like units and _FillValue. Also, they need to decode the attributes using 'ascii' with 'replace'. I need to make sure the sub-query includes all these elements.
+
+Next, the NumPy preprocessing. The user wants to handle _FillValue, which is common in HDF5 datasets. They might need to mask those values using np.ma.masked_where or np.where. Also, they might need to compute min and max for data filtering. The sub-query should ask about applying masks based on _FillValue and any preprocessing steps like filtering or computing statistics.
+
+For the plotting, they're using Basemap with an equidistant cylindrical projection. They need to set the lat/lon ranges, add coastlines, draw parallels and meridians at specific intervals. The scatter plot uses longitude and latitude, with color based on tx_pulse_energy. The colorbar needs a specific format and label. The sub-query should cover setting up the projection, customizing map features, and plotting with scatter, including colorbar and title.
+
+I need to make sure each sub-query is focused on its domain. No overlap between them. Also, avoid any code examples, just the technical questions. Let me check each part again to ensure they align with the user's steps and the required focus areas.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file with path "ATL03_20181027235521_04480111_006_02.h5", access datasets at paths "/gt1l/geolocation/reference_photon_lat", "/gt1l/geolocation/reference_photon_lon", and "/gt1l/geolocation/tx_pulse_energy", and retrieve attributes "units", "long_name", and "_FillValue" from the tx_pulse_energy dataset while decoding attribute strings with 'ascii' encoding and 'replace' error handling.
+
+NumPy Data Preprocessing Sub-query:
+How to apply NumPy masking to filter _FillValue from tx_pulse_energy data using np.ma.masked_where, compute valid data ranges with min/max operations, and prepare masked arrays for visualization while preserving metadata attributes from the original dataset.
+
+Plotting and Visualization Sub-query:
+How to configure an equidistant cylindrical projection in mpl_toolkits.basemap with longitude range [-180,180] and latitude range [-90,90], draw coastlines with linewidth=0.5, set parallels at [-90,120,30] and meridians at [-180,180,45], create a scatter plot with longitude/latitude coordinates, tx_pulse_energy as color values, marker size 0.1, 'jet' colormap, no edge colors, add a colorbar with '%.2e' format labeled by dataset units, and set a title combining the HDF5 file basename and tx_pulse_energy's long_name attribute.

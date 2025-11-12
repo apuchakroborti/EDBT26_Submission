@@ -1,0 +1,45 @@
+Purpose
+This script is designed to process an MRI image. Specifically, it deals with something called "attenuation" which can make parts of the image look darker or less clear due to how the sensors are positioned. The goal is to fix these dark areas so that the image looks better.
+
+Step-by-Step Explanation
+
+1. Setting Up:
+   - First, the script gets ready by importing some tools it needs to work with images and display them on the screen.
+
+2. Reading the Image:
+   - It tells the computer where to find the MRI image file (named 'Attenuation_AttenuationArtifact.pgm').
+   - Then, it reads this image into its memory so that it can start working with it.
+
+3. Preparing the Image:
+   - The script converts the image data into a format that's easier to work with.
+   - It then smooths out the image a bit to reduce any rough or jagged edges in the picture.
+
+4. Creating a Mask:
+   - Next, it creates something called a "mask" which is like a stencil. This mask helps identify where the dark areas (attenuation) are located.
+   - It sets up this mask with specific coordinates and size to match the parts of the image that need fixing.
+
+5. Adjusting the Mask:
+   - The script adjusts the mask so it fits perfectly over the areas that are too dark in the MRI image.
+   - Then, it scales down the mask to make sure it's just right for the image.
+
+6. Combining Images:
+   - Now, it combines the original smoothed image with the adjusted mask using a mathematical operation (multiplying them together). This helps to correct the dark areas by making them brighter where needed.
+
+7. Preparing to Display:
+   - The script sets up two versions of the image: one is the original and the other is the fixed version.
+   - It defines how each version should be displayed on the screen, with specific colors for the background.
+
+8. Setting Up the Viewport:
+   - It divides the screen into two parts so that both the original and the fixed images can be seen side by side.
+   - Each part of the screen is set up to show one image clearly.
+
+9. Creating the Window:
+   - The script creates a window on your computer screen where these images will be displayed.
+   - It sets the size of this window (600 pixels wide and 300 pixels tall) and gives it a title called 'Attenuation'.
+
+10. Interacting with the Image:
+    - Finally, it sets up controls so that you can interact with the image on your screen. For example, you might be able to zoom in or move around the image.
+    - It starts showing the window with both images side by side.
+
+Summary
+In simple terms, this script takes an MRI image that has some dark areas due to sensor positioning, fixes those dark areas using a special mask, and then shows both the original and fixed images on your screen so you can compare them. The whole process involves reading the image, smoothing it out, creating and adjusting a mask, combining the mask with the image, and finally displaying everything nicely on your computer screen.

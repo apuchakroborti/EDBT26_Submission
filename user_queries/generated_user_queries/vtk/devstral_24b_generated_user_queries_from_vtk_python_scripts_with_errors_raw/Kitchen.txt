@@ -1,0 +1,49 @@
+Sure, let's break down this script step by step so it's easy to understand.
+
+### What This Script Does
+
+This script creates a 3D visualization of a kitchen using data from a file. It shows various elements like doors, windows, cooking plates, and even the flow of air or smoke in the kitchen. The visualization is interactive, meaning you can view it from different angles and zoom in/out.
+
+### Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing necessary modules for 3D rendering and data handling.
+   - It defines a function called `main()` which contains all the code to create the visualization.
+
+2. Reading Data:
+   - The script reads data from a file named "Kitchen_kitchen.vtk". This file contains information about the kitchen's structure, like where the walls, windows, and other objects are located.
+   - It also sets up some initial values for colors and other settings.
+
+3. Creating Actors (Objects in 3D Space):
+   - The script creates various actors that represent different parts of the kitchen:
+     - `outline`: Represents the outline or boundary of the kitchen.
+     - `door`, `window1`, `window2`: Represent doors and windows.
+     - `klower1` to `klower7`: Represent different sections of a lower cabinet or countertop.
+     - `hood1` to `hood6`: Represent parts of an exhaust hood above the stove.
+     - `cookingPlate`: Represents the cooking surface (stove).
+     - `sgfilter`: Represents some kind of filter, possibly for the exhaust hood.
+
+4. Setting Up Streamlines:
+   - The script sets up streamlines to show how air or smoke flows in the kitchen.
+   - It creates a line source that acts as the starting point for these streamlines.
+   - It then uses this line source and the data from the file to calculate where the streamlines should go.
+
+5. Adding Actors to the Scene:
+   - All the actors (objects) created are added to the scene so they can be visualized together.
+   - The script sets up lighting, background color, and camera position to give a good view of the kitchen.
+
+6. Rendering the Scene:
+   - The script sets the size of the window where the visualization will appear.
+   - It renders (draws) the scene based on all the settings and actors added.
+   - Finally, it starts an interactive mode so you can move around and explore the 3D kitchen.
+
+### Key Concepts
+
+- Actors: These are objects in the 3D space. Each actor represents a part of the kitchen like doors, windows, or cooking plates.
+- Streamlines: These show how something (like air or smoke) moves through the kitchen. They start at one point and follow a path based on the data.
+- Rendering: This is the process of drawing the 3D scene on your screen so you can see it.
+- Interactive Mode: This allows you to interact with the visualization, like moving around to see different angles or zooming in/out.
+
+### Summary
+
+This script takes data about a kitchen's structure and airflow, creates a 3D model of it, and then lets you explore that model on your screen. It's like having a virtual tour of a kitchen where you can see how air moves around when something is cooking.

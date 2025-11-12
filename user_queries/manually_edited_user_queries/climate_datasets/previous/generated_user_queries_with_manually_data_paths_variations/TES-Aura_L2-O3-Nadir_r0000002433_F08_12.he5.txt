@@ -1,0 +1,21 @@
+a Python code that visualizes ozone (O3) data from an HDF5 file. Here's what it does:
+
+**Loading Data**
+
+The code loads an HDF5 file named `TES-Aura_L2-O3-Nadir_r0000002433_F08_12.he5`. It accesses several datasets within the file:
+
+* `/HDFEOS/SWATHS/O3NadirSwath/Data Fields/O3` (ozone data, 6th column)
+* `/HDFEOS/SWATHS/O3NadirSwath/Geolocation Fields/Latitude` (latitude values)
+* `/HDFEOS/SWATHS/O3NadirSwath/Geolocation Fields/Longitude` (longitude values)
+
+**Data Processing**
+
+The code extracts units, long name, and fill value from the O3 dataset's attributes. It replaces fill values with NaN.
+
+**Creating a Map**
+
+The code creates a map using a cylindrical projection with low resolution, specifying latitude and longitude ranges. It draws coastlines, parallels, and meridians on the map, and scatters O3 data points with colors representing O3 values.
+
+**Plot Customization**
+
+Finally, the code sets the plot title using the HDF5 file name and O3 dataset long name, and adds a label to the colorbar using the extracted units.

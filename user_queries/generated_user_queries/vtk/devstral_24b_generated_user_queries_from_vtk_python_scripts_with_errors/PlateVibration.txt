@@ -1,0 +1,42 @@
+Purpose of the Script
+This script creates a visual representation (like a picture) that shows how a flat plate vibrates. It reads data from a file and then uses that data to create an image on your screen, showing the displacement or movement of the plate when it vibrates.
+
+Step-by-Step Explanation
+
+1. Setting Up Colors:
+   - The script starts by setting up some colors. It defines two specific colors: one for the plate (a light red color) and another for the background (a dark blue color).
+
+2. Reading Data from a File:
+   - Next, it reads data about the plate's vibration from a file named 'PlateVibration_plate.vtk'. This file contains information on how the plate moves when it vibrates.
+
+3. Processing the Plate Data:
+   - The script processes this data to understand the shape and movement of the plate. It calculates the normals (which are like directions pointing outward from the surface) and then warps or distorts these normals slightly to show the vibration effect.
+   - It also calculates a color value based on how much the plate is displaced, which will be used to shade the plate in the final image.
+
+4. Creating the Plate Actor:
+   - An "actor" in this context is like an object that can be displayed on the screen. The script creates an actor for the plate using the processed data.
+   - It sets the color of the plate to the light red color defined earlier and rotates it so it's oriented correctly.
+
+5. Creating the Outline Actor:
+   - The script also creates another actor, this time for the outline of the plate. This helps to clearly see the shape of the plate in the final image.
+   - It sets the color of the outline to white and rotates it similarly to the plate.
+
+6. Setting Up the Rendering Environment:
+   - Now, the script sets up a window where the image will be displayed. Think of this like setting up a canvas for painting.
+   - It creates a renderer (which is like the painter) that will draw everything on the canvas.
+
+7. Adding Actors to the Scene:
+   - The script adds both the plate actor and the outline actor to the scene, so they'll appear in the final image.
+   - It sets the size of the window to 500x500 pixels and gives it a title called 'PlateVibration'.
+
+8. Rendering the Image:
+   - The script tells the renderer to draw everything on the canvas (the window). It sets the background color to the dark blue defined earlier.
+   - It also adjusts the camera position to get the best view of the plate, similar to how you might move a real camera to take a good photo.
+
+9. Displaying the Image:
+   - Finally, it displays the image on your screen and waits for you to interact with it (like clicking or closing the window).
+
+Summary
+In simple terms, this script reads data about a vibrating plate from a file, processes that data to understand how the plate moves, and then creates an image showing that movement. It sets up colors, shapes, and a viewing environment to display this image on your screen in a way that's easy to see and understand.
+
+The end result is a visual representation of a vibrating plate, which helps you see how it moves when it vibrates.

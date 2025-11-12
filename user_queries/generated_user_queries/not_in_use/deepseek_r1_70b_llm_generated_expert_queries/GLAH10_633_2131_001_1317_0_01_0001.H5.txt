@@ -1,0 +1,31 @@
+Process an HDF5 file and generate a map visualization.
+
+1. Import Libraries: The code begins by importing necessary libraries including os, re, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and Basemap from mpl_toolkits.basemap.
+
+2. Read Datasets: 
+   - Extract latitude data from `/Data_1HZ/Geolocation/d_lat`.
+   - Extract longitude data from `/Data_1HZ/Geolocation/d_lon`.
+   - Extract surface temperature data from `/Data_1HZ/Geophysical/r_Surface_temp`.
+   - Extract time data from `/Data_1HZ/Time/d_UTCTime_1`.
+
+3. Extract Attributes:
+   - For latitude, longitude, and surface temperature datasets, retrieve their `valid_min` and `valid_max` attributes.
+   - Combine these into new variables: `latitude_valid`, `longitude_valid`, and `surfacetemperature_valid`.
+   - From the surface temperature dataset, also extract the `units` and `long_name` attributes.
+
+4. Data Validation:
+   - Replace latitude values outside `[latitude_valid[0], latitude_valid[1]]` with NaN.
+   - Apply similar validation to longitude using `longitude_valid` and to surface temperature using `surfacetemperature_valid`.
+
+5. Longitude Adjustment: Subtract 360 from longitude values exceeding 180.
+
+6. Map Setup:
+   - Create an equidistant cylindrical projection map with low resolution, spanning latitudes from -90 to 90 and longitudes from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels at intervals [-90, 120, 30] and meridians at intervals [-180, 180, 45].
+
+7. Visualization:
+   - Use `scatter` function with parameters: longitude (x), latitude (y), data (c), marker size 0.1, colormap 'jet', no edge colors, and linewidth 0.
+   - Add a colorbar labeled with the surface temperature units.
+
+8. Plot Title: Combine the HDF5 file's basename with the `long_name` attribute of the surface temperature dataset for the title.

@@ -1,0 +1,60 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for working with operating system-related tasks, such as file paths.
+2. `h5py`: a library for reading and writing HDF5 files in Python.
+3. `numpy` (as `np`): a library for numerical computations.
+4. `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`): libraries for creating visualizations.
+5. `Basemap`: a library for creating maps.
+
+**Defining Constants**
+
+The code defines two constants:
+
+1. `FILE_NAME`: the name of the HDF5 file to be read, which is `'oco2_L2StdND_03949a_150330_B8100r_170916014809.h5'`.
+
+**Reading the HDF5 File**
+
+The code opens the HDF5 file in read mode (`mode='r'`) using `h5py.File`. The file object is assigned to `f`.
+
+**Extracting Data**
+
+The code extracts several datasets from the HDF5 file:
+
+1. `/RetrievalResults/xco2`: a dataset containing data with units and a long name.
+	* `data`: the actual data values are extracted using `f[name][:]`.
+	* `units`: the units of the data are extracted from the attributes of the dataset using `f[name].attrs['Units'][0]`.
+	* `longname`: the long name (description) of the dataset is extracted from the attributes using `f[name].attrs['Description'][0]`.
+2. `/RetrievalGeometry/retrieval_latitude` and `/RetrievalGeometry/retrieval_longitude`: datasets containing geolocation data.
+	* `latitude` and `longitude`: the actual data values are extracted using `f[...][:]`.
+
+**Creating a Map**
+
+The code creates a map using `Basemap`:
+
+1. A cylindrical projection (`projection='cyl'`) is used with a resolution of `'l'`.
+2. The map boundaries are set to `-90` and `90` for latitude, and `-180` and `180` for longitude.
+3. Coastlines are drawn using `m.drawcoastlines`.
+4. Parallels (latitude lines) and meridians (longitude lines) are drawn using `m.drawparallels` and `m.drawmeridians`, respectively.
+
+**Visualizing the Data**
+
+The code visualizes the data on the map:
+
+1. A scatter plot is created using `m.scatter`, where each point represents a data value.
+	* The x-axis values are `longitude`, and the y-axis values are `latitude`.
+	* The color of each point is determined by the corresponding `data` value, using a jet colormap (`cmap=plt.cm.jet`).
+2. A colorbar is added to the map using `m.colorbar`, with a label set to the units of the data.
+
+**Saving the Plot**
+
+The code saves the plot to a PNG file:
+
+1. The base name of the HDF5 file is extracted using `os.path.basename`.
+2. The plot title is set to include the base name and long name of the dataset.
+3. The figure object (`fig`) is saved to a PNG file with the same base name as the HDF5 file, but with a `.py.png` extension.
+
+That's it!

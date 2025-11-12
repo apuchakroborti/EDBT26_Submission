@@ -1,0 +1,28 @@
+A Python script that reads an HDF5 file containing ASTER GED data, extracts specific datasets, and visualizes them on a map.
+
+1. Read the input HDF5 file in read-only mode.
+
+2. Extract datasets:
+   - 'Mean Emissivity for Band 10' from '/Emissivity/Mean' as a 2D slice (1st index along x-axis).
+   - Retrieve the Description attribute's 0th value.
+   - Set units to None and long name to 'Mean emissivity for Band 10'.
+
+3. Extract geolocation data:
+   - Latitude from 'Latitude'.
+   - Longitude from 'Longitude'.
+
+4. Process mean data:
+   - Replace -9999 with NaN.
+   - Scale by multiplying with 0.001.
+   - Apply mask using numpy's masked_where.
+
+5. Create an equidistant cylindrical projection map with Basemap, setting latitude (62.5-64.5) and longitude (89.5-87.5) ranges.
+
+6. Add map features:
+   - Coastlines with linewidth 0.5.
+   - Parallels at 62, 63, 64 with left labels only
+   - Meridians at -89, -88, -87 with bottom labels only
+
+7. Plot data using pcolormesh with latlon=True.
+
+8. Add colorbar labeled 'None' and a title combining the filename's base name with 'Mean Emissivity for Band 10'.

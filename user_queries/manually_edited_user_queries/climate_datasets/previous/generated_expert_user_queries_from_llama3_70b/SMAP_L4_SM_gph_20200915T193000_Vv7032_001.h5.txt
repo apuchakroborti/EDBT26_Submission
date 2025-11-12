@@ -1,0 +1,68 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for interacting with the operating system (e.g., getting the current working directory)
+2. `matplotlib.pyplot` as `plt`: for creating plots and visualizations
+3. `numpy` as `np`: for numerical computations and data manipulation
+4. `mpl_toolkits.basemap` as `Basemap`: for creating maps and geospatial visualizations
+5. `h5py`: for reading and manipulating HDF5 files
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, which is the name of the HDF5 file to be read.
+
+**Reading HDF5 File**
+
+The code opens the HDF5 file in read mode (`'r'`) using `h5py`. The `with` statement ensures that the file is properly closed when it's no longer needed.
+
+**Extracting Data and Attributes**
+
+The code extracts data and attributes from the HDF5 file:
+
+1. It reads the dataset `/Geophysical_Data/sm_profile` into a NumPy array `data`.
+2. It extracts several attributes associated with the dataset:
+	* `units`: the units of measurement for the data
+	* `long_name`: a longer description of the data
+	* `_FillValue`: the fill value used to represent missing or invalid data
+	* `valid_max` and `valid_min`: the valid range of values for the data
+
+The code decodes the attribute strings from ASCII bytes using the `decode()` method.
+
+**Data Processing**
+
+The code performs several operations on the data:
+
+1. It identifies invalid data points by checking if they fall outside the valid range or are equal to the fill value.
+2. It replaces these invalid data points with NaN (Not a Number) values.
+3. It creates a masked array `data` using NumPy's `ma` module, which allows for efficient handling of missing data.
+
+**Extracting Geolocation Data**
+
+The code extracts two datasets:
+
+1. `/cell_lat`: latitude values
+2. `/cell_lon`: longitude values
+
+These datasets are used to create a map visualization later.
+
+**Creating Map Visualization**
+
+The code uses the `Basemap` library to create a map visualization:
+
+1. It creates a Basemap object `m` with a cylindrical projection and sets various parameters (e.g., resolution, latitude and longitude ranges).
+2. It draws coastlines, parallels, and meridians on the map.
+3. It scatters the data points on the map using the `scatter()` method, with colors representing the values in the `data` array.
+4. It adds a colorbar to the plot with a label indicating the units of measurement.
+
+**Saving Plot to File**
+
+The code saves the plot to a PNG file:
+
+1. It gets the base name of the HDF5 file using `os.path.basename()`.
+2. It sets the title of the plot to include the base name and the long description of the data.
+3. It saves the figure to a file with a `.png` extension using `plt.gcf()` and `fig.savefig()`.
+
+Note that the last line, `plt.show()`, is commented out, which means the plot will not be displayed on screen when running this script. Instead, it will only be saved to a file.

@@ -1,0 +1,52 @@
+Here is the reduced text while keeping implementation details:
+
+**Importing libraries**
+
+The first few lines import Python libraries for data manipulation, plotting, and HDF5 file handling:
+```python
+import datetime
+import os
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+import h5py
+```
+**Defining the HDF5 file name**
+
+The code defines the HDF5 file name to be accessed:
+```python
+FILE_NAME = 'acos_L2s_110101_02_Production_v201201_L2Sub7309_r01_PolB_161206183303.h5'
+```
+Replace this with your actual file name.
+
+**Opening and accessing datasets**
+
+The code opens the HDF5 file in read-only mode, accesses several datasets, and reads data from each:
+```python
+with h5py.File(FILE_NAME, mode='r') as f:
+    dset_var = f['/RetrievalResults/xco2']
+    dset_lat = f['/SoundingGeometry/sounding_latitude_geoid']
+    ...
+    data = dset_var[:]
+    lat = dset_lat[:]
+    ...
+```
+**Plotting and saving**
+
+The code creates two subplots using `matplotlib`, adds annotations, and saves the plot to a PNG file:
+```python
+fig = plt.figure(figsize=(15, 6))
+plt.subplot(1, 2, 1)
+...
+plt.subplot(1, 2, 2)
+...
+m.plot(x[0], y[0], marker='o', color='red')
+plt.annotate('START',
+             xy=(x[0] + 200000, y[0]),
+             xycoords='data',
+             color='red')
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+This code reads all the necessary data from the HDF5 file and plots it.

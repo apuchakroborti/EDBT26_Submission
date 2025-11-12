@@ -1,0 +1,27 @@
+A Python script to read and visualize HDF-EOS5 file data.
+
+1. Import Libraries
+2. Open File: Use h5py to open the file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' in read mode.
+
+3. Retrieve Data:
+   - Extract grid metadata from '/HDFEOS INFORMATION/StructMetadata.0'.
+   - Read SurfacePressure data from 'SurfacePressure' from the group `HDFEOS/GRIDS/NadirGrid/Data Fields` into a NumPy array (dtype float64).
+   - Extract metadata: '_FillValue', 'MissingValue', 'Title' (using decode()), and 'Units' (using decode())
+
+4. Process Data:
+   - Identify invalid values using np.logical_or with SurfacePressure == _FillValue[0] and SurfacePressure == MissingValue[0].
+   - Set invalid values to NaN.
+   - Create a masked array using np.ma.masked_array with parameters SurfacePressure data and isnan(SurfacePressure).
+
+5. Retrieve Coordinates:
+   - Extract Longitude and Latitude from '/HDFEOS/GRIDS/NadirGrid/Data Fields/Longitude' and 'Latitude' as float64 NumPy arrays.
+
+6. Create Map:
+   - Initialize a Basemap object with cylindrical projection, resolution 'l', latitude range [-90, 90], longitude range [-180, 180].
+   - Draw coastlines (linewidth=0.5), parallels from -45 to 91 with interval of 45 with labels at left,
+      and meridians from -180 to 180 with interval 45 with labels at bottom
+
+7. Visualize Data:
+   - Use pcolormesh to plot data with longitude, latitude, SurfacePressure data, and latlon=True.
+   - Add a colorbar with the Units label from metadata.
+   - Set the title as a concatenation of the file's base name and the Title metadata.

@@ -1,0 +1,54 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Create a polar coordinate diagram using data from "95_h5_data.h5" to display the highest temperatures on the first of each month in Amherst, spanning from January 1, 2004, to August 1, 2015. The data includes datasets labeled "Year," "Date," and "Temperature." The diagram should include:
+
+- 12 sectors, each representing a month of the year.
+- Temperature data plotted according to the corresponding month.
+- Circular points for the temperature data, slightly offset to prevent alignment along a single radial line.
+- Abbreviated labels for the months (Jan, Feb, Mar, etc.).
+- A blue curve that connects the data points from the year 2015.
+- A legend positioned on the right side of the diagram.
+- A title: "Monthly Highest Temperature in Amherst (2004-2015)."
+The purpose of the diagram is to clearly illustrate the temperature trends and monthly variations over the years, with an emphasis on the data from 2015.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to access datasets labeled "Year," "Date," and "Temperature" from a file named "95_h5_data.h5" using h5py?
+
+NumPy Data Preprocessing Sub-query:
+How to filter temperature data for the highest temperatures on the first of each month spanning from January 1, 2004, to August 1, 2015, and handle missing values with `_FillValue`?
+
+Plotting and Visualization Sub-query:
+How to create a polar coordinate diagram using matplotlib or cartopy that includes 12 sectors for months, plots temperature data as circular points with slight offsets, adds abbreviated month labels, connects 2015 data points with a blue curve, positions the legend on the right side, and titles it "Monthly Highest Temperature in Amherst (2004-2015)"?

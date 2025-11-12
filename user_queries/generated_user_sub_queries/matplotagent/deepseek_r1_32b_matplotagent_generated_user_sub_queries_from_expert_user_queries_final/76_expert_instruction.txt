@@ -1,0 +1,66 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            I Have some data of Clothing Stores Retail Sales in U.S.A named in h5 format named '76_h5_data.h5'. 
+There are two datasets in the .h5 file. The first dataset is "Womans Millions of dollars". the second dataset is "Mens millions of Dollars". 
+Write a python script to read data from file "76_h5_data.h5" and create a vertical two-part graph with the top part being a box plot and the bottom part a histogram. 
+The data visualized relates to 'Womens millions of dollars' in retail sales. The plot showcase the distribution of women's clothing retail sales in the U.S. 
+The upper section is an axis-free box plot highlighting key statistical values, while the lower section is a histogram detailing the frequency distribution. 
+Red dashed lines indicate the quartiles, seamlessly connecting both plots to emphasize these measures.The box plot should have no visible axes, and it should be narrower in width. 
+Include numerical labels for key statistics such as the minimum, lower quartile, median, upper quartile, and maximum values, placed just above the box plot. 
+The histogram should have visible axes and a smaller bin size for finer details. Add two continuous red dashed lines at the lower and upper quartiles. 
+These lines should extend seamlessly across both the box plot and the histogram, without any gaps. 
+The entire plot should be tightly laid out with no space between the box plot and the histogram so that the line can have no break.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per the guidelines. Let me go through each part step by step.
+
+First, the HDF5 Dataset Access. The user has a file named '76_h5_data.h5' with two datasets: "Womans Millions of dollars" and "Mens millions of Dollars". They want to read the data from the first dataset. So, I should focus on how to access this specific dataset using h5py.
+
+Next, for NumPy-based Data Preprocessing, they need to handle any _FillValue in the dataset. This involves masking or filtering out invalid data points before processing. Since the user mentioned preprocessing logic like min and max, I'll include that as well.
+
+Lastly, the Plotting and Visualization part is quite detailed. They want a two-part graph with a box plot on top and a histogram below. The box plot should have no axes and be narrower, while the histogram needs visible axes and smaller bins. Red dashed lines for quartiles must connect both plots seamlessly without any breaks. Also, numerical labels for key statistics need to be added above the box plot.
+
+I'll make sure each sub-query is clear and targets only its specific domain.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access the dataset "Womans Millions of dollars" from the HDF5 file '76_h5_data.h5' using h5py, including opening the file, navigating to the correct dataset path, and retrieving the data.
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue in NumPy arrays, apply masks using np.where or np.ma.masked_where, and compute key statistical values such as min, max, lower quartile, median, upper quartile for preprocessing retail sales data.
+
+Plotting and Visualization Sub-query:
+How to create a vertical two-part graph with matplotlib where the top is an axis-free box plot and the bottom is a histogram. The plots should share continuous red dashed lines for quartiles, have no space between them, include numerical labels above the box plot, and ensure seamless connection of the dashed lines across both plots.

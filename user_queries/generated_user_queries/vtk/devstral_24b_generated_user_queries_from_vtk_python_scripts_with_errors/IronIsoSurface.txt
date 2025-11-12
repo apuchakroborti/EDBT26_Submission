@@ -1,0 +1,51 @@
+Purpose
+This script is designed to create a 3D visualization of an iron-protein surface. It reads data from a file and then displays it on your screen as a colorful 3D model.
+
+Step-by-Step Explanation
+
+1. Setting Up the Environment:
+   - The script starts by importing some tools (modules) that are needed to create and display the 3D visualization. These tools help with rendering graphics, handling colors, reading data files, and creating interactive windows.
+
+2. Defining the Main Function:
+   - The main function is where all the action happens. It's like the director of a play who coordinates everything.
+
+3. File Name:
+   - The script specifies which file to read from: 'IronIsoSurface_ironProt.vtk'. This file contains the data needed to create the 3D model.
+
+4. Setting Up Colors:
+   - A color tool is created to easily access named colors like "Banana" or "SlateGray".
+
+5. Creating the Rendering Environment:
+   - The script sets up a window where the 3D visualization will be displayed.
+   - It creates a renderer (think of it as a camera that captures and displays images).
+   - It also sets up an interactor, which allows you to interact with the 3D model using your mouse or keyboard.
+
+6. Building the Pipeline:
+   - The script reads data from the specified file using a reader.
+   - It then processes this data through various filters:
+     - A contour filter is used to create the surface of the iron-protein based on the data values.
+     - An outline filter creates an outline around the 3D model.
+
+7. Mapping and Coloring:
+   - The processed data (the 3D model) is mapped onto a visual representation that can be displayed in the window.
+   - The script sets the color of the iron-protein surface to "Banana" yellow and keeps the outline black by default.
+
+8. Adding Actors to the Renderer:
+   - The script adds both the outlined model and the colored surface model to the renderer, so they will appear in the display window.
+   - It also sets the background color of the window to a slate gray color.
+
+9. Setting Up the Window Size and Title:
+   - The size of the rendering window is set to 640x640 pixels (like setting up a square picture frame).
+   - The title of the window is set to 'IronIsoSurface'.
+
+10. Rendering the Image:
+    - The script adjusts the camera angle to give a better view of the model.
+    - It then renders (draws) the image in the window.
+
+11. Starting Interaction:
+    - Finally, it starts the interactor, allowing you to interact with the 3D model using your mouse or keyboard.
+
+Summary
+In simple terms, this script reads data about an iron-protein surface from a file, processes that data to create a 3D model, colors and outlines the model, sets up a window to display it, and then shows the model in that window. You can interact with the model by rotating or zooming using your mouse.
+
+This is like having a virtual microscope where you can see and manipulate a detailed 3D model of an iron-protein surface on your computer screen.

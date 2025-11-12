@@ -1,0 +1,33 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+Let's break down this Python code step by step:
+
+**Importing Modules**
+
+The code imports several modules: `datetime`, `os`, `matplotlib` and `matplotlib.pyplot` (as `mpl` and `plt`), `Basemap` from `mpl_toolkits.basemap`, and `numpy` (as `np`).
+
+**Defining the `run` Function**
+
+The `run` function takes a single argument `FILE_NAME` and reads data from an HDF5 file, processes it, and creates a plot.
+
+**Reading Data from HDF5 File**
+
+The `run` function reads data using either `netCDF4` or `h5py`, depending on the value of `USE_NETCDF4`. It accesses the `/Data_Fields` group and reads four datasets: `ProfileOzone`, `Latitude`, `ProfilePressureLevels`, and `Date`.
+
+**Processing Data**
+
+The code processes the data by converting the date, applying a logarithmic scale to pressure levels, and creating a masked array for ozone data.
+
+**Creating the Plot**
+
+It creates a contour plot of ozone data using `matplotlib` with latitude on the x-axis and logarithmic pressure levels on the y-axis. It adds a color bar, labels axes, sets the title, and adds a text label displaying the date.
+
+**Saving the Plot**
+
+Finally, it saves the plot to a PNG file using `matplotlib`.
+
+**Main Script**
+
+The main script sets up the environment, checks for an environment variable `HDFEOS_ZOO_DIR`, and calls the `run` function with an HDF5 file name as an argument.
+
+Overall, this code reads data from an HDF5 file, processes it, and creates a visualization of ozone data using `matplotlib`.

@@ -1,0 +1,89 @@
+1. **Import Libraries**:
+   - Import `vtkInteractionStyle` from `vtkmodules.vtkInteractionStyle`
+   - Import `vtkRenderingOpenGL2` from `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - Import `vtkImageHSVToRGB` from `vtkmodules.vtkImagingColor`
+   - Import several classes (`vtkImageCast`, `vtkImageConstantPad`, `vtkImageExtractComponents`, and `vtkImageMagnify`) from `vtkmodules.vtkImagingCore`
+   - Import additional classes (`vtkImageEuclideanToPolar`, `vtkImageGaussianSmooth`, and `vtkImageGradient`) from `vtkmodules.vtkImagingGeneral`
+   - Import `vtkImageViewer` from `vtkmodules.vtkInteractionImage`
+   - Import `vtkRenderWindowInteractor` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Define a function named `main()`
+
+3. **Set File Name and Colors**:
+   - Set `fileName` to `'ImageGradient_FullHead.mhd'`
+   - Create an instance of `vtkNamedColors` called `colors`
+
+4. **Read CT Data**:
+   - Create an instance of `vtkMetaImageReader` named `reader`
+   - Set the file name for the reader using `SetFileName(fileName)`
+   - Update the reader with `Update()`
+
+5. **Cast Image to Float**:
+   - Create an instance of `vtkImageCast` named `cast`
+   - Connect the output port of the reader to the input connection of the cast filter using `SetInputConnection(reader.GetOutputPort())`
+   - Set the output scalar type to float with `SetOutputScalarTypeToFloat()`
+
+6. **Magnify Image**:
+   - Create an instance of `vtkImageMagnify` named `magnify`
+   - Connect the output port of the cast filter to the input connection of the magnify filter using `SetInputConnection(cast.GetOutputPort())`
+   - Set magnification factors with `SetMagnificationFactors(2, 2, 1)`
+   - Enable interpolation with `InterpolateOn()`
+
+7. **Smooth Data**:
+   - Create an instance of `vtkImageGaussianSmooth` named `smooth`
+   - Connect the output port of the magnify filter to the input connection of the smooth filter using `SetInputConnection(magnify.GetOutputPort())`
+   - Set dimensionality with `SetDimensionality(2)`
+   - Set standard deviations with `SetStandardDeviations(1.5, 1.5, 0.0)`
+   - Set radius factors with `SetRadiusFactors(2.01, 2.01, 0.0)`
+
+8. **Compute Gradient**:
+   - Create an instance of `vtkImageGradient` named `gradient`
+   - Connect the output port of the smooth filter to the input connection of the gradient filter using `SetInputConnection(smooth.GetOutputPort())`
+   - Set dimensionality with `SetDimensionality(2)`
+
+9. **Convert Data to Polar Coordinates**:
+   - Create an instance of `vtkImageEuclideanToPolar` named `polar`
+   - Connect the output port of the gradient filter to the input connection of the polar filter using `SetInputConnection(gradient.GetOutputPort())`
+   - Set theta maximum with `SetThetaMaximum(255.0)`
+
+10. **Add Third Component**:
+    - Create an instance of `vtkImageConstantPad` named `pad`
+    - Connect the output port of the polar filter to the input connection of the pad filter using `SetInputConnection(polar.GetOutputPort())`
+    - Set the number of scalar components with `SetOutputNumberOfScalarComponents(3)`
+    - Set constant value with `SetConstant(200.0)`
+
+11. **Permute Components**:
+    - Create an instance of `vtkImageExtractComponents` named `permute`
+    - Connect the output port of the pad filter to the input connection of the permute filter using `SetInputConnection(pad.GetOutputPort())`
+    - Set components with `SetComponents(0, 2, 1)`
+
+12. **Convert HSV to RGB**:
+    - Create an instance of `vtkImageHSVToRGB` named `rgb`
+    - Connect the output port of the permute filter to the input connection of the rgb filter using `SetInputConnection(permute.GetOutputPort())`
+    - Set maximum value with `SetMaximum(255.0)`
+
+13. **Setup Image Viewer**:
+    - Create an instance of `vtkImageViewer` named `viewer`
+    - Connect the output port of the rgb filter to the input connection of the viewer using `SetInputConnection(rgb.GetOutputPort())`
+    - Set z-slice with `SetZSlice(22)`
+    - Set color window with `SetColorWindow(255.0)`
+    - Set color level with `SetColorLevel(127.0)`
+    - Set render window size with `GetRenderWindow().SetSize(512, 512)`
+    - Set renderer background using `GetRenderer().SetBackground(colors.GetColor3d('Silver'))`
+    - Set window name with `GetRenderWindow().SetWindowName('ImageGradient')`
+
+14. **Create Render Window Interactor**:
+    - Create an instance of `vtkRenderWindowInteractor` named `iren`
+    - Setup the interactor for the viewer using `viewer.SetupInteractor(iren)`
+    - Render the image with `viewer.Render()`
+
+15. **Initialize and Start Interaction**:
+    - Initialize the render window interactor with `iren.Initialize()`
+    - Start interaction with `iren.Start()`
+
+16. **Execute Main Function**:
+    - Check if the script is being run as the main module using `if __name__ == '__main__':`
+    - Call the `main()` function

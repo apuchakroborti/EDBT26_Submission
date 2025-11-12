@@ -1,0 +1,18 @@
+a code that reads an HDF5 file and visualizes its contents. 
+The code starts by importing necessary libraries.
+It then reads a data file which is located at DeepBlue-SeaWiFS_L2_20101210T135954Z_v004-20130525T172725Z.h5, 
+After that it access the dataset named `aerosol optical thickness 550 ocean`
+
+Next, it reads latitude and longitude data. It also extracts the long name and units from the dataset named aerosol_optical_thickness_550_ocean decodes the value using the decode() function.
+
+The code prepares the data for visualization by replacing -999 values with NaN
+It then creates a masked data array using numpy masked array function with the parameters data itself and checking numpy isnan of the aerosol optical thickness 550 ocean data.
+
+It then creates an orthographic map projection using mean latitude and longitude coordinates, 
+it also adds coastlines with width 0.5, parrallels with the numpy arrange of values -90, 120, and 30.
+After that it also add meridians with the first parameter using numpy of arrange -180, 180, and 45 
+
+It creates a pseudocolor mesh plot of the data.
+It add colorbar nad set label with a value the previously accessed units value
+
+Finally, the code customizes the plot by setting the title and saving it as a PNG file in the same directory of the data file.

@@ -1,0 +1,27 @@
+Accesses and visualizes ozone data from a NASA HDF-EOS file named `DSCOVR_EPIC_L2_TO3_03_20210301005516_03.h5`. The script should perform the following steps:
+
+1. Import necessary libraries: os, cartopy.crs, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, h5py, and LATITUDE_FORMATTER and LONGITUDE_FORMATTER from cartopy.mpl.gridlines.
+
+2. Open the HDF5 file in read-only mode and extract the following datasets:
+   - `/Ozone` for ozone data
+   - `/Latitude` for latitude coordinates
+   - `/Longitude` for longitude coordinates
+
+3. Extract attributes such as `units` (expected value: 'DU') and `long_name` (expected value: 'Ozone').
+
+4. Process the ozone data by replacing the static fill value (-999.0) with NaN values using numpy's masked_where function, based on whether the ozone data is not a number.
+
+5. Calculate the midpoint of the latitude and longitude arrays to determine the center point for visualization.
+
+6. Create an orthographic projection map centered at the calculated midpoint using Cartopy's Orthographic class.
+
+7. Plot the ozone data as a scatter plot with parameters:
+   - Longitude as x-coordinates
+   - Latitude as y-coordinates
+   - Ozone values represented by color (using cmap=plt.cm.jet)
+   - Marker size of 1
+   - Data transformation set to PlateCarree coordinates
+
+8. Add map features including gridlines, coastlines, and degree labels for latitude and longitude.
+
+9. Create a colorbar with a width of 0.022 and padding of 0.01.

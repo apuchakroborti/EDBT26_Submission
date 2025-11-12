@@ -1,0 +1,33 @@
+Here is the reduced description, condensed by about 20% while keeping as many implementation details as possible:
+
+**Comments and metadata**
+
+The script begins with comments and metadata, including copyright information, usage instructions, and testing details.
+
+**Importing libraries**
+
+The script imports several libraries: `os`, `matplotlib` and `matplotlib.pyplot` as `mpl` and `plt`, `Basemap` from `mpl_toolkits.basemap`, `numpy` as `np`, and `h5py`.
+
+**Setting up constants and file paths**
+
+The script defines constants: `FILE_NAME`, the name of the HDF5 file; `path`, a string representing the path to the data field within the HDF5 file; and `DATAFIELD_NAME`, the full path to the specific dataset.
+
+**Reading the HDF5 file**
+
+The script opens the HDF5 file in read-only mode using `h5py.File` and retrieves the dataset specified by `DATAFIELD_NAME`. It reads the contents into a NumPy array called `data` and retrieves several attributes, including `ScaleFactor`, `Offset`, `MissingValue`, `_FillValue`, `Title`, and `Units`.
+
+**Processing the data**
+
+The script replaces missing values and fill values with NaN, applies the scale factor and offset to the data, and masks where NaN.
+
+**Creating a map**
+
+The script uses `Basemap` to create an equidistant cylindrical projection, drawing coastlines, parallels, and meridians. It plots the data using `scatter`, coloring each point according to its value in the `datam` array (masked where NaN).
+
+**Adding a colorbar and title**
+
+The script creates a colorbar with a label set to the units of the data and sets the plot title using the file name and dataset title.
+
+**Saving the plot**
+
+Finally, the script saves the plot as a PNG image using `fig.savefig()`, constructing the file name by appending `.py.png` to the base name of the input HDF5 file.

@@ -1,0 +1,76 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a Python script that processes an HDF5 file and generates a split-window plot with specific visualizations.
+
+1. Import Libraries: Include os, cartopy.crs, matplotlib, matplotlib.pyplot, numpy, and datetime for handling OS functions, map projections, plotting, numerical operations, and date/time processing.
+
+2. Define Constants: Set `FILE_NAME` to "ATL12_20190330212241_00250301_006_03.h5".
+
+3. Open HDF5 File: Read the file in read mode and access these datasets:
+   - `/gpsr/navigation/latitude`
+   - `/gpsr/navigation/longitude`
+   - `/atlas/pce1/background/bg_cnt_50shot_s` (main data)
+   - `/atlas/pce1/background/delta_time` (time data)
+
+4. Extract Attributes: For the bg_cnt_50shot_s dataset, read 'units' and 'long_name' attributes using decode('ascii', 'replace').
+
+5. Create Plots:
+   - First Plot (Time vs. Counts): 
+     - Set figure size to 10x10.
+     - Use subplot ax1 at position 2,1,1.
+     - Calculate elapsed_time by subtracting the first time value from each time point.
+     - Plot elapsed_time vs. main data with blue circles.
+     - Label axes with time units and main data units.
+     - Set title combining the file name, dataset name, and long_name.
+
+   - Second Plot (Trajectory Map):
+     - Calculate midpoint latitude (lat_m) and longitude (lon_m).
+     - Use cartopy's orthographic projection centered at lat_m and lon_m.
+     - Enable gridlines with labels and degrees, minutes, seconds (dms).
+     - Display global features and coastlines.
+     - Plot trajectory in blue, using Geodetic transformation.
+     - Mark the starting point with a red circle and label "START" offset by 200 km.
+
+6. Adjust Layout: Use tight layout with padding of 3.0 for proper spacing.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py`, access datasets by path (e.g., `/gpsr/navigation/latitude`), and read dataset attributes like 'units' and 'long_name', including decoding byte strings.
+
+NumPy Data Preprocessing Sub-query:
+How to calculate the difference between consecutive elements in a NumPy array to create elapsed time, and how to handle potential missing or fill values within the data.
+
+Plotting and Visualization Sub-query:
+How to create subplots using `matplotlib`, configure map projections (orthographic) with `cartopy`, draw coastlines and gridlines, plot trajectories on a map using Geodetic transformations, and customize plot elements like titles, labels, and colorbars.

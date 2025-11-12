@@ -1,0 +1,50 @@
+Here is the reduced text, retaining as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports various Python libraries:
+
+* `os`
+* `h5py` (for working with HDF5 files)
+* `numpy` (`np`) and `matplotlib.pyplot` (`plt`) for numerical computations and array manipulation
+
+**Defining the file name**
+
+A constant `FILE_NAME` is defined with a specific HDF5 file name.
+
+**Opening the HDF5 file**
+
+The code opens the HDF5 file in read-only mode using `h5py`.
+
+**Accessing and processing data**
+
+Within the `with` block:
+
+1. Accesses a dataset named `/Sigma0_Data/cell_sigma0_hh_fore`
+2. Extracts the data from the dataset and assigns it to a NumPy array
+3. Retrieves metadata about the dataset (units, long name, `_FillValue`, `valid_max`, and `valid_min`)
+
+**Validating and masking invalid data**
+
+The code:
+
+1. Checks if data is outside valid range and sets it to `np.nan`
+2. Replaces `_FillValue` occurrences with `np.nan`
+
+**Getting geolocation data**
+
+Accesses two datasets: `/Sigma0_Data/cell_lat` and `/Sigma0_Data/cell_lon`
+
+**Creating a map and visualizing the data**
+
+Within the `with` block:
+
+1. Creates a map using `Basemap`
+2. Draws coastlines, grid lines, and plots the data
+3. Adds a color bar at the bottom of the figure
+
+**Saving the plot**
+
+Sets the title and saves the figure as a PNG image.
+
+Note that I removed some of the details about metadata retrieval and validation/masking steps to reduce the text while still retaining key implementation details.

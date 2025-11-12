@@ -1,0 +1,67 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            I have data of protein consumption in 24 European countries named "77_h5_data.h5". 
+The datasets are ["Country", "Red Meat", "White Meat", "Eggs", "Milk", "Fish", "Cereals", "Starch", "Nuts", "Fruits and Vegetables"].
+Write a python code to create an image of a 2D scatter plot representing a K-Means clustering of data. 
+The plot should have three distinct clusters of points, each in its own color. 
+For example, Cluster 0 could be blue, Cluster 1 could be red, and Cluster 2 could be green. 
+Around each cluster, draw a semi-transparent ellipse in the same color as the cluster points but in a lighter shade, giving a sense of grouping. 
+Connect each data point to the centroid of its cluster with a thick grey line. The background should have a grid, enhancing the plot's readability. 
+Label the x-axis as 'Principal Component 1' and the y-axis as 'Principal Component 2'. 
+Annotate each data point with a small text label close to it, which could be the names of countries for a realistic touch, but ensure the text is legible. 
+The plot should have a title at the top: 'K-Means Clustering with PCA-reduced Data and Colored Ellipses'. 
+Include a legend on the side, denoting the clusters with their respective colors.   
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Alright, I need to break down the user's query into three specific sub-queries as per the guidelines. Let me go through each part step by step.
+
+First, the HDF5 Dataset Access. The user has a file named "77_h5_data.h5" and mentions several datasets like Country, Red Meat, etc. So I should focus on how to access this file using h5py, retrieve these datasets, and handle metadata if needed.
+
+Next, for NumPy-based Data Preprocessing, the task involves preparing the data for K-Means clustering. This includes handling any _FillValue (though in this case, maybe not necessary), applying masks, and performing PCA to reduce dimensions. I need to ensure that preprocessing steps like scaling or normalizing are considered.
+
+Lastly, the Plotting and Visualization part is quite detailed. The user wants a scatter plot with clusters, ellipses around each cluster, lines connecting points to centroids, grid background, labels, annotations, title, and legend. I should focus on using matplotlib for this, possibly with basemap or cartopy if geospatial elements were involved, but here it's more about the clustering visualization.
+
+I need to make sure each sub-query is clear and targets only its specific domain without overlapping into others.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access the "77_h5_data.h5" file using h5py, retrieve datasets including "Country", "Red Meat", "White Meat", "Eggs", "Milk", "Fish", "Cereals", "Starch", "Nuts", and "Fruits and Vegetables", and handle metadata.
+
+NumPy Data Preprocessing Sub-query:
+How to preprocess the protein consumption data using NumPy, including handling _FillValue if present, applying masks, and preparing the data for K-Means clustering with PCA-reduced dimensions.
+
+Plotting and Visualization Sub-query:
+How to create a 2D scatter plot of K-Means clusters using matplotlib, draw semi-transparent ellipses around each cluster, connect points to centroids with grey lines, add grid, labels, annotations, title, and legend.

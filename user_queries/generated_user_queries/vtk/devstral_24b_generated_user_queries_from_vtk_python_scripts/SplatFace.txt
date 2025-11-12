@@ -1,0 +1,50 @@
+This Python script performs elliptical splatting for surface reconstruction using VTK (Visualization Toolkit) modules. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkContourFilter`, `vtkMaskPoints`, and `vtkPolyDataNormals` from `vtkmodules.vtkFiltersCore`
+   - `vtkPolyDataReader` from `vtkmodules.vtkIOLegacy`
+   - `vtkGaussianSplatter` from `vtkmodules.vtkImagingHybrid`
+   - `vtkActor`, `vtkCamera`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Create a `colors` object using `vtkNamedColors()`.
+   - Set the filename for the input VTK file: `'SplatFace_fran_cut.vtk'`.
+
+3. **Create Rendering Components**:
+   - Create a renderer (`ren1`), render window (`renWin`), and interactor (`iren`).
+   - Add the renderer to the render window.
+
+4. **Read Input File**:
+   - Read the VTK file using `vtkPolyDataReader()` with the filename set to `'SplatFace_fran_cut.vtk'`.
+
+5. **Process Data**:
+   - Generate normals for the input data using `vtkPolyDataNormals()`.
+   - Mask points from the normal data using `vtkMaskPoints()`, setting a ratio of 8.
+
+6. **Apply Gaussian Splatter**:
+   - Use `vtkGaussianSplatter()` to splat the masked points into a 100x100x100 volume.
+   - Set eccentricity, enable normal warping, scale factor, and radius for the splatter.
+
+7. **Extract Isosurface**:
+   - Extract an isosurface from the splattered data using `vtkContourFilter()`, setting a contour value of 0.25.
+
+8. **Create Mappers and Actors**:
+   - Create mappers (`splatMapper` and `cyberMapper`) for the splatted surface and original mesh.
+   - Create actors (`splatActor` and `cyberActor`) with properties like color and representation (wireframe for the original mesh).
+
+9. **Set Up Rendering Scene**:
+   - Add both actors to the renderer.
+   - Set background color, window size, and title.
+
+10. **Configure Camera**:
+    - Configure camera settings including clipping range, focal point, position, view angle, and view up direction.
+
+11. **Render and Interact**:
+    - Render the scene using `renWin.Render()`.
+    - Start interaction with `iren.Start()`.
+
+12. **Execute Main Function**:
+    - If this script is run as the main module, call the `main()` function.

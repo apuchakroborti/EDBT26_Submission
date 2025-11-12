@@ -1,0 +1,11 @@
+It starts by importing necessary libraries: `os`, `matplotlib`, `numpy`, `mpl_toolkits.basemap`, and `h5py`. Then it sets the Matplotlib font size to 9.
+
+The code defines two constants: `FILE_NAME` for the HDF5 file name, and reads/processed the data from the `/S1/Tc` dataset. It extracts units, long name, and fill value from the HDF5 attributes, replaces fill values with NaN, and masks the array to ignore NaN values.
+
+It also accesses geolocation data from `/S1/Latitude` and `/S1/Longitude`.
+
+The code creates a Basemap object with a cylindrical projection, low resolution, and specific latitude/longitude limits. It draws coastlines, parallels, and meridians on the map.
+
+Then it plots the data as a scatter plot using `m.scatter`, with x/y coordinates from longitude/latitude values, color determined by the dataset value, and marker size set to 1. A colorbar is added to the plot with a label set to the units of the dataset.
+
+Finally, the code saves the plot as a PNG file with a title created by concatenating the HDF5 base name and long name of the dataset."

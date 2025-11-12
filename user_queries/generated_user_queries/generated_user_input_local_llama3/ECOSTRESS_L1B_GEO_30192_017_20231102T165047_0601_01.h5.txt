@@ -1,0 +1,23 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+This Python script accesses and visualizes a NASA LP DAAC ECOSTRESS L2 HDF5 file in Python. Here's a step-by-step explanation:
+
+1. **Importing necessary libraries**:
+   - `os`
+   - `matplotlib.pyplot as plt`
+   - `numpy as np`
+   - `mpl_toolkits.basemap`
+
+2. **Defining file names and opening HDF5 files**:
+   Define two file names: `FILE_NAME` and `FILE_NAME_GEO`. Open both HDF5 files for reading (`"r"` mode) using a context manager (`with`).
+
+3. **Accessing data from HDF5 file and processing data**:
+   Access the `/SDS/LST` dataset from `FILE_NAME` and store it in `data`. Read attributes: `scale_factor`, `add_offset`, `units`, `_FillValue`, and `long_name`. Apply a fill value, scale, and add an offset. Create masked arrays for `data`, `lon`, and `lat`.
+
+4. **Creating a map and adding data**:
+   Use `Basemap` to create a map with an Albers Equal-Area (aea) projection. Add the processed data using `pcolormesh`. Add coastlines, parallels, and meridians.
+
+5. **Creating a color bar and saving figure**:
+   Add a color bar using `colorbar`, set label to units of data. Add title using `title`, with file name and long name as text. Save the figure to a PNG file using `savefig`.
+
+Note that I removed steps 6, 7, and 10, which were mainly descriptive and didn't add much value to the implementation details. The remaining steps should still provide a good overview of how to access and visualize an HDF5 file using Python.

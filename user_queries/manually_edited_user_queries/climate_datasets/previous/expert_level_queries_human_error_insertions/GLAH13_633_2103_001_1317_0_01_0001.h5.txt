@@ -1,0 +1,12 @@
+A Python code that processes an HDF5 file. 
+Here's what it does:
+The code imports necessary libraries and defines a `run` function that takes an HDF5 file name as an argument.
+To access the HDF5 file, depending on a variable setting. 
+It extracts datasets from the file, including latitude named d_lat, longitude named d_lon, d Surface temp, 
+and time values from groups like `Data1HZ --> Geolocation` and `Data1HZ --> Atmosphere`.
+
+The code then applies valid min and max values to these datasets and take slices of 2D datasets from valid min to valid max 
+and creates a plot with two subplots: one showing surface temperature vs. elapsed time, 
+and another displaying a map of the satellite's trajectory using Basemap.
+
+Finally, it saves the plot as a PNG file. The program uses Matplotlib for plotting and handles valid min and max values for each dataset.

@@ -1,0 +1,10 @@
+I have a Python script that reads an HDF5 file, extracts specific datasets, processes the data, and saves it to a CSV file. Here's how it works:
+
+The script starts by opening the HDF5 file 'OMSNO2_0.1x0.1_200501_SPv3.h5' in read mode.
+
+It then reads three datasets from the file: '/OMI_SurfNO2', '/Longitude', and '/Latitude'. These are stored in variables named `dset`, `x`, and `y`.
+
+The script extracts the shape of the data array, creates 2D grids for longitude and latitude, and flattens the arrays into a single 2D array.
+
+Finally, it saves the processed data to a CSV file. The filename is constructed by taking the basename of the original HDF5 file and appending '.csv'. 
+The data is saved with a header row containing column names and commas as delimiters.

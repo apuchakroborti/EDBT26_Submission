@@ -1,0 +1,36 @@
+1. Import necessary libraries: os, datetime, h5py, numpy as np, matplotlib.pyplot as plt, FormatStrFormatter from matplotlib.ticker, mpl_toolkits.basemap import Basemap.
+
+2. Open an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+3. Access the following datasets within the file:
+   - Ozone data: "/HDFEOS/SWATHS/O3/Data Fields/L2gpValue"
+   - Latitude values: "/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude"
+   - Pressure levels: "/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure"
+   - Time information: "/HDFEOS/SWATHS/O3/Geolocation Fields/Time"
+
+4. Read ozone data from index 0 to 70 along the x-axis and all y-axis data.
+
+5. Read latitude data from index 0 to 70.
+
+6. Read pressure data up to index 55.
+
+7. Extract units and title information from the ozone, latitude, and longitude datasets.
+
+8. Preprocess the data:
+   - Replace _FillValue with numpy NaN.
+   - Mask ozone data using masked_array where values are NaN.
+
+9. Calculate start and end times using datetime functions relative to "1993-01-01" plus time in seconds from index 0 and 70, respectively, and format these as strings.
+
+10. Create a pcolormesh plot with parameters: latitude, longitude, and ozone data transposed (data.T).
+
+11. Set x-axis label using latitude title and units, and y-axis label using longitude title and units.
+
+12. Set the plot title to include the data title concatenated with start and end times.
+
+13. Configure the plot:
+    - Invert the y-axis.
+    - Set y-scale to log.
+    - Format major ticks to display values with one decimal place.
+
+14. Display the plot.

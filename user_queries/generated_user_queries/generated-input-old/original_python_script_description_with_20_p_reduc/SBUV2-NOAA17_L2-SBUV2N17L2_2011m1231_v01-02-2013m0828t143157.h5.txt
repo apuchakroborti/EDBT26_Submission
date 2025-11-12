@@ -1,0 +1,33 @@
+Here's the reduced description, keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports several Python libraries: `os`, `h5py`, `datetime`, `numpy` (as `np`), `matplotlib` (as `mpl`) and its submodules, and `matplotlib.ticker`.
+
+**Defining constants and opening the HDF5 file**
+
+A constant `FILE_NAME` is defined with an HDF5 file name. The file is opened in read-only mode (`mode='r'`) using `h5py.File`, and the file object is assigned to `f`.
+
+**Reading datasets and attributes**
+
+The code reads several datasets from the HDF5 file, including `/SCIENCE_DATA/ProfileO3Retrieved`, `/GEOLOCATION_DATA/Latitude`, and `/ANCILLARY_DATA/PressureLevels`. It also reads attributes from these datasets, such as units, valid ranges, and fill values.
+
+**Reading data and applying attribute information**
+
+The code reads the entire datasets using slicing (`[:]`) and applies attribute information to the data, including setting invalid values to NaN and creating a masked array.
+
+**Sorting latitude and converting time**
+
+The code sorts the latitude values in ascending order and converts the time values from seconds since 1993-01-01 to datetime objects.
+
+**Creating a contour plot**
+
+A contour plot is created using `plt.contourf`, plotting ozone retrieval data against latitude and pressure levels. The sorted indices are used to ensure a monotonic latitude axis.
+
+**Customizing the plot**
+
+The code customizes the plot by setting axis labels, title, and adding a text box with start and end times. It also inverts the y-axis, applies a log scale, and removes scientific notation from y-axis tick labels.
+
+**Saving the plot**
+
+The plot is saved to a PNG file with a name based on the input file name using `fig.savefig(pngfile)`.

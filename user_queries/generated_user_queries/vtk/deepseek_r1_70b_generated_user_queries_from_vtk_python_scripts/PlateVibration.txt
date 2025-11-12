@@ -1,0 +1,54 @@
+### Step-by-Step Description of the Python Script
+
+1. Import Required Libraries:
+   - Import `vtkmodules.vtkInteractionStyle`
+   - Import `vtkmodules.vtkRenderingOpenGL2`
+   - From `vtkmodules.vtkCommonColor`, import `vtkNamedColors`
+   - From `vtkmodules.vtkFiltersCore`, import `vtkPolyDataNormals` and `vtkVectorDot`
+   - From `vtkmodules.vtkFiltersGeneral`, import `vtkWarpVector`
+   - From `vtkmodules.vtkFiltersModeling`, import `vtkOutlineFilter`
+   - From `vtkmodules.vtkIOLegacy`, import `vtkPolyDataReader`
+   - From `vtkmodules.vtkRenderingCore`, import `vtkActor`, `vtkDataSetMapper`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer`
+
+2. Define the Main Function:
+   - Set the file name to `'PlateVibration_plate.vtk'`.
+
+3. Set Up Colors Using vtkNamedColors:
+   - Define color 'PlateColor' with RGB values `[255, 160, 140]`.
+   - Define color 'BkgColor' with RGB values `[65, 99, 149]`.
+
+4. Read the VTK File:
+   - Use `vtkPolyDataReader` to read the file `'PlateVibration_plate.vtk'`.
+   - Update the reader and get the bounds of the output data.
+   - Set the vectors name to 'mode2'.
+
+5. Process the Data with Filters:
+   - Apply `vtkPolyDataNormals` to compute normals from the plate data.
+   - Use `vtkWarpVector` to warp the data based on normals, scaling by 0.5.
+   - Apply `vtkVectorDot` to color the warped data.
+
+6. Create Mappers and Actors:
+   - Create a mapper (`plateMapper`) for the warped data and assign it to an actor (`plateActor`).
+     - Set the actor's color to 'PlateColor'.
+     - Rotate the actor 90 degrees around the X-axis.
+   - Create an outline of the plate using `vtkOutlineFilter`.
+   - Create another mapper (`spikeMapper`) for the outline and assign it to an actor (`outlineActor`).
+     - Set the actor's color to white.
+     - Rotate the actor 90 degrees around the X-axis.
+
+7. Set Up the Rendering Environment:
+   - Create a renderer (`ren`), render window (`renWin`), and interactor (`iren`).
+   - Add both actors to the renderer.
+   - Set the render window size to 500x500 pixels and name it 'PlateVibration'.
+
+8. Configure the Scene:
+   - Render the scene once to initialize.
+   - Set the background color to 'BkgColor'.
+   - Adjust the camera position to `[-3.7, 13, 15.5]` for a specific view.
+   - Reset the camera clipping range and render again.
+
+9. Start Interaction:
+   - Start the interactor to enable user interaction with the rendered scene.
+
+10. Run the Script:
+    - Execute the `main()` function when the script is run as the main program.

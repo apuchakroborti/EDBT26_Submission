@@ -1,0 +1,24 @@
+A Python script that processes an HDF5 file and generates a geospatial plot as follows:
+
+1. Import Libraries: Use os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Load Data: Open the HDF5 file "1C.F19.SSMIS.XCAL2021-V.20160105-S214106-E232259.009078.V07A.HDF5" in read-only mode using h5py.
+
+3. Extract Dataset: Access the "Tc" dataset, which is 3D. Extract all data from the first and second dimensions at the 0th index of the third dimension. 
+Retrieve attributes: 'units', 'LongName', and '_FillValue'.
+
+4. Data Cleaning: Replace values matching _FillValue with NaN in the Tc dataset.
+
+5. Geolocation Data: Read latitude from "Latitude" and longitude from "Longitude".
+
+6. Map Setup: Create a cylindrical projection map with low resolution, latitude range -90 to 90, and longitude range -180 to 180. 
+Add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90], 
+and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with labels [True, False, False, True].
+
+7. Plot Data: Display Tc data as a scatter plot on the map using 'jet' colormap and point size 1.
+
+8. Colorbar: Add a colorbar below the plot with 10% padding, labeled with the units from Tc's attributes.
+
+9. Title: Set the title to include the file basename, Tc's LongName, and " (nchannel1=0)".
+
+This structured approach ensures clarity for code generation by an LLM.

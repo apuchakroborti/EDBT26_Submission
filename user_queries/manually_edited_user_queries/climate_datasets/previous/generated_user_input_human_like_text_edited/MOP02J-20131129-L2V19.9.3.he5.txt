@@ -1,0 +1,18 @@
+Hey, I'd like to break down this Python code step-by-step. 
+
+The code starts by importing necessary modules: `os`, `h5py` for HDF5 files, `matplotlib` and `Basemap` for plotting, and `numpy` for numerical computations.
+
+Two constants are defined: `FILE_NAME` for the HDF5 file group name /HDFEOS/SWATHS/MOP02/Data Fields and `dataset name` RetrievedSurfaceTemperature for the dataset path within the file.
+# Get the geolocation data such as latitude Geolocation Fields/Latitude and  longitude Longitude
+
+The code reads the HDF5 file in read-only mode using `h5py.File`, extracts data from the specified dataset, and retrieves units and fill value attributes. It replaces fill values with `np.nan`.
+
+Geolocation data is extracted from the HDF5 file, including latitude and longitude datasets.
+
+A map is created using `Basemap` with a cylindrical projection, low resolution, and set limits. Coastlines, parallels, and meridians are added to the map.
+
+The code scatters data points on the map using `m.scatter`, coloring each point according to its value in the `data` array. A colorbar is added to the map using `m.colorbar`, with a label set to the units of the data.
+
+Finally, the plot is saved to a PNG file with a title including the HDF5 file name and dataset name.
+
+Let me know if you have any questions about this code!

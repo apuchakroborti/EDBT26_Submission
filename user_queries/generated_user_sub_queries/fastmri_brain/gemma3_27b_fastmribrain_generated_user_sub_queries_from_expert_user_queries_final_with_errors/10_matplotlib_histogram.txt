@@ -1,0 +1,59 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            It starts by importing necessary libraries and defining file paths. 
+
+The code then defines two file paths: one for an HDF5 which is located at 10_fastMRI_brain_first_10_dcm_to_h5.h5 file containing brain MRI data 
+and another for a specific dataset within the HDF5 file. 
+It opens the HDF5 file in read mode and accesses the dataset at the specified path, assigning it to `brain_vol`. 
+The shape of the original 2D dataset is printed.
+
+Next, the code reshapes the 2D dataset into a 3D array with dimensions (16, 32, 512) representing 16 slices, each with 32 rows and 512 columns. 
+It then computes a histogram of the brain volume data.
+
+From a high-level perspective, this program appears to be part of a medical imaging pipeline that processes MRI data from the NYU fastMRI dataset.
+
+The HDF5 file contains a hierarchy of groups and datasets. 
+In this case, the `FAST_MRI_BRAIN_H5_FILE_DATA_PATH` variable specifies the path to a dataset within the HDF5 file, 
+which is: `FAST_MRI_BRAIN_ROOT` -> `100099070170` -> `279` -> `fastMRI_brain_data`. This hierarchy allows the program to access specific datasets within the HDF5 file."
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py` and access a dataset at a nested path like `/group1/group2/dataset_name`? What methods are available to retrieve dataset metadata or attributes?
+
+NumPy Data Preprocessing Sub-query:
+How to reshape a NumPy array to a specific shape (e.g., from 2D to 3D)? How to compute a histogram of a NumPy array's data?
+
+Plotting and Visualization Sub-query:
+Not applicable based on the provided text.

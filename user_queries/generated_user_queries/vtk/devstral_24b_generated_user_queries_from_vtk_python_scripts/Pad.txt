@@ -1,0 +1,80 @@
+This Python script performs image padding and visualization using VTK (Visualization Toolkit) modules. Here's a step-by-step description:
+
+1. **Import Libraries**:
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`
+   - `vtkImageMapToWindowLevelColors` from `vtkmodules.vtkImagingColor`
+   - `vtkImageConstantPad`, `vtkImageMirrorPad` from `vtkmodules.vtkImagingCore`
+   - `vtkInteractorStyleImage` from `vtkmodules.vtkInteractionStyle`
+   - `vtkImageActor`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Create a `colors` object using `vtkNamedColors()`.
+
+3. **Set File Name**:
+   - Define `fileName = 'Pad_FullHead.mhd'`.
+
+4. **Read Image**:
+   - Create a `readerFactory` object from `vtkImageReader2Factory()`.
+   - Create a `reader` object by calling `readerFactory.CreateImageReader2(fileName)`.
+   - Set the file name for the reader using `reader.SetFileName(fileName)`.
+   - Update the reader to read the image data with `reader.Update()`.
+
+5. **Create Padding Filters**:
+   - Create a `constantPad` object from `vtkImageConstantPad()`.
+     - Set its input connection to the reader's output port: `constantPad.SetInputConnection(reader.GetOutputPort())`.
+     - Set constant value for padding: `constantPad.SetConstant(800)`.
+     - Define the extent for padding: `constantPad.SetOutputWholeExtent(-127, 383, -127, 383, 22, 22)`.
+
+   - Create a `mirrorPad` object from `vtkImageMirrorPad()`.
+     - Set its input connection to the reader's output port: `mirrorPad.SetInputConnection(reader.GetOutputPort())`.
+     - Set the same extent as constant padding: `mirrorPad.SetOutputWholeExtent(constantPad.GetOutputWholeExtent())`.
+
+6. **Create Color Mappers**:
+   - Create a `constantPadColor` object from `vtkImageMapToWindowLevelColors()`.
+     - Set window and level for color mapping: `constantPadColor.SetWindow(2000)`, `constantPadColor.SetLevel(1000)`.
+     - Set its input connection to the constant pad's output port: `constantPadColor.SetInputConnection(constantPad.GetOutputPort())`.
+
+   - Create a `mirrorPadColor` object from `vtkImageMapToWindowLevelColors()`.
+     - Set window and level for color mapping: `mirrorPadColor.SetWindow(2000)`, `mirrorPadColor.SetLevel(1000)`.
+     - Set its input connection to the mirror pad's output port: `mirrorPadColor.SetInputConnection(mirrorPad.GetOutputPort())`.
+
+7. **Create Image Actors**:
+   - Create a `constantPadActor` object from `vtkImageActor()`.
+     - Set its mapper's input connection to the constant pad color's output port: `constantPadActor.GetMapper().SetInputConnection(constantPadColor.GetOutputPort())`.
+     - Set interpolation type for the actor: `constantPadActor.GetProperty().SetInterpolationTypeToNearest()`.
+
+   - Create a `mirrorPadActor` object from `vtkImageActor()`.
+     - Set its mapper's input connection to the mirror pad color's output port: `mirrorPadActor.GetMapper().SetInputConnection(mirrorPadColor.GetOutputPort())`.
+     - Set interpolation type for the actor: `mirrorPadActor.GetProperty().SetInterpolationTypeToNearest()`.
+
+8. **Setup Renderers**:
+   - Create a `constantPadRenderer` object from `vtkRenderer()`.
+     - Set viewport for the renderer: `constantPadRenderer.SetViewport(0.0, 0.0, 0.5, 1.0)`.
+     - Add constant pad actor to the renderer: `constantPadRenderer.AddActor(constantPadActor)`.
+     - Reset camera and set background color: `constantPadRenderer.ResetCamera()`, `constantPadRenderer.SetBackground(colors.GetColor3d("SlateGray"))`.
+
+   - Create a `mirrorPadRenderer` object from `vtkRenderer()`.
+     - Set viewport for the renderer: `mirrorPadRenderer.SetViewport(0.5, 0.0, 1.0, 1.0)`.
+     - Add mirror pad actor to the renderer: `mirrorPadRenderer.AddActor(mirrorPadActor)`.
+     - Set active camera and background color: `mirrorPadRenderer.SetActiveCamera(constantPadRenderer.GetActiveCamera())`, `mirrorPadRenderer.SetBackground(colors.GetColor3d("LightSlateGray"))`.
+
+9. **Setup Render Window**:
+   - Create a `renderWindow` object from `vtkRenderWindow()`.
+     - Set window size and name: `renderWindow.SetSize(600, 300)`, `renderWindow.SetWindowName('Pad')`.
+     - Add renderers to the window: `renderWindow.AddRenderer(constantPadRenderer)`, `renderWindow.AddRenderer(mirrorPadRenderer)`.
+
+10. **Setup Interactor**:
+    - Create a `renderWindowInteractor` object from `vtkRenderWindowInteractor()`.
+    - Create an interactor style object from `vtkInteractorStyleImage()` and set it: `style = vtkInteractorStyleImage()`, `renderWindowInteractor.SetInteractorStyle(style)`.
+    - Set the render window for the interactor: `renderWindowInteractor.SetRenderWindow(renderWindow)`.
+
+11. **Adjust Camera and Initialize**:
+    - Adjust camera settings: `constantPadRenderer.GetActiveCamera().Dolly(1.2)`, `constantPadRenderer.ResetCameraClippingRange()`.
+    - Initialize and start the interactor: `renderWindowInteractor.Initialize()`, `renderWindowInteractor.Start()`.
+
+12. **Run Main Function**:
+    - If this script is run as the main module, call the `main()` function.
+
+This description provides a clear step-by-step breakdown of what each part of the Python script does, including all variable and object names used in the code.

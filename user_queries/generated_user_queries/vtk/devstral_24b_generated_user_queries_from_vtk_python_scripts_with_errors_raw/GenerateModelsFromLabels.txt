@@ -1,0 +1,54 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### What This Script Does
+This script takes a 3D image file (like a medical scan) that contains different labeled areas and creates separate models for each label. Think of it like taking a colored map where each color represents something different (like different tissues in a body scan), and then creating individual 3D shapes for each color.
+
+### Step-by-Step Explanation
+
+#### 1. Setting Up the Tools
+The script starts by importing some tools (modules) that will help it read, process, and write files. These are like specialized instruments in a workshop.
+
+#### 2. Checking VTK Version
+It checks if a specific tool called "vtkDiscreteFlyingEdges3D" is available. This tool helps create the 3D shapes from the labels. If this tool isn't available, it uses an older version of the tool instead.
+
+#### 3. Setting Up Variables
+The script sets up some basic information:
+- The name of the file to read (`GenerateModelsFromLabels_frogtissue.mhd`)
+- The range of label numbers to process (from 1 to 29)
+- Some settings for how smooth the shapes should be
+
+#### 4. Creating Objects
+It creates several objects that will help with different parts of the task:
+- A reader to read the file
+- A histogram maker to count how many times each label appears
+- A shape creator (either `vtkDiscreteFlyingEdges3D` or `vtkDiscreteMarchingCubes`)
+- A smoother to make the shapes look nicer
+- A selector to pick out specific labels
+- A cleaner to remove unnecessary data
+- A geometry filter to prepare the shapes for output
+- A writer to save the shapes as files
+
+#### 5. Reading the File
+The script tells the reader object to open and read the file specified.
+
+#### 6. Making a Histogram
+It uses the histogram maker to count how many times each label appears in the file. This helps it know which labels are actually present.
+
+#### 7. Creating Shapes
+For each label (from 1 to 29), it:
+- Creates a shape for that label using the shape creator.
+- Smooths out the shape to make it look better.
+- Selects only the cells (parts) of the shape that match the current label.
+
+#### 8. Cleaning Up
+It removes any extra data from the shapes so they're clean and ready to be saved.
+
+#### 9. Writing Files
+For each shape, it:
+- Creates a file name based on the label number.
+- Tells the writer object to save the shape as a new file.
+
+### Summary
+In simple terms, this script reads a 3D image with different labeled areas, creates individual 3D shapes for each label, smooths them out, and saves each shape as a separate file. It's like taking a multi-colored cake and cutting it into pieces, smoothing the edges, and then wrapping each piece in its own box.
+
+This process helps people who need to analyze these 3D images (like doctors looking at medical scans) by giving them clean, individual models of different parts of the image.

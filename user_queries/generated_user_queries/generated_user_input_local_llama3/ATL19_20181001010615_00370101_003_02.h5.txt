@@ -1,0 +1,37 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+1. `import os`
+2. `import matplotlib.pyplot as plt`
+3. `import numpy as np`
+4. `from mpl_toolkits.basemap import Basemap`
+5. `import h5py`
+
+**Defining constants and opening the HDF5 file**
+
+1. `FILE_NAME = "ATL19_20181001010615_00370101_003_02.h5"`
+2. `with h5py.File(FILE_NAME, mode="r") as f:`
+
+**Accessing datasets within the HDF5 file**
+
+1. Access and extract datasets for latitude (`latvar`), longitude (`lonvar`), and data (`datavar`)
+2. Replace `_FillValue` with NaN in the `data` array
+3. Create a masked array from the original `data` array
+
+**Creating a map using Basemap**
+
+1. Create an instance of the `Basemap` class
+2. Draw coastlines, grid lines, and create a pseudocolor plot (pcolormesh) of the data onto the map
+
+**Adding a colorbar and title**
+
+1. Add a colorbar to the bottom of the plot
+2. Set the label for the colorbar using attributes from the HDF5 dataset
+3. Create a title for the plot, including filename and long name attributes from the HDF5 dataset
+
+**Saving the plot as an image**
+
+1. Extract the base filename from the full path of the HDF5 file
+2. Construct a filename for the saved plot
+3. Save the plot as an image file with the constructed filename

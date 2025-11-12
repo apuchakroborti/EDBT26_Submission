@@ -1,0 +1,51 @@
+Here is the reduced text, keeping as many implementation details as possible:
+
+Let's break down this Python code step-by-step:
+
+**Comments and docstrings**
+
+The code starts with a long comment block providing information about the script.
+
+**Importing modules**
+
+The next section imports various Python modules: `os`, `cartopy.crs as ccrs`, `matplotlib.pyplot as plt`, `numpy as np`, and `h5py`.
+
+**Defining constants**
+
+A constant `FILE_NAME` specifies the path to an HDF5 file.
+
+**Reading HDF5 file**
+
+The script uses `h5py` to read the HDF5 file in read-only mode. Within the file, several datasets are accessed using their full paths: latitude values, longitude values, and height data.
+
+**Accessing attributes**
+
+Attributes of the height dataset are accessed: units, long name, and fill value for missing data.
+
+**Handling FillValue**
+
+Fill values are replaced with NaN (Not a Number) values to handle missing data in visualization.
+
+**Setting up map projection**
+
+An Orthographic map projection is created using Cartopy with central coordinates set from middle latitude and longitude values.
+
+**Plotting data**
+
+The height data is plotted on the map using `matplotlib` with colors representing values.
+
+**Adding gridlines and coastlines**
+
+Gridlines and coastlines are added to the map. Gridlabels are customized to display only at the bottom and left sides of the map.
+
+**Adding colorbar**
+
+A colorbar is added to the plot, sized and positioned using `fraction` and `pad` arguments.
+
+**Setting title**
+
+The plot title combines the HDF5 file name with the long name of the height data.
+
+**Saving figure**
+
+Finally, the plot is saved as a PNG image named after the HDF5 file.

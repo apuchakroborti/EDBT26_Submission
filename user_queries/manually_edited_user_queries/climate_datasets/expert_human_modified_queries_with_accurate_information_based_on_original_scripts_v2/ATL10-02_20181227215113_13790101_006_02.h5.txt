@@ -1,0 +1,46 @@
+The code starts by importing necessary libraries for working with operating system functions, creating plots and visualizations, numerical computations, 
+map projections, and HDF5 files.
+To be more specific the libraries are os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap
+
+Defining Constants
+A constant `FILE_NAME` is defined which is located at ATL10-02_20181227215113_13790101_006_02.h5
+which is the name of the HDF5 file to be processed.
+
+Opening the HDF5 File and Accessing Datasets
+The code opens the HDF5 file in read mode and accesses three datasets: 
+`/gt1r/freeboard_segment/geophysical/latitude` latitude data, 
+`/gt1r/freeboard_segment/geophysical/longitude` longitude data, 
+`/gt1r/freeboard_segment/beam_fb_height` main data,
+and '/gt1r/freeboard_segment/geophysical/delta_time' time data 
+
+Reads attributes named units and long_name with decoding using decode() function with parameters ascii and replace, 
+and _FillValue from the main data
+The main data type is set to astype float
+
+main data's _FillValue is set to numpy NaN
+and masked the data using numpy masked_where function with parameters of numpy isnan of data and data itself
+
+Creating a Map
+Using an ortho projection map 
+with low resolution and lat_0 0th index value of latitude and lon_0 0th index value of longitude
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -80.0, -0.0, 20.0, 
+and meridians with parameters numpy arrange -180.0, 181.0, 20.0
+
+
+Adding Colorbar and Title
+the plot figure size is 10 by 10
+the subplot for ax1 is 2, 1, 1
+elapsed_time is the result of time - 0th index time value
+ax1 plot is set with parameter elapsed_time, main data and a string "bo"
+ax1 x label is timeunits
+ax1 y label is string value of main data's units
+ax1 title is the combined string of file basename, maindataset name and value of longs_name
+
+m function is called with longitude and latitude values which returns two values x and y
+maps plot is set from the result fo longitude and latitude such as x and y
+
+final plot value is set with parameter of 0th index value of x, 0th index value of y and maker="o", and color="red"
+
+Plot title is set to "Trajectory of Flight Path"

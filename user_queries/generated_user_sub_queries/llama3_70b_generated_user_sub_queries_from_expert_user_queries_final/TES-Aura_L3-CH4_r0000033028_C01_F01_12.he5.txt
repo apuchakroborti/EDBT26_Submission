@@ -1,0 +1,73 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script to read and visualize HDF-EOS5 file data.
+
+1. Import Libraries: Include necessary libraries such as os, h5py, numpy (as np), matplotlib (as mpl), matplotlib.pyplot (as plt), and Basemap from mpl_toolkits.basemap.
+
+2. Open File: Use h5py to open the file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' in read mode.
+
+3. Retrieve Data:
+   - Extract grid metadata from '/HDFEOS INFORMATION/StructMetadata.0'.
+   - Read SurfacePressure data from '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure' into a NumPy array (dtype float64).
+   - Extract metadata: '_FillValue', 'MissingValue', 'Title' (using decode()), and 'Units' (using decode()) from the SurfacePressure dataset.
+
+4. Process Data:
+   - Identify invalid values using np.logical_or with SurfacePressure == _FillValue[0] and SurfacePressure == MissingValue[0].
+   - Set invalid values to NaN.
+   - Create a masked array using np.ma.masked_array with parameters SurfacePressure data and isnan(SurfacePressure).
+
+5. Retrieve Coordinates:
+   - Extract Longitude and Latitude from '/HDFEOS/GRIDS/NadirGrid/Data Fields/Longitude' and 'Latitude' as float64 NumPy arrays.
+
+6. Create Map:
+   - Initialize a Basemap object with cylindrical projection, resolution 'l', latitude range [-90, 90], longitude range [-180, 180].
+   - Draw coastlines (linewidth=0.5), parallels (np.arange(-45, 91, 45) with labels [1,0,0,0]), and meridians (np.arange(-180, 180, 45) with labels [0,0,0,1]).
+
+7. Visualize Data:
+   - Use pcolormesh to plot data with longitude, latitude, SurfacePressure data, and latlon=True.
+   - Add a colorbar with the Units label from metadata.
+   - Set the title as a concatenation of the file's base name and the Title metadata.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+Here are the 3 sub-queries:
+
+HDF5 Dataset Access Sub-query:
+Access HDF-EOS5 file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' using h5py, retrieve metadata from '/HDFEOS INFORMATION/StructMetadata.0', and read dataset '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure'.
+
+NumPy Data Preprocessing Sub-query:
+Handle _FillValue and MissingValue in NumPy array, apply mask using np.where or np.ma.masked_where, and compute or filter data using min, max, or other preprocessing logic.
+
+Plotting and Visualization Sub-query:
+Visualize geospatial data using matplotlib, mpl_toolkits.basemap, or cartopy, configure cylindrical projection, draw coastlines, meridians, parallels, and apply colorbar or title.

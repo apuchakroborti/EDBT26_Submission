@@ -1,0 +1,9 @@
+I have a h5 data of iris flower named "79_h5_data.h5". The list of datasets is ['Petal Length(cm)', 'Petal Width(cm)', 'Sepal Length(cm)', 'Sepal Width(cm)', 'Species'].
+Write a python code to draw a plot.
+1. Create a 3D scatter plot with axes representing 'Petal Length', 'Petal-Width', and 'Sepal Length'.
+2. Plot data points for each iris flower species using distinct colors.
+3. For each species, calculate the mean of the data points to determine the ellipsoid center.
+4. Compute the covariance matrix for each species to define the ellipsoid shape and orientation.
+5. Scale the ellipsoids to include 95% of the respective data points, ensuring they are aligned with the dataset's principal variation axes.
+6. Draw solid, opaque ellipsoids for each species in matching colors to the scatter points, without wireframes.
+7. Add axis labels for each measurement dimension and a legend that identifies each species by color.

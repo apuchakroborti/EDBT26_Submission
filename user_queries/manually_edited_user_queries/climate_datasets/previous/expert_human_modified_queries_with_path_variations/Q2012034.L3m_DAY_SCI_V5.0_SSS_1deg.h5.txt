@@ -1,0 +1,17 @@
+The code starts by defining variables: `FILE_NAME` for an HDF5 file, and several others to store data from the file.
+
+It then reads the HDF5 file, storing the 'l3m_data' dataset in `datavar`. 
+It retrieves data minimum and maximum values, as well as a fill value, from the file's attributes.
+
+The code processes the data by replacing fill values with NaNs and identifying invalid values outside a certain range. 
+
+there are two other variables named units and long name and set the values psu and Sea Surface Salinity
+
+then it compares the data with value and sets with numpy NaN value 
+after that it creates invalid data with logical or with parameters such as comparision of data less than data minimum and data greater than data maximum
+
+Next, it creates a map visualization using `Basemap`, defining x and y coordinates, creating a meshgrid, and setting up a cylindrical projection.
+It also sets the resolution as low and latitude values from -90 to 90 and longitude values -180 and 180 
+It adds coastlines, parallels, and meridians to the map, and plots the data as a scatter plot with colors represented by the 'jet' colormap.
+
+At the end, it adds a colorbar with units, sets a title using the file name and long name of the data

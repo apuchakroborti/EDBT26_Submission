@@ -1,0 +1,63 @@
+Here is the reduced text while keeping as many implementation details as possible:
+
+**Importing necessary libraries**
+
+The code imports various Python libraries for date and time handling, file system operations, plotting (matplotlib), geographical mapping (Basemap), and numerical computations (numpy).
+```python
+import datetime
+import os
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+import numpy as np
+```
+**Setting a flag for using NetCDF4**
+
+The `USE_NETCDF4` variable is set to `True`, indicating that the code will use the NetCDF4 library to access the HDF5 file.
+```python
+USE_NETCDF4 = True
+```
+**Accessing data from the HDF5 file (NetCDF4 version)**
+
+If `USE_NETCDF4` is set, the code uses the NetCDF4 library to access the HDF5 file. It creates a `Dataset` object and navigates through the file's hierarchy using group names:
+```python
+nc = Dataset(FILE_NAME)
+grp = nc.groups['HDFEOS'].groups['GRIDS'].groups['SET1']
+data_var = grp.groups['Data Fields'].variables['E']
+data = data_var[:]
+```
+**Processing data**
+
+The code processes the `data` array by decoding string attributes, replacing fill values with NaN, and masking NaN values.
+
+**Creating a Basemap object and plotting data**
+
+The code creates a Basemap object and plots the `data` array on this map:
+```python
+m = Basemap(projection='cyl', resolution='l',
+            llcrnrlat=-90, urcrnrlat=90,
+            llcrnrlon=-180, urcrnrlon=180)
+...
+m.pcolormesh(longitude, latitude, data, latlon=True)
+```
+**Saving the plot**
+
+The code saves the plot as a PNG file using the Basemap object:
+```python
+fig = plt.gcf()
+# plt.show()  # Commented out, so the plot is not displayed inline
+pngfile = "{0}.py.png".format(basename)
+fig.savefig(pngfile)
+```
+**Running the script**
+
+The script is run by calling the `run(FILE_NAME)` function with a specific file name:
+```python
+if __name__ == "__main__":
+    hdffile = 'GSSTF_3_2008_12_31.he5'
+    try:
+        hdffile = os.path.join(os.environ['HDFEOS_ZOO_DIR'], hdffile)
+    except KeyError:
+        pass
+    run(hdffile)
+```
+This code sets the `hdffile` variable to a specific file name and then calls the `run(FILE_NAME)` function with that file name.

@@ -1,0 +1,29 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing Libraries**
+
+The code imports several libraries: `os`, `matplotlib.pyplot` (as `plt`), `numpy` (as `np`), `mpl_toolkits.basemap` (as `Basemap`), and `h5py`.
+
+**Defining Constants**
+
+The code defines a constant `FILE_NAME`, the path to an HDF5 file.
+
+**Opening the HDF5 File and Reading Data**
+
+The code opens the HDF5 file using `h5py` in read-only mode and reads several datasets: `/grid_lat`, `/grid_lon`, and `/monthly/mean_fb`. It also reads attributes from the datasets, including `units`, `long_name`, and `_FillValue`.
+
+**Processing Data**
+
+The code processes the data by replacing `_FillValue` with NaN values using NumPy's `nan` constant and creating a masked array using NumPy's `ma` module.
+
+**Creating a Basemap Plot**
+
+The code creates a Basemap plot using the `Basemap` library, setting up a polar stereographic projection, drawing coastlines, parallels, and meridians, and creating a pseudocolor plot of the data.
+
+**Adding a Colorbar and Title**
+
+The code adds a colorbar to the plot with the label set to the units of the data and a title to the plot including the filename and long description of the data.
+
+**Saving the Plot to a File**
+
+Finally, the code saves the plot to a PNG file using `fig.savefig`.

@@ -1,0 +1,33 @@
+A Python code. Here's what it does:
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Reading an HDF5 File
+The code reads an HDF5 file named `MLS-Aura_L2GP-H2O_v04-20-c01_2013d003.he5`.
+
+Accessing Datasets
+It accesses several datasets within the HDF5 file, including:
+
+`/HDFEOS/SWATHS/H2O/Data Fields/L2gpValue`, containing H2O data
+`/HDFEOS/SWATHS/H2O/Geolocation Fields/Pressure`, containing pressure values
+
+It reads L2gpValue data from x-axis and 0th index only from the y-axis of 2D data array
+
+The code also retrieves attributes like Units from both L2gpValue and Pressure data and only Title from Pressure datasets.
+
+Geolocation Data
+The code accesses geolocation datasets:
+`/HDFEOS/SWATHS/H2O/Geolocation Fields/Latitude`
+`/HDFEOS/SWATHS/H2O/Geolocation Fields/Longitude` These contain latitude and longitude values respectively.
+
+Visualization
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 91, 45, 
+and meridians with parameters numpy arrange -180, 180, 45 and labels with the list [True, False, False, True]
+
+The program should set scatter function with paramets of lon, lat, c=data, s=1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+
+At the end, I adds a colorbar with parameteres location="bottom", formation="%.1e" with 10% padding
+I also adds label using set_label function with the values of Units 

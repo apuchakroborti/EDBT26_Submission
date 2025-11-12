@@ -1,0 +1,69 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            I have a h5 data of iris flower named "79_h5_data.h5". The list of datasets is ['Petal Length(cm)', 'Petal Width(cm)', 'Sepal Length(cm)', 'Sepal Width(cm)', 'Species'].
+Write a python code to draw a plot.
+1. Create a 3D scatter plot with axes representing 'Petal Length', 'Petal-Width', and 'Sepal Length'.
+2. Plot data points for each iris flower species using distinct colors.
+3. For each species, calculate the mean of the data points to determine the ellipsoid center.
+4. Compute the covariance matrix for each species to define the ellipsoid shape and orientation.
+5. Scale the ellipsoids to include 95% of the respective data points, ensuring they are aligned with the dataset's principal variation axes.
+6. Draw solid, opaque ellipsoids for each species in matching colors to the scatter points, without wireframes.
+7. Add axis labels for each measurement dimension and a legend that identifies each species by color.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to break down the user's query into three specific sub-queries. Let me start by understanding what each part of their request entails.
+
+First, they have an HDF5 file named "79_h5_data.h5" containing datasets related to iris flowers. The datasets are 'Petal Length(cm)', 'Petal Width(cm)', 'Sepal Length(cm)', 'Sepal Width(cm)', and 'Species'. They want a Python code that does several things: create a 3D scatter plot, color each species differently, calculate mean ellipsoids for each species, compute covariance matrices, scale the ellipsoids to include 95% of data points, draw solid ellipsoids in matching colors, add labels and a legend.
+
+Now, I need to split this into three parts as per the instructions: HDF5 access, NumPy preprocessing, and plotting visualization.
+
+For the HDF5 part, the main focus is on accessing the datasets. So the sub-query should ask how to read each of these datasets from the H5 file using h5py. That makes sense because they need to extract the data before processing it.
+
+Next, the NumPy preprocessing involves handling the data once it's loaded. They mention calculating means and covariance matrices for each species. Also, scaling ellipsoids to 95% of the data points suggests some statistical calculations, possibly using percentiles or standard deviations. So the sub-query should cover how to group data by species, compute these statistics, and scale appropriately.
+
+Lastly, the plotting part is about visualization. They want a 3D scatter plot with distinct colors for each species. Additionally, they need to draw ellipsoids that are solid and opaque without wireframes. This involves using matplotlib's 3D capabilities, possibly with basemap or cartopy if there were geospatial elements, but since it's iris data, maybe just standard 3D plotting. The sub-query should focus on creating the scatter plot, adding ellipsoids correctly, labeling axes, and including a legend.
+
+I need to make sure each sub-query is clear and targets only its specific domain without overlapping with others. So for HDF5, it's about accessing data; for NumPy, preprocessing steps like grouping, means, covariances, scaling; and for plotting, the visualization aspects.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access datasets in an H5 file named "79_h5_data.h5" using h5py, including reading 'Petal Length(cm)', 'Petal Width(cm)', 'Sepal Length(cm)', 'Sepal Width(cm)', and 'Species' datasets.
+
+NumPy Data Preprocessing Sub-query:
+How to group data by species, calculate mean values for each species, compute covariance matrices, scale ellipsoids to include 95% of the data points using NumPy.
+
+Plotting and Visualization Sub-query:
+How to create a 3D scatter plot with distinct colors for each species, add axis labels, legend, and draw solid ellipsoids using matplotlib.

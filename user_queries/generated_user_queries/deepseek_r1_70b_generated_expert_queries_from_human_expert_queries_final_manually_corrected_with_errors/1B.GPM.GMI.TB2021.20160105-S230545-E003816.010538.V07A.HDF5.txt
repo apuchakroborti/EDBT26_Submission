@@ -1,0 +1,16 @@
+A Python script that performs the following steps:
+
+1. Open an HDF5 file in read mode using h5py and extract the dataset 'Tb' from the group `S1`, 
+including its 'unit' and 'fillValue' attributes. Also, retrieve geolocation data from 'Latitude' and 'Longitude'.
+
+2. Mask NaN values in the 'Tb' dataset using numpy's masked_where function with parameters based on numpy's isnan.
+
+3. Create a cylindrical projection map with specific settings (low resolution, -90 to 90 latitude range, -180 to 180 longitude range etc.). 
+it also adds coastlines with width 0.5, parrallels with every 45 degree from -90 to 90 degree.
+After that it also add meridians to every 45 degree from -180 to 180 with left and bottom labels 
+
+4. Plot the dataset as a scatter plot on the map using the 'jet' colormap, setting each point's size to 1.
+
+5. Add a colorbar below the plot with padding of 10% and label it using the units extracted from the 'Tb' dataset.
+
+6. Set the plot title by combining the HDF5 file's basename, the string "Tb", and "(nchan1=0)".

@@ -1,0 +1,35 @@
+A Python code that processes an HDF5 file. 
+Here's what it does:
+At first, it should import libraries such as import os, re, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+The program should read the below datasets:
+latitude data from the path /Data_1HZ/Geolocation/d_lat
+longitude data from the path /Data_1HZ/Geolocation/d_lon
+surfacetemperature data from the path /Data_1HZ/Atmosphere/d_Surface_temp
+time data from the path /Data_1HZ/Time/d_UTCTime_1
+
+In the next step it should read the valid_min and valid_max attributes data from the latitude and combine them together and store into a new variable name latitude_valid
+Similary, from the longitude dataset it should read also the valid_min and valid_max attributes data from the longitude and combine them together and store into a new variable name longitude_valid
+Next, from the surfacetemperature data the program should read the valid_min and valid_max attributes data from the surfacetemperature and combine them together and store into a new variable name surfacetemperature_valid
+After that it should also read attributes's data named units and long_name data from the surfacetemperature data
+
+In the next step, the process is validation
+need to replace the latitude data by numpy nan which is less the latitude_valid index of 0 and greater than latitude_valid index of 1
+Need to do the similar thing for longitude and surfacetemperature datasets too using the same indexing and same longitude_valid and surfacetemperature_valid attributes data
+
+While plotting figure the figure size should be 15 by 6
+the axis1 subplot should be with parameters 1, 2, 1
+axis1's x label should be set to 'Elapsed Time(Minutes)' and y label should be units
+And the overall subplot should be 1, 2, 2
+
+At the end,
+Using a cylindrical projection map 
+with low resolution and latitude and longitude values from -90 to 90 and -180 to 180 respectively
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values -90, 120, 30  
+and meridians with parameters numpy arrange -180, 180, 45 
+
+The program should set scatter function with parameters of longitude, latitude, c=data, s=0.1, cmap=plt.cm.jet, edgecolors=None, and linewidth=0
+It should also add colorbar with using set_label function with the values of Units
+The plot title should be based on the combines strings of data file basename and surfacetemperature's long_name 

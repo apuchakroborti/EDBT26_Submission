@@ -1,0 +1,74 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        Create a Python script that reads an HDF5 file and generates a map visualization by following these steps:
+
+1. Import Libraries: Include os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Read HDF5 File: Open the file `AMSR_E_L2_Land_V11_201110031920_D.he5` in read-only mode.
+
+3. Extract Data:
+   - Retrieve main data from the attribute 'SoilMoistureSCA' at `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+   - Extract latitude data from `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/Latitude`.
+   - Extract longitude data from `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/Longitude`.
+
+4. Data Cleaning:
+   - Assign a static _FillValue of -9999.0.
+   - Replace values matching _FillValue with numpy NaN.
+   - Mask data using numpy's masked_array where values are not NaN.
+
+5. Create Map:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude range from -90 to 90 and longitude from -170 to 190.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels using numpy arrange with values -90, 91, 45 and labels [1, 0, 0, 0].
+   - Draw meridians using numpy arrange with values -180, 181, 45 and labels [0, 0, 0, 1].
+
+6. Scatter Plot:
+   - Use longitude and latitude data.
+   - Set parameters: marker size (s=0.1), colormap (plt.cm.jet), edgecolors=None, linewidth=0.
+
+7. Add Colorbar and Title:
+   - Include a colorbar labeled with the dataset's units.
+   - Set title to include the file basename and 'SoilMoistureSCA'.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file in read-only mode, access datasets at specific paths like `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`, retrieve data from attributes such as 'SoilMoistureSCA', and extract latitude and longitude data.
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue in NumPy, replace values matching a specific fill value with NaN, and create masked arrays using numpy's masked_array where values are not NaN.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib and mpl_toolkits.basemap for map visualization, configure equidistant cylindrical projection, set latitude/longitude ranges, add coastlines, draw parallels and meridians with specific labels, create scatter plots with custom parameters, and add colorbars and titles.

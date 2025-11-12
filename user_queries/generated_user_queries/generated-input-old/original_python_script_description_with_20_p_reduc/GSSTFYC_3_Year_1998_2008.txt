@@ -1,0 +1,33 @@
+Here is the reduced description, keeping as many implementation details as possible:
+
+**Importing Modules**
+
+The code imports various Python modules: `os`, `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`), `mpl_toolkits.basemap`, and `numpy` (as `np`).
+
+**Defining Constants**
+
+Two constants are defined: `USE_NETCDF4` (set to `True`) and `FILE_NAME` (passed as an argument to the `run` function).
+
+**Defining the `run` Function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is the path to an HDF-EOS5 file. The function performs the following steps:
+
+1. **Accessing the HDF-EOS5 File**: Depending on `USE_NETCDF4`, the script uses either the NetCDF4 library or `h5py` to access the file and extract the SST dataset.
+2. **Data Preparation**: The script prepares the data for visualization by creating latitude and longitude arrays, masking NaN values (if using `h5py`), and extracting data values, long name, and units.
+
+**Visualization**
+
+The script uses Basemap to create a geographic visualization:
+
+1. **Create a Basemap Object**: It creates a Basemap object with an equidistant cylindrical projection (`cyl`) and sets the resolution to low (`l`).
+2. **Draw Coastlines and Gridlines**: It draws coastlines, parallels, and meridians on the map.
+3. **Render the Image**: It renders the image in the projected coordinate system using `pcolormesh`.
+4. **Add a Colorbar**: It adds a colorbar with a label set to the data units.
+
+**Save the Figure**
+
+The script saves the figure as a PNG file by extracting the basename from the input file path and concatenating it with `.py.png`.
+
+**Main Script**
+
+The main script sets up the input file path and calls the `run` function.

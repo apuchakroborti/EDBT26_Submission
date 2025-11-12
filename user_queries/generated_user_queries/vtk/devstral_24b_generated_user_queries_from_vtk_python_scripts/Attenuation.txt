@@ -1,0 +1,95 @@
+1. **Import Libraries**:
+   - Import `vtkRenderingOpenGL2` from `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import `vtkSphere` from `vtkmodules.vtkCommonDataModel`
+   - Import `vtkImageReader2Factory` from `vtkmodules.vtkIOImage`
+   - Import `vtkImageCast`, `vtkImageShiftScale` from `vtkmodules.vtkImagingCore`
+   - Import `vtkImageGaussianSmooth` from `vtkmodules.vtkImagingGeneral`
+   - Import `vtkSampleFunction` from `vtkmodules.vtkImagingHybrid`
+   - Import `vtkImageMathematics` from `vtkmodules.vtkImagingMath`
+   - Import `vtkInteractorStyleImage` from `vtkmodules.vtkInteractionStyle`
+   - Import `vtkImageActor`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function**:
+   - Create a function named `main()`
+
+3. **Initialize Colors**:
+   - Create an instance of `vtkNamedColors` and assign it to the variable `colors`
+
+4. **Set File Name**:
+   - Define the file name as `'Attenuation_AttenuationArtifact.pgm'` and assign it to the variable `fileName`
+
+5. **Read Image**:
+   - Create an instance of `vtkImageReader2Factory` and assign it to `readerFactory`
+   - Use `readerFactory.CreateImageReader2(fileName)` to create a reader for the image file
+   - Set the file name for the reader using `reader.SetFileName(fileName)`
+   - Update the reader with `reader.Update()`
+
+6. **Cast Image**:
+   - Create an instance of `vtkImageCast` and assign it to `cast`
+   - Connect the output port of the reader to the input connection of the cast filter using `cast.SetInputConnection(reader.GetOutputPort())`
+   - Set the output scalar type to double with `cast.SetOutputScalarTypeToDouble()`
+
+7. **Smooth Image**:
+   - Create an instance of `vtkImageGaussianSmooth` and assign it to `smooth`
+   - Connect the output port of the cast filter to the input connection of the smooth filter using `smooth.SetInputConnection(cast.GetOutputPort())`
+   - Set standard deviations for smoothing with `smooth.SetStandardDeviations(0.8, 0.8, 0)`
+
+8. **Create Sphere Model**:
+   - Create an instance of `vtkSphere` and assign it to `m1`
+   - Set the center of the sphere using `m1.SetCenter(310, 130, 0)`
+   - Set the radius of the sphere to 0 with `m1.SetRadius(0)`
+
+9. **Sample Function**:
+   - Create an instance of `vtkSampleFunction` and assign it to `m2`
+   - Set the implicit function for sampling using `m2.SetImplicitFunction(m1)`
+   - Define model bounds with `m2.SetModelBounds(0, 264, 0, 264, 0, 1)`
+   - Set sample dimensions with `m2.SetSampleDimensions(264, 264, 1)`
+
+10. **Shift and Scale Image**:
+    - Create an instance of `vtkImageShiftScale` and assign it to `m3`
+    - Connect the output port of the sample function to the input connection of the shift-scale filter using `m3.SetInputConnection(m2.GetOutputPort())`
+    - Set scale factor with `m3.SetScale(0.000095)`
+
+11. **Perform Image Mathematics**:
+    - Create an instance of `vtkImageMathematics` and assign it to `div`
+    - Connect the output port of the smooth filter to input connection 0 using `div.SetInputConnection(0, smooth.GetOutputPort())`
+    - Connect the output port of the shift-scale filter to input connection 1 using `div.SetInputConnection(1, m3.GetOutputPort())`
+    - Set operation to multiply with `div.SetOperationToMultiply()`
+
+12. **Create Image Actors**:
+    - Define color window and level values: `colorWindow = 256.0` and `colorLevel = 127.5`
+    - Create an instance of `vtkImageActor` for the original image and assign it to `originalActor`
+      - Set input connection with `originalActor.GetMapper().SetInputConnection(cast.GetOutputPort())`
+      - Set color window and level properties
+    - Create another instance of `vtkImageActor` for the filtered image and assign it to `filteredActor`
+      - Set input connection with `filteredActor.GetMapper().SetInputConnection(div.GetOutputPort())`
+
+13. **Define Viewports**:
+    - Define viewport ranges:
+      - Original viewport: `[0.0, 0.0, 0.5, 1.0]`
+      - Filtered viewport: `[0.5, 0.0, 1.0, 1.0]`
+
+14. **Setup Renderers**:
+    - Create instances of `vtkRenderer` for original and filtered images:
+      - Set viewports with `originalRenderer.SetViewport(originalViewport)` and `filteredRenderer.SetViewport(filteredViewport)`
+      - Add actors to renderers: `originalRenderer.AddActor(originalActor)` and `filteredRenderer.AddActor(filteredActor)`
+      - Reset cameras and set background colors
+
+15. **Setup Render Window**:
+    - Create an instance of `vtkRenderWindow` and assign it to `renderWindow`
+    - Set window size with `renderWindow.SetSize(600, 300)`
+    - Add renderers to the render window
+    - Set window name to 'Attenuation'
+
+16. **Setup Interactor**:
+    - Create an instance of `vtkRenderWindowInteractor` and assign it to `renderWindowInteractor`
+    - Create an instance of `vtkInteractorStyleImage` and assign it to `style`
+    - Set interactor style with `renderWindowInteractor.SetInteractorStyle(style)`
+    - Initialize the render window interactor
+
+17. **Start Interaction**:
+    - Start the interaction loop with `renderWindowInteractor.Start()`
+
+18. **Execute Main Function**:
+    - Check if the script is run as the main module and call the `main()` function

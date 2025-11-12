@@ -1,0 +1,52 @@
+What This Script Does
+This script takes a 3D image (like a CT scan) of a person's head and creates two separate surfaces: one for the skin and one for the bones. Then it displays these surfaces on your screen so you can see them.
+
+Step-by-Step Explanation
+
+1. Setting Up Colors
+First, the script sets up some colors that will be used later to make different parts of the image look distinct:
+- Skin color (a light brown)
+- Background color (a dark blue)
+
+2. Creating a Window for Display
+Next, it creates a window where everything will be displayed. This is like setting up a TV screen where you'll watch the final result.
+
+3. Reading the Image File
+The script reads in the 3D image file of the head named `MedicalDemo2_FullHead.mhd`. Think of this as loading a photo into your computer.
+
+4. Extracting the Skin Surface
+Now, it looks for specific values within the image that represent the skin:
+- It finds all points in the image where the value is 500 (which corresponds to skin).
+- Then it creates a smooth surface from these points.
+- This surface is then colored with the skin color.
+
+5. Extracting the Bone Surface
+Similarly, it looks for values that represent bones:
+- It finds all points where the value is 1150 (which corresponds to bone).
+- Creates another smooth surface from these points.
+- Colors this surface a different color to distinguish it from the skin.
+
+6. Adding an Outline
+To give context and make things clearer, it adds an outline around the entire image. This helps you see where the edges of the head are.
+
+7. Setting Up the Camera View
+The script sets up how you'll view this 3D model:
+- It positions a virtual camera to look at the head from a specific angle.
+- Adjusts the zoom level so everything fits nicely on your screen.
+
+8. Displaying Everything
+Finally, it puts all these pieces together in the window and displays them:
+- The skin surface, bone surface, and outline are shown in their respective colors.
+- You can see this image on your computer screen.
+
+How It Works Together
+
+1. Load Image: The script starts by loading a 3D image of a head.
+2. Find Skin & Bones: It then looks for specific points within the image that represent skin and bones, creating separate surfaces for each.
+3. Color & Display: These surfaces are colored differently so you can tell them apart, and everything is displayed in a window on your screen.
+
+Why This Is Useful
+
+This script helps doctors or researchers visualize what's inside a person's head without having to do surgery. By seeing the skin and bones separately, they can better understand the structure and maybe even spot issues that need attention.
+
+In simple terms, this script takes a complex 3D image and makes it easier to see and understand by breaking it down into simpler parts (skin and bone) and displaying them clearly on your screen.

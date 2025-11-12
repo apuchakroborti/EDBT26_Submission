@@ -1,0 +1,63 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Comments and Headers**
+
+The code starts with comments explaining its purpose, usage, and testing information.
+
+**Importing Libraries**
+
+The code imports several libraries:
+
+1. `os`: for operating system-related functions
+2. `matplotlib` (as `mpl`) and `matplotlib.pyplot` (as `plt`): for plotting and visualization
+3. `Basemap`: a toolkit for creating maps
+4. `numpy` (as `np`): for numerical computations
+
+**Defining the `run` Function**
+
+The `run` function takes a single argument, `FILE_NAME`, which is the name of an HDF5 file.
+
+**Using NetCDF4 or h5py**
+
+The code checks whether to use `netCDF4` or `h5py` to read the HDF5 file. If `USE_NETCDF4` is set to `True`, it uses `netCDF4`. Otherwise, it uses `h5py`.
+
+**Reading Data with NetCDF4 (if USE_NETCDF4 is True)**
+
+If using `netCDF4`, the code:
+
+1. Opens the HDF5 file using `Dataset`
+2. Extracts several variables from the file:
+	* `latvar`: latitude values
+	* `lonvar`: longitude values
+	* `tempvar`: surface temperature values
+	* `timevar`: UTC time values
+3. Retrieves the valid range and units for each variable
+
+**Reading Data with h5py (if USE_NETCDF4 is False)**
+
+If using `h5py`, the code:
+
+1. Opens the HDF5 file in read mode (`mode='r'`)
+2. Extracts several variables from the file:
+	* `latvar`: latitude values
+	* `lonvar`: longitude values
+	* `tempvar`: surface temperature values
+	* `time`: UTC time values
+3. Retrieves the valid range, units, and long name for each variable
+
+**Visualizing Data**
+
+The code uses `Basemap` to create a map and visualize the data:
+
+1. Creates an equidistant cylindrical projection using the low-resolution coastline database
+2. Draws coastlines, parallels, and meridians on the map
+3. Scatters the longitude and latitude values with temperature values as colors
+4. Adds a colorbar with units
+
+**Saving the Plot**
+
+The code saves the plot to a PNG file with a name based on the input HDF5 file.
+
+**Main Program**
+
+The `if __name__ == "__main__":` block is executed when the script is run directly (not imported as a module). It sets the HDF5 file name and calls the `run` function with that file name.

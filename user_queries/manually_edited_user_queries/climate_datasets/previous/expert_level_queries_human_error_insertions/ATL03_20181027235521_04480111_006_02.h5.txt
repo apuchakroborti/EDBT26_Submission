@@ -1,0 +1,10 @@
+First, define constants like the file name. 
+Then, open the HDF5 file in read-only mode and access datasets within it: 
+    `reference photon lat` for latitude values, `reference photon lon` for longitude values, 
+    and `tx pulse energy` for pulse energy values from the subgroup /gt1l/geolocation.
+
+Next, create an equidistant cylindrical map projection with a low-resolution and a latitude range of -90 to 90 and longitude range of -180 to 180 and coastline database. 
+Plot the pulse energy values on this map using a scatter plot, customizing it with options like color maps and marker sizes.
+
+Add a color bar to the plot and set a title that includes the file name and a descriptive label. 
+Finally, save the plot to a PNG file derived from the HDF5 file name.

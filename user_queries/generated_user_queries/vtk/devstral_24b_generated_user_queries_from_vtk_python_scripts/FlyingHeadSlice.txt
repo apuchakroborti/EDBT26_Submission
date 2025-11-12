@@ -1,0 +1,84 @@
+This Python script generates 2D contour lines representing tissue density on a CT slice through the head. The contours are colored based on tissue density.
+
+### Step-by-Step Description
+
+1. **Import Libraries:**
+   - `vtkmodules.vtkInteractionStyle`
+   - `vtkmodules.vtkRenderingOpenGL2`
+   - `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - `vtkContourFilter`, `vtkFlyingEdges2D` from `vtkmodules.vtkFiltersCore`
+   - `vtkOutlineFilter` from `vtkmodules.vtkFiltersModeling`
+   - `vtkMetaImageReader` from `vtkmodules.vtkIOImage`
+   - `vtkExtractVOI` from `vtkmodules.vtkImagingCore`
+   - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+
+2. **Define the Main Function:**
+   - The function is named `main()`.
+
+3. **Set File Name and Contouring Method:**
+   - Define `fileName` as `'FlyingHeadSlice_FullHead.mhd'`
+   - Set `useContouring` to `True`
+   - Print a message indicating whether `vtkContourFilter` or `vtkFlyingEdges2D` is being used
+
+4. **Initialize Colors:**
+   - Create an instance of `vtkNamedColors` named `colors`
+
+5. **Create Renderer, RenderWindow, and Interactor:**
+   - Create a renderer (`ren1`) using `vtkRenderer()`
+   - Create a render window (`renWin`) using `vtkRenderWindow()` and add the renderer to it
+   - Create an interactor (`iren`) using `vtkRenderWindowInteractor()` and set its render window
+
+6. **Create the Pipeline:**
+   - Read the image file using `vtkMetaImageReader` named `reader`
+     - Set the filename with `reader.SetFileName(fileName)`
+     - Update the reader with `reader.Update()`
+   - Extract a volume of interest (VOI) using `vtkExtractVOI` named `extractVOI`
+     - Connect the reader's output to the extractVOI input
+     - Set VOI parameters: `extractVOI.SetVOI(0, 255, 0, 255, 45, 45)`
+   - Define a scalar range: `[500, 1150]`
+
+7. **Create Contour or Flying Edges Filter:**
+   - Create instances of `vtkContourFilter` named `contour` and `vtkFlyingEdges2D` named `flyingEdges`
+   - Create a mapper (`isoMapper`) using `vtkPolyDataMapper()`
+   - If `useContouring` is True:
+     - Set the input connection for contour filter
+     - Generate values with `contour.GenerateValues(12, scalarRange)`
+     - Connect the contour's output to the mapper
+   - Otherwise (if using FlyingEdges):
+     - Set the input connection for flying edges filter
+     - Generate values with `flyingEdges.GenerateValues(12, scalarRange)`
+     - Connect the flying edges' output to the mapper
+
+8. **Configure Mapper and Actor:**
+   - Enable scalar visibility on the mapper: `isoMapper.ScalarVisibilityOn()`
+   - Set the scalar range for the mapper
+   - Create an actor (`isoActor`) using `vtkActor()` and set its mapper
+   - Set the color of the actor's property to 'Wheat'
+
+9. **Create Outline Filter:**
+   - Create an outline filter (`outline`) using `vtkOutlineFilter()`
+   - Connect the extractVOI output to the outline input
+
+10. **Configure Outline Mapper and Actor:**
+    - Create a mapper for the outline (`outlineMapper`) using `vtkPolyDataMapper()`
+    - Set its input connection
+    - Create an actor for the outline (`outlineActor`) using `vtkActor()` and set its mapper
+
+11. **Add Actors to Renderer:**
+    - Add both actors (`outlineActor` and `isoActor`) to the renderer
+    - Set background color of the renderer to 'SlateGray'
+    - Reset camera, adjust dolly, and reset clipping range
+
+12. **Set Window Size and Name:**
+    - Set render window size to 640x640 pixels
+    - Set window name to 'FlyingHeadSlice'
+
+13. **Render the Scene:**
+    - Render the scene with `renWin.Render()`
+
+14. **Start Interaction:**
+    - Start the interactor with `iren.Start()`
+
+### Execution
+
+- The script is executed by calling the `main()` function if it's run as the main module (`if __name__ == '__main__':`).

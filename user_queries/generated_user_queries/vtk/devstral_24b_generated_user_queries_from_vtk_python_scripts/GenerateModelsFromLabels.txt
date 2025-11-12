@@ -1,0 +1,71 @@
+This Python script creates VTK polydata models from a 3D volume containing discrete labels. The volumes are typically the output of a segmentation algorithm, and each label's polydata is saved to a separate file.
+
+### Step-by-Step Description
+
+1. **Import Libraries:**
+   - `os`: For operating system dependent functionality.
+   - `sys`: To access command-line arguments.
+   - `vtkmodules.vtkInteractionStyle` and `vtkmodules.vtkRenderingOpenGL2`: Imported for VTK interaction style and rendering.
+   - Various classes from `vtkmodules.vtkCommonCore`, `vtkmodules.vtkCommonDataModel`, `vtkmodules.vtkFiltersCore`, `vtkmodules.vtkFiltersGeneral`, `vtkmodules.vtkFiltersGeometry`, `vtkmodules.vtkIOImage`, `vtkmodules.vtkIOXML`, and `vtkmodules.vtkImagingStatistics`: These are VTK modules required for processing the 3D volume data.
+
+2. **Define Main Function:**
+   - The main function is defined to execute the script's primary operations.
+
+3. **Check VTK Version:**
+   - A helper function `vtk_version_ok` checks if the current VTK version meets or exceeds a specified version (8.2.0 in this case).
+
+4. **Set File and Label Parameters:**
+   - Define file name (`file_name`), start label (`start_label`), and end label (`end_label`). If `start_label` is greater than `end_label`, they are swapped.
+
+5. **Create VTK Objects:**
+   - Instantiate various VTK objects needed for processing:
+     - `reader`: `vtkMetaImageReader()` to read the input file.
+     - `histogram`: `vtkImageAccumulate()` to generate a histogram of labels.
+     - `discrete_cubes`: Either `vtkDiscreteFlyingEdges3D()` or `vtkDiscreteMarchingCubes()` based on VTK version and availability.
+     - `smoother`: `vtkWindowedSincPolyDataFilter()` for smoothing the models.
+     - `selector`: `vtkThreshold()` to select specific labels.
+     - `scalars_off`: `vtkMaskFields()` to strip scalars from output.
+     - `geometry`: `vtkGeometryFilter()` to convert data to polygonal geometry.
+     - `writer`: `vtkXMLPolyDataWriter()` to write the polydata to files.
+
+6. **Set Processing Parameters:**
+   - Define variables for file prefix (`file_prefix`), smoothing iterations (`smoothing_iterations`), pass band (`pass_band`), and feature angle (`feature_angle`).
+
+7. **Read Input File:**
+   - Set the input file name using `reader.SetFileName(file_name)`.
+
+8. **Generate Histogram:**
+   - Connect the reader's output to the histogram generator.
+   - Configure the histogram component extent, origin, spacing, and update it.
+
+9. **Configure Discrete Cubes Filter:**
+   - Set the input connection for discrete cubes filter.
+   - Generate values based on label range.
+
+10. **Smooth Models:**
+    - Connect the discrete cubes output to the smoother.
+    - Configure smoothing parameters like number of iterations, boundary and feature edge smoothing, pass band, etc.
+    - Update the smoother.
+
+11. **Configure Threshold Selector:**
+    - Set input connection for threshold selector based on VTK version and filter type used.
+
+12. **Strip Scalars from Output:**
+    - Configure `scalars_off` to strip scalar data from points and cells.
+
+13. **Convert to Geometry:**
+    - Connect the output of `scalars_off` to the geometry filter.
+
+14. **Write Polydata Files:**
+    - Set input connection for writer.
+    - Loop through each label in the specified range:
+      - Check if the label exists in the histogram; skip if not.
+      - Select cells for the current label using threshold values.
+      - Define output file name and write the polydata to a `.vtp` file.
+
+15. **Run Main Function:**
+    - If the script is executed as the main module, call `main()` function to start processing.
+
+### File Names and Paths
+- Input file: `'GenerateModelsFromLabels_frogtissue.mhd'`
+- Output files: Generated dynamically with names like `'Label<label_number>.vtp'`

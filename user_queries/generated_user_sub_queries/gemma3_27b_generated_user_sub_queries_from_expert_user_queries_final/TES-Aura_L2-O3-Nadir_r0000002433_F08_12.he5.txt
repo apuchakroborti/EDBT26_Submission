@@ -1,0 +1,68 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+        A Python script to visualize ozone (O3) data from an HDF5 file with the following specifications:
+
+1. Import Libraries: Include os, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and Basemap from mpl_toolkits.basemap.
+
+2. Load Data:
+   - Open the HDF5 file: 'TES-Aura_L2-O3-Nadir_r0000002433_F08_12.he5'.
+   - Extract ozone data from '/HDFEOS/SWATHS/O3NadirSwath/Data Fields/O3' (all rows, 6th column).
+   - Retrieve latitude and longitude from their respective paths.
+
+3. Data Processing:
+   - Extract Units, Title, and FillValue attributes from the O3 dataset.
+   - Replace FillValues with NaNs in the ozone data.
+
+4. Create Map:
+   - Use Basemap with cylindrical projection, low resolution, lat limits [-90, 90], lon limits [-180, 180].
+   - Draw coastlines (linewidth=0.5), parallels (every 45 degrees) from -90 to 90, 
+      and meridians (every 45 degrees with labels on left and right) from -180 to 180.
+
+5. Plot Data:
+   - Scatter plot ozone data using longitude, latitude coordinates; set marker size to 1.
+
+6. Customize Plot:
+   - Add colorbar labeled with O3 Units.
+   - Set title combining HDF5 filename base and O3 long_name attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file using `h5py`, access a specific dataset by path (e.g., '/HDFEOS/SWATHS/O3NadirSwath/Data Fields/O3'), retrieve dataset attributes like 'Units', 'Title', and '_FillValue', and extract all rows from a specific column within the dataset.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a specific `_FillValue` in a NumPy array with `NaN` values, and how to use `np.ma.masked_where` to create masked arrays based on a fill value.
+
+Plotting and Visualization Sub-query:
+How to create a Basemap plot with a cylindrical projection, set latitude and longitude limits, draw coastlines, parallels, and meridians, and create a scatter plot with a colorbar and title using `matplotlib`.

@@ -1,0 +1,27 @@
+a Python script that reads and visualizes data from an HDF-EOS5 file. Here's what it does:
+
+**Reading File**
+
+The script opens the file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' in read mode.
+
+**Retrieving Data**
+
+It retrieves grid metadata from '/HDFEOS INFORMATION/StructMetadata.0' and data from '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure'. The data is converted to a NumPy array with dtype float64, and associated metadata like fill value, missing value, title, and units are retrieved.
+
+**Data Processing**
+
+Invalid values (fill or missing) are set to NaN, and a masked array is created using numpy.ma.
+
+**Retrieving Longitude and Latitude**
+
+The script retrieves longitude and latitude datasets from '/HDFEOS/GRIDS/NadirGrid/Data Fields/Longitude' and '/HDFEOS/GRIDS/NadirGrid/Data Fields/Latitude', respectively, as NumPy arrays with dtype float64.
+
+**Creating a Map**
+
+A Basemap object is created with a cylindrical projection, resolution 'l', and defined map boundaries. Coastlines, parallels, and meridians are drawn on the map.
+
+**Visualizing Data**
+
+The script visualizes the data on the map using pcolormesh, with longitude and latitude as x and y coordinates. A colorbar is added to the plot.
+
+Let me know if you have any questions about this script!

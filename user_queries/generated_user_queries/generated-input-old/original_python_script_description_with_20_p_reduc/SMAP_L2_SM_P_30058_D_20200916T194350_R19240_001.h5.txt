@@ -1,0 +1,29 @@
+Here is the rewritten description with 20% reduction in text while keeping implementation details:
+
+**Importing Libraries**
+
+The code starts by importing several libraries: `os` for interacting with the operating system, `h5py` for reading and manipulating HDF5 files, `matplotlib` and `matplotlib.pyplot` (imported as `mpl` and `plt`) for creating plots and visualizations, `Basemap` from `mpl_toolkits.basemap` for geospatial visualizations, and `numpy` (imported as `np`) for numerical computations.
+
+**Defining Constants**
+
+The code defines a constant: `FILE_NAME`, the name of the HDF5 file to be read, assumed to be in the current working directory.
+
+**Reading HDF5 File and Accessing Dataset Attributes**
+
+The code uses `h5py` to read the HDF5 file specified by `FILE_NAME`. It accesses various attributes associated with the dataset `/Soil_Moisture_Retrieval_Data/soil_moisture`, including the data itself, units, long name, fill value, and valid maximum and minimum values.
+
+**Data Cleaning and Masking**
+
+The code cleans and masks the dataset to remove invalid or missing values by creating a boolean mask and setting invalid values to NaN. It then creates a masked array where NaN values are replaced with a mask.
+
+**Geolocation Data and Map Visualization**
+
+The code retrieves geolocation data from the HDF5 file, including latitude and longitude datasets. It creates a map visualization using Basemap, drawing coastlines, parallels, and meridians on the map. The scatter plot of the data is created on the map using the jet colormap.
+
+**Colorbar and Plot Customization**
+
+The code customizes the plot by adding a colorbar at the bottom with a 10% padding and setting the label to the units attribute. It sets the plot title to include the base name and long name attributes.
+
+**Plot Title and Saving**
+
+The code saves the figure as a PNG image, constructing the file name from the HDF5 file's base name.

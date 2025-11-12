@@ -1,0 +1,103 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Import necessary libraries for handling OS functions, plotting, numerical operations, map projections, and HDF5 files:
+   - `os`
+   - `cartopy.crs` as `ccrs`
+   - `matplotlib` and `matplotlib.pyplot` as `plt`
+   - `numpy`
+   - `mpl_toolkits.basemap`
+   - `h5py`
+   - `LATITUDE_FORMATTER` and `LONGITUDE_FORMATTER` from `cartopy.mpl.gridliner`
+
+2. Define the constant `FILE_NAME` with the path to the HDF5 file:  
+   `ATL08_20210114234518_03361001_006_01.h5`.
+
+3. Open the HDF5 file in read mode and access these datasets:
+   - `latitude`
+   - `longitude`
+   - `dem_h`
+   from /gt1l/land_segments
+   
+4. Extract attributes from `dem_h`:
+   - `units` and `long_name`, decoded using `ascii` with `replace` error handling.
+   - `_FillValue`.
+
+5. Preprocess the data:
+   - Replace `_FillValue` in `dem_h` with `numpy.NaN`.
+   - Mask NaN values using `numpy.ma.masked_where` based on `numpy.isnan`.
+
+6. Calculate midpoint coordinates for latitude (`lat_m`) and longitude (`lon_m`).
+
+7. Create a map using Cartopy's orthographic projection:
+   - Set central longitude to `lon_m` and central latitude to `lat_m`.
+   - Use `ax = fig.add_subplot(111, projection=ccrs)`.
+
+8. Plot the data as a scatter plot:
+   - Parameters: `lon`, `lat`, `c=data`, `s=1`, `cmap=plt.cm.jet`, `transform=ccrs.PlateCarree()`.
+
+9. Configure the map:
+   - Add gridlines with `ax.gridlines(draw_labels=True, dms=True)`.
+   - Include coastlines using `ax.coastlines()`.
+   - Disable top and right grid labels.
+   - Set xformatter to `LONGITUDE_FORMATTER` and yformatter to `LATITUDE_FORMATTER`.
+
+10. Add a colorbar:
+    - Use `plt.colorbar` with `fraction=0.022`, `pad=0.01`.
+    - Label it with the units from `dem_h` attributes, font size 8.
+
+11. Set the plot title:
+    - Include the file basename and `long_name` of `dem_h`.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I'm trying to break down this user's query into three focused sub-queries. Let me start by understanding what each part of their task entails.
+
+First, the user is working with HDF5 files using h5py. They need to access specific datasets and attributes. So for the first sub-query, I should focus on how to open the file, navigate to the correct group (/gt1l/land_segments), and extract 'latitude', 'longitude', and 'dem_h'. Also, they want to get attributes like units and long_name from dem_h, handling decoding with ASCII and replacing errors. Plus, extracting _FillValue.
+
+Next, the preprocessing part involves NumPy operations. The user wants to replace _FillValue with NaNs and mask those using numpy.ma.masked_where based on isnan checks. So the second sub-query should cover these steps, ensuring that the data is properly cleaned before visualization.
+
+Lastly, for plotting, they're using Cartopy's orthographic projection. I need to include setting the central longitude and latitude, adding gridlines with formatters, coastlines, and adjusting the map aesthetics like disabling top/right labels. Also, creating a scatter plot with specific parameters and adding a colorbar with the correct units.
+
+I should make sure each sub-query is concise and targets only the relevant technical areas without mixing them up.
+</think>
+
+HDF5 Dataset Access Sub-query:  
+How to access HDF5 file `ATL08_20210114234518_03361001_006_01.h5` using `h5py`, navigate to `/gt1l/land_segments`, and extract datasets `latitude`, `longitude`, `dem_h`. Also, retrieve attributes `units`, `long_name`, and `_FillValue` from `dem_h`.
+
+NumPy Data Preprocessing Sub-query:  
+How to replace `_FillValue` in `dem_h` with `numpy.NaN` and mask NaN values using `numpy.ma.masked_where` based on `numpy.isnan`.
+
+Plotting and Visualization Sub-query:  
+How to create an orthographic map projection with Cartopy centered at midpoint coordinates, plot data as scatter points, add gridlines with degree-minute-second formatting, include coastlines, configure formatters, and disable top/right labels.

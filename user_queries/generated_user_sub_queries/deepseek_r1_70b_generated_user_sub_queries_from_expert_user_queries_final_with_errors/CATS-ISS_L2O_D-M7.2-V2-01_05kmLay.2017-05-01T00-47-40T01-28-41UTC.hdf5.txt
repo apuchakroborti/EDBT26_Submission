@@ -1,0 +1,84 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Load an HDF5 file named 'CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5' in read-only mode using h5py.
+
+2. Import necessary libraries: datetime, os, matplotlib (including pyplot and toolkits), numpy, sys, time, and colors.
+
+3. Access the following datasets from the HDF5 file:
+   - '/layer_descriptor/Aerosol_Type_Fore_FOV' as a 2D array for aerosol type information.
+   - 'CATS_Fore_FOV_Latitude' and 'CATS_Fore_FOV_Longitude' from the group `geolocation` as 2D arrays for latitude and longitude values.
+
+4. Extract the first column from the Aerosol_Type_Fore_FOV dataset, the second column from the latitude data, and the second column from the longitude data.
+
+5. Create a discrete color map named 'cmap' with nine colors: "grey", "blue", "aqua", "yellow", "orange", "green", "red", "black", and "brown".
+
+6. Set up a geographic map using a cylindrical projection with low resolution, latitude range from -90 to 90, longitude range from -180 to 180, 
+   coastlines with linewidth 0.5, parallels at [-90, 0, 45, 60, 75, 90], and meridians at [-180, -120, -60, 0, 60, 120, 180] with labels [True, False, False, True].
+
+7. Create a scatter plot using longitude and latitude data with parameters: c=data, s=0.1, cmap='jet', edgecolors=None, linewidth=0.
+
+8. Set the plot title to the basename of the HDF5 file.
+
+9. Define bins for the colorbar using numpy.linspace(0, 9, 10) and normalize using matplotlib.colors.BoundaryNorm with bounds and N=9.
+
+10. Create a second axes object (ax2) at position [0.1, 0.1, 0.8, 0.02] and add a horizontal colorbar with parameters: ax=ax2, cmap=cmap, normalize=normalize, orientation='horizontal', spacing='proportional', ticks=bounds, boundaries=bounds, format='%1i'.
+
+11. Set x-tick labels for the colorbar as ["invalid", "marine", "p. marine", "dust", "dust mixture", "clean/bg", "p. continental", "smoke", "volcanic"] with font size 5.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I'm trying to break down this user's query into three focused sub-queries. Let me start by reading through each of their steps carefully.
+
+First, the user wants to load an HDF5 file using h5py in read-only mode. That seems straightforward for the first sub-query. They also need to access specific datasets: one from 'layer_descriptor' and two from the 'geolocation' group. I should make sure those paths are correctly noted.
+
+Next, they're extracting columns from these datasets. For the Aerosol_Type_Fore_FOV, it's the first column; for latitude and longitude, both are second columns. This part involves NumPy operations, so I'll need to focus on how to handle array slicing or extraction here. Maybe using something like [:, 0] for the first column and [:, 1] for the others.
+
+Then, they're creating a discrete colormap with nine specific colors. That's more about visualization, so that will fall under the plotting sub-query. They also set up a geographic map with cylindrical projection, which involves libraries like cartopy or basemap. I should note the parameters like resolution, latitude and longitude ranges, coastlines, parallels, and meridians.
+
+The scatter plot uses longitude and latitude data with certain parameters. The title is based on the HDF5 filename, so I'll need to extract that using os.path.basename. 
+
+For the colorbar, they define bins using numpy.linspace and normalize with BoundaryNorm. Then, they create a second axes for the colorbar with specific positions and labels. The ticks are set with labels provided in the query.
+
+Putting it all together, each sub-query needs to target a specific domain: HDF5 access, NumPy preprocessing, and plotting. I'll structure them accordingly, ensuring each part is clear and concise without overlapping into other domains.
+</think>
+
+HDF5 Dataset Access Sub-query:
+Load an HDF5 file named 'CATS-ISS_L2O_D-M7.2-V2-01_05kmLay.2017-05-01T00-47-40T01-28-41UTC.hdf5' in read-only mode using h5py and access the datasets '/layer_descriptor/Aerosol_Type_Fore_FOV', 'geolocation/CATS_Fore_FOV_Latitude', and 'geolocation/CATS_Fore_FOV_Longitude'.
+
+NumPy Data Preprocessing Sub-query:
+Extract the first column from the Aerosol_Type_Fore_FOV dataset, the second column from the latitude data, and the second column from the longitude data using NumPy array indexing.
+
+Plotting and Visualization Sub-query:
+Create a geographic map with cylindrical projection, configure coastlines, parallels, and meridians, generate a scatter plot with specified parameters, set the plot title to the HDF5 file basename, create a discrete color map with nine colors, add a horizontal colorbar with custom bins and labels, and format the colorbar ticks.

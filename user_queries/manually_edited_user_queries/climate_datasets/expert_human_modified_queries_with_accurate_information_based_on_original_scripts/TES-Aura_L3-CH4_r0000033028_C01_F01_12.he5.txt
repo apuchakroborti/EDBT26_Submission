@@ -1,0 +1,25 @@
+A Python script that reads and visualizes data from an HDF-EOS5 file. 
+Here's what it does:
+At first, it should import libraries such as import os, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Reading File
+The script opens the file 'TES-Aura_L3-CH4_r0000033028_C01_F01_12.he5' in read mode.
+
+Retrieving Data
+It retrieves grid metadata from '/HDFEOS INFORMATION/StructMetadata.0' and data from '/HDFEOS/GRIDS/NadirGrid/Data Fields/SurfacePressure'. 
+The data is converted to a NumPy array with dtype float64, and associated metadata like '_FillValue', 'MissingValue', 'Title' with decode(), 'Units' with decode() are retrieved, 
+
+
+Data Processing
+Invalid values (fill or missing) are set to NaN, and a masked array is created using numpy.ma.
+
+Retrieving Longitude and Latitude
+The script retrieves longitude and latitude datasets from '/HDFEOS/GRIDS/NadirGrid/Data Fields/Longitude' and '/HDFEOS/GRIDS/NadirGrid/Data Fields/Latitude', 
+respectively, as NumPy arrays with dtype float64.
+
+Creating a Map
+A Basemap object is created with a cylindrical projection, resolution 'l' along with a latitude range of -90 to 90 and longitude range of -180 to 180, 
+and defined map boundaries. Coastlines with linewidth of 0.5, parallels with parameers value of numpy arrange -45, 91, 45 and labels 1, 0, 0, 0, and meridians with numpy arrange of -180, 180, 45 and labels 0, 0, 0, 1 are drawn on the map.
+
+Visualizing Data
+The script visualizes the data on the map using pcolormesh with parameters longitude, latitude, data and latlon status. A colorbar with units label is added to the plot.

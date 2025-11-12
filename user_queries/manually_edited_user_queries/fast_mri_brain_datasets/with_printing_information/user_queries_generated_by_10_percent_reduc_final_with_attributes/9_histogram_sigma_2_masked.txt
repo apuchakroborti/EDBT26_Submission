@@ -1,0 +1,27 @@
+Loading Data
+The code loads an HDF5 file located at `9_fastMRI_brain_first_10_dcm_to_h5.h5`. 
+This file is opened in read-only mode.
+
+Accessing Data
+The script accesses a specific dataset within the HDF5 file, located at `FAST_MRI_BRAIN_ROOT/100099070170/279/fastMRI_brain_data`, which represents brain MRI data. 
+This dataset is assigned to the variable `brain_vol`.
+
+Also print the below information by acessing attributes data from the from the group `FAST_MRI_BRAIN_ROOT/100099070170/279/metadata` 
+`PatientAge`, `PatientBirthDate`, `PatientID`, `PatientIdentityRemoved`, `PatientName`, `PatientSex`
+
+Reshaping Data
+The 2D dataset `brain_vol` is reshaped into a 3D array with dimensions `(16, 32, 512)`, representing a volume of brain MRI data.
+
+Smoothing Data
+A Gaussian filter from scipy.ndimage is applied to the reshaped 3D dataset `brain_vol` to reduce noise and make it suitable for segmentation.
+
+Plotting Smoothed Images
+A subset of smoothed images from the 3D volume is plotted, displaying every 4th slice starting from the middle of the volume. Each image is displayed in grayscale.
+
+Segmenting Smoothed Images
+The smoothed images are segmented by applying another Gaussian filter and plotting the histogram of filtered values. 
+Based on the histogram, a range of bins for grey matter (16-25) is selected and a mask for the brain region is created.
+
+Plotting Brain Mask
+Finally, the brain mask is plotted, displaying a 2D slice of the mask in grayscale with the axis turned off to focus on the brain region.
+The code appears to be focused on processing and analyzing MRI data from the FAST_MRI_BRAIN dataset, specifically segmenting brain regions from smoothed images.

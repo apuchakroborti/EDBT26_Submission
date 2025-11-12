@@ -1,0 +1,86 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            It starts by loading an HDF5 file located at `6_fastMRI_brain_first_10_dcm_to_h5.h5` in read-only mode.
+
+The code then accesses a dataset within the HDF5 file from the dataset fastMRI_brain_data from the sub group 279 and root group FAST_MRI_BRAIN_ROOT, 
+which represents 16 slices, 32 rows, and 512 columns. 
+
+Two masks are created: one where values are greater than 10% of the maximum value, 
+and another where values are less than 15% of the maximum value. 
+The two masks are combined using element-wise addition, and then thresholded to create a final mask.
+
+The code visualizes the mask using a gray colormap and slice of 20th column from 3D array that means it reads all values from x axis,
+and z axis but only select the 20th slice from y axis, displaying a slice of the mask. 
+
+In summary, this code loads an HDF5 file containing MRI data, reshapes the data into 3D, applies masking, and visualizes the results.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+
+# Open the file in read mode
+with h5py.File('6_fastMRI_brain_first_10_dcm_to_h5.h5', 'r') as f:
+    # Accessing datasets or attributes, dataset paths (like '/Grid/cloudWater'), and metadata
+    print(f.attrs)  # Print all attributes of the file
+    
+    # Accessing specific dataset
+    data = f['FAST_MRI_BRAIN_ROOT']['279'][()]  # Accesses the data from the specified path
+```
+
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+
+# Assuming 'data' is your 3D array
+max_val = np.max(data)
+mask1 = data > (0.1 * max_val)
+mask2 = data < (0.15 * max_val)
+final_mask = np.logical_or(mask1, mask2)
+```
+
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# Assuming 'data' is your 3D array
+fig = plt.figure(figsize=(10, 5))
+ax = fig.add_subplot(121)
+m = Basemap(projection='ortho', lat_0=45, lon_0=-100)
+x, y = m(data[20, :, :].T)
+m.drawcoastlines()
+plt.pcolormesh(x, y, final_mask[20, :, :], cmap='gray')
+```

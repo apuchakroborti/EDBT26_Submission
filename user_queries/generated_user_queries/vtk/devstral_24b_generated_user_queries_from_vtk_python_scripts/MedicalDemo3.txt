@@ -1,0 +1,41 @@
+This script is a Python implementation of a 3D medical visualization using the Visualization Toolkit (VTK). Here's a step-by-step breakdown:
+
+1. **Imports and Initial Setup**:
+   - Import necessary VTK modules.
+   - Define the `vtk_version_ok` function to check if the required VTK version is available.
+
+2. **Main Function (`main()`)**:
+   - Create a renderer, render window, and interactor for rendering the scene.
+   - Set up colors using `vtkNamedColors`.
+   - Read the medical data from a file (assumed to be in the same directory as the script).
+
+3. **Skin Extraction**:
+   - Use an isosurface filter (`vtkMarchingCubes` or `vtkFlyingEdges3D`) to extract skin surfaces at a specific contour value.
+   - Apply a stripper and mapper to prepare the data for rendering.
+   - Create an actor for the skin with specified properties (color, opacity).
+
+4. **Bone Extraction**:
+   - Similar process as skin extraction but for bone surfaces at a different contour value.
+
+5. **Outline Creation**:
+   - Create an outline around the data using `vtkOutlineFilter`.
+
+6. **Orthogonal Planes**:
+   - Create three orthogonal planes (sagittal, axial, coronal) with different color mappings.
+   - Use `vtkImageMapToColors` to apply lookup tables for coloring.
+
+7. **Camera Setup**:
+   - Set up the camera position and orientation.
+   - Add actors (skin, bone, outline, planes) to the renderer.
+   - Adjust visibility and opacity settings.
+
+8. **Rendering**:
+   - Render the scene and start the interactor for user interaction.
+
+9. **Version Check Function (`vtk_version_ok`)**:
+   - Compare the required VTK version with the installed version.
+
+10. **Execution**:
+    - Call `main()` if the script is run as the main module.
+
+This script provides a comprehensive example of how to use VTK for medical data visualization, including handling different contour values, creating orthogonal planes, and setting up camera views.

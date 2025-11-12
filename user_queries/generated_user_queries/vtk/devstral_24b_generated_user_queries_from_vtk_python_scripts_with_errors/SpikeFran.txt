@@ -1,0 +1,53 @@
+Purpose of the Script
+This script is designed to create a 3D visualization of a face. It takes data from a file that contains information about the shape and surface of a person's face (in this case, someone named Fran) and displays it on the screen with some special effects.
+
+Step-by-Step Explanation
+
+1. Importing Tools:
+   - The script starts by importing various tools (modules) needed to work with 3D graphics. These are like different toolboxes that help us create and manipulate 3D shapes and colors.
+
+2. Setting Up the Main Function:
+   - The main function is where all the action happens. It's like the director of a play, telling everyone what to do.
+
+3. Loading the Face Data:
+   - The script loads data from a file named 'SpikeFran_fran_cut.vtk'. This file contains information about Fran's face that was originally captured using a special 3D scanner.
+   - Think of this like loading a blueprint for building a model of Fran's face.
+
+4. Preparing the Face Data:
+   - The script processes the data to make sure all the surface details (like bumps and curves) are correctly represented. It also flips the direction of these details so they point outward from the face, as they should.
+
+5. Creating a Mapper for the Face:
+   - A mapper is like a guide that tells the computer how to draw the 3D shape on the screen. The script creates one for Fran's face and sets its color to look like skin.
+
+6. Subsampling Points:
+   - To avoid clutter, the script selects only some of the points from the face data instead of all of them. This makes the visualization cleaner and easier to understand.
+   - It randomly picks one out of every ten points to use for the next steps.
+
+7. Creating a Glyph (3D Shape):
+   - The script creates a small cone shape that will be used as a marker on the face. It moves this cone so its base is at a specific point (0,0,0), which is important for positioning it correctly.
+   - This is like creating little flags to place on certain points of Fran's face.
+
+8. Applying Glyphs to Selected Points:
+   - The script uses the selected points from the face data and places these cone markers on them. It orients each cone based on the surface details (normals) calculated earlier.
+   - This is like sticking those little flags into specific spots on Fran's face model.
+
+9. Creating a Mapper for Glyphs:
+   - Just like with the face, the script creates a mapper to guide how these cones should be drawn on the screen. It sets their color to a bright green.
+
+10. Setting Up the Rendering Environment:
+    - The script sets up everything needed to display the 3D model on the screen. This includes creating a window (like a canvas), a renderer (which paints the picture), and an interactor (which lets you interact with the picture).
+    - It adds both Fran's face and the cone markers to this rendering environment.
+
+11. Configuring the Display:
+    - The script sets the size of the display window, gives it a title ('SpikeFran'), and sets the background color to a grayish-blue.
+    - This is like setting up the stage for our 3D model to be shown.
+
+12. Rendering the Image:
+    - Finally, the script tells the renderer to draw everything on the screen. It adjusts the camera view to zoom in and rotate slightly for a better look at Fran's face with the cone markers.
+    - This is like taking a snapshot of our 3D model from just the right angle.
+
+13. Starting the Interaction:
+    - The script starts an interactive mode, allowing you to move around and explore the 3D model on your screen using your mouse or keyboard.
+
+Summary
+In simple terms, this script takes a 3D scan of someone's face, processes it to make sure all the details are correct, selects certain points on the face, places little cone markers on those points, and then displays everything in a window where you can look around and explore. It's like creating a detailed 3D model of a person's face with some special markers added for interest.

@@ -1,0 +1,53 @@
+Sure, let's break down this Python script step by step in simple language:
+
+### Purpose
+This script is designed to create a visual representation (like a 3D graph) of financial data. It reads information from a file and then displays it in an interactive window where you can see different aspects of the data.
+
+### Step-by-Step Explanation
+
+1. Setting Up:
+   - The script starts by importing various tools that will help with reading, processing, and displaying the data.
+   - These tools are like different specialized workers who each have a specific job to do in this process.
+
+2. Reading the Data File:
+   - It specifies which file to read from (`FinanceFieldData_financial.vtk`).
+   - This is like telling someone exactly which book to pick up and read.
+
+3. Preparing to Extract Information:
+   - The script sets up some variables that will help it understand what kind of data it's dealing with.
+   - It defines what each axis (X, Y, Z) represents in the 3D graph: interest rate, monthly payment, and monthly income respectively.
+   - It also specifies which value to use for coloring or highlighting points on the graph (`TIME_LATE`).
+
+4. Extracting Data:
+   - The script reads the data from the file using a tool called `vtkDataObjectReader`.
+   - Then it uses another tool (`vtkDataObjectToDataSetFilter`) to convert this raw data into a format that can be used for creating points in 3D space.
+   - It normalizes the data, which means it adjusts all values so they fit within a certain range (like making sure everyone's height is measured in inches instead of feet).
+
+5. Creating Visual Representations:
+   - The script sets up two different visual representations:
+     - One for the general population (`popSplatter` and `popSurface`) which shows where most people fall on the graph.
+     - Another for delinquent populations (`lateSplatter` and `lateSurface`), highlighting areas where people are late with their payments.
+
+6. Setting Up the 3D Graph:
+   - It creates a 3D space (like an empty room) where it will place all these points.
+   - It sets up axes (X, Y, Z) to help you understand which direction represents what kind of data.
+   - It labels each axis with its corresponding financial term.
+
+7. Adding Colors and Opacity:
+   - The script assigns colors to different parts of the graph: gold for the general population and tomato red for delinquent areas.
+   - It also sets how transparent or opaque these points should be, so you can see overlapping data more clearly.
+
+8. Creating the Visual Scene:
+   - It assembles everything into a scene that will be displayed in a window.
+   - This includes adding all the actors (points and labels) to the renderer (the part that draws everything on the screen).
+
+9. Setting Up the Camera:
+   - The script sets up a virtual camera to determine how you'll view this 3D space.
+   - It specifies where the camera should be positioned, what it should focus on, and how it should be oriented.
+
+10. Displaying Everything:
+    - Finally, it creates an interactive window where you can see all this data visualized in 3D.
+    - You can move around, zoom in and out, and explore different parts of the graph to understand the financial data better.
+
+### Summary
+In simple terms, this script takes a file full of complex financial information and turns it into a colorful, interactive 3D graph. It helps you visualize how different factors (like interest rates, monthly payments, and income) relate to each other and highlights areas where people might be having trouble paying on time.

@@ -1,0 +1,28 @@
+Here's a reduced version of the text, keeping most implementation details:
+
+**Importing necessary libraries**
+
+The code starts by importing required libraries:
+1. `os` for operating system-related tasks.
+2. `matplotlib.pyplot` (as `plt`) for creating plots and visualizations.
+3. `numpy` (as `np`) for numerical computations.
+
+**Opening an HDF5 file and accessing datasets**
+
+The code opens an HDF5 file named `ATL09_20181117090604_07600101_006_02.h5` using `h5py`, assigning it to a variable `f`. It then accesses several datasets:
+1. `/profile_1/high_rate/latitude`: latitude values.
+2. `/profile_1/high_rate/longitude`: longitude values.
+3. `/profile_1/high_rate/apparent_surf_reflec`: surface reflectance values.
+
+**Plotting the data**
+
+The code creates a plot using `matplotlib`:
+1. It draws an equidistant cylindrical projection map with coastlines, parallels, and meridians.
+2. It plots surface reflectance data as points on the map, colored by their values.
+3. It adds a color bar for the plot.
+
+**Saving the plot**
+
+The code saves the plot as a PNG file with the same name as the HDF5 file (but with a `.png` extension).
+
+I removed some of the extraneous details and condensed the text to focus on the main steps in the code. Let me know if you'd like me to make any further changes!

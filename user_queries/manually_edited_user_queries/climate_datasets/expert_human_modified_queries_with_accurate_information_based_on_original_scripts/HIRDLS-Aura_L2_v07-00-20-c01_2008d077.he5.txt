@@ -1,0 +1,33 @@
+Python code that reads and visualizes data from an HDF-EOS5 file which is located at HIRDLS-Aura_L2_v07-00-20-c01_2008d077.he5. 
+
+Here's what it does:
+At first, it should import libraries such as import os, datetime, h5py, numpy as np, FormatStrFormatter and ScalarFormatter from matplotlib.ticker, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Reading the File
+Accessing Datasets
+It reads three datasets: 
+ `/HDFEOS/SWATHS/HIRDLS/Data Fields/O3` containing ozone (O3) data it read 0th index from the x-axis and all data from the y-axis of 2D data
+ `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Pressure` containing Pressure data
+ `/HDFEOS/SWATHS/HIRDLS/Geolocation Fields/Time` containing Time data, from Time data program reads only 0th index of linear data
+
+Reading Attributes
+The code reads several attributes such as Units from both the O3 and Pressure datasets, 
+it then reads Title data from the O3, Time, and Pressure datasets 
+it then uses these values by decoding using the decode() function 
+
+After that it accesses _FillValue data from the O3 data sets
+Then by comparing the O3 data and _FillValue it relaces the O3 data by numpy nan value
+
+In the next step, it creats a variable named datestr and store the value such as datatime with parametes of 1993, 1, 1 combining with timedelta function with value of seconds=time 
+
+Plotting
+The code creates a plot of ozone (O3) data against pressure, customizing it with scientific notation for x-axis tick labels, log scale for the y-axis, 
+inverted y-axis, and customized axis labels and title.
+
+The plot's x label is set by combining both O3 Title and Units data 
+The plot's y label is set by combining both Pressure data Title and Units data
+
+
+The plot's title is the combined string of file basename, O3's Title and Units data
+
+At the end, the gca of the plot is set such as invert yaxis, yscale value of log, and major formatter is FormatStrFormatter with the value of '%g'

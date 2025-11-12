@@ -1,0 +1,47 @@
+1. Import necessary libraries for handling OS functions, plotting, numerical operations, map projections, and HDF5 files:
+   - `os`
+   - `cartopy.crs` as `ccrs`
+   - `matplotlib` and `matplotlib.pyplot` as `plt`
+   - `numpy`
+   - `mpl_toolkits.basemap`
+   - `h5py`
+   - `LATITUDE_FORMATTER` and `LONGITUDE_FORMATTER` from `cartopy.mpl.gridliner`
+
+2. Define the constant `FILE_NAME` with the path to the HDF5 file:  
+   `ATL08_20210114234518_03361001_006_01.h5`.
+
+3. Open the HDF5 file in read mode and access these datasets:
+   - `latitude`
+   - `longitude`
+   - `dem_h`
+   from /gt1l/land_segments
+   
+4. Extract attributes from `dem_h`:
+   - `units` and `long_name`, decoded using `ascii` with `replace` error handling.
+   - `_FillValue`.
+
+5. Preprocess the data:
+   - Replace `_FillValue` in `dem_h` with `numpy.NaN`.
+   - Mask NaN values using `numpy.ma.masked_where` based on `numpy.isnan`.
+
+6. Calculate midpoint coordinates for latitude (`lat_m`) and longitude (`lon_m`).
+
+7. Create a map using Cartopy's orthographic projection:
+   - Set central longitude to `lon_m` and central latitude to `lat_m`.
+   - Use `ax = fig.add_subplot(111, projection=ccrs)`.
+
+8. Plot the data as a scatter plot:
+   - Parameters: `lon`, `lat`, `c=data`, `s=1`, `cmap=plt.cm.jet`, `transform=ccrs.PlateCarree()`.
+
+9. Configure the map:
+   - Add gridlines with `ax.gridlines(draw_labels=True, dms=True)`.
+   - Include coastlines using `ax.coastlines()`.
+   - Disable top and right grid labels.
+   - Set xformatter to `LONGITUDE_FORMATTER` and yformatter to `LATITUDE_FORMATTER`.
+
+10. Add a colorbar:
+    - Use `plt.colorbar` with `fraction=0.022`, `pad=0.01`.
+    - Label it with the units from `dem_h` attributes, font size 8.
+
+11. Set the plot title:
+    - Include the file basename and `long_name` of `dem_h`.

@@ -1,0 +1,26 @@
+A Python code that processes data from an HDF-EOS5 file. 
+Here's what it does:
+At first, it should import the necessary libraries such as os, pyproj, re, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap, pyproj, and numpy as np
+
+The program should read the main dataset from the path '/HDFEOS/GRIDS/NpPolarGrid25km/Data Fields/SI_25km_NH_89V_DAY'
+gridmeta from the path '/HDFEOS INFORMATION/StructMetadata.0'
+
+Then the main data type is updated to numpy float64 using astype
+
+The main function takes a file name as input and performs several steps. 
+It identifies the data field using the defined constant, 
+opens the HDF-EOS5 file and extracts metadata and projection parameters.
+
+Then, it processes the data by replacing 0 values with NaN, multiplying by 0.1, and creating a masked array. 
+It constructs a grid using the extracted projection parameters and data shape, and transforms the EASE Grid to WGS84 using pyproj.
+
+At the end, it creates a map using Basemap
+with npstere projection, low resolution, boundinglat of 33 and lon_0 of 0
+
+It also adds coastlines with linewidth of 0.5, 
+parallels with parameters of nummpy arrange with values 0, 91, 20 with labels value of list of [1, 0, 0, 0], 
+and meridians with parameters numpy arrange -180, 181, 45 with labels value of list of [0, 0, 0, 1]
+Then it adds pcolormesh with parameters longitude, latitude, data, and latlon=True
+
+At the end, a colorbar is added with label using set_label function of main dataset's units
+The plot title is set with the combined value of data file basename and main dataset's long_name

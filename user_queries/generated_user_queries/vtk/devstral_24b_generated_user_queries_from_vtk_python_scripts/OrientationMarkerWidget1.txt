@@ -1,0 +1,81 @@
+1. **Import Libraries**:
+   - Import `vtkInteractionStyle` from `vtkmodules.vtkInteractionStyle`
+   - Import `vtkRenderingOpenGL2` from `vtkmodules.vtkRenderingOpenGL2`
+   - Import `vtkNamedColors` from `vtkmodules.vtkCommonColor`
+   - Import `vtkSuperquadricSource` from `vtkmodules.vtkFiltersSources`
+   - Import `vtkXMLPolyDataReader` from `vtkmodules.vtkIOXML`
+   - Import `vtkOrientationMarkerWidget` from `vtkmodules.vtkInteractionWidgets`
+   - Import the following classes from `vtkmodules.vtkRenderingCore`:
+     - `vtkActor`
+     - `vtkDataSetMapper`
+     - `vtkPolyDataMapper`
+     - `vtkRenderWindow`
+     - `vtkRenderWindowInteractor`
+     - `vtkRenderer`
+
+2. **Define the Main Function**:
+   - Create a variable named `colors` by instantiating `vtkNamedColors()`
+
+3. **Set File Name**:
+   - Define a variable `file_name` with the value `'OrientationMarkerWidget1_Bunny.vtp'`
+
+4. **Read Polydata for Icon**:
+   - Instantiate `reader` as an object of `vtkXMLPolyDataReader()`
+   - Set the file name for the reader using `reader.SetFileName(file_name)`
+
+5. **Create Icon Mapper and Actor**:
+   - Create `icon_mapper` by instantiating `vtkDataSetMapper()`
+   - Connect the output port of the reader to the mapper with `icon_mapper.SetInputConnection(reader.GetOutputPort())`
+   - Create `icon_actor` as an instance of `vtkActor()`
+   - Set the mapper for the actor using `icon_actor.SetMapper(icon_mapper)`
+   - Set the color property of the actor's property to 'Silver' with `icon_actor.GetProperty().SetColor(colors.GetColor3d('Silver'))`
+
+6. **Setup Renderer, Window, and Interactor**:
+   - Create a renderer object named `renderer` by instantiating `vtkRenderer()`
+   - Set the background color of the renderer using `renderer.SetBackground(colors.GetColor3d('SlateGray'))`
+   - Create a render window object named `ren_win` by instantiating `vtkRenderWindow()`
+   - Add the renderer to the render window with `ren_win.AddRenderer(renderer)`
+   - Set the size of the render window using `ren_win.SetSize(400, 400)`
+   - Set the window name using `ren_win.SetWindowName('OrientationMarkerWidget1')`
+   - Create a render window interactor object named `iren` by instantiating `vtkRenderWindowInteractor()`
+   - Set the render window for the interactor with `iren.SetRenderWindow(ren_win)`
+
+7. **Setup Orientation Marker Widget**:
+   - Define an RGB array `rgb = [0.0, 0.0, 0.0]`
+   - Get the color 'Wheat' and store it in the `rgb` variable using `colors.GetColorRGB('Wheat', rgb)`
+   - Create a widget object named `widget` by instantiating `vtkOrientationMarkerWidget()`
+   - Set the orientation marker for the widget with `widget.SetOrientationMarker(icon_actor)`
+   - Set the interactor for the widget using `widget.SetInteractor(iren)`
+   - Define the viewport for the widget with `widget.SetViewport(0.0, 0.0, 0.2, 0.2)`
+   - Set the outline color of the widget using `widget.SetOutlineColor(*rgb)`
+   - Enable the widget with `widget.SetEnabled(1)`
+   - Turn on interactive mode for the widget with `widget.InteractiveOn()`
+
+8. **Create Superquadric**:
+   - Create a superquadric source object named `superquadric_source` by instantiating `vtkSuperquadricSource()`
+   - Set the phi roundness of the superquadric using `superquadric_source.SetPhiRoundness(.2)`
+   - Set the theta roundness of the superquadric using `superquadric_source.SetThetaRoundness(.8)`
+
+9. **Create Superquadric Mapper and Actor**:
+   - Create a mapper object named `superquadric_mapper` by instantiating `vtkPolyDataMapper()`
+   - Connect the output port of the superquadric source to the mapper with `superquadric_mapper.SetInputConnection(superquadric_source.GetOutputPort())`
+   - Create an actor object named `superquadric_actor` by instantiating `vtkActor()`
+   - Set the mapper for the actor using `superquadric_actor.SetMapper(superquadric_mapper)`
+   - Set the interpolation to flat with `superquadric_actor.GetProperty().SetInterpolationToFlat()`
+   - Set the diffuse color of the actor's property to 'Carrot' with `superquadric_actor.GetProperty().SetDiffuseColor(colors.GetColor3d('Carrot'))`
+   - Set the specular color of the actor's property to 'White' with `superquadric_actor.GetProperty().SetSpecularColor(colors.GetColor3d('White'))`
+   - Set the diffuse property using `superquadric_actor.GetProperty().SetDiffuse(0.6)`
+   - Set the specular property using `superquadric_actor.GetProperty().SetSpecular(0.5)`
+   - Set the specular power with `superquadric_actor.GetProperty().SetSpecularPower(5.0)`
+
+10. **Add Actor to Renderer and Reset Camera**:
+    - Add the superquadric actor to the renderer using `renderer.AddActor(superquadric_actor)`
+    - Reset the camera of the renderer with `renderer.ResetCamera()`
+
+11. **Render Window and Start Interaction**:
+    - Render the window using `ren_win.Render()`
+    - Initialize the interactor with `iren.Initialize()`
+    - Start the interaction loop with `iren.Start()`
+
+12. **Execute Main Function**:
+    - If this script is run as the main module, call the `main()` function.

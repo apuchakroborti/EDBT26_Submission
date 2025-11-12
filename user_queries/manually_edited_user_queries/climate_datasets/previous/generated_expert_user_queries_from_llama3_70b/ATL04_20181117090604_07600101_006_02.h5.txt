@@ -1,0 +1,51 @@
+Here's a step-by-step explanation of the provided Python code:
+
+**Importing Libraries**
+
+The code starts by importing several libraries:
+
+1. `os`: for operating system-related functions
+2. `matplotlib.pyplot` as `plt`: for creating plots and visualizations
+3. `numpy` as `np`: for numerical computations
+4. `mpl_toolkits.basemap` as `Basemap`: for creating maps and geographic projections
+5. `h5py`: for reading and manipulating HDF5 files
+
+**Defining the HDF5 File**
+
+The code defines a variable `FILE_NAME` with the name of an HDF5 file: `"ATL04_20181117090604_07600101_006_02.h5"`.
+
+**Opening the HDF5 File**
+
+The code opens the HDF5 file in read-only mode (`mode="r"`) using the `h5py` library. The file is opened as a context manager, which ensures that the file is properly closed when it goes out of scope.
+
+**Accessing Datasets in the HDF5 File**
+
+The code accesses several datasets within the HDF5 file:
+
+1. `/profile_1/latitude`: retrieves an array of latitude values and its valid range (minimum and maximum values) from the `latvar` dataset.
+2. `/profile_1/longitude`: retrieves an array of longitude values and its valid range from the `lonvar` dataset.
+3. `/profile_1/dem_h`: retrieves an array of height values, its units, and its long name from the `tempvar` dataset.
+
+**Creating a Map**
+
+The code creates a map using the `Basemap` library:
+
+1. It defines a cylindrical projection with a low-resolution coastline database.
+2. It sets the latitude and longitude ranges for the map.
+3. It draws coastlines, parallels, and meridians on the map.
+
+**Plotting Data**
+
+The code plots the height data (`temp`) on the map using the `scatter` function:
+
+1. It uses the longitude and latitude values as the x and y coordinates.
+2. It colors the points based on their height values using a jet colormap.
+3. It sets the point size to 1 and removes edge colors.
+
+**Adding Colorbar and Title**
+
+The code adds a colorbar to the plot with a label indicating the units of the height data. It also sets a title for the plot, which includes the file name and the long name of the height dataset.
+
+**Saving the Plot**
+
+Finally, the code saves the plot as a PNG image using the `savefig` function from `matplotlib`. The file name is constructed by appending `.py.png` to the base name of the HDF5 file.

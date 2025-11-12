@@ -1,0 +1,37 @@
+A Python script. 
+It reads an HDF-EOS5 file which is located at HIRDLS-Aura_L3ZFCNO2_v07-00-20-c01_2005d022-2008d077.he5, 
+extracts specific datasets, manipulates the data, and creates a contour plot.
+At first, it should import libraries such as import os, datetime, FormatStrFormatter from matplotlib.ticker, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, mpl_toolkits.basemap import Basemap
+
+Read datasets
+The script starts by opening the HDF-EOS5 file and reading various datasets: 
+    `/HDFEOS/ZAS/HIRDLS/Data Fields/NO2Ascending` (a 4D dataset containing NO2 data), 
+    `/HDFEOS/ZAS/HIRDLS/Data Fields/Latitude` (a 1D dataset containing latitude values), 
+    `/HDFEOS/ZAS/HIRDLS/Data Fields/Pressure` (a 1D dataset containing pressure values), 
+    `/HDFEOS/ZAS/HIRDLS/Data Fields/Time` (a scalar dataset containing the time of measurement), from the sub group path of /ZAS/HIRDLS/Data Fields 
+    and `HDFEOS/ZAS/HIRDLS/nCoeffs` (a scalar dataset containing the number of coefficients). from the sub group path /ZAS/HIRDLS
+    The above all datasets from the root group HDFEOS
+
+It reads NO2Ascending data of 0th index from the first and fourth dimensions and all of the data from the 2nd and 3rd dimensions of 4D data
+Iand 0th index of the Time and nCoeffs data 
+
+Read Attributes
+The script then reads attributes such as Units, Title from NO2Ascending, Latitude, and Pressure datasets.
+After that it reads the _FillValue attribute from the NO2Ascending dataset.
+
+Then by comparing the NO2Ascending data with _FillValue it replaces NO2Ascending data with numpy nan value
+It also maksed the NO2Ascending data using numpy ma masked_array function with parameters NO2Ascending data and condition with numpy isnan of NO2Ascending data
+
+In the next step, it starts ploting data such as contourf plot with parameters latitude, Pressure, and NO2Ascending data
+The a colorbar is added with label using set_label function with NO2Ascending's Units attributes value
+It creates plot with parameters of NO2Ascending and pressure data
+
+The plot's x label is set by combining both NO2Ascending Title and Units data 
+The plot's y label is set by combining both Pressure's Title and Units data
+
+It performs some data manipulation, including converting the date stored in `Time`, replacing fill values with NaN values, 
+and creating a masked array for the `NO2Ascending` dataset.
+
+The plot's title is the combined string of file basename, NO2Ascending's Title, and 0th index value of nCoeffs data
+
+At the end, the gca of the plot is set such as invert yaxis, yscale value of log, and major formatter is FormatStrFormatter with the value of '%.1f'

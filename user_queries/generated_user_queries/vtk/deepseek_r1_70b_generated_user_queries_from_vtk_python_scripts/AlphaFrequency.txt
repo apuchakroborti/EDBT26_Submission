@@ -1,0 +1,52 @@
+1. Import Libraries: The script begins by importing necessary Python libraries:
+   - `re` for regular expression operations
+   - `Counter` from the `collections` module to count letter frequencies
+   - Various modules from VTK (Visualization Toolkit) for 3D rendering, including:
+     - `vtkNamedColors`
+     - `vtkLinearExtrusionFilter`
+     - `vtkActor`, `vtkPolyDataMapper`, `vtkRenderWindow`, `vtkRenderWindowInteractor`, and `vtkRenderer` from `vtkmodules.vtkRenderingCore`
+     - `vtkVectorText` from `vtkmodules.vtkRenderingFreeType`
+
+2. Define Main Function: The main function is defined to encapsulate the script's logic.
+
+3. Specify File Name: The variable `fileName` is set to `'AlphaFrequency_Gettysburg.txt'`, indicating the text file to be analyzed.
+
+4. Initialize Named Colors: An instance of `vtkNamedColors` named `colors` is created for color definitions.
+
+5. Read and Process Text File:
+   - Open the specified file in read mode.
+   - Use a `Counter` object `freq` to tally letter frequencies.
+   - For each line in the file, remove digits and non-alphabetic characters using regular expressions.
+   - Convert text to lowercase and count alphabetic characters.
+
+6. Determine Maximum Frequency: Calculate `maxFreq` as the highest value in `freq` to scale extrusion heights later.
+
+7. Prepare Renderer and Window:
+   - Create a renderer (`ren`), render window (`renWin`), and interactor (`iren`).
+   - Link these components together for display.
+
+8. Initialize Data Structures: Prepare lists `letters`, `extrude`, `mappers`, and `actors` to hold VTK objects for each letter.
+
+9. Create and Configure 3D Objects for Each Letter:
+   - Loop through each letter in the alphabet.
+   - Create a `vtkVectorText` object for the letter, setting it to uppercase.
+   - Apply a `vtkLinearExtrusionFilter` to extrude the text vertically based on its frequency relative to `maxFreq`.
+   - Use a `vtkPolyDataMapper` to map the extruded geometry to an actor.
+   - Set the actor's color using `colors.GetColor3d('Peacock')`.
+   - Hide actors for letters with zero frequency.
+
+10. Position Actors: Arrange actors in a grid layout:
+    - Place them in two rows of 13 columns each (for 26 letters).
+    - Position each actor at calculated (x, y) coordinates.
+
+11. Adjust Camera and Background:
+    - Reset the camera view.
+    - Set the background color to 'Silver'.
+    - Adjust the camera's elevation, azimuth, and dolly for optimal viewing.
+    - Ensure the camera's clipping range is reset.
+
+12. Set Window Properties: Configure the render window with a size of 640x480 pixels and title 'AlphaFrequency'.
+
+13. Start Interaction: Begin the VTK event loop with `iren.Start()` to display the 3D scene interactively.
+
+14. Run Main Function: The script checks if it's run as the main program and executes `main()`.

@@ -1,0 +1,94 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            Create a Python script that reads an HDF5 file and generates a map visualization by following these steps:
+
+1. Import Libraries: Include os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py.
+
+2. Read HDF5 File: Open the file `AMSR_E_L2_Land_V11_201110031920_D.he5` in read-only mode.
+
+3. Extract Data:
+   - Retrieve main data from the attribute 'SoilMoistureSCA' at `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields`.
+   - Extract latitude data from `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/Latitude`.
+   - Extract longitude data from `/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields/Longitude`.
+
+4. Data Cleaning:
+   - Assign a static _FillValue of -9999.0.
+   - Replace values matching _FillValue with numpy NaN.
+   - Mask data using numpy's masked_array where values are not NaN.
+
+5. Create Map:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude range from -90 to 90 and longitude from -170 to 190.
+   - Add coastlines with a linewidth of 0.5.
+   - Draw parallels using numpy arrange with values -90, 91, 45 and labels [1, 0, 0, 0].
+   - Draw meridians using numpy arrange with values -180, 181, 45 and labels [0, 0, 0, 1].
+
+6. Scatter Plot:
+   - Use longitude and latitude data.
+   - Set parameters: marker size (s=0.1), colormap (plt.cm.jet), edgecolors=None, linewidth=0.
+
+7. Add Colorbar and Title:
+   - Include a colorbar labeled with the dataset's units.
+   - Set title to include the file basename and 'SoilMoistureSCA'.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+<think>
+Okay, so I need to create a Python script that reads an HDF5 file and generates a map visualization. Let me break this down step by step.
+
+First, I'll start with importing the necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, and h5py. That's straightforward.
+
+Next, I need to read the HDF5 file. The filename is 'AMSR_E_L2_Land_V11_201110031920_D.he5', so I'll open it in read-only mode using h5py. I remember that HDF5 files have a hierarchical structure, so I need to navigate through the groups and datasets.
+
+The main data is stored under the attribute 'SoilMoistureSCA' at the path '/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields'. So I'll access this dataset. Similarly, I need to extract latitude and longitude data from their respective paths.
+
+Once I have the data, I need to clean it. The _FillValue is -9999.0, so I'll replace all occurrences of this value with NaN using NumPy. Then, I'll create a masked array where these NaN values are masked out. This will help in visualization by ignoring invalid data points.
+
+For the map visualization, I'll use matplotlib and basemap. The projection should be equidistant cylindrical with low resolution. I'll set the latitude range from -90 to 90 and longitude from -170 to 190. Adding coastlines with a linewidth of 0.5 will make the map more readable.
+
+Drawing parallels and meridians is next. Parallels should be at intervals of 45 degrees, starting from -90 up to 90, with labels only on the bottom. Meridians will also be every 45 degrees, but labels will be on the right side.
+
+Finally, I'll create a scatter plot using longitude and latitude data. The markers should be small (s=0.1), using the jet colormap without edges. Adding a colorbar with the dataset's units and setting an appropriate title that includes the file basename and 'SoilMoistureSCA' will complete the visualization.
+
+I think I've covered all the steps, but I need to make sure each part is correctly implemented in Python. Maybe I should look up some examples for accessing HDF5 files with h5py and using basemap for projections. Also, handling NaNs properly is crucial to avoid errors in plotting.
+</think>
+
+HDF5 Dataset Access Sub-query:
+How to access the 'SoilMoistureSCA' dataset from an HDF5 file using h5py, including navigating through the specified path '/HDFEOS/POINTS/AMSR-E Level 2 Land Data/Data/Combined NPD and SCA Output Fields', and extracting latitude and longitude data from their respective paths.
+
+NumPy Data Preprocessing Sub-query:
+How to handle _FillValue (-9999.0) in NumPy arrays, replace it with NaN, create a masked array using np.ma.masked_where, and ensure the data is properly cleaned for visualization.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib and mpl_toolkits.basemap to create an equidistant cylindrical projection map with specified latitude and longitude ranges, add coastlines, draw parallels and meridians with numpy.arange, and customize their labels.

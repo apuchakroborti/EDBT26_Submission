@@ -1,0 +1,108 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file and generates a split-window plot with specific visualizations.
+
+1. Define Constants: Set `FILE_NAME` to "ATL12_20190330212241_00250301_006_03.h5".
+
+2. Open HDF5 File: Read the file in read mode and access these datasets:
+   - `latitude`, `longitude` both from /gpsr/navigation
+   - `bg_cnt_50shot_s` and `delta_time` (time data) both from the sub-group path `/atlas/pce1/background`
+
+3. Extract Attributes: For the bg_cnt_50shot_s dataset, read 'unit' and 'long name' attributes using decode('ascii', 'replace').
+
+4. Create Plots:
+   - First Plot (Time vs. Counts): 
+     - Set figure size to 10x10.
+     - Use subplot ax1 at position 2,1,1.
+     - Calculate elapsed_time by subtracting the first time value from each time point.
+     - Plot elapsed_time vs. main data with blue circles.
+     - Label axes with time units and main data units.
+     - Set title combining the file name, dataset name, and long name.
+
+   - Second Plot (Trajectory Map):
+     - Calculate midpoint latitude (lat_m) and longitude (lon_m).
+     - Use cartopy's orthographic projection centered at lat_m and lon_m.
+     - Enable gridlines with labels and degrees, minutes, seconds (dms).
+     - Display global features and coastlines.
+     - Plot trajectory in blue, using Geodetic transformation.
+     - Mark the starting point with a red circle and label "START" offset by 200 km.
+
+5. Adjust Layout: Use tight layout with padding of 3.0 for proper spacing.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+ HDF5 Dataset Access Sub-query:
+```python
+import h5py
+FILE_NAME = "ATL12_20190330212241_00250301_006_03.h5"
+with h5py.File(FILE_NAME, 'r') as f:
+    # Accessing datasets and attributes
+    latitude = f['/gpsr/navigation']['latitude']
+    longitude = f['/gpsr/navigation']['longitude']
+    bg_cnt_50shot_s = f['/atlas/pce1/background']['bg_cnt_50shot_s']
+    delta_time = f['/atlas/pce1/background']['delta_time']
+    
+    # Extracting attributes
+    unit = bg_cnt_50shot_s.attrs['unit'].decode('ascii', 'replace')
+    long_name = bg_cnt_50shot_s.attrs['long_name'].decode('ascii', 'replace')
+```
+NumPy Data Preprocessing Sub-query:
+```python
+import numpy as np
+# Applying mask where _FillValue is present in the data
+masked_data = np.ma.masked_where(bg_cnt_50shot_s == bg_cnt_50shot_s._FillValue, bg_cnt_50shot_s)
+```
+Plotting and Visualization Sub-query:
+```python
+import matplotlib.pyplot as plt
+from mpl_toolkits.basemap import Basemap
+
+# First Plot (Time vs. Counts)
+fig = plt.figure(figsize=(10, 10))
+ax1 = fig.add_subplot(211)
+elapsed_time = delta_time[0] - delta_time
+plt.plot(elapsed_time, masked_data, 'bo')
+plt.xlabel('Time (s)', fontsize=14)
+plt.ylabel(f'{long_name} ({unit})', fontsize=14)
+plt.title(f"{FILE_NAME}\n{bg_cnt_50shot_s.name}\n{long_name}", fontsize=16)
+
+# Second Plot (Trajectory Map)
+fig = plt.figure(figsize=(10, 10))
+ax2 = fig.add_subplot(111, projection=Basemap(projection='ortho', lat_0=-90, lon_0=0))
+ax2.drawcoastlines()
+ax2.drawmeridians(np.arange(-180., 181., 30.), labels=[True, False, False, True])
+ax2.drawparallels(np.arange(-90., 91., 30.), labels=[False, False, False, True])
+plt.plot(longitude[0], latitude[0], 'ro', markersize=15)
+plt.text(longitude[0]-200000, latitude[0]+200000, "START", color='red')
+```

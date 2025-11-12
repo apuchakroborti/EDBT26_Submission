@@ -1,0 +1,47 @@
+Here is the reduced text:
+
+**Importing Modules**
+
+The code imports several modules: `datetime` for dates and times, `os` for interacting with the operating system, `cartopy.crs as ccrs` for creating map projections, `matplotlib.pyplot as plt` for plotting, and `h5py` for reading HDF5 files.
+
+**Defining the File Path**
+
+The code defines a file path to an HDF5 file named `ATL02_20190520193327_08020311_006_01.h5`.
+
+**Opening the HDF5 File**
+
+The code opens the HDF5 file in read-only mode using `h5py` and assigns it to `f`.
+
+**Accessing Datasets**
+
+The code accesses several datasets:
+
+1. `/gpsr/navigation/latitude`
+2. `/gpsr/navigation/longitude`
+3. `/atlas/pce1/background/bg_cnt_50shot_s`
+4. `/atlas/pce1/background/delta_time`
+
+**Decoding Attributes**
+
+The code decodes attributes of the `elevvar` dataset: `units` and `long_name`.
+
+**Plotting**
+
+The code creates two plots:
+
+**Plot 1: Time vs. Counts**
+
+* Plots elapsed time against elevation counts using blue circles.
+* Sets x-axis label, y-axis label, and title.
+
+**Plot 2: Trajectory**
+
+* Creates an Orthographic projection with coastlines and gridlines.
+* Plots the trajectory using blue lines.
+* Annotates the starting point of the trajectory.
+
+**Saving the Plot**
+
+The code saves the figure as a PNG file named `<basename>.py.png`.
+
+Overall, this code reads an HDF5 file containing ICESat-2 ATL02 data, extracts several datasets, and creates two plots: one showing the time series of elevation counts and another displaying the trajectory of the flight path.

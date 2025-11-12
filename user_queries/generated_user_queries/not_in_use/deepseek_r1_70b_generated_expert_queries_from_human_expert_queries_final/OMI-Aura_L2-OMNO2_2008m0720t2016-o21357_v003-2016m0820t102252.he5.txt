@@ -1,0 +1,34 @@
+Read an HDF5 file located at "OMI-Aura_L2-OMNO2_2008m0720t2016-o21357_v003-2016m0820t102252.he5". Extract a dataset and its attributes, process the data, and visualize it on a map.
+
+1. Import Libraries: Include necessary libraries such as `os`, `datetime`, `h5py`, `numpy` as `np`, `matplotlib` as `mpl`, `matplotlib.pyplot` as `plt`, and `mpl_toolkits.basemap.Basemap`.
+
+2. Define Constants: Set the file path and dataset name to `/HDFEOS/SWATHS/ColumnAmountNO2/Data Fields/CloudFraction`.
+
+3. Read Data: Extract all data from the dataset and convert it to a NumPy float64 type.
+
+4. Retrieve Attributes: Obtain attributes including 'ScaleFactor', 'Offset', 'MissingValue', '_FillValue', 'Title' (decoded), and 'Units' (decoded).
+
+5. Geolocation Data: Read latitude and longitude arrays from their respective paths:
+   - Latitude: `/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields/Latitude`
+   - Longitude: `/HDFEOS/SWATHS/ColumnAmountNO2/Geolocation Fields/Longitude`
+
+6. Data Preprocessing:
+   - Replace `MissingValue` and `_FillValue` with NumPy NaN in the CloudFraction data.
+   - Apply scaling and offset using the formula: `data = ScaleFactor  (data - Offset)`.
+   - Mask the data where values are NaN using `numpy.ma.masked_where`.
+
+7. Map Setup:
+   - Use an equidistant cylindrical projection with low resolution.
+   - Set latitude limits from -90 to 90 and longitude from -180 to 180.
+
+8. Add Map Features:
+   - Draw coastlines with a line width of 0.5.
+   - Add parallels at latitudes [-90, 120, 30] with labels [1, 0, 0, 0].
+   - Add meridians at longitudes [-180, 180, 45] with labels [0, 0, 0, 1].
+
+9. Visualization:
+   - Use `scatter` function with parameters: longitude, latitude, data `c`, marker size `s=0.1`, colormap `jet`, no edge colors, and linewidth `0`.
+
+10. Colorbar: Add a colorbar and set its label to the dataset's 'Units' attribute.
+
+This structured approach ensures each step is clear for code generation by an LLM.

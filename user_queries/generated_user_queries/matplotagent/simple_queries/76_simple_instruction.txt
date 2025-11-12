@@ -1,0 +1,1 @@
+Write a code to read h5 data named '76_h5_data.h5' and visualize the "women's millions of dollars" dataset with a composite graph: an axis-free box plot above and a histogram below. Label key statistics on the box plot and detail the frequency distribution in the histogram. Highlight quartiles with continuous red dashed lines across both sections, ensuring no breaks.

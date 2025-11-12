@@ -1,0 +1,165 @@
+=== CHUNK START ===
+Title: What is a masked array?
+Explanation:
+In many circumstances, datasets can be incomplete or tainted by the presence of invalid data. 
+For example, a sensor may have failed to record a data, or recorded an invalid value. The numpy.ma module provides a convenient way to address this issue, by introducing masked arrays.
+
+A masked array is the combination of a standard numpy.ndarray and a mask. 
+A mask is either nomask, indicating that no value of the associated array is invalid, 
+or an array of booleans that determines for each element of the associated array whether the value is valid or not. 
+When an element of the mask is False, the corresponding element of the associated array is valid and is said to be unmasked. 
+When an element of the mask is True, the corresponding element of the associated array is said to be masked (invalid).
+
+The package ensures that masked entries are not used in computations.
+
+Code:
+import numpy as np
+import numpy.ma as ma
+x = np.array([1, 2, 3, -1, 5])
+#We wish to mark the fourth entry as invalid. The easiest is to create a masked array:
+
+mx = ma.masked_array(x, mask=[0, 0, 0, 1, 0])
+#We can now compute the mean of the dataset, without taking the invalid data into account:
+
+mx.mean()
+#output is 2.75
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: The numpy.ma module
+Explanation:
+This example is for showing how a second element can be invalid and also all values close to 1.e20 are invalid
+
+Code:
+import numpy as np
+import numpy.ma as ma
+#To create an array with the second element invalid, we would do:
+
+y = ma.array([1, 2, 3], mask = [0, 1, 0])
+#To create a masked array where all values close to 1.e20 are invalid, we would do:
+
+z = ma.masked_values([1.0, 1.e20, 3.0, 4.0], 1.e20)
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: Accessing only the valid entries
+
+Explanation: To retrieve only the valid entries, we can use the inverse of the mask as an index. 
+The inverse of the mask can be calculated with the numpy.logical_not function or simply with the ~ operator:
+
+Code:
+import numpy as np
+x = ma.array([[1, 2], [3, 4]], mask=[[0, 1], [1, 0]])
+x[~x.mask]
+masked_result = masked_array(data=[1, 4], mask=[False, False], fill_value=999999)
+print(masked_result)
+#output: [1, 4]
+
+#Another way to retrieve the valid data is to use the compressed method, which returns a one-dimensional ndarray (or one of its subclasses, 
+#depending on the value of the baseclass attribute):
+x.compressed()
+print(x)
+#[[1 --] [-- 4]]
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: numpy.logical_and
+Explanation:
+For single values, the comparison is performed between both values.
+For arrays, the first value from the first array is compared with the first value from the second array.
+
+Code:
+import numpy as np
+result = np.logical_and(True, False)
+print(result)
+#output: False
+m_res = np.logical_and([True, False], [False, False])
+print(m_res)
+#output: [False, False]
+
+=== CHUNK END ===
+
+
+=== CHUNK START ===
+Title: numpy.logical_or
+Explanation:
+For single values, the comparison is performed between both values.
+For arrays, the first value from the first array is compared with the first value from the second array.
+
+Code:
+import numpy as np
+result = np.logical_or(True, False)
+print(result)
+#output: True
+
+m_res = np.logical_or([True, False], [False, False])
+print(m_res)
+#output: [True, False]
+
+=== CHUNK END ===
+
+
+
+=== CHUNK START ===
+Title: numpy.ma.masked_where
+Explanation:
+ma.masked_where(condition, a, copy=True)[source]
+Mask an array where a condition is met.
+
+Return a as an array masked where condition is True. Any masked values of a or condition are also masked in the output.
+
+Parameters:
+condition: array_like
+Masking condition. When condition tests floating point values for equality, consider using masked_values instead.
+
+a: array_like
+Array to mask.
+
+copy: bool
+If True (default) make a copy of a in the result. If False modify a in place and return a view.
+
+Returns:
+result: MaskedArray
+The result of masking a where condition is True.
+
+Code:
+import numpy as np
+import numpy.ma as ma
+a = np.arange(4)
+print(a)
+#output: [0, 1, 2, 3]
+
+result1 = ma.masked_where(a <= 2, a)
+print(result1)
+#Output: [-- -- -- 3]
+
+result2 = ma.masked_array(data=['--', '--', '--', 3], mask=[ True,  True,  True, False], fill_value=999999)
+print(result2)
+#Output: [-- -- -- '3']
+
+# assigning values from another array named b
+b = ['a', 'b', 'c', 'd']
+result_b = ma.masked_where(a == 2, b)
+print(f'Output: {result_b}')
+#Output: ['a' 'b' -- 'd']
+
+=== CHUNK END ===
+
+=== CHUNK START ===
+Title: Data with a given value representing missing data
+Explanation:
+Let’s consider a list of elements, x, where values of -9999. represent missing data. We wish to compute the average value of the data:
+
+Code:
+import numpy.ma as ma
+def get_mean_without_missing_data():
+    x = [0.,1.,-9999.,3.,4.]
+    mx = ma.masked_values (x, -9999.)
+    print(mx.mean())#output will be 2.0
+    return mx.mean()
+
+=== CHUNK END ===
