@@ -517,7 +517,7 @@ import time
 # created on June 29, 2025
 # to check if we can solve errors by giving error messages and generated code to LLM and ask to resolve
 #                                       user_input_dir, JSON_FILE_PATH, common_base_directory+"/"+data_dir, subdirectories, extensions, output_dir, output_subdir, model
-def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH(user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL):
+def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH(user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL, temperature):
     print(f'Processing directory {user_input_dir}')
     print(f'\nsize of the data_subdirectories: {len(data_subdirectories)}')
     print(f'\nInside zero_shot_COT_NASA_CLIMATE_DATASETS...')
@@ -592,7 +592,7 @@ def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEAR
                                 # examples_codes_for_query_augmentation=''
                                 if is_with_rag == True:
                                     rag_start_time = time.time()
-                                    examples_codes_for_query_augmentation = AGENTS.get_augmented_query(data_basename_with_extension+'.txt', model_name, is_errors, 'CLIMATE')
+                                    examples_codes_for_query_augmentation = AGENTS.get_augmented_query(data_basename_with_extension+'.txt', model_name, is_errors, 'CLIMATE', temperature)
                                     rag_end_time = time.time()
                                     rag_run_time = rag_end_time - rag_start_time
                                     print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
@@ -616,7 +616,7 @@ def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEAR
                                     #
                                 #    user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation
                                 llm_start_time = time.time()
-                                new_python_script_path, generated_python_script= llmRequester.generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_content, dataset_attrubute_fullpath_list_result, data_file_path, output_dir+'/'+output_subdir, model, '', '', 0, URL, query_augmentation)
+                                new_python_script_path, generated_python_script= llmRequester.generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_content, dataset_attrubute_fullpath_list_result, data_file_path, output_dir+'/'+output_subdir, model, '', '', 0, URL, query_augmentation, temperature)
                                 llm_end_time = time.time()
                                 llm_run_time = llm_end_time - llm_start_time
                                 utils.track_and_log_runtimes(output_dir+'/'+output_subdir+'.csv', model_name, corrector_run_time, rag_run_time, llm_run_time)    
@@ -633,8 +633,9 @@ def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEAR
                                     # print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH new_python_script_path:\n', new_python_script_path)
                                     # print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH generated_python_script:\n', generated_python_script)
                                 # for iterative error resolving, don't save the file in the first generation and pass it for another generation
-                                number_of_iteration = 7
-                                # number_of_iteration = 1
+                                
+                                # number_of_iteration = 7
+                                number_of_iteration = 1
                                 
                                 # execute the code and check if is there any errors
                                 # if error then get the get the generated code and error message together and regenerate the code
@@ -669,7 +670,7 @@ def ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEAR
                                                     
                                                 print('iterative error resolving with corrector')
                                                     #                                                                                                                           user_input_file_path, user_input_content, result, data_file_path, output_dir+'/'+output_subdir, attribute_present, model, is_memory, '', '', 0, URL
-                                                new_python_script_path, generated_python_script = llmRequester.generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_content, dataset_attrubute_fullpath_list_result, data_file_path, output_dir+'/'+output_subdir, model, generated_python_script, stderr, iteration, URL, query_augmentation)
+                                                new_python_script_path, generated_python_script = llmRequester.generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_content, dataset_attrubute_fullpath_list_result, data_file_path, output_dir+'/'+output_subdir, model, generated_python_script, stderr, iteration, URL, query_augmentation, temperature)
                                                 print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH new_python_script_path:\n', new_python_script_path)
                                                 print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH generated_python_script:\n', generated_python_script)
                                                 # else:
@@ -1034,7 +1035,7 @@ def user_sub_queries_generation_from_user_input_for_FASTMRIBRAIN_datasets(user_i
 
 
 #                                       user_input_dir, JSON_FILE_PATH, common_base_directory+"/"+data_dir, subdirectories, extensions, output_dir, output_subdir, model
-def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
+def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
     print(f'Processing directory {user_input_dir}')
     
     print(f'\nInside RAG_NASA_CLIMATE_DATASETS ...')
@@ -1107,12 +1108,12 @@ def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, 
                                 
                                 # with updated text
                                 # user_input_content=updated_text
-                                examples_codes_for_query_augmentation = AGENTS.get_augmented_query(data_basename_with_extension+'.txt', model_name, is_errors, 'CLIMATE')
+                                examples_codes_for_query_augmentation = AGENTS.get_augmented_query(data_basename_with_extension+'.txt', model_name, is_errors, 'CLIMATE', temperature)
                                 print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
                             
                                 # current with corrector
                                 # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
-                                llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+                                llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
                             else:
                                 print('\n------------Inside without RAG ...')
                                 # current generating code without correcotrs
@@ -1121,7 +1122,7 @@ def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, 
                                 # user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, old_ext='.txt'
                                 # llmRequester.generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, '', '', URL, dataset, dataset_attrubute_fullpath_list_result)
                                 # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-                                llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+                                llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
                             
                             # assuming code generating completed here
                             tracking.insert_or_update_key(common_directory, JSON_FILE_PATH, output_subdir, data_basename_with_extension, 'done')
@@ -1190,7 +1191,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
             
             # with updated text
             # user_input_content=updated_text
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'MATPLOTAGENT')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'MATPLOTAGENT', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
             # current with corrector
@@ -1280,7 +1281,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
             # with updated text
             # user_input_content=updated_text
             rag_start_time = time.time()
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'MATPLOTAGENT')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'MATPLOTAGENT', temperature)
             rag_end_time = time.time()
             rag_run_time = rag_end_time - rag_start_time
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
@@ -1405,7 +1406,7 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
             
             # with updated text
             # user_input_content=updated_text
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
             # current with corrector
@@ -1490,7 +1491,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_bas
             # with updated text
             # user_input_content=updated_text
             rag_start_time = time.time()
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN', temperature)
             rag_end_time = time.time()
             rag_run_time = rag_end_time - rag_start_time
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
@@ -1613,7 +1614,7 @@ def RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir
             
             # with updated text
             # user_input_content=updated_text
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
             # current with corrector
@@ -1695,7 +1696,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
             
             # with updated text
             # user_input_content=updated_text
-            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'VTK')
+            examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'VTK', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
             
@@ -1807,7 +1808,7 @@ if __name__ == '__main__':
     # create a tracking file with same name as output_subdir
     # def initialize_json(common_base_directory, JSON_FILE_PATH, directory_file_name):
     JSON_FILE_PATH = 'prompting_techniques/zero_shot_sci_data_prompting/tracking_file'
-   
+    temp = str(temperature).replace('.', '_')
 
     if dataset == 'MATPLOTAGENT':
         # this is not executed from this option
@@ -1970,22 +1971,24 @@ if __name__ == '__main__':
         #     user_input_dir = project_base_directory +'/user_queries/expert_user_queries'
         
         # without errors
+        
         if is_errors==False:
             # output_directory_prefix=model_name
-            output_subdir = f'{output_directory_prefix}_temp_{temperature}_generated_user_sub_queries_from_expert_user_queries_final'
             
-            user_input_dir = project_base_directory +f'/user_queries/generated_user_queries/{model_name}_temp_{temperature}_generated_expert_queries_from_human_expert_queries_final_manually_corrected'
+            output_subdir = f'{output_directory_prefix}_temp_{temp}_generated_user_sub_queries_from_expert_user_queries_final'
+            
+            user_input_dir = project_base_directory +f'/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected'
         # with errors
         else:
-            output_subdir = f'{output_directory_prefix}_temp_{temperature}_generated_user_sub_queries_from_expert_user_queries_final_with_errors'
+            output_subdir = f'{output_directory_prefix}_temp_{temp}_generated_user_sub_queries_from_expert_user_queries_final_with_errors'
             # queries with errors
-            user_input_dir = project_base_directory +f'/user_queries/generated_user_queries/{model_name}_temp_{temperature}_generated_expert_queries_from_human_expert_queries_final_manually_corrected_with_errors'
+            user_input_dir = project_base_directory +f'/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected_with_errors'
 
         print('Inside USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS ...')
         data_file_base_name = ''
         data_file_full_path = ''
 
-        user_sub_queries_generation_from_user_input_for_CLIMATE_datasets(user_input_dir, project_base_directory, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
+        user_sub_queries_generation_from_user_input_for_CLIMATE_datasets(user_input_dir, project_base_directory, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL, temperature)
     
     # created Jun 10, 2025
     #user sub queries generation
@@ -2076,32 +2079,32 @@ if __name__ == '__main__':
             # with rag
             # without error
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_corrector'
 
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector'
         else:
             # without rag
             # without errors
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_python_scripts_without_rag_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_without_rag_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_python_scripts_without_rag_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_without_rag_with_corrector'
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_python_scripts_without_rag_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_without_rag_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_python_scripts_without_rag_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_python_scripts_without_rag_with_errors_with_corrector'
 
         tracking.initialize_json(common_base_directory, JSON_FILE_PATH, output_subdir)
 
         #                         user_input_dir, JSON_FILE_PATH, common_directory,      data_dir, data_subdirectories, extensions, output_dir, output_subdir, model
-        RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_base_directory, data_dir, subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector)
+        RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_base_directory, data_dir, subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
     
     elif dataset == 'MATPLOTAGENT_RAG':
         print('Inside Matplotagent datasets ...')
@@ -2457,7 +2460,7 @@ if __name__ == '__main__':
 
         #                                   user_input_dir, JSON_FILE_PATH, common_directory,      data_dir, data_subdirectories, extensions, output_dir, output_subdir, model
         # zero_shot_COT_NASA_CLIMATE_DATASETS_ITERATIVE_ERROR_RESOLVE(                 user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL)
-        ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH(user_input_dir, JSON_FILE_PATH, common_base_directory, data_dir, subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL)
+        ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH(user_input_dir, JSON_FILE_PATH, common_base_directory, data_dir, subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL, temperature)
         # collect all images and store them into a new directory
         # Example usage
         source_dirs = subdirectories  # List of source directories

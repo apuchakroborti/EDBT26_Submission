@@ -1,0 +1,70 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A script that performs the following steps:
+
+1. Define a constant FILE_NAME with the name of the HDF5 file to be processed.
+
+2. Open the specified HDF5 file in read-only mode.
+
+3. Extract datasets from the file:
+   - `xco2` for xCO2 data
+   - `sounding_latitude_geoid` for latitude data
+   - `sounding_longitude_geoid` for longitude data
+   - `sounding_altitude` for altitude data
+   - `sounding_time_tai93` for time data
+
+4. Retrieve the 'Unit' attribute from both `xco2` and altitude datasets at index 0.
+
+5. Create a figure with two subplots:
+   - First subplot: Orthographic projection map with low resolution, centered at lat_0 = -55 and lon_0 = 120, 
+   displaying the sounding trajectory using latitude and longitude coordinates.
+   - Second subplot: Line plot showing time vs xco2 data, with a twin axis for time vs altitude data.
+
+6. Customize the map by adding:
+   - Coastlines with a line width of 0.5
+   - Parallels at latitudes [-80, -60, -40, -20, 0]
+   - Meridians at longitudes from -180 to 180 with interval of 20
+
+7. Customize both plots by setting appropriate axis labels, titles, and tick formats.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Using h5py to open an HDF5 file, access datasets such as `/xco2`, `/sounding_latitude_geoid`, `/sounding_longitude_geoid`, `/sounding_altitude`, `/sounding_time_tai93`, and retrieve the `'Unit'` attribute from the `xco2` and `sounding_altitude` datasets at index 0.
+
+NumPy Data Preprocessing Sub-query:
+Handling `_FillValue` in NumPy arrays, applying masks with `np.where` or `np.ma.masked_where`, filtering data, and computing `min` and `max` values for preprocessing.
+
+Plotting and Visualization Sub-query:
+Creating a figure with two subplots: an orthographic map projection centered at lat_0 = -55, lon_0 = 120 using cartopy or basemap, plotting the sounding trajectory, adding coastlines, parallels at [-80, -60, -40, -20, 0], meridians every 20°, and a twin-axis line plot of time vs xco2 and time vs altitude, setting axis labels, titles, and tick formats.

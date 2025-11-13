@@ -1,0 +1,71 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Define Constants:  
+   Define a constant `FILE_NAME` with the value `'ATL22_20210712003905_02811201_003_01.h5'`, which specifies the HDF5 file to be processed.
+
+3. Open the HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access the following datasets:  
+   - `transect_lat` for latitude data.  
+   - `transect_lon` for longitude data.  
+   - `inland_water_body_type` for the main data. from `gt1l` 
+
+   Read the attributes `units`, `long name` (decoded using `decode('ascii', 'replace')`), and `_FillValue`.
+
+4. Data Processing and Cleaning:  
+   Convert the main data to a float type using `.astype(float)`. Replace the `_FillValue` with `numpy.NaN` and mask the data using `numpy.ma.masked_where(numpy.isnan(data), data)`.
+
+5. Create a Map:  
+   Create an equidistant cylindrical projection map with low resolution, 
+   setting latitude and longitude bounds from -90 to 90 and -180 to 180, respectively. 
+   Add coastlines with a line width of 0.5, 
+   parallels at intervals of [-90, -60, -30, 0, 30, 60, 90], 
+   and meridians at intervals of [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+6. Scatter Plot:  
+   Use the `scatter` function to plot the data on the map with parameters: longitude, latitude, `c=data`, marker size `s=0.1`, colormap `plt.cm.jet`, and no edge colors or linewidth.
+
+7. Add Colorbar and Title:  
+   Add a colorbar to the map, positioned at the bottom, labeled with the main dataset's `units`. 
+   Set the title of the plot to include the file basename, dataset path name, and `long_name` from the attributes.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Using h5py, open the file 'ATL22_20210712003905_02811201_003_01.h5', access the datasets 'transect_lat', 'transect_lon', and '/gt1l/inland_water_body_type', and read their attributes 'units', 'long_name' (decoded with decode('ascii', 'replace')), and '_FillValue'.
+
+NumPy Data Preprocessing Sub-query:
+Convert the main dataset to float with .astype(float), replace the _FillValue with np.nan, and mask the data using np.ma.masked_where(np.isnan(data), data).
+
+Plotting and Visualization Sub-query:
+Create an equidistant cylindrical map with cartopy (lat limits -90 to 90, lon limits -180 to 180, low resolution), add coastlines (linewidth 0.5), parallels at [-90,-60,-30,0,30,60,90], meridians at [-180,-135,-90,-45,0,45,90,135,180], scatter plot lon, lat, c=data, s=0.1, cmap plt.cm.jet, no edgecolors, add a bottom colorbar labeled with the dataset's units, and set the title to include the file basename, dataset path, and long_name.

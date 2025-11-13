@@ -1,0 +1,61 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python program to access and visualize radiometer data from a SMAP L1A HDF5 file. 
+The program should import necessary libraries such as os, datetime, h5py, numpy, matplotlib, and Basemap.
+
+The program defines a function `run` that takes a filename as input. This function reads the specified HDF5 file and extracts datasets:
+- `/HighResolution_Moments_Data/moments16_right_ascension`
+- `/HighResolution_Moments_Data/moments16_lat` (latitude data)
+- `/HighResolution_Moments_Data/moments16_lon` (longitude data)
+
+It retrieves attributes from the `moments16_right_ascension` dataset, including units, long_name, _FillValue, valid_max, and valid_min.
+
+The program calculates invalid data using logical comparisons for values exceeding valid ranges and matching fill values. It sets invalid data points to NaN and creates a masked array.
+
+For visualization, it initializes a Basemap with cylindrical projection, sets up the map boundaries such latitude values from -90 to 90 and longitude values from -180 to 180,
+ adds coastlines, draws parallels and meridians with specific labels, 
+and plots the data as a scatter plot with a jet colormap.
+
+Finally, it adds a colorbar with a label derived from the dataset's long_name attribute.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How do I open a SMAP L1A HDF5 file using `h5py`, read the dataset `/HighResolution_Moments_Data/moments16_right_ascension`, and retrieve its attributes (`units`, `long_name`, `_FillValue`, `valid_max`, `valid_min`)?
+
+NumPy Data Preprocessing Sub-query:
+What is the recommended NumPy approach to mask invalid data in an array by comparing values against a `_FillValue`, `valid_min`, and `valid_max`, replacing invalid entries with `NaN`, and creating a masked array using `np.where` or `np.ma.masked_where`?
+
+Plotting and Visualization Sub-query:
+How can I plot geospatial scatter data from SMAP HDF5 datasets on a cylindrical Basemap (or Cartopy) projection, adding coastlines, labeled parallels and meridians, using a jet colormap, and attaching a colorbar whose label comes from the dataset’s `long_name` attribute?

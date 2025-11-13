@@ -1,0 +1,68 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Define Constants:  
+   Set the constant `FILE_NAME` to the path of the HDF5 file: "ATL03_20181027235521_04480111_006_02.h5".
+
+2. Open HDF5 File and Access Datasets:  
+   Open the HDF5 file in read mode and access these datasets:
+   - `reference_photon_lat` as latitude data and `reference_photon_lon` as longitude data from the `/gt1l/geolocation`
+   - `/gt1l/geolocation/tx_pulse_energy` for the main data.
+
+3. Extract Dataset Attributes:  
+   For the tx_pulse_energy dataset, read the `units` and `long name` attributes using `.decode('ascii', 'replace')`. 
+   Also, retrieve the `fillValue` attribute from the main dataset.
+
+4. Create Map Projection:  
+   Use an equidistant cylindrical projection with low resolution. Set the latitude range from -90 to 90 and longitude range from -180 to 180.
+
+5. Customize Map Features:  
+   Add coastlines with a line width of 0.5. Draw parallels at intervals of 30 degree from -90 to 120 
+   and meridians at intervals of 45 degree from -180 to 180
+
+6. Plot Data on the Map:  
+   Use the `scatter` function with longitude as x, latitude as y, data for color (c parameter), marker size of 0.1, colormap 'jet', no edge colors, and zero linewidth.
+
+7. Add Colorbar and Title:  
+   Append a colorbar with format '%.2e' labeled using the main dataset's units. Set the plot title to include the HDF5 file's basename and the `long name` attribute of the main dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How do I open an HDF5 file with h5py, access the datasets `/gt1l/geolocation/reference_photon_lat`, `/gt1l/geolocation/reference_photon_lon`, and `/gt1l/geolocation/tx_pulse_energy`, and read the attributes `units`, `long name`, and `fillValue` from the `tx_pulse_energy` dataset, decoding string attributes with `.decode('ascii', 'replace')`?
+
+NumPy Data Preprocessing Sub-query:
+What is the best way to handle a `_FillValue` in a NumPy array by replacing it with NaN or masking it using `np.ma.masked_where`, and then compute the minimum and maximum of the masked array for preprocessing?
+
+Plotting and Visualization Sub-query:
+How can I create an equidistant cylindrical map projection with matplotlib/cartopy, add coastlines (linewidth 0.5), draw parallels every 30° from –90° to 120° and meridians every 45° from –180° to 180°, plot latitude/longitude points with `scatter` using the `tx_pulse_energy` values for color (colormap `'jet'`, marker size 0.1, no edge colors), add a colorbar formatted as `'%.2e'` labeled with the dataset’s units, and set the plot title to include the HDF5 file’s basename and the dataset’s long name?

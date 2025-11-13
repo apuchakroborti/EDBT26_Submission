@@ -349,6 +349,15 @@ $ python3 ./prompting_techniques/zero_shot_sci_data_prompting/evaluation_error_c
 % <!-- ITERATIVE_FASTMRIBRAIN_RAG_IMAGE -->
 $ python3 ./prompting_techniques/zero_shot_sci_data_prompting/evaluation_error_categorization.py --url http://localhost:11434/api/generate --model  devstral:24b  --rag True --dataset ITERATIVE_FASTMRIBRAIN_RAG_IMAGE > ./mri_nyu_data/iterative_evaluation_logs/devstral_24b_iterative_evaluation_error_categorization_all_v5.log
 
+% To quit screen
+$ screen -X -S screen_name  quit
+% single turn iteration1
+% gpt-oss
+$ screen -dmS gpt_oss_sub bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss_sub_query.sh'
+
+$ screen -dmS gpt_oss bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss.sh'
+
+
 
 % climate
 <!-- iterative error resolving -->

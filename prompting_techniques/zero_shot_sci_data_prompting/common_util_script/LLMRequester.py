@@ -1317,7 +1317,7 @@ import time
 # created on June 29, 2025
 # to resolve error iteratively
 # def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
-def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation):
+def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation, temperature):
     try:
         print('LLMRequester::Inside generate_code_and_save_code_with_RAG_iterative_error_resolve ...')
         print("user_input_file_path: ", user_input_file_path)
@@ -1348,7 +1348,7 @@ def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file
             # source_code_gen_request = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
             # examples_for_query_augmentation = 'Need to fill later'
             #                                                                              user_input,             examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result
-            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result)
+            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
@@ -1880,6 +1880,9 @@ def generate_multi_agents_request_for_sub_query_generation(user_input_file_full_
 
         response_llm_user_sub_queries_gen = llm_user_sub_queries_gen['response']
         output_file_path = os.path.join(target_dir, f'{base_name}.txt')
+        # create the directory if not exists
+        # os.makedirs(output_file_path, exist_ok=True)
+
         utils.save_file(output_file_path, prompt+'\n\n'+response_llm_user_sub_queries_gen) 
 
         print("\nGenerated response saved to the directory: \n", output_file_path)
@@ -1894,7 +1897,7 @@ def generate_multi_agents_request_for_sub_query_generation(user_input_file_full_
 
 
 
-def generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result):
+def generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result, temperature):
     try:
         # Create the target directory if it doesn't exist
         if not os.path.exists(target_dir):
@@ -1906,7 +1909,7 @@ def generate_code_and_save_with_rag(user_input_file_path, user_input_description
         # this is currently being used for generating final code without LLM memory
         source_code_gen = ''        
         # with corrector
-        source_code_gen = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result)
+        source_code_gen = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         
         prompt = source_code_gen['prompt']
         prompt='"""'+prompt+'"""'
@@ -1932,7 +1935,7 @@ def generate_code_and_save_with_rag(user_input_file_path, user_input_description
         print("Exception occurred at LLMRequest.generate_code_and_save_with_rag, message: ", e)
 
 
-def generate_code_and_save_without_rag(user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result):
+def generate_code_and_save_without_rag(user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result, temperature):
     try:
         # Create the target directory if it doesn't exist
         if not os.path.exists(target_dir):
@@ -1944,7 +1947,7 @@ def generate_code_and_save_without_rag(user_input_file_path, user_input_descript
         # this is currently being used for generating final code without LLM memory
         source_code_gen = ''        
         # with corrector  --> user_input, full_data_path, model, dataset_attrubute_fullpath_list_result
-        source_code_gen = generate_request_for_generating_source_code_without_rag(user_input_description, full_data_path, model, dataset_attrubute_fullpath_list_result)
+        source_code_gen = generate_request_for_generating_source_code_without_rag(user_input_description, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         
         prompt = source_code_gen['prompt']
         prompt='"""'+prompt+'"""'
@@ -1999,7 +2002,7 @@ def generate_prompt_for_generating_source_code_with_rag(user_input, examples_cod
     prompt+=augmentation
     return prompt
 
-def generate_request_for_generating_source_code_with_rag(user_input, examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result):    
+def generate_request_for_generating_source_code_with_rag(user_input, examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature):    
     print('Inside generate_request_for_generating_source_code_with_rag\n\n')
     
     
@@ -2014,7 +2017,7 @@ def generate_request_for_generating_source_code_with_rag(user_input, examples_co
         "stream": False,
         "options": {
             "seed": 12344,
-            "temperature": 0.0
+            "temperature": temperature
         }
     }
     return data
@@ -2042,7 +2045,7 @@ def generate_prompt_for_generating_source_code_without_rag(user_input, full_data
     
     return prompt
 
-def generate_request_for_generating_source_code_without_rag(user_input, full_data_path, model, dataset_attrubute_fullpath_list_result):    
+def generate_request_for_generating_source_code_without_rag(user_input, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature):    
     print('Inside generate_request_for_generating_source_code_without_rag...\n\n')    
     
     prompt = generate_prompt_for_generating_source_code_without_rag(user_input, full_data_path, dataset_attrubute_fullpath_list_result)
@@ -2055,7 +2058,7 @@ def generate_request_for_generating_source_code_without_rag(user_input, full_dat
         "stream": False,
         "options": {
             "seed": 12344,
-            "temperature": 0.0
+            "temperature": temperature
         }
     }
     return data

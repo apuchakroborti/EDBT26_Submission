@@ -1,0 +1,102 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            1. Import Necessary Libraries  
+   - Import `os` for operating system functions.  
+   - Import `cartopy.crs` for map projections.  
+   - Import `matplotlib` and `matplotlib.pyplot` for plotting.  
+   - Import `numpy` for numerical computations.  
+   - Import `mpl_toolkits.basemap` for basemap functionality.  
+   - Import `h5py` for handling HDF5 files.  
+   - Import `LATITUDE_FORMATTER` and `LONGITUDE_FORMATTER` from `cartopy.mpl.gridliner`.  
+
+2. Define Constants  
+   - Set the constant `FILE_NAME` to the path of the HDF5 file: `ATL07-01_20210223204748_09451001_006_01.h5`.
+
+3. Open the HDF5 File and Access Datasets  
+   - Open the HDF5 file in read mode.  
+   - Access the following datasets:  
+     - `/gt1l/sea_ice_segments/latitude` for latitude data.  
+     - `/gt1l/sea_ice_segments/longitude` for longitude data.  
+     - `/gt1l/sea_ice_segments/heights/height_segment_height` for height data.  
+
+4. Read Dataset Attributes  
+   - Extract the `units` and `long_name` attributes from the datasets, decoding them using `decode('ascii', 'replace')`.  
+   - Extract the `_FillValue` attribute from the `height_segment_height` dataset.
+
+5. Preprocess Height Data  
+   - Replace the `_FillValue` in the height data with `numpy.NaN`.  
+   - Mask the height data where values are NaN using `numpy.masked_where`.
+
+6. Calculate Midpoints for Latitude and Longitude  
+   - Compute the midpoint locations (`lat_m` and `lon_m`) for the latitude and longitude data.
+
+7. Create the Map Projection  
+   - Use Cartopy's `ortho` projection with parameters:  
+     - `central_longitude=lon_m`  
+     - `central_latitude=lat_m`  
+     - `globe=None`.
+
+8. Set Up the Scatter Plot  
+   - Create a scatter plot using `plt.scatter()` with the following parameters:  
+     - `x=longitude`, `y=latitude`  
+     - `c=data` (height data)  
+     - `s=1` for marker size  
+     - `cmap=plt.cm.jet` for colormap  
+     - `transform=ccrs.PlateCarree()` for coordinate transformation.
+
+9. Configure the Plot Grid and Coastlines  
+   - Enable gridlines using `ax.gridlines()` with parameters:  
+     - `draw_labels=True`  
+     - `dms=True`.  
+   - Add coastlines to the plot.  
+   - Disable the top and right grid labels.  
+   - Set the x-axis and y-axis formatters to `LONGITUDE_FORMATTER` and `LATITUDE_FORMATTER`, respectively.
+
+10. Add Colorbar and Title  
+    - Create a colorbar with parameters:  
+      - `fraction=0.022`  
+      - `pad=0.01`.  
+    - Label the colorbar with the units from the height dataset, using a fontsize of 8.  
+    - Set the plot title to include the file basename and the long name of the main dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Open an HDF5 file with h5py, read datasets `/gt1l/sea_ice_segments/latitude`, `/gt1l/sea_ice_segments/longitude`, and `/gt1l/sea_ice_segments/heights/height_segment_height`, and extract the attributes `units`, `long_name` from the latitude and longitude datasets and `_FillValue` from the height dataset, decoding byte strings to ASCII.
+
+NumPy Data Preprocessing Sub-query:
+Using NumPy, replace the height dataset’s `_FillValue` with `np.nan`, mask the array where values are `nan` with `np.ma.masked_where`, compute the midpoints of the latitude and longitude arrays (e.g., `(lat.min()+lat.max())/2`), and prepare the masked height data for plotting.
+
+Plotting and Visualization Sub-query:
+With matplotlib and cartopy, create an orthographic projection centered at the computed latitude and longitude midpoints, scatter plot the latitude/longitude points colored by the masked height data using `plt.cm.jet`, add gridlines with labels in DMS, draw coastlines, set axis formatters to `LONGITUDE_FORMATTER` and `LATITUDE_FORMATTER`, add a colorbar labeled with the height units, and set the plot title to include the file basename and the dataset long_name.

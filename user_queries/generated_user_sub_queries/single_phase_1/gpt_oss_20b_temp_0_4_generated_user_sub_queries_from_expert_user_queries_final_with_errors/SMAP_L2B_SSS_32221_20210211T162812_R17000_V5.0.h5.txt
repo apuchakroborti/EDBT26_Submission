@@ -1,0 +1,73 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks using the specified libraries and steps:
+
+1. Import necessary Libraries
+
+2. Read HDF5 File: Open the file 'SMAP_L2B_SSS_32221_20210211T162812_R17000_V5.0.h5' in read-only mode using h5py.
+
+3. Extract Datasets and Attributes:
+   - Extract datasets: '/lat', '/lon', and '/smap_spd'.
+   - Retrieve attributes from 'smap_spd': units, long_name, and _FillValue.
+
+4. Data Processing:
+   - Replace _FillValue in 'smap_spd' with NaN.
+   - Apply a mask using masked_where with parameters: isnan(smap_spd) and smap_spd itself.
+
+5. Create Map Visualization:
+   - Use Basemap to create an equidistant cylindrical projection map with low resolution ('l').
+   - Draw coastlines with a line width of 0.5.
+   - Set parallels from -180 to 91 with interval 45 and meridians from -180 to 180 with interval of 45
+
+6. Plot Data:
+   - Use scatter plot with longitude vs latitude, data from smap_spd, marker size 1, colormap 'jet', no edge colors or linewidths.
+
+7. Enhance Visualization:
+   - Add a colorbar labeled with the units of 'smap_spd'.
+   - Set the title as the concatenation of the HDF5 file's basename and the long_name attribute from 'smap_spd'.
+
+8. Save and Cleanup:
+   - Save the plot as a PNG file.
+   - Close the figure properly.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How do I use h5py to open an HDF5 file (e.g., 'SMAP_L2B_SSS_32221_20210211T162812_R17000_V5.0.h5'), read the datasets '/lat', '/lon', and '/smap_spd', and retrieve the attributes 'units', 'long_name', and '_FillValue' from the '/smap_spd' dataset?
+
+NumPy Data Preprocessing Sub-query:
+What is the correct way in NumPy to replace a dataset’s _FillValue with np.nan, then apply np.ma.masked_where to mask those NaNs, and subsequently compute statistics such as min and max on the masked array?
+
+Plotting and Visualization Sub-query:
+Using matplotlib and Basemap, how can I create an equidistant cylindrical projection (low resolution), draw coastlines, set parallels from -180 to 90 with 45° intervals and meridians from -180 to 180 with 45° intervals, plot a scatter of longitude vs latitude colored by a data array (using the 'jet' colormap), add a colorbar labeled with the data units, set a title combining the file basename and the dataset’s long_name, and save the figure as a PNG?

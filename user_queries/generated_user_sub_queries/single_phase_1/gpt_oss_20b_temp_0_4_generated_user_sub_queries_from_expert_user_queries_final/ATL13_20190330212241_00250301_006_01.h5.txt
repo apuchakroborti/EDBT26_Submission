@@ -1,0 +1,73 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes an HDF5 file to generate a geospatial visualization. The script follows these steps:
+
+1. Import Libraries: Include necessary modules for OS operations (os), plotting (matplotlib and matplotlib.pyplot), 
+numerical computations (numpy), map projections (mpl_toolkits.basemap), and handling HDF5 files.
+
+2. Define Constants: Set the FILE_NAME constant to "ATL13_20190330212241_00250301_006_01.h5".
+
+3. Open HDF5 File: Open the file in read mode and access datasets at paths "/gt1l/segment_lat", "/gt1l/segment_lon", and "/gt1l/segment_geoid" 
+   for latitude, longitude, and main data respectively.
+
+4. Extract Attributes: From the segment_geoid dataset, read 'units' and 'long_name' attributes using decode('ascii', 'replace') and retrieve '_FillValue' from the main data. 
+   Convert segment_geoid data to float type.
+
+5. Data Processing:
+   - Replace _FillValue in segment_geoid data with numpy NaN.
+   - Mask data where values are NaN using numpy's masked_where function.
+
+6. Map Setup: Create a cylindrical projection map with low resolution, setting latitude and longitude bounds from -90 to 90 and -180 to 180 respectively. 
+   Add coastlines with line width 0.5, parallels at intervals [-90, -60, -30, 0, 30, 60, 90, 120], and meridians at intervals [-180, -135, -90, -45, 0, 45, 90, 135, 180].
+
+7. Adjust Longitude: Subtract 180 degrees from longitude values before plotting.
+
+8. Plot Data: Use scatter plot with parameters: longitude and latitude coordinates, data as color values (c=data), marker size 0.1, colormap 'jet', no edge colors, and zero linewidth.
+
+9. Add Visualization Elements:
+   - Include a colorbar at the bottom labeled with the main dataset's units.
+   - Set the title to include the HDF5 file's basename and its long_name attribute.
+
+This structured approach ensures clarity for code generation by an LLM.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file, access datasets at paths "/gt1l/segment_lat", "/gt1l/segment_lon", "/gt1l/segment_geoid", read attributes 'units', 'long_name', and '_FillValue', decode them with 'ascii', and convert the segment_geoid dataset to a float array.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a dataset’s _FillValue with np.nan, apply np.ma.masked_where to mask NaN values, and compute min/max or other statistics on the masked array for preprocessing before plotting.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib and mpl_toolkits.basemap to create a cylindrical projection map, set latitude/longitude bounds, add coastlines, parallels, meridians, plot latitude/longitude points with a scatter plot colored by data values (using 'jet' colormap), and add a colorbar and title.

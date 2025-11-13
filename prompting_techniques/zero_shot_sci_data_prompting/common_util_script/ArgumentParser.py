@@ -1,11 +1,11 @@
 import argparse
 
 def parse_argument(parser):
-    
     print('Inside argument parsar function ...')
+    allowed_model_list = ["gpt-oss:20b", "qwen3-coder:30b", "deepseek-r1:32b", "devstral:24b", "gemma3:27b"]
+    
     # Add arguments
-    # parser.add_argument("num1", type=float, help="First number")
-    # parser.add_argument("num2", type=float, help="Second number")
+    
     parser.add_argument(
         "--url", "-u",
         choices=["http://ai-lab2.dyn.gsu.edu:8080/api/generate", "http://localhost:11434/api/generate"],
@@ -15,7 +15,8 @@ def parse_argument(parser):
     
     parser.add_argument(
         "--model", "-m",
-        choices=["devstral:24b",  "gemma3:27b", "magicoder", "deepseek-r1:32b", "llama3:70b", "deepseek-coder-v2", "deepseek-r1:latest", "deepseek-r1:70b",  "qwen3:32b"],
+        # choices=["devstral:24b",  "gemma3:27b", "magicoder", "deepseek-r1:32b", "llama3:70b", "deepseek-coder-v2", "deepseek-r1:latest", "deepseek-r1:70b",  "qwen3:32b"],
+        choices=allowed_model_list,
         required=True,
         help="Request to send into LLM model"
     )
@@ -92,6 +93,12 @@ def parse_argument(parser):
         required=False,
         help="Required for selecting user input queries"
     )
+
+    parser.add_argument(
+        "--temp", "-t",
+        required=False,
+        help="temperature value range 0.0(determinstic) to 2.0(non-determinstic)"
+    )
     
     # Parse the arguments
     args = parser.parse_args()
@@ -102,22 +109,25 @@ def parse_argument(parser):
     
     model = ''
     model_name = ''
-    if args.model == "deepseek-coder-v2":
-        model = 'deepseek-coder-v2'       
-    elif args.model == "llama3:70b":
-        model = 'llama3:70b'
-    elif args.model == "magicoder":
-        model = 'magicoder'
-    elif args.model == "deepseek-r1:latest":
-        model = 'deepseek-r1:latest'
-    elif args.model == "deepseek-r1:70b":
-        model = 'deepseek-r1:70b'
-    elif args.model == "gemma3:27b":
-        model = 'gemma3:27b'
-    elif args.model == "devstral:24b":
-        model = 'devstral:24b'
-    elif args.model == "deepseek-r1:32b":
-        model = 'deepseek-r1:32b'
+    if args.model and args.model in allowed_model_list:
+        model = args.model
+
+    # if args.model == "deepseek-coder-v2":
+    #     model = 'deepseek-coder-v2'       
+    # elif args.model == "llama3:70b":
+    #     model = 'llama3:70b'
+    # elif args.model == "magicoder":
+    #     model = 'magicoder'
+    # elif args.model == "deepseek-r1:latest":
+    #     model = 'deepseek-r1:latest'
+    # elif args.model == "deepseek-r1:70b":
+    #     model = 'deepseek-r1:70b'
+    # elif args.model == "gemma3:27b":
+    #     model = 'gemma3:27b'
+    # elif args.model == "devstral:24b":
+    #     model = 'devstral:24b'
+    # elif args.model == "deepseek-r1:32b":
+    #     model = 'deepseek-r1:32b'
     
         
     model_name = model.replace('-', '_')
@@ -211,6 +221,18 @@ def parse_argument(parser):
     is_online_search = False
     if args.onlinesearch == 'True':
         is_online_search = True
+
+    temperature = 0.0
+    if args.temp:
+        temperature = float(args.temp)
     
-    print('model: ', model, ', model_name: ', model_name, ', dataset: ', dataset, ', is_rag: ', is_rag, ', is_errors: ', is_errors, ', with_corrector: ', with_corrector, ', is_online_search: ', is_online_search)
-    return model, model_name, dataset, is_rag, URL, is_errors, with_corrector, is_online_search
+    print(f'model: {model}')
+    print(f'model_name: {model_name}')
+    print(f'dataset: {dataset}')
+    print(f'is_rag: {is_rag}')
+    print(f'is_errors: {is_errors}')
+    print(f'with_corrector: {with_corrector}')
+    print(f'is_online_search: {is_online_search}')
+    print(f'temperature: {temperature}')    
+
+    return model, model_name, dataset, is_rag, URL, is_errors, with_corrector, is_online_search, temperature

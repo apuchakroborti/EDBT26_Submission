@@ -1,0 +1,79 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Import necessary libraries: os, datetime, h5py, numpy as np, matplotlib.pyplot as plt, FormatStrFormatter from matplotlib.ticker, mpl_toolkits.basemap import Basemap.
+2. Open an HE5 file named "MLS-Aura_L2GP-O3_v04-23-c02_2019d001.he5" in read mode.
+
+3. Access the following datasets within the file:
+   - Ozone data: "/HDFEOS/SWATHS/O3/Data Fields/L2gpValue"
+   - Latitude values: "/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude"
+   - Pressure levels: "/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure"
+   - Time information: "/HDFEOS/SWATHS/O3/Geolocation Fields/Time"
+
+4. Read ozone data from index 0 to 70 along the x-axis and all y-axis data.
+5. Read latitude data from index 0 to 70.
+6. Read pressure data up to index 55.
+7. Extract units and title information from the ozone, latitude, and longitude datasets and also and decods the value.
+
+8. Preprocess the data:
+   - Replace _FillValue with numpy NaN.
+   - Mask ozone data using masked_array where values are NaN.
+
+9. Calculate start and end times using datetime functions relative to "1993-01-01" plus time in seconds from index 0 and 70, respectively, and format these as strings.
+
+10. Create a pcolormesh plot with parameters: latitude, longitude, and ozone data transposed (data.T).
+
+11. Set x-axis label using latitude title and units, and y-axis label using longitude title and units.
+
+12. Set the plot title to include the data title concatenated with start and end times.
+
+13. Configure the plot:
+    - sets gca to plt
+    - Invert the y-axis.
+    - Set y-scale to log.
+    - Format major ticks to display values with one decimal place.
+
+14. Display the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Using h5py, how to open an HE5 file, access datasets '/HDFEOS/SWATHS/O3/Data Fields/L2gpValue', '/HDFEOS/SWATHS/O3/Geolocation Fields/Latitude', '/HDFEOS/SWATHS/O3/Geolocation Fields/Pressure', '/HDFEOS/SWATHS/O3/Geolocation Fields/Time', read slices (e.g., ozone[:,0:70], latitude[0:70], pressure[:55]), and retrieve attributes such as units and title from these datasets.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a dataset's _FillValue with np.nan, create a masked array where values are NaN using np.ma.masked_where, compute min/max of the masked array, and convert time in seconds to datetime strings relative to a base date.
+
+Plotting and Visualization Sub-query:
+Using matplotlib (and optionally Basemap or cartopy), how to create a pcolormesh plot of latitude vs longitude with ozone data transposed, set x and y labels with titles and units, set plot title including start and end times, invert y-axis, set y-scale to log, format major ticks to one decimal place, and display the plot.

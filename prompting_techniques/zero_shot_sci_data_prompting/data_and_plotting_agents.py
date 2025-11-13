@@ -45,34 +45,36 @@ def extract_second_subquery_blocks(file_path):
     return result
 
 # created May 18, 2025
-def get_user_sub_query_by_file_name_and_sub_query_header(sub_query_base_name, sub_query_header, model_name, is_errors, dataset_name):
+def get_user_sub_query_by_file_name_and_sub_query_header(sub_query_base_name, sub_query_header, model_name, is_errors, dataset_name, temperature):
     try:
+        temp= str(temperature).replace('.', '_')
         project_base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"
         print('Inside data and plotting agent:: get_user_sub_query_by_file_name_and_sub_query_header')
         print(f'sub query file base name: {sub_query_base_name}')
         print(f'sub query header name: {sub_query_header}')
         print(f'Dataset name: {dataset_name}')
+        print(f'Model name: {model_name}')
 
         # sub_query_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_sub_queries/llama3_70b_generated_user_sub_queries_from_expert_user_queries_final"
         sub_query_path = ''
         if is_errors == False:
             
             if dataset_name=="MATPLOTAGENT":
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/matplotagent/{model_name}_matplotagent_generated_user_sub_queries_from_expert_user_queries_final"
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/matplotagent/{model_name}_temp_{temp}_matplotagent_generated_user_sub_queries_from_expert_user_queries_final"
             elif dataset_name == "FASTMRIBRAIN":
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/fastmri_brain/{model_name}_fastmribrain_generated_user_sub_queries_from_expert_user_queries_final"
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/fastmri_brain/{model_name}_temp_{temp}_fastmribrain_generated_user_sub_queries_from_expert_user_queries_final"
             # default CLIMATE
             else:
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/{model_name}_generated_user_sub_queries_from_expert_user_queries_final"
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/{model_name}_temp_{temp}_generated_user_sub_queries_from_expert_user_queries_final"
 
         else:
             if dataset_name == "MATPLOTAGENT":
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/matplotagent/{model_name}_matplotagent_generated_user_sub_queries_from_expert_user_queries_final_with_errors"
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/matplotagent/{model_name}_temp_{temp}_matplotagent_generated_user_sub_queries_from_expert_user_queries_final_with_errors"
             elif dataset_name == "FASTMRIBRAIN":
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/fastmri_brain/{model_name}_fastmribrain_generated_user_sub_queries_from_expert_user_queries_final_with_errors"
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/fastmri_brain/{model_name}_temp_{temp}_fastmribrain_generated_user_sub_queries_from_expert_user_queries_final_with_errors"
             # default CLIMATE
             else:
-                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/{model_name}_generated_user_sub_queries_from_expert_user_queries_final_with_errors" 
+                sub_query_path = f"{project_base_path}/user_queries/generated_user_sub_queries/{model_name}_temp_{temp}_generated_user_sub_queries_from_expert_user_queries_final_with_errors" 
 
         result_dic = extract_second_subquery_blocks(sub_query_path+'/'+sub_query_base_name)
         if len(result_dic)>0 and result_dic[sub_query_header]:
@@ -88,7 +90,7 @@ def get_user_sub_query_by_file_name_and_sub_query_header(sub_query_base_name, su
         raise Exception('No message for query Augmentation!')
 # created May 18, 2025
 # for query agmentation
-def get_augmented_query(query_base_name, model_name, is_errors, dataset_name):
+def get_augmented_query(query_base_name, model_name, is_errors, dataset_name, temperature):
     print(f'data_and_plotting_agents::get_augmented_query, query_base_name: {query_base_name}')
     faiss_index_list = ['h5py', 'python3_numpy', 'matplotlib_basemap_cartopy']
     
@@ -104,7 +106,7 @@ def get_augmented_query(query_base_name, model_name, is_errors, dataset_name):
             print('Header for Augmented Query:\n', header)
             
             try:
-                dataset_sub_query = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name)+'\n'
+                dataset_sub_query = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name, temperature)+'\n'
                 examples = SEARCH_QUERY_AGENTS.get_top_k_matching_results(dataset_sub_query, faiss_index_list[0])
                 augmented_query+='Dataset and attribute access related examples:\n'
                 augmented_query+=examples+'\n'
@@ -117,7 +119,7 @@ def get_augmented_query(query_base_name, model_name, is_errors, dataset_name):
             print('Header for Augmented Query:\n', header)
             
             try:
-                numpy_python3 = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name)+'\n'
+                numpy_python3 = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name, temperature)+'\n'
                 examples = SEARCH_QUERY_AGENTS.get_top_k_matching_results(numpy_python3, faiss_index_list[1])
                 augmented_query+='Dataset masking related examples:\n'
                 augmented_query+=examples+'\n'
@@ -129,7 +131,7 @@ def get_augmented_query(query_base_name, model_name, is_errors, dataset_name):
             print('Header for Augmented Query:\n', header)
             
             try:
-                plotting_and_visualizations_sub_query = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name)+'\n'
+                plotting_and_visualizations_sub_query = get_user_sub_query_by_file_name_and_sub_query_header(query_base_name, header, model_name, is_errors, dataset_name, temperature)+'\n'
                 examples = SEARCH_QUERY_AGENTS.get_top_k_matching_results(plotting_and_visualizations_sub_query, faiss_index_list[2])
                 
                 augmented_query+='Plotting and Visualization related examples:\n'

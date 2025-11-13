@@ -1,0 +1,60 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A script to visualize precipitation rate data from an HDF5 file by following these steps:
+
+1. Open HDF5 File: Access the hierarchical data file in read-only mode and extract the `precipRateESurface` dataset from the sub-group `/FS/SLV`
+    along with its `unit` and `FillValu` attribute.
+
+2. Handle Missing Data: Replace `FillValu` entries with NaNs using numpy's masked_where function to mask the data where values are NaN.
+
+3. Retrieve Geolocation Data: Extract latitude from `Latitude` and longitude from `Longitude` from the root group `FS`.
+
+4. Set Up Map Projection: Create a cylindrical projection with low resolution, spanning latitudes from -90 to 90 and longitudes from -180 to 180.
+
+5. Customize Map: Add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90], and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with left and bottom labels.
+
+6. Plot Data: Use a scatter plot with the 'jet' colormap, point size of 1, based on longitude and latitude coordinates.
+
+7. Add Colorbar and Title: Include a colorbar below the plot, labeled with the dataset's units, and set the title to reflect the file and dataset name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with h5py, access the dataset '/FS/SLV/precipRateESurface', read its attributes 'unit' and 'FillValu', and retrieve the 'Latitude' and 'Longitude' datasets from the root group 'FS'?
+
+NumPy Data Preprocessing Sub-query:
+How to replace the _FillValue in a NumPy array with NaN, apply np.ma.masked_where to mask NaNs, and then compute min and max of the masked array?
+
+Plotting and Visualization Sub-query:
+How to plot a scatter of longitude/latitude data on a cylindrical map using matplotlib/cartopy, add coastlines (width 0.5), parallels at [-90, -45, 0, 45, 90] and meridians at [-180, -135, -90, -45, 0, 45, 90, 135, 180] with left and bottom labels, use the 'jet' colormap with point size 1, and include a colorbar below labeled with the dataset units and a title?
