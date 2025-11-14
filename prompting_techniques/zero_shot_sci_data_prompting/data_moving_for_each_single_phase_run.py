@@ -71,7 +71,8 @@ if __name__ == '__main__':
                 f"{base_path}/prompting_techniques/llm_rag_generated_python_scripts",
                 f"{base_path}/llm_rag_python_scripts_generation_logs",
                 f"{base_path}/user_queries/generated_user_sub_queries",
-                f"{base_path}/user_sub_query_generation_logs"
+                f"{base_path}/user_sub_query_generation_logs",
+                f"{base_path}/prompting_techniques/zero_shot_sci_data_prompting/tracking_file"
         ]
 
         matplotagent_list_dirs = [
