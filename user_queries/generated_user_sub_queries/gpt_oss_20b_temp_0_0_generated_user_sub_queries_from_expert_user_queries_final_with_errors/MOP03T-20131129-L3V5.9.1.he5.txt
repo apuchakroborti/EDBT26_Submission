@@ -1,0 +1,73 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes and visualizes HDF data using specific libraries and steps.
+
+1. Imports: 
+   Include necessary libraries.
+
+2. Read HDF Data: 
+   Access the dataset `RetrievedSurfaceTemperatureDay` from the group `/HDFEOS/GRIDS/MOP03/Data Fields` into a variable named `data`. 
+   Extract attributes `long name`, `Units`, and `FillValue`, decoding `long_name` and `units`.
+
+3. Data Preprocessing:
+   - Replace `_FillValue` with `NaN`.
+   - Mask data using `numpy.ma.masked_array` where values are not `NaN`.
+
+4. Geolocation Data: 
+   Then it reads the geolocation data
+   - `Latitude`, which contains latitude values, `Longitude`, which contains longitude values from the group `/HDFEOS/GRIDS/MOP03/Data Fields`
+   Read latitude and longitude from respective datasets into variables `x` and `y`, then create a meshgrid.
+
+5. Basemap Setup:
+   - Use cylindrical projection with low resolution.
+   - Set boundaries from -90 to 90 for latitude and -180 to 180 for longitude.
+   - Add coastlines, parallels at intervals of 45 degrees from -90 to 90, 
+      and meridians similarly from -180 to 180, labeling to left and bottom.
+
+6. Visualization: 
+   - Use `plt.scatter` with parameters including data, colormap 'jet', no edge colors, and linewidth 0.
+   - Add a colorbar labeled with the units attribute.
+
+7. Cleanup: Include `plt.show()` or save the figure as needed.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to use h5py to open an HDF5 file, navigate to the group `/HDFEOS/GRIDS/MOP03/Data Fields`, read the dataset `RetrievedSurfaceTemperatureDay`, and extract and decode its attributes `long_name`, `Units`, and `FillValue`.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a dataset’s `_FillValue` with `np.nan`, create a masked array that masks all non-`np.nan` values, and perform basic preprocessing such as computing min/max or filtering with NumPy functions.
+
+Plotting and Visualization Sub-query:
+How to use matplotlib with mpl_toolkits.basemap (or cartopy) to plot scattered geospatial data on a cylindrical projection, set latitude/longitude boundaries, add coastlines, parallels, meridians, and display a colorbar labeled with the data units.

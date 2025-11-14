@@ -1,0 +1,66 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads and visualizes data from an HDF5 file with the following steps:
+
+1. Read HDF5 File: Open the file located at "DeepBlue-SeaWiFS_L2_20101210T135954Z_v004-20130525T172725Z.h5".
+
+3. Access Dataset: Extract the dataset named `aerosol_optical_thickness_550_ocean`.
+
+4. Extract Metadata: Retrieve the `long name` and `unit`, decoding them using decode().
+
+5. Preprocess Data:
+   - Replace -999 values with NaN.
+   - Create a masked array using numpy's masked_array function, masking where data is NaN.
+
+6. Set Up Visualization:
+   - Use an orthographic map projection with mean latitude and longitude.
+   - Add coastlines with 0.5 width.
+   - Draw parallels at -90° to 120 with interval 30°; meridians at -180° to 180°, and 45° intervals.
+
+7. Create Pseudocolor Plot: Use matplotlib's pcmesh with latlon=True, plotting longitude, latitude, and aerosol data.
+
+8. Customize Plot:
+   - Add a colorbar labeled with the dataset's units.
+   - Set the title using the filename and long_name of the dataset.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Open an HDF5 file with h5py, access the dataset `aerosol_optical_thickness_550_ocean`, and read its `long_name` and `units` attributes using `decode()`.
+
+NumPy Data Preprocessing Sub-query:
+Replace `-999` values with `np.nan` in a NumPy array and create a masked array masking NaNs using `np.ma.masked_where`.
+
+Plotting and Visualization Sub-query:
+Create an orthographic map projection centered at the mean latitude and longitude, add coastlines, draw parallels and meridians, and plot a pseudocolor mesh with `latlon=True` using matplotlib.

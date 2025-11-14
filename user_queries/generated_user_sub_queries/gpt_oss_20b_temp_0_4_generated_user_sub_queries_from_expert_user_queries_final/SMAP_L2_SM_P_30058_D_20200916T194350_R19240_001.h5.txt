@@ -1,0 +1,80 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads soil moisture data from an HDF5 file and visualizes it using Basemap. The script should perform the following steps:
+
+1. Import necessary libraries: os, datetime, h5py, numpy as np, matplotlib as mpl, matplotlib.pyplot as plt, and mpl_toolkits.basemap import Basemap.
+
+2. Read the HDF5 file containing datasets:
+   - `/Soil_Moisture_Retrieval_Data/soil_moisture` (soil moisture data)
+   - `/Soil_Moisture_Retrieval_Data/latitude`
+   - `/Soil_Moisture_Retrieval_Data/longitude`
+
+3. Extract metadata from the soil_moisture dataset:
+   - units
+   - long_name (decode using ASCII and replace 'parameters')
+   - _FillValue
+   - valid_max
+   - valid_min
+
+4. Identify invalid data:
+   - Use numpy logical_or to compare soil_moisture against valid_max and valid_min
+   - Update the mask with comparisons against _FillValue
+   - Set NaN values for invalid data using numpy.where
+
+5. Create a masked array of soil_moisture data using numpy.masked_where, checking for NaNs and invalid data.
+
+6. Visualize the data:
+   - Create a Basemap object with cylindrical projection
+   - Set map boundaries (lat: -90 to 90, lon: -180 to 180)
+   - Add coastlines (linewidth=0.5)
+   - Draw parallels at intervals of 45 degrees
+   - Draw meridians at intervals of 45 degrees with labels on the east and west edges
+   - Create a scatter plot using longitude and latitude coordinates, with soil_moisture data as the color variable (cmap=plt.cm.jet, s=1, edgecolor=None)
+
+7. Add a colorbar:
+   - Position it at the bottom with 10% padding
+   - Label it with the units from metadata
+
+8. Set the plot title to include the base name of the HDF5 file and the decoded long_name.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How can I use h5py to open an HDF5 file (with extensions .h5, .hdf5, .HE5, etc.), read the datasets located at `/Soil_Moisture_Retrieval_Data/soil_moisture`, `/Soil_Moisture_Retrieval_Data/latitude`, and `/Soil_Moisture_Retrieval_Data/longitude`, and extract the attributes `units`, `long_name`, `_FillValue`, `valid_max`, and `valid_min` from the `soil_moisture` dataset, decoding `long_name` from ASCII and replacing the substring “parameters” with an empty string?
+
+NumPy Data Preprocessing Sub-query:
+Using NumPy, how can I identify invalid soil moisture values by applying `np.logical_or` to compare the data against `valid_max` and `valid_min`, mask values equal to `_FillValue`, set those invalid entries to `np.nan` with `np.where`, and then create a masked array with `np.ma.masked_where` that masks both NaNs and the identified invalid values?
+
+Plotting and Visualization Sub-query:
+With matplotlib and mpl_toolkits.basemap, how can I create a Basemap with a cylindrical projection covering latitudes -90 to 90 and longitudes -180 to 180, add coastlines (linewidth=0.5), draw parallels and meridians every 45 degrees (labeling the east and west edges), scatter plot soil moisture values using longitude and latitude coordinates with `cmap=plt.cm.jet`, `s=1`, no edgecolor, add a bottom-positioned colorbar with 10% padding labeled with the units attribute, and set the plot title to include the HDF5 file’s base name and the decoded long_name?

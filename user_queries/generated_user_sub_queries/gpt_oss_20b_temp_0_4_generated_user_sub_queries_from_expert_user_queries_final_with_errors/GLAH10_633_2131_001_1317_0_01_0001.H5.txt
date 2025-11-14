@@ -1,0 +1,73 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python code to process an HDF5 file and generate a map visualization.
+
+1. Read Datasets: 
+   - Extract latitude data from `d_lat`, longitude data from `d_lon` from the sub group `Data_1HZ/Geolocation`.
+   - Extract surface temperature data from `Geophysical/r_Surface_temp`, time data from `Time/d_UTCTime_1` from the group `Data_1HZ`.
+
+2. Extract Attributes:
+   - For latitude, longitude, and surface temperature datasets, retrieve their `valid_min` and `valid_max` attributes.
+   - Combine these into new variables: `latitude_valid`, `longitude_valid`, and `surfacetemperature_valid`.
+   - From the surface temperature dataset, also extract the `units` and `longname` attributes.
+
+3. Data Validation:
+   - Replace latitude values outside `[latitude_valid[0], latitude_valid[1]]` with NaN.
+   - Apply similar validation to longitude using `longitude_valid` and to surface temperature using `surfacetemperature_valid`.
+
+4. Longitude Adjustment: Subtract 360 from longitude values exceeding 180.
+
+5. Map Setup:
+   - Create an equidistant cylindrical projection map with low resolution, spanning latitudes from -90 to 90 and longitudes from -180 to 180.
+   - Add coastlines with a line width of 0.5.
+   - Draw parallels with intervals of 30 degree from -90 to 120
+   - and meridians with intervals of 45 degree from -180 to 180
+
+6. Visualization:
+   - Use `scatter` function with parameters: longitude (x), latitude (y), data (c), marker size 0.1, colormap 'jet', no edge colors, and linewidth 0.
+   - Add a colorbar labeled with the surface temperature units.
+
+7. Plot Title: Combine the HDF5 file's basename with the `long name` attribute of the surface temperature dataset for the title.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How can I use h5py to open an HDF5 file, navigate to the groups `Data_1HZ/Geolocation` and `Data_1HZ`, read the datasets `d_lat`, `d_lon`, `Geophysical/r_Surface_temp`, and `Time/d_UTCTime_1`, and retrieve the attributes `valid_min`, `valid_max`, `units`, and `longname` for each dataset, while also obtaining the file’s basename?
+
+NumPy Data Preprocessing Sub-query:
+What is the NumPy approach to replace latitude, longitude, and surface temperature values that fall outside their respective `[valid_min, valid_max]` ranges with NaN, adjust longitude values greater than 180 by subtracting 360, and handle `_FillValue` or missing data using `np.where`, `np.ma.masked_where`, or similar masking techniques?
+
+Plotting and Visualization Sub-query:
+Using matplotlib and cartopy (or mpl_toolkits.basemap), how can I create an equidistant cylindrical map covering latitudes -90 to 90 and longitudes -180 to 180, add coastlines (linewidth 0.5), draw parallels every 30° and meridians every 45°, plot the data with `scatter` (cmap='jet', s=0.1, edgecolors='none'), add a colorbar labeled with the surface temperature units, and set a title that combines the HDF5 file’s basename with the surface temperature dataset’s `longname` attribute?

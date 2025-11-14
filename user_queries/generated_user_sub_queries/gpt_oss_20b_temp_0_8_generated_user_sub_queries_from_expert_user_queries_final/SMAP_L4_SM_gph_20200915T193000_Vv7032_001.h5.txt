@@ -1,0 +1,80 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that processes and visualizes data from an HDF5 file using specific libraries and steps:
+
+1. Import Libraries: Include os, numpy as np, mpl_toolkits.basemap import Basemap, and matplotlib.pyplot as plt.
+
+2. Define File: Use the HDF5 file 'SMAP_L4_SM_gph_20200915T193000_Vv7032_001.h5'.
+
+3. Open File: Access the file in read-only mode.
+
+4. Read Datasets:
+   - Extract `/Geophysical_Data/sm_profile` into an array called `data`.
+   - Read latitude from `/cell_lat/` and longitude from `/cell_lon/`.
+
+5. Extract Attributes: From `sm_profile`, retrieve units, long_name, _FillValue, valid_max, and valid_min.
+
+6. Decode Parameters: Use ascii decoding for units and long_name.
+
+7. Identify Invalid Data:
+   - Use numpy's logical_or to find data beyond valid_max or below valid_min.
+   - Update with data equal to _FillValue.
+
+8. Set NaN Values: Replace invalid data with numpy NaNs.
+
+9. Create Masked Array: Apply numpy masked_where using isnan(data) and the data itself.
+
+10. Map Setup:
+    - Use Basemap for an equidistant cylindrical projection, low resolution.
+    - Draw coastlines with linewidth 0.5.
+    - Set parallels at from the result of nummpy array (start, stop, interval) with parameters [-180, 91, 45] 
+    and meridians at from the values of nummpy array (start, stop, interval) [-180, 180, 45].
+
+11. Data Visualization:
+    - Scatter plot with longitude, latitude, data, s=1, cmap=jet, no edgecolor or linewidth.
+
+12. Colorbar and Title:
+    - Add colorbar labeled with units from sm_profile.
+    - Set title as the concatenation of the HDF5 file's basename and sm_profile's long_name, font size 10.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How can I use the `h5py` library to open an HDF5 file named `SMAP_L4_SM_gph_20200915T193000_Vv7032_001.h5`, access the datasets at paths `/Geophysical_Data/sm_profile`, `/cell_lat/`, and `/cell_lon/`, and retrieve the attributes `units`, `long_name`, `_FillValue`, `valid_max`, and `valid_min` from the `sm_profile` dataset, decoding any ASCII-encoded string attributes?
+
+NumPy Data Preprocessing Sub-query:
+What steps should I take with NumPy to identify invalid data in a 1D array `data` by using `np.logical_or` to flag values outside the `valid_min`–`valid_max` range or equal to `_FillValue`, replace those invalid entries with `np.nan`, and then create a masked array using `np.ma.masked_where` that masks all `np.nan` values?
+
+Plotting and Visualization Sub-query:
+Using `matplotlib`, `mpl_toolkits.basemap`, and a Basemap instance with an equidistant cylindrical projection, how can I set up a map with low resolution, draw coastlines at linewidth 0.5, add parallels at latitudes from -180 to 90 in 45° increments, add meridians at longitudes from -180 to 180 in 45° increments, scatter plot longitude, latitude, and data values with marker size 1 and the `jet` colormap, then add a colorbar labeled with the `units` attribute and set a title combining the file basename and the `long_name` attribute at font size 10?

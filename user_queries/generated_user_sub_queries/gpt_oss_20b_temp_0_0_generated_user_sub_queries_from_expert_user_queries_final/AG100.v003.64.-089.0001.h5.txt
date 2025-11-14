@@ -1,0 +1,75 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that reads an HDF5 file containing ASTER GED data, extracts specific datasets, and visualizes them on a map.
+
+1. Import necessary libraries: os, matplotlib, matplotlib.pyplot, numpy, mpl_toolkits.basemap, h5py.
+
+2. Read the input HDF5 file in read-only mode.
+
+3. Extract datasets:
+   - 'Mean Emissivity for Band 10' from '/Emissivity/Mean' as a 2D slice (1st index along x-axis).
+   - Retrieve the Description attribute's 0th value.
+   - Set units to None and long_name to 'Mean emissivity for Band 10'.
+
+4. Extract geolocation data:
+   - Latitude from '/Geolocation/Latitude'.
+   - Longitude from '/Geolocation/Longitude'.
+
+5. Process mean data:
+   - Replace -9999 with NaN.
+   - Scale by multiplying with 0.001.
+   - Apply mask using numpy's masked_where.
+
+6. Create an equidistant cylindrical projection map with Basemap, setting latitude (62.5-64.5) and longitude (89.5-87.5) ranges.
+
+7. Add map features:
+   - Coastlines with linewidth 0.5.
+   - Parallels at 62, 63, 64 with specific labels of [1, 0, 0, 0]
+   - Meridians at -89, -88, -87 with specific labels of [0, 0, 0, 1]
+
+8. Plot data using pcolormesh with latlon=True.
+
+9. Add colorbar labeled 'None' and a title combining the filename's base name with 'Mean Emissivity for Band 10'.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with h5py, access the dataset '/Emissivity/Mean', read a 2D slice along the first index, and retrieve the 0th element of the 'Description' attribute?
+
+NumPy Data Preprocessing Sub-query:
+How to replace -9999 with NaN in a NumPy array, multiply by 0.001, and apply a mask using np.ma.masked_where to exclude NaN values?
+
+Plotting and Visualization Sub-query:
+How to create an equidistant cylindrical Basemap projection for latitudes 62.5–64.5 and longitudes 89.5–87.5, add coastlines, parallels at 62, 63, 64 with labels [1,0,0,0], meridians at -89, -88, -87 with labels [0,0,0,1], plot masked data with pcolormesh(latlon=True), add a colorbar labeled 'None', and set a title combining a filename base with 'Mean Emissivity for Band 10'?

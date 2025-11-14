@@ -1,0 +1,68 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            I am working with an HDF5 file containing SMAP Level 1C data. 
+The script should begin by importing necessary libraries
+
+Define a constant `filename` with the value "SMAP_L1C_TB_50719_D_20240730T124417_R19240_001.h5".
+
+The program should read this HDF5 file in read-only mode. 
+Access the main dataset at "cell_tb_h_fore" and geolocation datasets at "cell_lat" (latitude) and "cell_lon" (longitude).
+from the group `Global_Projection`
+
+Extract attributes from the cell_tb_h_fore dataset: units, long_name, _FillValue, valid_max, and valid_min. 
+Decode these attributes using 'ascii' encoding with 'replace' as the error handling parameter.
+
+Identify invalid data by combining two conditions using numpy's logical_or: values greater than valid_max or less than valid_min. 
+Update this mask to include values equal to _FillValue. Replace invalid data in cell_tb_h_fore with NaNs and create a masked array using numpy's masked_where function, checking for NaNs.
+
+For visualization, initialize a Basemap object with a cylindrical projection. Set map boundaries from -90 to 90 latitude and -180 to 180 longitude. 
+Add coastlines with a line width of 0.5. 
+Draw parallels at intervals of 45 degrees and meridians at the same interval, labeling them at the position of left and bottom.
+
+Create a scatter plot using longitude and latitude coordinates, with data from cell_tb_h_fore, point size 1, colormap 'jet', no edge color, and linewidth 0. 
+Add a colorbar below the plot with 10% padding and label it with the units attribute.
+
+Set the plot title to the concatenation of the filename's basename and long_name, using fontsize 7.
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with h5py, access the dataset “cell_tb_h_fore” under the group “Global_Projection”, read the attributes units, long_name, _FillValue, valid_max, and valid_min, decode these attributes using ASCII with the “replace” error handler, and retrieve the geolocation datasets “cell_lat” and “cell_lon” from the same group.
+
+NumPy Data Preprocessing Sub-query:
+Using NumPy to mask invalid data: combine conditions where values are greater than valid_max or less than valid_min with logical_or, include values equal to _FillValue, replace those invalid values with np.nan, and then create a masked array with np.ma.masked_where(np.isnan(data), data).
+
+Plotting and Visualization Sub-query:
+Using matplotlib and Basemap to plot a cylindrical projection: initialize Basemap with latitudes -90 to 90 and longitudes -180 to 180, add coastlines (linewidth 0.5), draw parallels and meridians every 45° with labels at left and bottom, scatter plot longitude/latitude points with data values, use cmap “jet”, no edgecolor, linewidth 0, add a colorbar below the plot with 10% padding labeled with the units attribute, and set the title to the filename’s basename concatenated with the long_name (fontsize 7).

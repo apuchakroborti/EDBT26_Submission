@@ -1,0 +1,79 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script that performs the following tasks:
+
+1. Read data from an HDF5 file named "DeepBlue-SeaWiFS-1.0_L3_20100101_v004-20130604T131317Z.h5".
+
+3. Extract the following datasets:
+   - aerosol_optical_thickness_550_ocean
+   - latitude
+   - longitude
+
+4. Retrieve attributes:
+   - long_name
+   - _FillValue
+
+5. Decode the long_name attribute using the decode() function.
+
+6. Replace all data points matching _FillValue with NaN values in the aerosol_optical_thickness_550_ocean dataset.
+
+7. Create a masked array of the aerosol_optical_thickness_550_ocean data where NaN values are masked.
+
+8. Generate a cylindrical projection map with:
+   - Low resolution
+   - Latitude range from -90 to 90
+   - Longitude range from -180 to 180
+
+9. Add map features:
+   - Coastlines with line width 0.5
+   - Parallels at latitudes at [-90, -60, -30, 0, 30, 60, 90, 120]
+   - Meridians at longitudes at [-180, -135, -90, -45, 0, 45, 90, 135, 180]
+
+10. Create a pcolormesh plot of the masked aerosol data on the map:
+    - Use longitude and latitude coordinates
+    - Set color scale from 0 to 1 (vmin=0, vmax=1)
+    - Ensure latlon=True for geographic projection
+
+11. Add a colorbar to the plot.
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+How to open an HDF5 file with h5py, access datasets such as '/aerosol_optical_thickness_550_ocean', read attributes 'long_name' and '_FillValue', and decode string attributes.
+
+NumPy Data Preprocessing Sub-query:
+How to replace a dataset's _FillValue with NaN, create a masked array that masks NaNs, and use np.where or np.ma.masked_where for preprocessing.
+
+Plotting and Visualization Sub-query:
+How to create a low‑resolution cylindrical map with cartopy or basemap, add coastlines, parallels, meridians, plot a pcolormesh of masked aerosol data with vmin=0, vmax=1, latlon=True, and add a colorbar.

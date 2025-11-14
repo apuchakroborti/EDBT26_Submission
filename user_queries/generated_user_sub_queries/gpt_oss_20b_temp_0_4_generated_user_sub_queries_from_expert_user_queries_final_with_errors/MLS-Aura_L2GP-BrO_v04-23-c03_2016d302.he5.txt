@@ -1,0 +1,69 @@
+"""
+        You are an assistant designed to break down a complex data science or geospatial analysis task 
+        into smaller, focused sub-queries. Each sub-query must target a specific technical domain 
+        so that relevant documentation, examples, or code can be retrieved using a vector database.
+
+        Given the user query, return 3 clearly separated sub-queries:
+
+        1. HDF5 Dataset Access:
+        Focus only on `h5py` such as accessing file with extensions H5, h5, HE5, he5, HDF5, or hdf5, 
+        accessing datasets or attributes, dataset paths (like `/Grid/cloudWater`), and metadata.
+
+        2. NumPy-based Data Preprocessing:
+        Focus only on how to handle `_FillValue`, apply masks using NumPy (`np.where`, `np.ma.masked_where`), and compute or filter data using `min`, `max`, or 
+        other preprocessing logic.
+
+        3. Map Plotting and Visualization:
+        Focus only on how to use `matplotlib`, `mpl_toolkits.basemap`, or `cartopy` to visualize geospatial data, configure projections, draw coastlines, 
+        meridians, parallels, and apply colorbars or titles.
+
+        
+        User Query:
+            A Python script to read an HDF-EOS5 file and plot BrO data against pressure levels with the following specifications:
+
+1. Read HDF-EOS5 File: 
+   - Extract BrO data from the group `/HDFEOS/SWATHS/BrO/Data Fields`.
+   - Retrieve pressure data from `/Geolocation Fields/Pressure`.
+   - Obtain time data from `/Geolocation Fields/Time`.
+
+2. Data Extraction:
+   - Slice BrO data to get the 399th index along the x-axis and all data along the y-axis.
+   - Convert BrO and pressure data into 1D arrays for plotting.
+
+3. Attributes Handling: Extract attributes like MissingValue, _FillValue, Title, and Units.
+
+4. Plotting:
+   - Use matplotlib to plot BrO data (indices 12-16) against corresponding pressure values.
+   - Set the x-axis label using BrO's title and units.
+   - Set the y-axis label using pressure units.
+   - Title the plot with BrO's title and the file's basename.
+
+5. Plot Configuration:
+   - Invert the y-axis.
+   - Apply a logarithmic scale to the y-axis.
+   - Use ScalarFormatter for minor ticks and FormatStrFormatter for major ticks.
+   - At the end, the gca is set with invert_yaxis, yscale value of log, minor formatter is ScalarFormatter, and major formatter is FormatStrFormatter
+
+
+        ---
+        Note: return only the the response of sub-queries only based on the below format, not explanation, not python code, and node additional text needed
+        Return format:
+
+        HDF5 Dataset Access Sub-query:
+        <generated sub-query>
+
+        NumPy Data Preprocessing Sub-query:
+        <generated sub-query>
+
+        Plotting and Visualization Sub-query:
+        <generated sub-query>
+        """
+
+HDF5 Dataset Access Sub-query:
+Using h5py, how to open an HDF-EOS5 file (extensions .h5, .he5, .H5, .HE5, .HDF5, .hdf5), access the dataset '/HDFEOS/SWATHS/BrO/Data Fields' and read its data and attributes (MissingValue, _FillValue, Title, Units), and similarly access '/Geolocation Fields/Pressure' and '/Geolocation Fields/Time' datasets and their attributes.
+
+NumPy Data Preprocessing Sub-query:
+With NumPy, how to slice a 2D array to extract the 399th index along the x-axis and all y-axis values, convert the resulting slice to a 1D array, handle _FillValue by masking or replacing with NaN, and compute or filter data using min, max, or other preprocessing logic.
+
+Plotting and Visualization Sub-query:
+Using matplotlib, how to plot BrO data (indices 12-16) against pressure values, set the x-axis label with BrO's title and units, the y-axis label with pressure units, title the plot with BrO's title and the file's basename, invert the y-axis, apply a logarithmic scale to the y-axis, and configure minor ticks with ScalarFormatter and major ticks with FormatStrFormatter.

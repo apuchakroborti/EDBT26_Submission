@@ -70,3 +70,13 @@ for job in "${!jobs[@]}"; do
 done
 
 echo "All jobs completed."
+
+echo "Starting final Python screen session..."
+screen -dmS final_python bash -c "python3 ./prompting_techniques/zero_shot_sci_data_prompting/data_moving_for_each_single_phase_run.py --model gpt_oss_20b --dataset climate"
+
+# Wait for Python screen to finish
+while screen -ls | grep -q "\.final_python"; do
+    sleep 5
+done
+
+echo "Final Python job completed."
