@@ -357,7 +357,7 @@ $ screen -dmS gpt_oss_sub bash -c './running_experiments_scripts/climate/single/
 
 $ screen -dmS gpt_oss bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss.sh'
 
-
+mkdir /home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/llm_rag_generated_python_scripts
 
 % climate
 <!-- iterative error resolving -->
