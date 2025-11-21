@@ -6,7 +6,7 @@ import h5py
 # input_file_directory= '/Users/apukumarchakroborti/gsu_research/MatPlotAgent-main/benchmark_data/data'
 input_file_directory= '/home/achakroborti1/related_work/MatPlotAgent/benchmark_data/data'
 # out_file_directory = '/Users/apukumarchakroborti/gsu_research/llam_test/plot_generation/csv_to_h5_data'
-out_file_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/csv_to_h5_data'
+out_file_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/csv_to_h5_data'
 column_dictionary = {}
 
 dtype_dic_76 = {'Womans millions of dollars': 'int32', 'Mens millions of dollars': 'int32'}

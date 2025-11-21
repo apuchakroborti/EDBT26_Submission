@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import os
 
-fastmribrain_csv_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results'
+fastmribrain_csv_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results'
 fastmribrain_all_csv_files_sub_dir = [
     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector"
     # "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_without_corrector",

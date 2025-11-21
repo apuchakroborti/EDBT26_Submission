@@ -8,7 +8,8 @@ def parse_argument(parser):
     
     parser.add_argument(
         "--url", "-u",
-        choices=["http://ai-lab2.dyn.gsu.edu:8080/api/generate", "http://localhost:11434/api/generate"],
+        choices=["http://ai-lab2.dyn.gsu.edu:8081/api/generate", "http://localhost:11434/api/generate", 
+                 "http://10.51.197.174:8080/api/generate", "http://10.51.197.174:11434/api/generate", "http://ai-lab2.dyn.gsu.edu:11434/api/generate"],
         required=False,
         help="URL of the server"
     )

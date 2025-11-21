@@ -48,14 +48,14 @@ def extract_second_subquery_blocks(file_path):
 def get_user_sub_query_by_file_name_and_sub_query_header(sub_query_base_name, sub_query_header, model_name, is_errors, dataset_name, temperature):
     try:
         temp= str(temperature).replace('.', '_')
-        project_base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"
+        project_base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
         print('Inside data and plotting agent:: get_user_sub_query_by_file_name_and_sub_query_header')
         print(f'sub query file base name: {sub_query_base_name}')
         print(f'sub query header name: {sub_query_header}')
         print(f'Dataset name: {dataset_name}')
         print(f'Model name: {model_name}')
 
-        # sub_query_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_sub_queries/llama3_70b_generated_user_sub_queries_from_expert_user_queries_final"
+        # sub_query_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_sub_queries/llama3_70b_generated_user_sub_queries_from_expert_user_queries_final"
         sub_query_path = ''
         if is_errors == False:
             
@@ -255,7 +255,7 @@ def get_augmented_query_for_fastmribrain(query_base_name, model_name, is_errors)
 
 
 if __name__ == '__main__':
-    sub_query_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_sub_queries/llama3_70b_generated_user_sub_queries_from_expert_user_queries_final/1A.GPM.GMI.COUNT2021.20160105-S230545-E003816.010538.V07A.HDF5.txt"
+    sub_query_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_sub_queries/llama3_70b_generated_user_sub_queries_from_expert_user_queries_final/1A.GPM.GMI.COUNT2021.20160105-S230545-E003816.010538.V07A.HDF5.txt"
     title_keyword = "HDF5 Dataset Access Sub-query:"
     # print(extract_subquery_content(sub_query_path, title_keyword))
     result_dic = extract_second_subquery_blocks(sub_query_path)

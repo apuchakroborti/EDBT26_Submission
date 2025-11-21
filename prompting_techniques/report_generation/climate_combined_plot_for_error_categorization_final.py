@@ -23,7 +23,7 @@ def read_pass_fail(filename):
     return {'Pass': pass_counts, 'Fail': fail_counts}
 
 # Read from CSVs
-csv_files_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
+csv_files_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
                     #   'devstral_24b_matplotagent_python_scripts_with_rag_with_errors_without_correctorr'
 # with_corrector = read_pass_fail('with_corrector.csv')
 # without_corrector = read_pass_fail('without_corrector.csv')

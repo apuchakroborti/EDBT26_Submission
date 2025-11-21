@@ -23,7 +23,7 @@ def read_pass_fail(filename):
     return {'Pass': pass_counts, 'Fail': fail_counts}
 
 # Read from CSVs
-csv_files_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/error_categorization_evaluation_result/llm_generated_code_with_rag'
+csv_files_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/error_categorization_evaluation_result/llm_generated_code_with_rag'
 # with_corrector = read_pass_fail('with_corrector.csv')
 # without_corrector = read_pass_fail('without_corrector.csv')
 model_list = ["devstral:24b",  "gemma3:27b", "magicoder", "deepseek-r1:32b", "llama3:70b"]

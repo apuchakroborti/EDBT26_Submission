@@ -666,7 +666,7 @@ if __name__ == '__main__':
     # else:
     #     print("No argument passed.")
 
-    project_base_directory = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"
+    project_base_directory = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
     data_base_directory = "/Users/apukumarchakroborti/gsu_research/llam_test"   
     
     # ----------------------------------------------ITERATIVE CLIMATE START--------------------------------

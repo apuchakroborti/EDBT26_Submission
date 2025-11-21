@@ -1978,11 +1978,11 @@ def find_the_missed_base_image():
         return results
 
     # Example usage:
-    # dir1 = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
-    # dir2 = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/evaluation_by_clip_algorithm/climate_base_images"
+    # dir1 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
+    # dir2 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/evaluation_by_clip_algorithm/climate_base_images"
 
-    dir2 = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
-    dir1 = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/evaluation_by_clip_algorithm/climate_base_images"
+    dir2 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
+    dir1 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/evaluation_by_clip_algorithm/climate_base_images"
 
     results = match_files(dir1, dir2)
 
@@ -1997,7 +1997,7 @@ if __name__ == '__main__':
     
     
     # #increasing the script name
-    # exisiting_climate_python_script_dir_list_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
+    # exisiting_climate_python_script_dir_list_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
     # exisiting_climate_python_script_dir_list = [
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector",
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector",
@@ -2016,7 +2016,7 @@ if __name__ == '__main__':
 
 
     # fastmribrain iterative log files
-    # climate_source_common_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/iterative_python_code_generation_logs'
+    # climate_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/iterative_python_code_generation_logs'
     # climate_python_script_dir_list = [
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector.log",
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector.log",
@@ -2027,7 +2027,7 @@ if __name__ == '__main__':
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_errors_without_corrector.log",
     #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector.log"
     # ]
-    # climate_target_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
+    # climate_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
 
     # for log_file_path in climate_python_script_dir_list:
     #     output_dir = log_file_path.replace('.log', '')
@@ -2041,24 +2041,24 @@ if __name__ == '__main__':
 
 
     # matplotagent_iterative_python_scripts_directory = [
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector"
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector"
     # ]
     # fastmribrain_iterative_python_scripts_directory = [
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector"
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_with_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_without_corrector",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector"
     # ]
     # for python_script_dir in fastmribrain_iterative_python_scripts_directory:
     #     for index in range(5, -1, -1):
@@ -2068,7 +2068,7 @@ if __name__ == '__main__':
     
     # this block is for extracting first generated python script from the log files, remove previous one and save
     # # matplotagent iterative log files
-    # matplotagent_source_common_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/iterative_python_scripts_generation_logs'
+    # matplotagent_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/iterative_python_scripts_generation_logs'
     # matplotagent_python_script_dir_list = [
     # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector.log",
     # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_with_corrector.log",
@@ -2079,9 +2079,9 @@ if __name__ == '__main__':
     # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_without_corrector.log",
     # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector.log"
     # ]
-    # # log_file_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
-    # # output_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
-    # matplotagent_target_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
+    # # log_file_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
+    # # output_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
+    # matplotagent_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
     # for log_file_path in matplotagent_python_script_dir_list:
     #     output_dir = log_file_path.replace('.log', '')
     #     remove_python_files_with_suffix(matplotagent_source_common_directory+'/'+output_dir)
@@ -2094,7 +2094,7 @@ if __name__ == '__main__':
     
 
     # # fastmribrain iterative log files
-    # fastmribrain_source_common_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/iterative_python_scripts_generation_logs'
+    # fastmribrain_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/iterative_python_scripts_generation_logs'
     # fastmribrain_python_script_dir_list = [
     #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__with_corrector.log",
     #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__with_errors_with_corrector.log",
@@ -2105,9 +2105,9 @@ if __name__ == '__main__':
     #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag__with_errors_without_corrector.log",
     #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector.log"
     # ]
-    # # log_file_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
-    # # output_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
-    # fastmribrain_target_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts'
+    # # log_file_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
+    # # output_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
+    # fastmribrain_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts'
 
     # for log_file_path in fastmribrain_python_script_dir_list:
     #     output_dir = log_file_path.replace('.log', '')
@@ -2121,8 +2121,8 @@ if __name__ == '__main__':
 
     # reading los files, searching verision 0 python code and dave
     # renaming files from iteration to iteration+1
-    # python_script_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector'
-    # python_script_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_without_corrector'
+    # python_script_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector'
+    # python_script_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_without_corrector'
     # for index in range(5, 0, -1):
     #     print(f'Current_index: {index}')
     #     rename_iteration_files(python_script_dir, index)
@@ -2134,9 +2134,9 @@ if __name__ == '__main__':
    
     
     # directory_list =[
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/deepseek_r1_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/llama3_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
-    #     "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/magicoder_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query"
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/deepseek_r1_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/llama3_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
+    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/magicoder_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query"
     # ]
 
     # for directory in directory_list:
@@ -2149,7 +2149,7 @@ if __name__ == '__main__':
     #  # collect all images and store them into a new directory
     # # Example usage
     # source_dirs = subdirectories  # List of source directories
-    # base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"  # Base path for new directory
+    # base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"  # Base path for new directory
     # new_dir_name=output_subdir
     # # data_dir = 'ACL_DIRS'
     # collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir)

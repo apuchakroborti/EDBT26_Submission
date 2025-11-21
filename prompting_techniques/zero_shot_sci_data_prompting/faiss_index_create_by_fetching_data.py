@@ -68,7 +68,7 @@ def save_metadata(chunks, metadat_path):
 # === RUN EVERYTHING ===
 
 if __name__ == "__main__":
-    PROJECT_BASE_PATH = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data" 
+    PROJECT_BASE_PATH = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data" 
     h5py_doc_file_location = f"{PROJECT_BASE_PATH}/retrieval/notes/h5py_notes.txt"
     python3_numpy_doc_file_location = f"{PROJECT_BASE_PATH}/retrieval/notes/python3_numpy_notes.txt"
     matplotlib_basemap_cartopy_doc_file_location = f"{PROJECT_BASE_PATH}/retrieval/notes/matplotlib_basemap_cartopy_notes.txt"

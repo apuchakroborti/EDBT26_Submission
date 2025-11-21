@@ -35,7 +35,7 @@ for path in file_paths:
 
 # Define the base directory where folders 76 to 100 are located
 # base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test/plot_generation/csv_to_h5_data'
-base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/csv_to_h5_data'
+base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/csv_to_h5_data'
 
 # Initialize a list to store file paths and their datasets
 file_paths = []

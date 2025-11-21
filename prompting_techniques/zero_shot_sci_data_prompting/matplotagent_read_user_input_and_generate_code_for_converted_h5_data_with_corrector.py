@@ -38,7 +38,7 @@ def process_json(input_file, target_dir):
                 # base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test'
                 
                 # this is for gsu server
-                base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+                base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
                 common_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
                 common_data_path = common_data_path.replace('*', str(item['id']))
                 
@@ -166,7 +166,7 @@ def process_json_iteratively(input_file, target_dir, iteration):
                 # base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test'
                 
                 # this is for gsu server
-                base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+                base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
                 common_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
                 common_data_path = common_data_path.replace('*', str(item['id']))
                 
@@ -358,8 +358,8 @@ if __name__ == '__main__':
     # input_file = '/Users/apukumarchakroborti/gsu_research/llam_test/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions.json'
     
     # gsu server path
-    # input_file = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions.json'
-    input_file = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions_modified.json'
+    # input_file = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions.json'
+    input_file = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions_modified.json'
     # target_dir = '/Users/apukumarchakroborti/gsu_research/llam_test/plot_generation/generated_python_script_replaced_colums_by_datasets'
     # output_file = 'processed_benchmark_instructions.json'
     
@@ -372,7 +372,7 @@ if __name__ == '__main__':
     # target_dir = f'/Users/apukumarchakroborti/gsu_research/llam_test/matplot_agent_data/plot_generation/python_script_llm/{model_name}_zero_shot_CoT_csv_to_h5_with_corrector'
 
     # GSU server path
-    target_dir = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/python_script_llm/{model_name}_zero_shot_CoT_csv_to_h5_with_corrector_modified'
+    target_dir = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/python_script_llm/{model_name}_zero_shot_CoT_csv_to_h5_with_corrector_modified'
     
     # Create directory if it does not exist
     if not os.path.exists(target_dir):

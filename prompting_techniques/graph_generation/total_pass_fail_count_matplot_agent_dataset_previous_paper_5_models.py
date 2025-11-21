@@ -14,7 +14,7 @@ with_rag_and_without_corrector = {'Pass': [], 'Fail': []}
 #w/o rag and corrector
 without_rag_and_corrector = {'Pass': [], 'Fail': []}
 
-csv_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
+csv_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
 
 all_csv_sub_directory = [
     "_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector",

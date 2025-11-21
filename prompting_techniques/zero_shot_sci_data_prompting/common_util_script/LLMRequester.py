@@ -1839,7 +1839,7 @@ def get_prompt_template_of_sub_queries_based_on_primary_query(user_query, model,
         Plotting and Visualization Sub-query:
         <generated sub-query>
         """
-    print("Prompt: \n", query_template)
+    # print("Prompt: \n", query_template)
     
     data = {
         "model": model,
@@ -1851,10 +1851,17 @@ def get_prompt_template_of_sub_queries_based_on_primary_query(user_query, model,
             "temperature": temperature
         }
     }
+    print("Request with Prompt: \n", data)
     return data
 
 # created May 17, 2025
 def generate_multi_agents_request_for_sub_query_generation(user_input_file_full_path, user_input_content, target_dir, model, URL, temperature):
+    print(f'LLMRequester::generate_multi_agents_request_for_sub_query_generation: user_input_file_full_path:\n{user_input_file_full_path}')
+    print(f'LLMRequester::generate_multi_agents_request_for_sub_query_generation: user_input_content:\n{user_input_content}')
+    print(f'LLMRequester::generate_multi_agents_request_for_sub_query_generation: target_dir:\n{target_dir}, model, URL, temperature')
+    print(f'LLMRequester::generate_multi_agents_request_for_sub_query_generation: user_input_file_full_path: model: {model}')
+    print(f'LLMRequester::generate_multi_agents_request_for_sub_query_generation: URL: {URL}, temperature: {temperature}')
+
     try:       
 
         # Create the target directory if it doesn't exist
@@ -1872,8 +1879,11 @@ def generate_multi_agents_request_for_sub_query_generation(user_input_file_full_
         prompt = user_sub_queries_gen['prompt']
         prompt='"""'+prompt+'"""'
 
+        print(f'Sending the post request')
         user_sub_queries_gen = json.dumps(user_sub_queries_gen).encode("utf-8")
+        print(f'user_sub_queries_gen:\n{user_sub_queries_gen}')
         llm_user_sub_queries_gen = requests.post(URL, data=user_sub_queries_gen)
+        print(f'llm_user_sub_queries_gen:\n{llm_user_sub_queries_gen}')
         
         llm_user_sub_queries_gen  = llm_user_sub_queries_gen.json()
         print('Raw output: \n',llm_user_sub_queries_gen)

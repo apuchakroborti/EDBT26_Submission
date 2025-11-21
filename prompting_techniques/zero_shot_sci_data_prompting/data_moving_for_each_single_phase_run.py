@@ -65,7 +65,7 @@ def move_prefixed_items(dir_list, prefix, sub_suffix="single_phase"):
 
 
 if __name__ == '__main__':
-        base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"
+        base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
 
         climate_list_dirs = [
                 f"{base_path}/prompting_techniques/llm_rag_generated_python_scripts",

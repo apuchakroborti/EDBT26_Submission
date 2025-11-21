@@ -65,7 +65,7 @@ def plot_pass_fail_cumulative(csv_dir, target_dir, title, report_name, base_file
     # plt.show()
 
 if __name__ == '__main__':
-    csv_file_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
+    csv_file_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
 
     climate_all_csv_files_sub_dir = [
         "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector",
@@ -78,7 +78,7 @@ if __name__ == '__main__':
         "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector"
     ]
     
-    target_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation'
+    target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation'
     base_file_name ='error_categorization_report_'
     # climate
     for csv_sub_path in climate_all_csv_files_sub_dir:
@@ -93,7 +93,7 @@ if __name__ == '__main__':
         plot_pass_fail_cumulative(csv_dir, target_dir, title, report_name, base_file_name)
     
     
-    matplotagent_csv_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/error_categorization_evaluation_result/iterative_error_resolve'
+    matplotagent_csv_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/error_categorization_evaluation_result/iterative_error_resolve'
     matplotagent_all_csv_files_sub_dir = [
        
         "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
@@ -119,7 +119,7 @@ if __name__ == '__main__':
         plot_pass_fail_cumulative(csv_dir, target_dir, title, report_name, base_file_name)
 
 
-    fastmribrain_csv_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results'
+    fastmribrain_csv_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results'
     fastmribrain_all_csv_files_sub_dir = [
         "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
         "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_with_corrector",

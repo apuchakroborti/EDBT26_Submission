@@ -6,7 +6,7 @@ import os
 # climate datasets
 iterations_category = []
 
-csv_file_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
+csv_file_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
 
 climate_all_csv_files_sub_dir = [
     # "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector",

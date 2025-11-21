@@ -1,10 +1,39 @@
+Error: for pip3 install -U sentence-transformers
+ERROR: Exception:
+Traceback (most recent call last):
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/venv/lib/python3.10/site-packages/pip/_internal/cli/base_command.py", line 165, in exc_logging_wrapper
+    status = run_func(*args)
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/venv/lib/python3.10/site-packages/pip/_internal/cli/req_command.py", line 205, in wrapper
+    return func(self, options, args)
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/venv/lib/python3.10/site-packages/pip/_internal/commands/install.py", line 389, in run
+    to_install = resolver.get_installation_order(requirement_set)
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/venv/lib/python3.10/site-packages/pip/_internal/resolution/resolvelib/resolver.py", line 188, in get_installation_order
+    weights = get_topological_weights(
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/venv/lib/python3.10/site-packages/pip/_internal/resolution/resolvelib/resolver.py", line 276, in get_topological_weights
+    assert len(weights) == expected_node_count
+AssertionError
+
+Solution:
+$ pip install --upgrade pip setuptools wheel
+
+$ pip install sentence-transformers
+
+
 % To quit screen
 $ screen -X -S screen_name  quit
 % single turn iteration1
-% gpt-oss
-$ screen -dmS gpt_oss_sub bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss_sub_query.sh'
+% 
+$ screen -dmS ai_deepseek_r1_32b_sub bash -c './running_experiments_scripts/climate/single/run_screens_deeepseek_r1_sub_query.sh'
 
-$ screen -dmS gpt_oss bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss.sh'
+$ screen -dmS ai_devstral_sub bash -c './running_experiments_scripts/climate/single/run_screens_devstral_sub_query.sh'
+
+$ screen -dmS ai_qwen3_coder_sub bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder_sub_query.sh'
+$ screen -dmS ai_qwen3_coder bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder.sh'
+
+
+% gpt-oss
+$ screen -dmS ai_gpt_oss_sub bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss_sub_query.sh'
+$ screen -dmS ai_gpt_oss bash -c './running_experiments_scripts/climate/single/run_screens_gpt_oss.sh'
 
 
 URLS Used for the RAG source

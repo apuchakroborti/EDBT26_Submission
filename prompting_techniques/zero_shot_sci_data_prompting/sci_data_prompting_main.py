@@ -44,8 +44,8 @@ def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_gen
                 print(f"\n\nProcessing file: {data_file_path}")
                 # get the input data
                 data_basename_with_extension = os.path.basename(data_file_path)
-                if tracking.check_string_status(data_basename_with_extension):
-                    continue
+                # if tracking.check_string_status(data_basename_with_extension):
+                #     continue
                 
                 # Remove the extension of input data file
                 data_basename_without_extension = os.path.splitext(data_basename_with_extension)[0]
@@ -1165,7 +1165,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
             print("user input content: ", user_input_content)
 
         # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         full_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
         splitted_name = user_input_base_name.split('_')
         if len(splitted_name)>0:
@@ -1196,7 +1196,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
         
             # current with corrector
             # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
-            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
         else:
             print('\n------------Inside without RAG ...')
             # current generating code without correcotrs
@@ -1205,7 +1205,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
             # user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, old_ext='.txt'
             # llmRequester.generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, '', '', URL, dataset, dataset_attrubute_fullpath_list_result)
             # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
 
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
@@ -1242,7 +1242,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
             print("user input content: ", user_input_content)
 
         # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         full_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
         splitted_name = user_input_base_name.split('_')
         if len(splitted_name)>0:
@@ -1289,7 +1289,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
             # current with corrector
             # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
             llm_start_time = time.time()
-            generated_python_code_path, generated_python_code = llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            generated_python_code_path, generated_python_code = llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
             llm_end_time = time.time()
             llm_run_time = llm_end_time - llm_start_time
             utils.track_and_log_runtimes(output_or_target_dir+'/'+output_subdir+'.csv', model_name, corrector_run_time, rag_run_time, llm_run_time)    
@@ -1299,7 +1299,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
             # current generating code without correcotrs
 
             # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-            generated_python_code_path, generated_python_code = llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            generated_python_code_path, generated_python_code = llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
 
 
         # number_of_iteration = 6
@@ -1379,7 +1379,7 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
         user_input_prefix_id = user_input_base_name.split('_')[0]
 
         # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         full_data_path = full_data_path.replace('**', user_input_prefix_id)
         # splitted_name = user_input_base_name.split('_')
@@ -1454,7 +1454,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_bas
         user_input_prefix_id = user_input_base_name.split('_')[0]
 
         # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         full_data_path = full_data_path.replace('**', user_input_prefix_id)
         # splitted_name = user_input_base_name.split('_')
@@ -1586,7 +1586,7 @@ def RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir
         user_input_prefix_id = user_input_base_name.split('_')[0]
 
         # set data file full path
-        # base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        # base_directory ='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         # full_data_path = full_data_path.replace('**', user_input_prefix_id)
         full_data_path = ''
@@ -1641,7 +1641,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
     #at first move all data files to the generated script directory
     extensions = ['.txt', '.pgm', '.3ds', '.vtk', '.vtp', '.mhd', '.zraw', '.raw', '.mha', '.tri']      
     # utils.move_files_by_extension(all_files_source_directory, python_script_dir, extensions)
-    target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     all_files_source_directory = f'{target_base_dir}/vtk_data'
 
     program_execution_base_directory = common_base_directory
@@ -1792,7 +1792,7 @@ if __name__ == '__main__':
     # common_base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test'
     
     # this is for the GSU sci-data virtual machine
-    common_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    common_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
    
     #           0                   1                   2               3                   4               5           6: not works        7               8
@@ -1813,10 +1813,10 @@ if __name__ == '__main__':
     temp = str(temperature).replace('.', '_')
 
     list_dirs = [
-        "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_queries/generated_user_sub_queries",
-        "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/user_sub_query_generation_logs",
-        "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/llm_rag_generated_python_scripts",
-        "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/llm_rag_python_scripts_generation_logs"
+        "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_sub_queries",
+        "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_sub_query_generation_logs",
+        "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/llm_rag_generated_python_scripts",
+        "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/llm_rag_python_scripts_generation_logs"
         ]
     # model_name = "gpt_oss_20b"
     prefix = "single_phase"
@@ -1971,7 +1971,7 @@ if __name__ == '__main__':
     # created May 18, 2025
     #user sub queries generation
     elif dataset == 'USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS':
-        project_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        project_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = project_base_directory+'/user_queries/generated_user_sub_queries'
         
@@ -2007,7 +2007,7 @@ if __name__ == '__main__':
     #user sub queries generation
     elif dataset == 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS':
         # file_list = ['76', '77', '78', '79', '83', '84', '87', '95', '96', '97', '99', '100']
-        project_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        project_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = project_base_directory+'/user_queries/generated_user_sub_queries/matplotagent'
         
@@ -2031,7 +2031,7 @@ if __name__ == '__main__':
     # created May 18, 2025
     #user sub queries generation
     elif dataset == 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS':
-        project_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        project_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = project_base_directory+'/user_queries/generated_user_sub_queries/fastmri_brain'
         
@@ -2398,7 +2398,7 @@ if __name__ == '__main__':
     #user queries generation for the vtk related python scripts
     elif dataset == 'VTK_USER_QUERY_GENERATION_VTK_DATASETS':
         print('Inside VTK_USER_QUERY_GENERATION_VTK_DATASETS ...')
-        project_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        project_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         
         output_dir = project_base_directory+'/user_queries/generated_user_queries/vtk'        
                
@@ -2481,7 +2481,7 @@ if __name__ == '__main__':
         # Example usage
         source_dirs = subdirectories  # List of source directories
         source_dirs.append('../prompting_techniques/zero_shot_sci_data_prompting')
-        base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"  # Base path for new directory
+        base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"  # Base path for new directory
         new_dir_name = output_subdir
         # data_dir = 'ACL_DIRS'
         utils.collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir)

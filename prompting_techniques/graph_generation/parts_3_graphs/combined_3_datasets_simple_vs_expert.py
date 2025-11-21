@@ -24,7 +24,7 @@ def count_high_similarity(csv_path):
     count = (df['Similarity Raw'] >= 0.85).sum()
     return count
 
-project_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+project_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
 climate_csv_dir = f'{project_base_directory}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag'
 list_of_python_scripts_sub_dirs_for_climate = [
             "devstral_24b_python_scripts_without_rag_with_errors_without_corrector",
@@ -657,7 +657,7 @@ fig.legend(
 )
 
 plt.tight_layout(rect=[0, 0.1, 1, 1])
-path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 plt.show()
 
@@ -763,7 +763,7 @@ plt.show()
 
 
 # plt.tight_layout(rect=[0, 0.1, 1, 1])
-# path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+# path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 # plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 # plt.show()
 
@@ -856,7 +856,7 @@ plt.show()
 #            fontsize=11)
 
 # plt.tight_layout(rect=[0, 0.05, 1, 1])  # Make room for the legend
-# path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+# path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 # plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 # plt.show()
 
@@ -953,7 +953,7 @@ plt.show()
 # )
 
 # plt.tight_layout(rect=[0, 0.05, 1, 1])  # Make space for legend
-# path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+# path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 # plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 # plt.show()
 # -------------------------
@@ -1029,7 +1029,7 @@ plt.show()
 # g.map_dataframe(plot_grouped_stacked)
 # g.set_titles(col_template="Category {col_name}")
 # plt.tight_layout()
-# path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+# path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 # plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 # plt.show()
 
@@ -1107,6 +1107,6 @@ plt.show()
 # g.map_dataframe(plot_stacked_bars)
 # g.set_titles(col_template="Category {col_name}")
 # plt.tight_layout()
-# path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/parts_3_graphs'
+# path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/parts_3_graphs'
 # plt.savefig(f'{path}/combined_3_datasets_simple_vs_expert.pdf', bbox_inches='tight')
 # plt.show()

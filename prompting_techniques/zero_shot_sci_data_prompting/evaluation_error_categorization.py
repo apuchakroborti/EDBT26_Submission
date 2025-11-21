@@ -245,7 +245,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
         image_found = False
         if dataset_name == 'CLIMATE':
              # collecting and storing png files 
-            data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+            data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
             target_dir_base_path = f"{data_dir_base_path}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"    
     
             subdirectories = [  f'{data_dir_base_path}/ACL_DIRS/ASF',
@@ -265,7 +265,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
             # should be updated
             # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-            data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
+            data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
         
         
             print('Data Directory: \n', data_directory)
@@ -290,7 +290,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
                     print(f'No image found witht the name: {image_data_file}')
         elif dataset_name == 'MATPLOTAGENT':
             new_dir_name = output_subdir
-            data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+            data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
             target_dir_base_path = f"{data_dir_base_path}/matplot_agent_data/plot_generation/error_categorization_evaluation_result"    
     
             subdirectories = [      
@@ -330,7 +330,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             
         elif dataset_name == 'FASTMRIBRAIN':
             new_dir_name = 'iterative_'+output_subdir
-            data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+            data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
             target_dir_base_path = f"{data_dir_base_path}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"    
     
             subdirectories = [  f'{data_dir_base_path}/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5',
@@ -341,7 +341,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
             # should be updated
             # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-            data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
+            data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
     
             print('Data Directory: \n', data_directory)
     
@@ -374,7 +374,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
         
         elif dataset_name == 'VTK' :
             new_dir_name = output_subdir
-            data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+            data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
             target_dir_base_path = f"{data_dir_base_path}/vtk_python_scripts_experiment/error_categorization_evaluation_result"    
             python_script_dir = os.path.dirname(script_path)
             subdirectories = [   
@@ -386,7 +386,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, 'iterative_'+new_dir_name)
             # should be updated
             # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-            data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/iterative_{new_dir_name}'
+            data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/iterative_{new_dir_name}'
             print('Data Directory: \n', data_directory)
     
             png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -875,17 +875,17 @@ def main(common_directory, output_file, python_script_dir, model, iterative_erro
         data_dir='ACL_DIRS'
         source_dirs = subdirectories  # List of source directories
         source_dirs.append('../prompting_techniques/zero_shot_sci_data_prompting')
-        base_path = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data"  # Base path for new directory
+        base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"  # Base path for new directory
         # new_dir_name=f'{model_name}_zero_shot_CoT_{with_without_corrector}_corrector_expert_level_queries_human_error_insertions_remove_image_from_query_evaluation_images_final'
         # for expert
         new_dir_name=f'{model_name}_zero_shot_CoT_{with_without_corrector}_corrector_expert_level_queries_human_modified_queries_with_accurate_information_based_on_original_scripts'
         # data_dir = 'ACL_DIRS'
         utils.collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir)
     # Fetch all generated PNG files
-    # data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/generated_image_from_running_evaluation/{model_name}_{with_without_corrector}_corrector_expert_level_queries_human_error_insertions_remove_image_from_query'
+    # data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/generated_image_from_running_evaluation/{model_name}_{with_without_corrector}_corrector_expert_level_queries_human_error_insertions_remove_image_from_query'
     
-    # data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/generated_image_from_running_evaluation/{model_name}_{with_without_corrector}_corrector_expert_level_queries_human_error_insertions_remove_image_from_query'
-    data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/generated_image_from_running_evaluation/{new_dir_name}'
+    # data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/generated_image_from_running_evaluation/{model_name}_{with_without_corrector}_corrector_expert_level_queries_human_error_insertions_remove_image_from_query'
+    data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/generated_image_from_running_evaluation/{new_dir_name}'
 
     print('Data Directory: \n', data_directory)
     # data_directory = os.path.dirname(script_path)
@@ -893,7 +893,7 @@ def main(common_directory, output_file, python_script_dir, model, iterative_erro
     
     # png_files = glob.glob(os.path.join(data_directory, "*.png"))
     
-    # main_script_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting'
+    # main_script_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting'
     png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
     
     # if len(png_files_from_main_script_dir)>0:
@@ -1168,7 +1168,7 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base
             print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
     
     # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-    data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     target_dir_base_path = f"{data_dir_base_path}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"    
     
     subdirectories = [      f'{data_dir_base_path}/ACL_DIRS/ASF',
@@ -1187,7 +1187,7 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base
     utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
     # should be updated
     # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-    data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
+    data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
     
     
     print('Data Directory: \n', data_directory)
@@ -1287,7 +1287,7 @@ def evaluation_of_MATPLOTAGENT_python_scripts_by_checking_generated_image(common
             print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
     
     # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-    data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     target_dir_base_path = f"{data_dir_base_path}/matplot_agent_data/plot_generation/error_categorization_evaluation_result"    
     
     subdirectories = [      
@@ -1394,7 +1394,7 @@ def evaluation_of_FASTMRIBRAIN_python_scripts_by_checking_generated_image(common
             print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
     
     # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-    data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     # target_dir_base_path = f"{data_dir_base_path}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"
     target_dir_base_path = f"{data_dir_base_path}/mri_nyu_data/error_categorization_evaluation_result/non_iterative_evaluation_results"      
     
@@ -1406,7 +1406,7 @@ def evaluation_of_FASTMRIBRAIN_python_scripts_by_checking_generated_image(common
     utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
     # should be updated
     # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-    data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
+    data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
     
     
     print('Data Directory: \n', data_directory)
@@ -1511,7 +1511,7 @@ def evaluation_of_VTK_python_scripts_by_checking_generated_image(common_base_dir
             print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
     
     # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-    data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     target_dir_base_path = f"{data_dir_base_path}/vtk_python_scripts_experiment/error_categorization_evaluation_result"    
     
     subdirectories = [      f'{python_script_dir}',
@@ -1522,7 +1522,7 @@ def evaluation_of_VTK_python_scripts_by_checking_generated_image(common_base_dir
     utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
     # should be updated
     # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-    data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/{new_dir_name}'
+    data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/{new_dir_name}'
     
     
     print('Data Directory: \n', data_directory)
@@ -1593,7 +1593,7 @@ def evaluation_of_ITERATIVE_VTK_python_scripts_by_checking_generated_image(llm_g
     #at first move all data files to the generated script directory
     extensions = ['.txt', '.pgm', '.3ds', '.vtk', '.vtp', '.mhd', '.zraw', '.raw', '.mha', '.tri']      
     # utils.move_files_by_extension(all_files_source_directory, python_script_dir, extensions)
-    # all_files_source_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_data'
+    # all_files_source_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_data'
     utils.move_files_by_extension(all_files_source_directory, target_base_dir, extensions)
 
     directory_path =script_dir  # Replace with your actual directory
@@ -1645,7 +1645,7 @@ def evaluation_of_ITERATIVE_VTK_python_scripts_by_checking_generated_image(llm_g
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         target_dir_base_path = f"{data_dir_base_path}/vtk_python_scripts_experiment/error_categorization_evaluation_result"     
         
         subdirectories = [   
@@ -1659,7 +1659,7 @@ def evaluation_of_ITERATIVE_VTK_python_scripts_by_checking_generated_image(llm_g
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
         # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-        data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/{new_dir_name}_{iteration}'
+        data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/error_categorization_evaluation_result/generated_image_from_running_evaluation/{new_dir_name}_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -1792,7 +1792,7 @@ def evaluation_of_ITERATIVE_CLIMATE_python_scripts_by_checking_generated_image(c
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         target_dir_base_path = f"{data_dir_base_path}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"    
         
         subdirectories = [      f'{data_dir_base_path}/ACL_DIRS/ASF',
@@ -1812,7 +1812,7 @@ def evaluation_of_ITERATIVE_CLIMATE_python_scripts_by_checking_generated_image(c
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
         # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-        data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -1943,7 +1943,7 @@ def evaluation_of_ITERATIVE_MATPLOTAGENT_python_scripts_by_checking_generated_im
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         target_dir_base_path = f"{data_dir_base_path}/matplot_agent_data/plot_generation/error_categorization_evaluation_result/iterative_error_resolve"    
         
         subdirectories = [      f'{data_dir_base_path}/matplot_agent_data/plot_generation/csv_to_h5_data',
@@ -1955,7 +1955,7 @@ def evaluation_of_ITERATIVE_MATPLOTAGENT_python_scripts_by_checking_generated_im
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
         # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-        data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/error_categorization_evaluation_result/iterative_error_resolve/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/error_categorization_evaluation_result/iterative_error_resolve/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -2088,7 +2088,7 @@ def evaluation_of_ITERATIVE_FASTMRIBRAIN_python_scripts_by_checking_generated_im
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        data_dir_base_path = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        data_dir_base_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         target_dir_base_path = f"{data_dir_base_path}/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results"    
         
         subdirectories = [  f'{data_dir_base_path}/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5',
@@ -2100,7 +2100,7 @@ def evaluation_of_ITERATIVE_FASTMRIBRAIN_python_scripts_by_checking_generated_im
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
         # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-        data_directory = f'/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/error_categorization_evaluation_result/iterative_evaluation_results/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -2182,7 +2182,7 @@ if __name__ == "__main__":
     # common_base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test'
     
     # for the GSU sevrer
-    common_base_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+    common_base_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     
     python_script_dir = ''
     output_file = ''
@@ -2192,7 +2192,7 @@ if __name__ == "__main__":
     # without corrector
     print('Inside With corrector ...\n')
     if dataset == 'CLIMATE_RAG_IMAGE':
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/llm_rag_generated_python_scripts'
         list_of_python_scripts_sub_dirs = [
             # done
             "devstral_24b_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector", #0
@@ -2247,7 +2247,7 @@ if __name__ == "__main__":
             "deepseek_r1_32b_python_scripts_without_rag_with_corrector" #39  
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         for index in [23]:
         # for index in range(32, 40):
         # for index in range(0, 8):
@@ -2278,7 +2278,7 @@ if __name__ == "__main__":
     elif dataset == 'MATPLOTAGENT_RAG_IMAGE':
         print('Evaluating python scripts from the MATPLOTAGENT_RAG_IMAGE ...')
                     
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
         
         list_of_python_scripts_sub_dirs = [
             "deepseek_r1_32b_matplotagent_python_scripts_with_rag_with_corrector", #0
@@ -2329,7 +2329,7 @@ if __name__ == "__main__":
 
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # for index in [8, 11, 12, 15 ]:
         # for index in [32, 35, 36, 39 ]:
         for index in [24, 27, 28, 31]:
@@ -2361,7 +2361,7 @@ if __name__ == "__main__":
             evaluation_of_MATPLOTAGENT_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
     
     elif dataset == 'FASTMRIBRAIN_RAG_IMAGE':                    
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts'
         
         list_of_python_scripts_sub_dirs = [
             "deepseek_r1_32b_fastmribrain_python_scripts_with_rag_with_corrector", #0
@@ -2411,7 +2411,7 @@ if __name__ == "__main__":
             "magicoder_fastmribrain_python_scripts_without_rag_without_corrector" #39
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # gemma3
         for index in range(0, 40):
         # for index in [16, 17, 18, 19, 32, 33, 34, 35]:
@@ -2442,7 +2442,7 @@ if __name__ == "__main__":
             evaluation_of_FASTMRIBRAIN_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
 
     elif dataset == 'VTK_RAG_IMAGE':                    
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts'
         
         list_of_python_scripts_sub_dirs = [
             # "deepseek_r1_70b_vtk_python_scripts_without_rag_without_corrector",
@@ -2451,7 +2451,7 @@ if __name__ == "__main__":
             # "devstral_24b_vtk_python_scripts_without_rag_with_errors_without_corrector" #1                    
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         all_files_source_directory = f'{target_base_dir}/vtk_data'
         # for index in range(0, 40):
         for index in [0]:
@@ -2481,7 +2481,7 @@ if __name__ == "__main__":
             evaluation_of_VTK_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name, all_files_source_directory, target_base_dir)
     
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE':                    
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
 
         llm_generated_python_scripts_ase_directory = f'{target_base_dir}/vtk_python_scripts_experiment/llm_rag_generated_python_scripts'
         
@@ -2521,7 +2521,7 @@ if __name__ == "__main__":
 
     if dataset == 'ITERATIVE_CLIMATE_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector", #0#
@@ -2534,7 +2534,7 @@ if __name__ == "__main__":
             "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector" #7#
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # for index in [0]:
             # current expert queries
         # python_script_dir = list_of_python_scripts_sub_dirs[index]
@@ -2588,7 +2588,7 @@ if __name__ == "__main__":
     
     if dataset == 'ITERATIVE_MATPLOTAGENT_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
@@ -2601,7 +2601,7 @@ if __name__ == "__main__":
             "devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector"
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         for index in range(0, 8):
             # current expert queries
             python_script_dir = list_of_python_scripts_sub_dirs[index]
@@ -2628,7 +2628,7 @@ if __name__ == "__main__":
     # -------------------------------ITERATIVE_FASTMRIBRAIN_RAG_IMAGE -------------------------------
     if dataset == 'ITERATIVE_FASTMRIBRAIN_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/mri_nyu_data/llm_rag_generated_python_scripts'
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
@@ -2641,7 +2641,7 @@ if __name__ == "__main__":
             "devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector"
         ]
         
-        target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         for index in range(0, 8):
             # current expert queries
             python_script_dir = list_of_python_scripts_sub_dirs[index]

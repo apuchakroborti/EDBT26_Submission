@@ -5,7 +5,7 @@ from sentence_transformers import SentenceTransformer
 def get_top_k_matching_results(query, index_name):
    try:
       print('Inside search query from faiss index::get_top_k_matching_results ...')
-      PROJECT_BASE_PATH = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data" 
+      PROJECT_BASE_PATH = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data" 
       
       faiss_index_path = ''
       faiss_metadata_path = ''
@@ -20,11 +20,11 @@ def get_top_k_matching_results(query, index_name):
       chunks = np.load(faiss_metadata_path, allow_pickle=True)
 
       # Load embedding model
-      # model = SentenceTransformer('all-MiniLM-L6-v2', cache_folder='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/models')
+      # model = SentenceTransformer('all-MiniLM-L6-v2', cache_folder='/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/models')
       # model = SentenceTransformer("all-MiniLM-L6-v2")
-      # model = SentenceTransformer('/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/models/all-MiniLM-L6-v2')
-      # model = SentenceTransformer('/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/models/models--sentence-transformers--all-MiniLM-L6-v2')
-      model = SentenceTransformer('/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/models/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf')
+      # model = SentenceTransformer('/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/models/all-MiniLM-L6-v2')
+      # model = SentenceTransformer('/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/models/models--sentence-transformers--all-MiniLM-L6-v2')
+      model = SentenceTransformer('/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/models/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/c9745ed1d9f207416be6d2e6f8de32d1f16199bf')
 
       
       query_embedding = model.encode([query])
