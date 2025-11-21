@@ -44,6 +44,7 @@ def parse_argument(parser):
                  
                 #  evaluation
                  "CLIMATE_RAG_IMAGE",
+                 "CLIMATE_RAG_IMAGE_WITH_TEMP",
                  "MATPLOTAGENT_RAG_IMAGE",
                  "FASTMRIBRAIN_RAG_IMAGE",
                  "VTK_RAG_IMAGE",
@@ -103,8 +104,8 @@ def parse_argument(parser):
     # Parse the arguments
     args = parser.parse_args()
     
-    URL = ''
-    if len(args.url)>0:
+    URL = 'http://localhost:11434/api/generate'
+    if args.url and len(args.url)>0:
         URL = args.url
     
     model = ''
@@ -112,93 +113,80 @@ def parse_argument(parser):
     if args.model and args.model in allowed_model_list:
         model = args.model
 
-    # if args.model == "deepseek-coder-v2":
-    #     model = 'deepseek-coder-v2'       
-    # elif args.model == "llama3:70b":
-    #     model = 'llama3:70b'
-    # elif args.model == "magicoder":
-    #     model = 'magicoder'
-    # elif args.model == "deepseek-r1:latest":
-    #     model = 'deepseek-r1:latest'
-    # elif args.model == "deepseek-r1:70b":
-    #     model = 'deepseek-r1:70b'
-    # elif args.model == "gemma3:27b":
-    #     model = 'gemma3:27b'
-    # elif args.model == "devstral:24b":
-    #     model = 'devstral:24b'
-    # elif args.model == "deepseek-r1:32b":
-    #     model = 'deepseek-r1:32b'
-    
+  
         
     model_name = model.replace('-', '_')
     model_name = model_name.replace(':', '_')
         
             
     dataset = ''
-    if args.dataset == "MATPLOTAGENT":
-        dataset = 'MATPLOTAGENT' 
-    elif args.dataset == "CLIMATE":
-        dataset = 'CLIMATE'
+    if args.dataset and len(args.dataset)>0:
+        dataset = args.dataset
+
+    # if args.dataset == "MATPLOTAGENT":
+    #     dataset = 'MATPLOTAGENT' 
+    # elif args.dataset == "CLIMATE":
+    #     dataset = 'CLIMATE'
         
-    elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_CLIMATE':
-        dataset = 'ITERATIVE_ERROR_RESOLVE_CLIMATE'
-    elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_FASTMRIBRAIN_RAG':
-        dataset = 'ITERATIVE_ERROR_RESOLVE_FASTMRIBRAIN_RAG'  
-    elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG':
-        dataset = 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG'
-    elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE':
-        dataset = 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE'
+    # elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_CLIMATE':
+    #     dataset = 'ITERATIVE_ERROR_RESOLVE_CLIMATE'
+    # elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_FASTMRIBRAIN_RAG':
+    #     dataset = 'ITERATIVE_ERROR_RESOLVE_FASTMRIBRAIN_RAG'  
+    # elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG':
+    #     dataset = 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG'
+    # elif args.dataset == 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE':
+    #     dataset = 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE'
 
                   
     
-    elif args.dataset == "FAST_MRI_BRAIN_WITH_USER_INTENT":
-        dataset = 'FAST_MRI_BRAIN_WITH_USER_INTENT'
-    elif args.dataset == "FASTMRIBRAIN":
-        dataset = 'FASTMRIBRAIN'
-    # elif args.dataset == "USER_INTENT_GENERATION_FROM_CLIMATE_RELATED_QUERIES":
-    #     dataset = 'USER_INTENT_GENERATION_FROM_CLIMATE_RELATED_QUERIES'
-    elif args.dataset == 'USER_INTENT_GENERATION_FROM_FAST_MRI_BRAIN_RELATED_QUERIES':
-        dataset = 'USER_INTENT_GENERATION_FROM_FAST_MRI_BRAIN_RELATED_QUERIES'
-    elif args.dataset == "FAST_MRI_BRAIN_WITH_USER_INTENT":
-        dataset = 'FAST_MRI_BRAIN_WITH_USER_INTENT'
+    # elif args.dataset == "FAST_MRI_BRAIN_WITH_USER_INTENT":
+    #     dataset = 'FAST_MRI_BRAIN_WITH_USER_INTENT'
+    # elif args.dataset == "FASTMRIBRAIN":
+    #     dataset = 'FASTMRIBRAIN'
+    # # elif args.dataset == "USER_INTENT_GENERATION_FROM_CLIMATE_RELATED_QUERIES":
+    # #     dataset = 'USER_INTENT_GENERATION_FROM_CLIMATE_RELATED_QUERIES'
+    # elif args.dataset == 'USER_INTENT_GENERATION_FROM_FAST_MRI_BRAIN_RELATED_QUERIES':
+    #     dataset = 'USER_INTENT_GENERATION_FROM_FAST_MRI_BRAIN_RELATED_QUERIES'
+    # elif args.dataset == "FAST_MRI_BRAIN_WITH_USER_INTENT":
+    #     dataset = 'FAST_MRI_BRAIN_WITH_USER_INTENT'
     
-    elif args.dataset == "USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS":
-        dataset = 'USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS'
-    elif args.dataset == 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS':
-        dataset = 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS'
-    elif args.dataset == 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS':
-        dataset = 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS'
+    # elif args.dataset == "USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS":
+    #     dataset = 'USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS'
+    # elif args.dataset == 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS':
+    #     dataset = 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS'
+    # elif args.dataset == 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS':
+    #     dataset = 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS'
     
-    elif args.dataset == "CLIMATE_RAG":
-        dataset = 'CLIMATE_RAG'
-    elif args.dataset == 'MATPLOTAGENT_RAG':
-        dataset = 'MATPLOTAGENT_RAG'          
-    elif args.dataset == 'FASTMRIBRAIN_RAG':
-        dataset = 'FASTMRIBRAIN_RAG'
-    elif args.dataset == 'VTK_RAG':
-        dataset = 'VTK_RAG'
+    # elif args.dataset == "CLIMATE_RAG":
+    #     dataset = 'CLIMATE_RAG'
+    # elif args.dataset == 'MATPLOTAGENT_RAG':
+    #     dataset = 'MATPLOTAGENT_RAG'          
+    # elif args.dataset == 'FASTMRIBRAIN_RAG':
+    #     dataset = 'FASTMRIBRAIN_RAG'
+    # elif args.dataset == 'VTK_RAG':
+    #     dataset = 'VTK_RAG'
         
 
-    elif args.dataset == "CLIMATE_RAG_IMAGE":
-        dataset = 'CLIMATE_RAG_IMAGE'
-    elif args.dataset == "MATPLOTAGENT_RAG_IMAGE":
-        dataset = 'MATPLOTAGENT_RAG_IMAGE'
-    elif args.dataset == "FASTMRIBRAIN_RAG_IMAGE":
-        dataset = 'FASTMRIBRAIN_RAG_IMAGE'
-    elif args.dataset == "VTK_RAG_IMAGE":
-        dataset = 'VTK_RAG_IMAGE'
+    # elif args.dataset == "CLIMATE_RAG_IMAGE":
+    #     dataset = 'CLIMATE_RAG_IMAGE'
+    # elif args.dataset == "MATPLOTAGENT_RAG_IMAGE":
+    #     dataset = 'MATPLOTAGENT_RAG_IMAGE'
+    # elif args.dataset == "FASTMRIBRAIN_RAG_IMAGE":
+    #     dataset = 'FASTMRIBRAIN_RAG_IMAGE'
+    # elif args.dataset == "VTK_RAG_IMAGE":
+    #     dataset = 'VTK_RAG_IMAGE'
     
-    elif args.dataset == "ITERATIVE_CLIMATE_RAG_IMAGE":
-        dataset = 'ITERATIVE_CLIMATE_RAG_IMAGE'
-    elif args.dataset == "ITERATIVE_MATPLOTAGENT_RAG_IMAGE":
-        dataset = 'ITERATIVE_MATPLOTAGENT_RAG_IMAGE'
-    elif args.dataset == "ITERATIVE_FASTMRIBRAIN_RAG_IMAGE":
-        dataset = 'ITERATIVE_FASTMRIBRAIN_RAG_IMAGE'  
-    elif args.dataset == "ITERATIVE_ERROR_RESOLVE_VTK_RAG":
-        dataset = 'ITERATIVE_ERROR_RESOLVE_VTK_RAG'        
+    # elif args.dataset == "ITERATIVE_CLIMATE_RAG_IMAGE":
+    #     dataset = 'ITERATIVE_CLIMATE_RAG_IMAGE'
+    # elif args.dataset == "ITERATIVE_MATPLOTAGENT_RAG_IMAGE":
+    #     dataset = 'ITERATIVE_MATPLOTAGENT_RAG_IMAGE'
+    # elif args.dataset == "ITERATIVE_FASTMRIBRAIN_RAG_IMAGE":
+    #     dataset = 'ITERATIVE_FASTMRIBRAIN_RAG_IMAGE'  
+    # elif args.dataset == "ITERATIVE_ERROR_RESOLVE_VTK_RAG":
+    #     dataset = 'ITERATIVE_ERROR_RESOLVE_VTK_RAG'        
     
-    elif args.dataset == "VTK_USER_QUERY_GENERATION_VTK_DATASETS":
-        dataset = 'VTK_USER_QUERY_GENERATION_VTK_DATASETS'
+    # elif args.dataset == "VTK_USER_QUERY_GENERATION_VTK_DATASETS":
+    #     dataset = 'VTK_USER_QUERY_GENERATION_VTK_DATASETS'
     
 
 

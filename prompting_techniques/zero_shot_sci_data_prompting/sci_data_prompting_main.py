@@ -1136,7 +1136,7 @@ def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, 
 # def RAG_MATPLOTAGENT_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
 import json
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
+def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
 
     print(f'\nInside RAG_MATPLOTAGENT_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1166,7 +1166,13 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
 
         # set data file full path
         base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
-        full_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
+        
+        # inside project directory
+        # full_data_path = base_directory+'/matplot_agent_data/plot_generation/csv_to_h5_data/*_h5_data.h5'
+        
+        # outside project directory
+        full_data_path = base_directory+'../data_files_llm_project/MatPlotAgent/csv_to_h5_data/*_h5_data.h5'
+        
         splitted_name = user_input_base_name.split('_')
         if len(splitted_name)>0:
             full_data_path = full_data_path.replace('*', str(splitted_name[0]))
@@ -1196,7 +1202,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
         
             # current with corrector
             # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
-            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
         else:
             print('\n------------Inside without RAG ...')
             # current generating code without correcotrs
@@ -1205,7 +1211,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
             # user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, old_ext='.txt'
             # llmRequester.generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, '', '', URL, dataset, dataset_attrubute_fullpath_list_result)
             # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
 
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
@@ -1347,7 +1353,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
                         print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR:: Error is None')
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
+def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
 
     print(f'\nInside RAG_MATPLOTAGENT_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1380,7 +1386,10 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
 
         # set data file full path
         base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
-        full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
+        # inside project
+        # full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
+        # outside project
+        full_data_path = base_directory+'../data_files_llm_project/fastMri/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         full_data_path = full_data_path.replace('**', user_input_prefix_id)
         # splitted_name = user_input_base_name.split('_')
         # if len(splitted_name)>0:
@@ -1411,7 +1420,7 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
         
             # current with corrector
             # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
-            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
         else:
             print('\n------------Inside without RAG ...')
             # current generating code without correcotrs
@@ -1420,7 +1429,7 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
             # user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, old_ext='.txt'
             # llmRequester.generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, '', '', URL, dataset, dataset_attrubute_fullpath_list_result)
             # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
 
 def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
 
@@ -2140,31 +2149,31 @@ if __name__ == '__main__':
             # with rag
             # without error
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_with_rag_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_with_rag_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_with_rag_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_with_rag_with_corrector'
 
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_with_rag_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_with_rag_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_with_rag_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_with_rag_with_errors_with_corrector'
         else:
             # without rag
             # without errors
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_without_rag_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_without_rag_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_without_rag_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_without_rag_with_corrector'
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_without_rag_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_without_rag_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_matplotagent_python_scripts_without_rag_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_matplotagent_python_scripts_without_rag_with_errors_with_corrector'
 
         # tracking.initialize_json(common_base_directory, JSON_FILE_PATH, output_subdir)
 
-        RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector)
+        RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
         # move_prefixed_items(list_dirs, model_name, prefix)
     
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG':
@@ -2231,27 +2240,27 @@ if __name__ == '__main__':
             # with rag
             # without error
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_with_rag_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_with_rag_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_with_rag_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_with_rag_with_corrector'
 
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_with_rag_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_with_rag_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_with_rag_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_with_rag_with_errors_with_corrector'
         else:
             # without rag
             # without errors
             if is_errors==False:
-                output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_without_rag_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_without_rag_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_without_rag_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_without_rag_with_corrector'
             # with errors
             else:
-                output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_without_rag_with_errors_without_corrector'
+                output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_without_rag_with_errors_without_corrector'
                 if with_corrector == True:
-                    output_subdir = f'{output_directory_prefix}_fastmribrain_python_scripts_without_rag_with_errors_with_corrector'
+                    output_subdir = f'{output_directory_prefix}_{temp}_fastmribrain_python_scripts_without_rag_with_errors_with_corrector'
 
         # tracking.initialize_json(common_base_directory, JSON_FILE_PATH, output_subdir)
 

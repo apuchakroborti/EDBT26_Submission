@@ -1,3 +1,11 @@
+$ screen -dmS qwen3_coder_sub bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder_sub_query.sh'
+$ screen -dmS qwen3_coder bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder.sh'
+
+
+
+ssh -L 8080:localhost:11434 achakroborti1@ai-lab2.dyn.gsu.edu
+
+
 % To quit screen
 $ screen -X -S screen_name  quit
 % single turn iteration1

@@ -44,3 +44,6 @@ ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
 **/vtk/vtk_data/
 
 **/ACL_DIRS/**
+
+# generated user sub-queries
+user_queries/generated_user_sub_queries/**
