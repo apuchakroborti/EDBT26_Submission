@@ -3,26 +3,53 @@
 # Define your screen session names and associated commands
 
 declare -A jobs=(
-  [job2]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder  --errors True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector.log 2>&1"
-  [job3]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder  --errors True -c True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector.log 2>&1"
-  [job4]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder  --errors True --rag True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector.log 2>&1"
-  [job5]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder  --errors True --rag True -c True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector.log 2>&1"
-  [job6]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder  --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_without_corrector.log 2>&1"
-  [job7]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder --rag True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_without_corrector.log 2>&1"
-  [job8]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder -c True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_without_rag_multi_agents_and_sub_query_decomposition_with_corrector.log 2>&1"
-  [job9]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model magicoder --rag True -c True --dataset CLIMATE_RAG > ./llm_rag_python_scripts_generation_logs/magicoder_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_corrector.log 2>&1"
+  [job41]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.8 --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_08_user_sub_queries_generation.log 2>&1"
+  [job42]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.8 --errors True --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_08_user_sub_queries_generation_with_errors.log 2>&1"
+  
+  [job43]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.6 --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_06_user_sub_queries_generation.log 2>&1"
+  [job44]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.6 --errors True --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_06_user_sub_queries_generation_with_errors.log 2>&1"
+  
+  [job45]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.4 --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_04_user_sub_queries_generation.log 2>&1"
+  [job46]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.4 --errors True --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_04_user_sub_queries_generation_with_errors.log 2>&1"
+  
+  [job47]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.2 --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_02_user_sub_queries_generation.log 2>&1"
+  [job48]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.2 --errors True --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_02_user_sub_queries_generation_with_errors.log 2>&1"
+  
+  [job49]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.0 --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_00_user_sub_queries_generation.log 2>&1"
+  [job50]="python3 ./prompting_techniques/zero_shot_sci_data_prompting/sci_data_prompting_main.py --url http://ai-lab2.dyn.gsu.edu:8081/api/generate --model gemma3:27b --temp 0.0 --errors True --dataset USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS > ./user_sub_query_generation_logs/gemma3_27b_temp_00_user_sub_queries_generation_with_errors.log 2>&1"
+ 
 )
 
-for job in "${!jobs[@]}"; do
-  echo "Starting $job..."
-  screen -dmS "$job" bash -c "${jobs[$job]}"
-  
-  # Wait until the screen session ends
-  while screen -ls | grep -q "$job"; do
-    sleep 5
+# Run the entire model 4 times
+for run in {1..3}; do
+  echo "==============================="
+  echo "   Starting FULL RUN $run"
+  echo "==============================="
+
+  for job in "${!jobs[@]}"; do
+    echo "Starting $job..."
+    screen -dmS "$job" bash -c "${jobs[$job]}"
+    
+    # Wait until the screen session ends
+    while screen -ls | grep -q "$job"; do
+      sleep 5
+    done
+
+    echo "$job finished."
   done
 
-  echo "$job finished."
-done
+  echo "All jobs completed."
 
-echo "All jobs completed."
+
+  echo "Starting Python scripts generation screen"
+  screen -dmS ai_gemma3 bash -c './running_experiments_scripts/climate/single/run_screens_gemma3.sh'
+
+  # Wait for Python screen to finish
+  while screen -ls | grep -q "\.ai_devstral"; do
+      sleep 5
+  done
+
+  echo "Python scripts generation job completed."
+
+done
+echo "Python scripts generation for the devstral completed."

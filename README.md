@@ -22,7 +22,8 @@ $ pip install sentence-transformers
 % To quit screen
 $ screen -X -S screen_name  quit
 % single turn iteration1
-% 
+% screen -dmS ai_gemma3_27b_sub bash -c './running_experiments_scripts/climate/single/run_screens_gemma3_sub_query.sh'
+
 $ screen -dmS ai_deepseek_r1_32b_sub bash -c './running_experiments_scripts/climate/single/run_screens_deeepseek_r1_sub_query.sh'
 
 $ screen -dmS ai_devstral_sub bash -c './running_experiments_scripts/climate/single/run_screens_devstral_sub_query.sh'
