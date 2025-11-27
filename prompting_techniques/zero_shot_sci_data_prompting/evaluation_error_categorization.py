@@ -1119,21 +1119,29 @@ def show_data_using_table_view(file_path):
     plt.show()
 
 
-def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base_directory, target_dir, python_script_dir, model_name):
-    FULL_PYTHON_SCRIPT_DIRECTORY = common_base_directory+"/"+directory_path
-    print(f'evaluation_of_CLIMATE_python_scripts_by_checking_generated_image, FULL_PYTHON_SCRIPT_DIRECTORY: {FULL_PYTHON_SCRIPT_DIRECTORY}')
+# def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base_directory, target_dir, python_script_dir, model_name):
+def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base_directory, llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name):
+    # FULL_PYTHON_SCRIPT_DIRECTORY = common_base_directory+"/"+directory_path
+    # print(f'evaluation_of_CLIMATE_python_scripts_by_checking_generated_image, FULL_PYTHON_SCRIPT_DIRECTORY: {FULL_PYTHON_SCRIPT_DIRECTORY}')
+    
+    print(f'common_directory:\n{common_base_directory}')
+    
+    print(f'evaluation_of_CLIMATE_python_scripts_by_checking_generated_image, target_dir:\n {target_dir}')
+    print(f'evaluation_of_CLIMATE_python_scripts_by_checking_generated_image, python_script_dir:\n {python_script_dir}')
+    print(f'evaluation_of_CLIMATE_python_scripts_by_checking_generated_image, model_name:\n {model_name}')
 
     target_dir = Path(target_dir)
     target_dir.mkdir(parents=True, exist_ok=True)
     
    
     script_dir = python_script_dir
-    print('common_directory: ', common_base_directory, '\n')
-    print('python_script_dir: ', python_script_dir, '\n')
     print('script_dir: ', script_dir, '\n')
 
     directory_path =script_dir  # Replace with your actual directory
-    python_files_dict = get_python_files_dict(common_base_directory+"/"+directory_path)
+    # python_files_dict = get_python_files_dict(common_base_directory+"/"+directory_path)
+
+    python_files_dict = get_python_files_dict(f"{llm_generated_python_scripts_ase_directory}/{directory_path}")
+    
     py_scripts = python_files_dict
     next_evaluation_scritps = python_files_dict
     print(f'All python scripts to be evaluated:\n{python_files_dict}')
@@ -1187,9 +1195,7 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base
     utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
     # should be updated
     # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-    data_directory = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
-    
-    
+    data_directory = f'{common_base_directory}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation/{new_dir_name}'
     print('Data Directory: \n', data_directory)
     
     png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -2176,7 +2182,7 @@ if __name__ == "__main__":
     
     # Create the argument parser
     parser = argparse.ArgumentParser(description="Select models to use correct LLM model")
-    model, model_name, dataset, is_rag, URL, is_errors, with_corrector, is_online_search = argumentParsar.parse_argument(parser)  
+    model, model_name, dataset, is_rag, URL, is_errors, with_corrector, is_online_search, temperature = argumentParsar.parse_argument(parser)  
     
     # this is for the macOS
     # common_base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test'
@@ -2188,11 +2194,59 @@ if __name__ == "__main__":
     output_file = ''
 
     iterative_error_resolve = False
+    # ll_model_list = ["gpt-oss:20b", "qwen3-coder:30b", "deepseek-r1:32b", "devstral:24b", "gemma3:27b"]
+    
+    temperature_list = [0.0, 0.2, 0.4, 0.6, 0.8]
 
-    # without corrector
-    print('Inside With corrector ...\n')
-    if dataset == 'CLIMATE_RAG_IMAGE':
-        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/llm_rag_generated_python_scripts'
+    # without corrector 
+    if dataset == 'CLIMATE_RAG_IMAGE_WITH_TEMP':
+        print(f'Starting evaluation ...')
+
+        llm_generated_python_scripts_ase_directory = f'{common_base_directory}/prompting_techniques/llm_rag_generated_python_scripts'
+        list_of_python_scripts_sub_dirs = [
+            # done
+            "_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector",
+            "_python_scripts_without_rag_with_errors_with_corrector",
+            "_python_scripts_without_rag_with_errors_without_corrector",
+            "_python_scripts_without_rag_without_corrector"
+        ]
+        
+        # target_base_dir = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+        
+        python_script_dir_list = []
+        
+        # for model in ll_model_list:
+        for temp in temperature_list:
+            for sub_dir in list_of_python_scripts_sub_dirs:
+                for iteration in range(1, 6):
+                    model_name = model.replace("-", "_").replace(":", "_")
+                    temperature_str = str(temp).replace(".", "_")
+
+                    # python_script_dir = f"{llm_generated_python_scripts_ase_directory}/{model_name}_single_phase_{iteration}"
+                    python_script_dir = f"{model_name}_single_phase_{iteration}/{model_name}_{temperature_str}{sub_dir}"
+                    # print(f'Adding python_script_dir:\n{python_script_dir}')
+                    python_script_dir_list.append(python_script_dir)
+        
+        # print(f'Adding python_script_dir:\n{python_script_dir_list}')
+        for python_script_dir in python_script_dir_list:
+            if python_script_dir.startswith('gpt_oss_20b'):
+                model_name = 'gpt_oss_20b'
+            elif python_script_dir.startswith('qwen3_coder_30b'):
+                model_name = 'qwen3_coder_30b'
+            elif python_script_dir.startswith('deepseek_r1_32b'):
+                model_name = 'deepseek_r1_32b'
+            elif python_script_dir.startswith('devstral_24b'):
+                model_name = 'devstral_24b'
+            elif python_script_dir.startswith('gemma3_27b'):
+                model_name = 'gemma3_27b'
+                    
+            
+            # target_dir =f'{common_base_directory}/llms_generated_python_scripts/error_categorization_report/{python_script_dir}'
+            target_dir =f'{common_base_directory}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/{python_script_dir}' 
+            evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(common_base_directory, llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
+    
+    elif dataset == 'CLIMATE_RAG_IMAGE':
+        llm_generated_python_scripts_ase_directory = '/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/llm_rag_generated_python_scripts'
         list_of_python_scripts_sub_dirs = [
             # done
             "devstral_24b_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector", #0

@@ -1933,7 +1933,7 @@ def generate_code_and_save_with_rag(user_input_file_path, user_input_description
         response_code = utils.extract_python_code_from_response(llm_gen_source_code['response'])
         print("\n\nFirst Generated code: \n", response_code)
         
-        
+        output_file_path= ''
         if response_code is not None:           
             regen_response_code = response_code
             if regen_response_code is not None:
@@ -1971,7 +1971,7 @@ def generate_code_and_save_without_rag(user_input_file_path, user_input_descript
         response_code = utils.extract_python_code_from_response(llm_gen_source_code['response'])
         print("\n\nFirst Generated code: \n", response_code)
         
-        
+        output_file_path = ''
         if response_code is not None:           
             regen_response_code = response_code
             if regen_response_code is not None:
