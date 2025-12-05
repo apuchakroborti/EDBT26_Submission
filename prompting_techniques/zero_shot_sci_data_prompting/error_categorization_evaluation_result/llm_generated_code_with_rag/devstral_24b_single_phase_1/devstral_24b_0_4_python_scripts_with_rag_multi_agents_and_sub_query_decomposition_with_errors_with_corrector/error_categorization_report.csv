@@ -1,0 +1,2 @@
+Model,Pass Count,Fail Count,Dataset Paths Related Error Count,Attribute Related Error Count,Slicing Related Error Count,Other Errors count
+devstral_24b,26,35,10,8,2,15

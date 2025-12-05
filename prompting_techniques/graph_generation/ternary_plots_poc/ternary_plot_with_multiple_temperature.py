@@ -11,6 +11,7 @@ data = []
 for model in models:
     for temp in temperatures:
         vals = np.random.rand(3)
+        print(f'vals: {vals}')
         vals = vals / vals.sum()  # normalize to 1
         data.append((model, temp, vals[0], vals[1], vals[2]))
 
@@ -40,6 +41,8 @@ markers = ["o", "s", "D", "^", "v"]
 for model_idx, model in enumerate(models):
     for temp_idx, temp in enumerate(temperatures):
         s, r, f = data[model_idx*5 + temp_idx][2:5]
+        # print(f'data[model_idx*5 + temp_idx][2:5]: {data[model_idx*5 + temp_idx][2:5]}')
+        # print(f'model_idx*5 + temp_idx: {model_idx*5 + temp_idx}')
         x, y = ternary_to_cartesian(s, r, f)
 
         ax.scatter(
@@ -113,7 +116,7 @@ ax.set_title("Corrected Ternary Plot with Perfectly Aligned Tick Scales", fontsi
 # Save Figure
 # ----------------------------------------------------
 
-directory = "/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data/prompting_techniques/graph_generation/ternary_plots_poc"
+directory = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/ternary_plots_poc"
 output_path = f"{directory}/ternary_plot_with_scales.png"
 
 plt.savefig(output_path, dpi=300, bbox_inches="tight")

@@ -653,7 +653,8 @@ if __name__ == '__main__':
     
     # operation = 'process_iterative_climate_images'
     # operation = 'process_iterative_matplotagent_images'
-    operation = 'process_iterative_fastmribrain_images'
+    # operation = 'process_iterative_fastmribrain_images'
+    operation = 'process_images_with_temperature'
     
     
     # operation = 'process_non_iterative_climate_images'
@@ -1027,4 +1028,37 @@ if __name__ == '__main__':
             input_dir2 = common_path+'/'+list_of_python_scripts_sub_dirs[index]
             target_dir = common_path+'/similarity_score_files/'+list_of_python_scripts_sub_dirs[index]
 
-            generate_and_save_similarity_scores(input_dir1, input_dir2, target_dir) 
+            generate_and_save_similarity_scores(input_dir1, input_dir2, target_dir)
+    elif operation == 'process_images_with_temperature':
+        sub_path = "prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/devstral_24b_single_phase_1"
+        
+        list_of_python_scripts_sub_dirs = ["_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector"]
+        sub_dir = "_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector"
+        model = "devstral:24b"
+        temperature_list = [0.0, 0.2, 0.4, 0.6, 0.8]
+        generated_image_directory_full_path_list = []
+        for temp in temperature_list:
+            # for sub_dir in list_of_python_scripts_sub_dirs:
+            for iteration in range(1, 6):
+
+                model_name = model.replace("-", "_").replace(":", "_")
+                temperature_str = str(temp).replace(".", "_")
+
+                # python_script_dir = f"{llm_generated_python_scripts_ase_directory}/{model_name}_single_phase_{iteration}"
+                generated_image_dir = f"{model_name}_single_phase_{iteration}/{model_name}_{temperature_str}{sub_dir}"
+                # print(f'Adding python_script_dir:\n{python_script_dir}')
+                generated_image_directory_full_path_list.append(generated_image_dir)
+        
+        base_image_input_dir1 = f'{project_base_directory}/evaluation_by_clip_algorithm/climate_base_images'
+        
+        common_path = f"{project_base_directory}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag/generated_image_from_running_evaluation"
+        
+        # for index in range(0, len(generated_image_directory_full_path_list)):
+        #     generated_image_input_dir2 = common_path+'/'+list_of_python_scripts_sub_dirs[index]
+        #     target_dir = common_path+'/similarity_score_files/'+list_of_python_scripts_sub_dirs[index]
+        for path in generated_image_directory_full_path_list:
+            print(f'Processing: {path}')
+            generated_image_input_dir2 = common_path+'/'+path
+            target_dir = common_path+'/similarity_score_files/'+path
+
+            generate_and_save_similarity_scores(base_image_input_dir1, generated_image_input_dir2, target_dir)  

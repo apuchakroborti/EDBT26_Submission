@@ -1,3 +1,6 @@
+<!-- Evaluation -->
+$ screen -dmS devstral_32b_evaluation bash -c './running_experiments_scripts/climate/evaluation/run_screens_devstral_evaluation_single_phase.sh'
+
 $ screen -dmS qwen3_coder_sub bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder_sub_query.sh'
 $ screen -dmS qwen3_coder bash -c './running_experiments_scripts/climate/single/run_screens_qwen3_coder.sh'
 

@@ -1,0 +1,29 @@
+Percentage--> Phase 1-0.0:: Success: 0.2459016393442623, Runnable: 0.14754098360655737, Failed: 0.6065573770491803
+Percentage--> Phase 2-0.0:: Success: 0.2459016393442623, Runnable: 0.06557377049180328, Failed: 0.6885245901639344
+Percentage--> Phase 3-0.0:: Success: 0.21311475409836064, Runnable: 0.08196721311475409, Failed: 0.7049180327868853
+Percentage--> Phase 4-0.0:: Success: 0.14754098360655737, Runnable: 0.08196721311475409, Failed: 0.7704918032786885
+Percentage--> Phase 5-0.0:: Success: 0.18032786885245902, Runnable: 0.11475409836065574, Failed: 0.7049180327868853
+Percentage--> Phase 1-0.2:: Success: 0.26229508196721313, Runnable: 0.11475409836065574, Failed: 0.6229508196721312
+Percentage--> Phase 2-0.2:: Success: 0.3114754098360656, Runnable: 0.06557377049180328, Failed: 0.6229508196721312
+Percentage--> Phase 3-0.2:: Success: 0.2786885245901639, Runnable: 0.09836065573770492, Failed: 0.6229508196721312
+Percentage--> Phase 4-0.2:: Success: 0.2459016393442623, Runnable: 0.06557377049180328, Failed: 0.6885245901639344
+Percentage--> Phase 5-0.2:: Success: 0.22950819672131148, Runnable: 0.11475409836065574, Failed: 0.6557377049180327
+Percentage--> Phase 1-0.4:: Success: 0.26229508196721313, Runnable: 0.14754098360655737, Failed: 0.5901639344262295
+Percentage--> Phase 2-0.4:: Success: 0.19672131147540983, Runnable: 0.13114754098360656, Failed: 0.6721311475409836
+Percentage--> Phase 3-0.4:: Success: 0.26229508196721313, Runnable: 0.06557377049180328, Failed: 0.6721311475409836
+Percentage--> Phase 4-0.4:: Success: 0.21311475409836064, Runnable: 0.09836065573770492, Failed: 0.6885245901639344
+Percentage--> Phase 5-0.4:: Success: 0.22950819672131148, Runnable: 0.06557377049180328, Failed: 0.7049180327868853
+Percentage--> Phase 1-0.6:: Success: 0.22950819672131148, Runnable: 0.03278688524590164, Failed: 0.7377049180327869
+Percentage--> Phase 2-0.6:: Success: 0.2786885245901639, Runnable: 0.06557377049180328, Failed: 0.6557377049180327
+Percentage--> Phase 3-0.6:: Success: 0.32786885245901637, Runnable: 0.04918032786885246, Failed: 0.6229508196721312
+Percentage--> Phase 4-0.6:: Success: 0.26229508196721313, Runnable: 0.06557377049180328, Failed: 0.6721311475409836
+Percentage--> Phase 5-0.6:: Success: 0.26229508196721313, Runnable: 0.03278688524590164, Failed: 0.7049180327868853
+Percentage--> Phase 1-0.8:: Success: 0.2786885245901639, Runnable: 0.04918032786885246, Failed: 0.6721311475409836
+Percentage--> Phase 2-0.8:: Success: 0.3114754098360656, Runnable: 0.04918032786885246, Failed: 0.639344262295082
+Percentage--> Phase 3-0.8:: Success: 0.2786885245901639, Runnable: 0.01639344262295082, Failed: 0.7049180327868853
+Percentage--> Phase 4-0.8:: Success: 0.2786885245901639, Runnable: 0.03278688524590164, Failed: 0.6885245901639344
+Percentage--> Phase 5-0.8:: Success: 0.26229508196721313, Runnable: 0.06557377049180328, Failed: 0.6721311475409836
+Traceback (most recent call last):
+  File "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/graph_generation/ternary_plots_poc/edbt_simple_query_with_rag_and_correct_different_temperatures_with_side_arrow.py", line 336, in <module>
+    formatter = ticker.FuncFormatter(lambda x, pos: f'{x * 100:.0f}\\%')
+NameError: name 'ticker' is not defined. Did you mean: 'ticks'?

@@ -19,3 +19,6 @@ sentence-transformers
 h5py
 matplotlib
 basemap
+torchvision
+scikit-image
+opencv-python
