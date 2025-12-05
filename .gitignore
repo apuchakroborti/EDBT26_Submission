@@ -47,3 +47,8 @@ ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
 
 # generated user sub-queries
 user_queries/generated_user_sub_queries/**
+user_sub_query_generation_logs/**
+
+# python scripts generation
+prompting_techniques/llm_rag_generated_python_scripts/**
+llm_rag_python_scripts_generation_logs/**
