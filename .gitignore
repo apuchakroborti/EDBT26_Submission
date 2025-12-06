@@ -1,6 +1,6 @@
 # Ignore virtual environment directory
 venv/
-*.log
+# *.log
 
 *.tar.xz
 # Ignore HDF5 files
@@ -12,7 +12,7 @@ venv/
 *.HE5
 
 # Ignore PNG files
-*.png
+# *.png
 
 ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
 
@@ -22,28 +22,36 @@ ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
 #ignore the .DS_Store files
 .DS_Store
 **.DS_Store
-.pdf
-**.pdf
+# .pdf
+# **.pdf
 
 # Ignore Python cache
 **/__pycache__/
 
 **/tracking_file/
 
-**/error_categorization_evaluation_result/previous_results/
+# **/error_categorization_evaluation_result/previous_results/
 **/models/**
 # Ignore generated python code from the experiment
-**/prompting_techniques/llm_rag_generated_python_scripts/
+# **/prompting_techniques/llm_rag_generated_python_scripts/
 
 
 # ignore vtk data
-**/vtk_data/
+# **/vtk_data/
 
 # ignore vtk examples
-**/vtk/examples/
-**/vtk/vtk_data/
+# **/vtk/examples/
+# **/vtk/vtk_data/
 
-**/ACL_DIRS/**
+ACL_DIRS/ASF/**
+ACL_DIRS/AURA_DATA_VC/**
+ACL_DIRS/GES_DISC/**
+ACL_DIRS/ICESat_2/**
+ACL_DIRS/LAADS/**
+ACL_DIRS/LaRC/**
+ACL_DIRS/LP_DAAC/**
+ACL_DIRS/NSIDC/**
+ACL_DIRS/PO_DAAC/**
 
 # generated user sub-queries
 user_queries/generated_user_sub_queries/**
