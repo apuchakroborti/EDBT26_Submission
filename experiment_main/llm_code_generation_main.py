@@ -19,7 +19,7 @@ from common_util_script import ArgumentParser as argumentParsar
 import evaluation_error_categorization as python_execution_helper
 import data_and_plotting_agents as AGENTS
 
-
+PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
 
 def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_generate_prompt(user_input_dir, common_directory, data_subdirectories, extensions, output_dir, model):
     """
@@ -59,11 +59,9 @@ def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_gen
                 user_input_content = ""
                 # Find the file that starts with the provided filename and has an extension
                 for user_input_file in user_input_files_in_directory:
-                    user_input_base_name, ext = os.path.splitext(user_input_file)
-                    
+                    user_input_base_name, ext = os.path.splitext(user_input_file)                    
                     # also remove the data type extention
-                    user_input_base_name =  utils.get_base_filename(user_input_base_name)
-                    
+                    user_input_base_name =  utils.get_base_filename(user_input_base_name)                    
                     
                     # print("user_input_base_name: ", user_input_base_name)
                     user_input_file_path = ''
@@ -77,9 +75,6 @@ def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_gen
                             content = f.read()
                             user_input_content = content
                             # print("user input content: ", user_input_content)
-                        
-                        # return content, user_input_file_path
-
                         # replace the file name by whole path
                         user_input_content = utils.replace_string(user_input_content, data_basename_with_extension, data_file_path )
                 
@@ -149,7 +144,6 @@ def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_gen
                             # print(f"\n\n filtered_real_datasets from scores, size: {len(filtered_real_datasets)}: \n", filtered_real_datasets)   
 
                         # this is the current testing final user prompt making
-                        # def decision_maker_about_the_final_list_of_datasets(exact_matched_datasets, exact_matched_datasets_by_name, exact_matched_group_subgroups, exact_matched_group_subgroups_by_name, rapid_fuzz_best_matched_output):
                         final_dataset_list = utils.decision_maker_about_the_final_list_of_datasets(exact_matched_datasets, exact_matched_datasets_by_name, exact_matched_group_subgroups, exact_matched_group_subgroups_by_name, rapid_fuzz_best_matched_output)
                         print(f"\n\n final_dataset_list, size: {len(final_dataset_list)}: \n", final_dataset_list)
                         
@@ -157,17 +151,8 @@ def receive_data_path_user_input_generate_data_des_insert_full_datasets_path_gen
                         print(f"\n\n longitude_latitude_list, size: {len(longitude_latitude_list)}: \n", longitude_latitude_list)
                         
                         
-                        # result = dataSummarizer.format_datasets_from_final_set_add_example_prompt_if_latitude_longtitude_not_present(data_file_path, final_dataset_list)
                         result = dataSummarizer.format_datasets_from_final_set_and_latitude_longitude_list(data_file_path, final_dataset_list_without_lat_lon, longitude_latitude_list)
-                        # dataSummarizer.find_latitudes_and_longditudes_based_on_final_dataset(data_file_path, final_dataset_list)
                         print("\n\n Final Result: \n", result)
-                        
-                    # step 5: call the llm again the generate the python code
-                    old_ext = ".txt"             
-
-                    # just for testing not calling for generating code:
-                    # continue
-                    # example test rule base reasoning
                     
                     llmRequester.generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path=user_input_file_path, user_input_description=user_input_content, data_structure_information=result, full_data_path=data_file_path, target_dir=output_dir, model=model, URL=URL)
 
@@ -221,14 +206,12 @@ def zero_shot_COT_csv_to_converted_h5_DATASETS(user_input_dir, JSON_FILE_PATH, c
                         user_input_base_name, ext = os.path.splitext(user_input_file)
                         
                         # also remove the data type extention
-                        user_input_base_name =  utils.get_base_filename(user_input_base_name)
-                        
+                        user_input_base_name =  utils.get_base_filename(user_input_base_name)                        
                         
                         # print("user_input_base_name: ", user_input_base_name)
                         if user_input_base_name == data_basename_without_extension:
                             user_input_file_path = os.path.join(user_input_dir, user_input_file)
-                            print(data_basename_with_extension)
-                            
+                            print(data_basename_with_extension)                            
                             
                             # Read the file (as text here; change for binary or specific format)
                             with open(user_input_file_path, 'r') as f:
@@ -236,24 +219,16 @@ def zero_shot_COT_csv_to_converted_h5_DATASETS(user_input_dir, JSON_FILE_PATH, c
                                 user_input_content = content
                                 print("user input content: ", user_input_content)
                             
-                            # return content, user_input_file_path
-
                             # replace the file name by whole path
                             user_input_content = utils.replace_string(user_input_content, data_basename_with_extension, data_file_path )
                             if with_corrector == True:
                                 print('\n------------Inside with corrector...')
                                 # current with corrector
                                 result, attribute_present, updated_text = corrector.corrector_function_main(user_input_content, data_file_path, is_memory)
-                                print('Passed corrector_function_main function')
+                                print('Passed corrector_function_main function')                           
                             
-                                # without updated text
-                                # llmRequester.generate_code_and_save_with_data_zero_shot_CoT(user_input_file_path, user_input_content, result, data_file_path, output_dir, attribute_present, model)
-
                                 # with updated text
-                                user_input_content=updated_text
-                            
-                                # user_input, data_structure_information, full_data_path, attribute_present, model
-                                # with updated text such as replacing bigram or monogram by acutual dataset paths and attribute names
+                                user_input_content=updated_text                            
                             
                                 # current with corrector
                                 llmRequester.generate_code_and_save_with_data_zero_shot_CoT(user_input_file_path, user_input_content, result, data_file_path, output_dir+'/'+output_subdir, attribute_present, model, is_memory, URL, dataset)
@@ -733,7 +708,7 @@ def zero_shot_COT_FAST_MRI_BRAIN_DCM_TO_H5_DATASETS_WITH_USER_INTENT(user_input_
     
     print(f'Processing directory {user_input_dir}')
 
-    all_user_queries_directory_full_path = os.path.join(common_base_directory, user_input_dir)
+    all_user_queries_directory_full_path = os.path.join(PROJECT_BASE_DIRECTORY, user_input_dir)
     print('all_user_queries_directory_full_path: ', all_user_queries_directory_full_path)
     
     user_query_files_in_directory = os.listdir(all_user_queries_directory_full_path)
@@ -758,7 +733,7 @@ def zero_shot_COT_FAST_MRI_BRAIN_DCM_TO_H5_DATASETS_WITH_USER_INTENT(user_input_
 
 
         # get the user intent and process
-        user_intent = intent_generation_from_user_input_zero_shot_prompt(user_input_dir, common_base_directory, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
+        user_intent = intent_generation_from_user_input_zero_shot_prompt(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
         attribute_name, condition, condition_value = utils.get_attribute_name_condition_condition_value(user_intent)
         print(f"attribute_name: {attribute_name}, condition: {condition}, condition_value: {condition_value}")
 
@@ -811,10 +786,10 @@ def zero_shot_COT_FAST_MRI_BRAIN_DCM_TO_H5_DATASETS_WITH_USER_INTENT(user_input_
 
 # DCM TO H5 FAST MRI BRAIN DATASETS
 # Intent generation from user queries 
-def intent_generation_from_user_input_zero_shot_prompt(user_input_dir, common_base_directory, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL):
+def intent_generation_from_user_input_zero_shot_prompt(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL):
     print(f'Processing directory {user_input_dir}')
 
-    all_user_queries_directory_full_path = os.path.join(common_base_directory, user_input_dir)
+    all_user_queries_directory_full_path = os.path.join(PROJECT_BASE_DIRECTORY, user_input_dir)
     print('All_user_queries_directory_full_path: ', all_user_queries_directory_full_path)
     
     user_query_files_in_directory = os.listdir(all_user_queries_directory_full_path)
@@ -1032,7 +1007,6 @@ def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, 
                             user_input_file_path = os.path.join(user_input_dir, user_input_file)
                             print(data_basename_with_extension)
                             
-                            
                             # Read the file (as text here; change for binary or specific format)
                             with open(user_input_file_path, 'r') as f:
                                 content = f.read()
@@ -1051,23 +1025,17 @@ def RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, common_directory, 
                             user_input_content = utils.replace_string(user_input_content, data_basename_with_extension, data_file_path )
                             if with_rag == True:
                                 print('\n------------Inside with RAG ...')
-                                # current with corrector
-                                # result, attribute_present, updated_text = corrector.corrector_function_main(user_input_content, data_file_path, is_memory)
-                                # print('Passed corrector_function_main function')
                                 
                                 # with updated text
-                                # user_input_content=updated_text
                                 examples_codes_for_query_augmentation = AGENTS.get_augmented_query(data_basename_with_extension+'.txt', model_name, is_errors, 'CLIMATE', temperature)
                                 print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
                             
                                 # current with corrector
-                                # generate_code_and_save_with_rag(user_input_file_path, user_input_description, examples_for_query_augmentation, full_data_path, target_dir, model, URL):
                                 llmRequester.generate_code_and_save_with_rag(user_input_file_path, user_input_content, examples_codes_for_query_augmentation, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
                             else:
                                 print('\n------------Inside without RAG ...')
                                 # current generating code without correcotrs
 
-                                
                                 llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
                             
                             # assuming code generating completed here
@@ -1099,7 +1067,6 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
         
         # also remove the data type extention
         user_input_base_name =  utils.get_base_filename(user_input_base_name)
-
         user_input_file_path = os.path.join(user_input_dir, user_input_file)                        
             
         # Read the file (as text here; change for binary or specific format)
@@ -1108,12 +1075,9 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
             user_input_content = content
             print("user input content: ", user_input_content)
 
-        # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
-        
-        
+        # set data file full path       
         # outside project directory
-        full_data_path = base_directory+'../data_files_llm_project/MatPlotAgent/csv_to_h5_data/*_h5_data.h5'
+        full_data_path = PROJECT_BASE_DIRECTORY+'../data_files_llm_project/MatPlotAgent/csv_to_h5_data/*_h5_data.h5'
         
         splitted_name = user_input_base_name.split('_')
         if len(splitted_name)>0:
@@ -1148,7 +1112,7 @@ def RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_t
 
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, is_with_rag, model, URL, dataset, is_errors, with_corrector):
+def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, output_or_target_dir, output_subdir, is_with_rag, model, URL, dataset, is_errors, with_corrector):
 
     print(f'\nInside RAG_MATPLOTAGENT_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1277,7 +1241,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, common_bas
                         print('ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR:: Error is None')
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
+def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
 
     print(f'\nInside RAG_MATPLOTAGENT_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1309,11 +1273,11 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
         user_input_prefix_id = user_input_base_name.split('_')[0]
 
         # set data file full path
-        base_directory ='/home/achakroborti1/llam_test/code-generation-by-llm-for-scientific-data'
+       
         # inside project
         # full_data_path = base_directory+'/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         # outside project
-        full_data_path = base_directory+'../data_files_llm_project/fastMri/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
+        full_data_path = PROJECT_BASE_DIRECTORY+'../data_files_llm_project/fastMri/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5/**_fastMRI_brain_first_10_dcm_to_h5.h5'
         full_data_path = full_data_path.replace('**', user_input_prefix_id)
         # splitted_name = user_input_base_name.split('_')
         # if len(splitted_name)>0:
@@ -1342,7 +1306,7 @@ def RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_t
        
             llmRequester.generate_code_and_save_without_rag(user_input_file_path, user_input_content, data_file_path, output_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result, temperature)
 
-def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
+def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature):
 
     print(f'\nInside ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1405,8 +1369,6 @@ def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_bas
         if with_rag == True:
             print('\n------------Inside with RAG ...')
             # current with corrector
-            # result, attribute_present, updated_text = corrector.corrector_function_main(user_input_content, data_file_path, is_memory)
-            # print('Passed corrector_function_main function')
             
             # with updated text
             # user_input_content=updated_text
@@ -1451,8 +1413,20 @@ def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_bas
                         stderr = formatted_error_message
                         
                         print('iterative error resolving with corrector')
-                        #                                                                                                                           user_input_file_path, user_input_content, result, data_file_path, output_dir+'/'+output_subdir, attribute_present, model, is_memory, '', '', 0, URL
-                        generated_python_script_path, generated_python_script = llmRequester.generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(user_input_file_path, user_input_content, dataset_attrubute_fullpath_list_result, data_file_path, output_dir+'/'+output_subdir, model, generated_python_script, stderr, iteration, URL, query_augmentation, temperature)
+                        
+                        generated_python_script_path, generated_python_script = llmRequester.generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(
+                                            user_input_file_path=user_input_file_path, 
+                                            user_input_description=user_input_content, 
+                                            dataset_attrubute_fullpath_list_result=dataset_attrubute_fullpath_list_result, 
+                                            full_data_path=data_file_path, 
+                                            target_dir=output_dir+'/'+output_subdir, 
+                                            model=model, 
+                                            python_script=generated_python_script, 
+                                            error_message=stderr, 
+                                            iteration=iteration, 
+                                            URL=URL, 
+                                            examples_for_query_augmentation=query_augmentation, 
+                                            temperature=temperature)
                         print('generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve generated_python_script_path:\n', generated_python_script_path)
                         print('generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve generated_python_script:\n', generated_python_script)
                        
@@ -1461,7 +1435,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, common_bas
 
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
+def RAG_VTK_DATASETS(user_input_dir, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
 
     print(f'\nInside RAG_VTK_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1491,8 +1465,6 @@ def RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir
 
         # fetching the id
         user_input_prefix_id = user_input_base_name.split('_')[0]
-
-       
         full_data_path = ''
        
         data_file_path = full_data_path
@@ -1501,35 +1473,29 @@ def RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir
         dataset_attrubute_fullpath_list_result = ''
         # if is with corrector
         if with_corrector == True:
-                print('\n------------Inside with corrector...')
-                # current with corrector
-               
+                print('\n------------Inside with corrector...')               
                 print('Passed corrector_function_main function')
 
         # replace the file name by whole path
         user_input_content = utils.replace_string(user_input_content, data_basename_with_extension, data_file_path )
         if with_rag == True:
             print('\n------------Inside with RAG ...')
-            # current with corrector
-            # result, attribute_present, updated_text = corrector.corrector_function_main(user_input_content, data_file_path, is_memory)
-            # print('Passed corrector_function_main function')
-            
             # with updated text
             # user_input_content=updated_text
             examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'FASTMRIBRAIN', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
-           
         else:
             print('\n------------Inside without RAG ...')
             # current generating code without correcotrs
-
-           
-            # parameters: user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result
-            llmRequester.generate_code_and_save_VTK_related_python_scripts_without_rag(user_input_file_path, user_input_content, data_file_path, output_or_target_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+            llmRequester.generate_code_and_save_VTK_related_python_scripts_without_rag(user_input_file_path=user_input_file_path, 
+                                                                                       user_input_description=user_input_content, 
+                                                                                       full_data_path=data_file_path, 
+                                                                                       target_dir=output_or_target_dir+'/'+output_subdir, 
+                                                                                       model=model, URL=URL, dataset_attrubute_fullpath_list_result=dataset_attrubute_fullpath_list_result)
 
 # user_input_dir, common_base_directory, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector
-def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directory, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
+def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, output_or_target_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector):
 
     print(f'\nInside RAG_VTK_DATASETS ...')
     print(f'Processing directory {user_input_dir}')   
@@ -1542,7 +1508,7 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
     target_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     all_files_source_directory = f'{target_base_dir}/vtk_data'
 
-    program_execution_base_directory = common_base_directory
+    program_execution_base_directory = PROJECT_BASE_DIRECTORY
     utils.move_files_by_extension(all_files_source_directory, program_execution_base_directory, extensions)
     
     # user input directory and list all files
@@ -1583,7 +1549,6 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
         if with_corrector == True:
                 print('\n------------Inside with corrector...')
                 # current with corrector
-                # dataset_attrubute_fullpath_list_result, attribute_present, updated_text = corrector.corrector_function_main(user_input_content, data_file_path, False)
                 print('Passed corrector_function_main function')
 
         # replace the file name by whole path
@@ -1597,12 +1562,15 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
             examples_codes_for_query_augmentation = AGENTS.get_augmented_query(user_input_base_name+'.txt', model_name, is_errors, 'VTK', temperature)
             print(f'Inside sci data prompting main:: examples code for query augmentation: \n{examples_codes_for_query_augmentation}')
         
-            
-        generated_python_script_path, generated_python_script = llmRequester.generate_code_and_save_VTK_related_python_scripts_without_rag(user_input_file_path, user_input_content, data_file_path, output_or_target_dir+'/'+output_subdir, model, URL, dataset_attrubute_fullpath_list_result)
+        # , , , , model, URL, dataset_attrubute_fullpath_list_result
+        generated_python_script_path, generated_python_script = llmRequester.generate_code_and_save_VTK_related_python_scripts_without_rag(
+                    user_input_file_path=user_input_file_path, 
+                    user_input_description=user_input_content, 
+                    full_data_path=data_file_path, 
+                    target_dir=output_or_target_dir+'/'+output_subdir, 
+                    model=model, URL=URL, dataset_attrubute_fullpath_list_result=dataset_attrubute_fullpath_list_result)
         number_of_iteration = 1
 
-        # generated_python_code_path = ''
-        # generated_python_code = ''
         # execute the code and check if is there any errors
         # if error then get the get the generated code and error message together and regenerate the code
         for iteration in range(1, number_of_iteration):
@@ -1641,10 +1609,10 @@ def ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, common_base_directo
     utils.move_files_by_extension(program_execution_base_directory, all_files_source_directory, extensions)
 
 # USER queries generation from VTK related python scripts
-def user_queries_generation_from_vtk_related_python_scripts_for_VTK_datasets(user_input_dir, common_base_directory, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL):
+def user_queries_generation_from_vtk_related_python_scripts_for_VTK_datasets(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL):
     print(f'Processing directory {user_input_dir}')
 
-    all_user_queries_directory_full_path = os.path.join(common_base_directory, user_input_dir)
+    all_user_queries_directory_full_path = os.path.join(PROJECT_BASE_DIRECTORY, user_input_dir)
     print('All_user_queries_directory_full_path: ', all_user_queries_directory_full_path)
     
     user_query_files_in_directory = os.listdir(all_user_queries_directory_full_path)
@@ -1678,20 +1646,18 @@ def user_queries_generation_from_vtk_related_python_scripts_for_VTK_datasets(use
         print('\n\n---------------------------------------------------------')
         print('user_input_content: \n', user_input_content)
 
-        #                                                                                     user_input_file_full_path, user_input_content, target_dir, model, old_ext='.txt'
-        llmRequester.generate_request_for_VTK_related_user_query_generation(user_input_file_full_path, user_input_content, output_dir+'/'+output_subdir, model, URL, is_errors)
+        llmRequester.generate_request_for_VTK_related_user_query_generation(user_input_file_full_path=user_input_file_full_path, 
+                                                                            user_input_content=user_input_content, 
+                                                                            target_dir=output_dir+'/'+output_subdir, model=model, URL=URL, is_errors=is_errors)
 
 
 
 
 
-if __name__ == '__main__':
-    
+if __name__ == '__main__':    
     # this is for the GSU sci-data virtual machine
-    PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
     extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
-   
-    
+       
     # Create the argument parser
     parser = argparse.ArgumentParser(description = "Select models to use correct LLM model")   
     
@@ -1703,34 +1669,23 @@ if __name__ == '__main__':
     is_memory = False
     # create a tracking file with same name as output_subdir
     # def initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, directory_file_name):
-    JSON_FILE_PATH = 'prompting_techniques/zero_shot_sci_data_prompting/tracking_file'
+    JSON_FILE_PATH = 'experiment_main/tracking_file'
     temp = str(temperature).replace('.', '_')
 
-    list_dirs = [
-        "f{PROJECT_BASE_DIRECTORY}/user_queries/generated_user_sub_queries",
-        "f{PROJECT_BASE_DIRECTORY}/user_sub_query_generation_logs",
-        "f{PROJECT_BASE_DIRECTORY}/prompting_techniques/llm_rag_generated_python_scripts",
-        "f{PROJECT_BASE_DIRECTORY}/llm_rag_python_scripts_generation_logs"
-        ]
     # model_name = "gpt_oss_20b"
     prefix = "single_phase"
     
     # created May 18, 2025
     #user sub queries generation
     if dataset == 'USER_SUB_QUERY_GENERATION_CLIMATE_DATASETS':
-        # PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
+        
         extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = PROJECT_BASE_DIRECTORY+'/user_queries/generated_user_sub_queries'
-        
-       
-        
+             
         # without errors
-        
         if is_errors==False:
             # output_directory_prefix=model_name
-            
             output_subdir = f'{output_directory_prefix}_temp_{temp}_generated_user_sub_queries_from_expert_user_queries_final'
-            
             user_input_dir = PROJECT_BASE_DIRECTORY +f'/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected'
         # with errors
         else:
@@ -1743,13 +1698,12 @@ if __name__ == '__main__':
         data_file_full_path = ''
 
         user_sub_queries_generation_from_user_input_for_CLIMATE_datasets(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL, temperature)
-        # move_prefixed_items(list_dirs, model_name, prefix)
+        
 
     # created Jun 10, 2025
     #user sub queries generation
     elif dataset == 'USER_SUB_QUERY_GENERATION_MATPLOTAGENT_DATASETS':
         # file_list = ['76', '77', '78', '79', '83', '84', '87', '95', '96', '97', '99', '100']
-        PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = PROJECT_BASE_DIRECTORY+'/user_queries/generated_user_sub_queries/matplotagent'
         
@@ -1768,12 +1722,11 @@ if __name__ == '__main__':
         data_file_full_path = ''
 
         user_sub_queries_generation_from_user_input_for_MATPLOTAGENT_datasets(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL, temperature)
-        # move_prefixed_items(list_dirs, model_name, prefix)
+       
     
     # created May 18, 2025
     #user sub queries generation
     elif dataset == 'USER_SUB_QUERY_GENERATION_FASTMRIBRAIN_DATASETS':
-        PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
         # extensions = ['hdf5', 'he5', 'h5', 'HDF5', 'H5', 'HE5']
         output_dir = PROJECT_BASE_DIRECTORY+'/user_queries/generated_user_sub_queries/fastmri_brain'
         
@@ -1794,10 +1747,10 @@ if __name__ == '__main__':
         data_file_full_path = ''
 
         user_sub_queries_generation_from_user_input_for_FASTMRIBRAIN_datasets(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL, temperature)
-        # move_prefixed_items(list_dirs, model_name, prefix)
+      
 
     elif dataset == 'CLIMATE_RAG':
-        output_dir = PROJECT_BASE_DIRECTORY+'/NASA_EOS/llm_rag_generated_python_scripts/single_step'
+        output_dir = PROJECT_BASE_DIRECTORY+'/NASA_EOS/llm_rag_generated_python_scripts/non_iterative'
         with_rag = is_with_rag
         
         print('Inside Climate datasets')
@@ -1849,10 +1802,10 @@ if __name__ == '__main__':
 
         #                         user_input_dir, JSON_FILE_PATH, common_directory,      data_dir, data_subdirectories, extensions, output_dir, output_subdir, model
         RAG_NASA_CLIMATE_DATASETS(user_input_dir, JSON_FILE_PATH, PROJECT_BASE_DIRECTORY, data_dir, subdirectories, extensions, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
-        # move_prefixed_items(list_dirs, model_name, prefix)
+
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_CLIMATE':
         print('Inside ITERATIVE_ERROR_RESOLVE_CLIMATE ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/NASA_EOS/llm_rag_generated_python_scripts/iterative'
+        output_dir = PROJECT_BASE_DIRECTORY+'/NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve'
         
         input_sub_directories = 'user_queries/generated_user_queries'
 
@@ -1897,24 +1850,20 @@ if __name__ == '__main__':
 
         tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
 
-        #                                   user_input_dir, JSON_FILE_PATH, common_directory,      data_dir, data_subdirectories, extensions, output_dir, output_subdir, model
-        # zero_shot_COT_NASA_CLIMATE_DATASETS_ITERATIVE_ERROR_RESOLVE(                 user_input_dir, JSON_FILE_PATH, common_directory, data_dir, data_subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL)
         ITERATIVE_ERROR_RESOLVE_NASA_CLIMATE_DATASETS_WITH_RAG_CORRECTOR_ONLINE_SEARCH(user_input_dir, JSON_FILE_PATH, PROJECT_BASE_DIRECTORY, data_dir, subdirectories, extensions, output_dir, output_subdir, with_corrector, model, URL, temperature)
         # collect all images and store them into a new directory
-        # Example usage
         source_dirs = subdirectories  # List of source directories
         source_dirs.append('../prompting_techniques/zero_shot_sci_data_prompting')
-        base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"  # Base path for new directory
         new_dir_name = output_subdir
         # data_dir = 'ACL_DIRS'
-        utils.collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir)
+        
+        utils.collect_and_store_png(source_dirs, new_dir_name, data_dir)
     
    
 
     elif dataset == 'MATPLOTAGENT_RAG':
         print('Inside Matplotagent datasets ...')
-        # input_file = f'{PROJECT_BASE_DIRECTORY}/user_queries/manually_edited_user_queries/matplot_agent_datasets/benchmark_instructions_modified.json'
-        output_dir = PROJECT_BASE_DIRECTORY+'/MatPlotAgent/llm_rag_generated_python_scripts/single_step'
+        output_dir = PROJECT_BASE_DIRECTORY+'/MatPlotAgent/llm_rag_generated_python_scripts/non_iterative'
         with_rag = is_with_rag        
                 
         # without errors
@@ -1954,11 +1903,11 @@ if __name__ == '__main__':
 
    
         RAG_MATPLOTAGENT_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
-        # move_prefixed_items(list_dirs, model_name, prefix)
+    
     
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_MATPLOTAGENT_RAG':
         print('Inside Matplotagent datasets ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/MatPlotAgent/llm_rag_generated_python_scripts/iterative'
+        output_dir = PROJECT_BASE_DIRECTORY+'/MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve'
         with_rag = is_with_rag        
                 
         # without errors
@@ -1976,9 +1925,7 @@ if __name__ == '__main__':
             if is_errors==False:
                 output_subdir = f'{output_directory_prefix}_matplotagent_iterative_python_scripts_with_rag_without_corrector'
                 if with_corrector == True:
-                    # output_subdir = f'{output_directory_prefix}_matplotagent_iterative_python_scripts_with_rag_with_corrector'
                     output_subdir = f'{output_directory_prefix}_matplotagent_iterative_python_scripts_with_rag_with_corrector_time_record'
-
             # with errors
             else:
                 output_subdir = f'{output_directory_prefix}_matplotagent_iterative_python_scripts_with_rag_with_errors_without_corrector'
@@ -1998,12 +1945,12 @@ if __name__ == '__main__':
                     output_subdir = f'{output_directory_prefix}_matplotagent_iterative_python_scripts_without_rag_with_errors_with_corrector'
 
         # tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
-
-        ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector)
+        ITERATIVE_ERROR_RESOLVE_RAG_MATPLOTAGENT_DATASETS(user_input_dir=user_input_dir, output_or_target_dir=output_dir, output_subdir=output_subdir, is_with_rag=with_rag, 
+                                                          model=model, URL=URL, dataset=dataset, is_errors=is_errors, with_corrector=with_corrector)
 
     elif dataset == 'FASTMRIBRAIN_RAG':
         print('Inside FASTMRIBRAIN_RAG datasets ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/fastMri/llm_rag_generated_python_scripts/single_step'
+        output_dir = PROJECT_BASE_DIRECTORY+'/fastMri/llm_rag_generated_python_scripts/non_iterative'
         with_rag = is_with_rag        
                 
         # without errors
@@ -2043,10 +1990,10 @@ if __name__ == '__main__':
 
         # tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
 
-        RAG_FASTMRIBRAIN_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
+        RAG_FASTMRIBRAIN_DATASETS(user_input_dir, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_FASTMRIBRAIN_RAG':
         print('Inside FASTMRIBRAIN_RAG datasets ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/fastMri/llm_rag_generated_python_scripts/iterative'
+        output_dir = PROJECT_BASE_DIRECTORY+'/fastMri/llm_rag_generated_python_scripts/iterative_error_resolve'
         with_rag = is_with_rag        
                 
         # without errors
@@ -2087,11 +2034,11 @@ if __name__ == '__main__':
 
         # tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
 
-        ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
+        ITERATIVE_ERROR_RESOLVE_RAG_FASTMRIBRAIN_DATASETS(user_input_dir, output_dir, output_subdir, with_rag, model, URL, dataset, is_errors, with_corrector, temperature)
     
     elif dataset == 'VTK_RAG':
         print('Inside VTK_RAG datasets ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/VTK/llm_rag_generated_python_scripts/single_step'
+        output_dir = PROJECT_BASE_DIRECTORY+'/VTK/llm_rag_generated_python_scripts/non_iterative'
                 
         # without errors: expert queries
         if is_errors==False:
@@ -2129,12 +2076,11 @@ if __name__ == '__main__':
                     output_subdir = f'{output_directory_prefix}_vtk_python_scripts_without_rag_with_errors_with_corrector'
 
         # tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
-
-        RAG_VTK_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, is_with_rag, model, URL, dataset, is_errors, with_corrector)
+        RAG_VTK_DATASETS(user_input_dir=user_input_dir, output_or_target_dir=output_dir, output_subdir=output_subdir, with_rag=is_with_rag, model=model, URL=URL, dataset=dataset, is_errors=is_errors, with_corrector=with_corrector)
     
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_VTK_RAG':
         print('Inside VTK_RAG datasets ...')
-        output_dir = PROJECT_BASE_DIRECTORY+'/VTK/llm_rag_generated_python_scripts/iterative'
+        output_dir = PROJECT_BASE_DIRECTORY+'/VTK/llm_rag_generated_python_scripts/iterative_error_resolve'
         # with_rag = is_with_rag        
                 
         # without errors: expert queries
@@ -2174,14 +2120,12 @@ if __name__ == '__main__':
 
         # tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)
 
-        ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, PROJECT_BASE_DIRECTORY, output_dir, output_subdir, is_with_rag, model, URL, dataset, is_errors, with_corrector)
+        ITERATIVE_ERROR_RESOLVE_RAG_VTK_DATASETS(user_input_dir, output_dir, output_subdir, is_with_rag, model, URL, dataset, is_errors, with_corrector)
     
-    # created June 24, 2025
     #user queries generation for the vtk related python scripts
     elif dataset == 'VTK_USER_QUERY_GENERATION_VTK_DATASETS':
         print('Inside VTK_USER_QUERY_GENERATION_VTK_DATASETS ...')
-        PROJECT_BASE_DIRECTORY = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data'
-        
+               
         output_dir = PROJECT_BASE_DIRECTORY+'/user_queries/generated_user_queries/vtk'        
                
         # without errors
@@ -2193,15 +2137,11 @@ if __name__ == '__main__':
         else:
             
             output_subdir = f'{output_directory_prefix}_generated_user_queries_from_vtk_expert_queries_with_errors'
-            # queries with errors
-            # user_input_dir = PROJECT_BASE_DIRECTORY +'/vtk_example_python_scripts_with_data'
-            user_input_dir = PROJECT_BASE_DIRECTORY +'/user_queries/generated_user_queries/vtk/deepseek_r1_70b_generated_user_queries_from_vtk_python_scripts_human_reviewed'
-        
-        
+            user_input_dir = PROJECT_BASE_DIRECTORY +'/user_queries/generated_user_queries/vtk/deepseek_r1_70b_generated_user_queries_from_vtk_python_scripts_human_reviewed'       
         data_file_base_name = ''
         data_file_full_path = ''
 
-        user_queries_generation_from_vtk_related_python_scripts_for_VTK_datasets(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
+        user_queries_generation_from_vtk_related_python_scripts_for_VTK_datasets(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
     
     
      # this is under planning, not implemented yet
@@ -2212,9 +2152,8 @@ if __name__ == '__main__':
         data_file_base_name = ''
         data_file_full_path = ''
 
-        # output_dir = PROJECT_BASE_DIRECTORY+'/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/fastMRI_brain'
         output_dir = PROJECT_BASE_DIRECTORY+'/prompting_techniques/zero_shot_sci_data_prompting/generated_user_intent'
-        intent_generation_from_user_input_zero_shot_prompt(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
+        intent_generation_from_user_input_zero_shot_prompt(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
 
     # for the fast mmri brain image data we have to generate user intent from the user queries first, then it need to processed for final python code generation
     elif dataset == 'USER_INTENT_GENERATION_FROM_FAST_MRI_BRAIN_RELATED_QUERIES':
@@ -2224,17 +2163,14 @@ if __name__ == '__main__':
         data_file_full_path = ''
 
         output_dir = PROJECT_BASE_DIRECTORY+'/prompting_techniques/zero_shot_sci_data_prompting/generated_user_intent'
-        intent_generation_from_user_input_zero_shot_prompt(user_input_dir, PROJECT_BASE_DIRECTORY, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
+        intent_generation_from_user_input_zero_shot_prompt(user_input_dir, data_file_base_name, data_file_full_path, output_dir, output_subdir, model, URL)
     
-    # updated February 23
-    # intent related codes are not being used now
-    # python code generation using user queries and generated user intent
     elif dataset == 'FAST_MRI_BRAIN_WITH_USER_INTENT':
         output_dir = PROJECT_BASE_DIRECTORY+'/mri_nyu_data/generated_python_script_llm_user_intent' 
         output_subdir = f'{output_directory_prefix}_zero_shot_CoT_with_corrector_fastMRI_brain_with_path_errors_with_corrector_search_queries'
         user_input_dir = PROJECT_BASE_DIRECTORY+'/mri_nyu_data/user_queries_generated_human_modified_error_insertion_with_search_queries'
 
-        data_file_directory_full_path = '/Users/apukumarchakroborti/gsu_research/llam_test/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5'
+        data_file_directory_full_path = f'{PROJECT_BASE_DIRECTORY}/mri_nyu_data/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5'
         data_file_base_name = 'fastMRI_brain_200_dcm_to_h5.h5'
 
         tracking.initialize_json(PROJECT_BASE_DIRECTORY, JSON_FILE_PATH, output_subdir)

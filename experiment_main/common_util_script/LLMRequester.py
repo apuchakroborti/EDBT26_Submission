@@ -87,8 +87,12 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_iterative_err
 # this method is to regerate the python script based on the current python script and erros message
 def generate_request_for_generating_source_code_with_SO_corrector_iterative_error_resolve(data_structure_information, full_data_path, model, generated_python_script, error_message, query_augmentation):    
     print('Inside generate_request_for_generating_source_code_with_SO_corrector_iterative_error_resolve\n\n')
-    # data_structure_information, full_data_path, python_script, error_message, query_augmentation
-    prompt = generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_error_resolving(data_structure_information, full_data_path, generated_python_script, error_message, query_augmentation)
+    
+    prompt = generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_error_resolving(data_structure_information=data_structure_information, 
+                                                                                                         full_data_path=full_data_path, 
+                                                                                                         python_script=generated_python_script, 
+                                                                                                         error_message=error_message, 
+                                                                                                         query_augmentation=query_augmentation)
     
     print("Prompt: \n", prompt)
     
@@ -108,11 +112,12 @@ def generate_request_for_generating_source_code_with_SO_corrector_iterative_erro
 # this method is to regerate the python script based on the current python script and erros message
 def generate_request_for_generating_source_code_with_MATPLOTAGENT_RAG_corrector_iterative_error_resolve(data_structure_information, full_data_path, model, generated_python_script, error_message, query_augmentation):    
     print('Inside generate_request_for_generating_source_code_with_MATPLOTAGENT_RAG_corrector_iterative_error_resolve\n\n')
-    # data_structure_information, full_data_path, python_script, error_message, query_augmentation
-    prompt = generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_error_resolving(data_structure_information, full_data_path, generated_python_script, error_message, query_augmentation)
+ 
+    prompt = generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_error_resolving(data_structure_information=data_structure_information, full_data_path=full_data_path, 
+                                                                                                         python_script=generated_python_script, error_message=error_message, 
+                                                                                                         query_augmentation=query_augmentation)
     
     print("Prompt: \n", prompt)
-    
     data = {
         "model": model,
         "prompt": prompt,
@@ -134,8 +139,7 @@ def generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_
     prompt+="I have a Python script that produces an error at runtime. Below, I have included:\n"
     prompt+="   - The original Python script\n"
     prompt+="   - The exact error message\n"
-    # prompt+="   - Related Stack Overflow suggestions and summaries\n"
-
+    
     prompt+="Your task:\n"
     prompt+="   1. Carefully analyze the provided Python script and the error message.\n"
     prompt+="   2. Use the relevant suggestions (if applicable) to understand the likely cause and potential fixes.\n"
@@ -149,9 +153,6 @@ def generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_
     prompt+="\nError Message:\n"    
     prompt+=f"{error_message}"
 
-    # if len(query_augmentation)>0:
-    #     prompt+= f"\n\nWhile rewriting the python code consider the Related Stack Overflow suggestions and summaries if applicable:\n" 
-    #     prompt+= f"{query_augmentation}"
     
     if len(data_structure_information)>0: 
         prompt+= f"\nWhile rewriting the python code consider the information about the DATA_STRUCTURE=\n{data_structure_information}"
@@ -210,7 +211,6 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_best_success_
 # created on Nov 17, 2024
 def generate_request_for_generating_source_code_with_zero_shot_CoT_best_success(user_input, data_structure_information, full_data_path, attribute_present):
     print('Inside generate_request_for_generating_source_code_with_zero_shot_CoT_best_success\n')
-    # prompt = "Generate the python code and add the code inside <<< >>> based on the description below:\n"
     prompt = "Generate the python code based on the description below:\n"
     prompt+=user_input 
     prompt+= "\n#Follow the instructions step by step:"
@@ -229,9 +229,6 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_best_success(
 
     return prompt
 
-# currently being used, Jan 08, 2025
-# created Nov 09 2024
-# created Nov 03 2024
 # this is for resolving specific errors by changing prompt
 def generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input, data_structure_information, full_data_path, attribute_present, model, python_script, error_message):    
     print('Inside generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step\n\n')
@@ -1151,7 +1148,6 @@ def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_
 import time
 # created on June 29, 2025
 # to resolve error iteratively
-# def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
 def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation, temperature):
     try:
         print('LLMRequester::Inside generate_code_and_save_code_with_RAG_iterative_error_resolve ...')
@@ -1196,10 +1192,7 @@ def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                # response_code+="\nprint(\"Success_and_End_of_Script!\")"
-                # for time recording
-                # utils.save_file(output_file_path, response_code)
-
+              
                 utils.save_file(output_file_path, prompt+'\n\n'+response_code)
 
                 # lets save the iterative generated code
@@ -1266,10 +1259,7 @@ def generate_code_and_save_code_MATPLOTAGENT_RAG_iterative_error_resolve(user_in
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                # response_code+="\nprint(\"Success_and_End_of_Script!\")"
-                # for time recording
-                # utils.save_file(output_file_path, response_code)
-
+           
                 utils.save_file(output_file_path, prompt+'\n\n'+response_code)
 
                 # lets save the iterative generated code
@@ -1310,13 +1300,10 @@ def generate_code_and_save_code_VTK_RAG_iterative_error_resolve(user_input_file_
         
         if len(python_script) <= 0:
             print('LLMRequester:: with corrector code generation ...')
-            #                                                                              user_input,             examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result
-            # source_code_gen_request = generate_request_for_generating_vtk_related_python_scripts_without_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result)
             source_code_gen_request = generate_request_for_generating_vtk_related_python_scripts_without_rag(user_input_description, full_data_path, model, dataset_attrubute_fullpath_list_result)
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
-            # source_code_gen_request = generate_request_for_generating_source_code_using_LLM_memory_with_zero_shot_CoT_with_corrector_iterative_error_resolve(user_input_description, data_structure_information, full_data_path, attribute_present, model, python_script, error_message)
             source_code_gen_request = generate_request_for_generating_source_code_with_MATPLOTAGENT_RAG_corrector_iterative_error_resolve(dataset_attrubute_fullpath_list_result, full_data_path, model, python_script, error_message, examples_for_query_augmentation)
         
         prompt = source_code_gen_request['prompt']
@@ -1791,10 +1778,7 @@ def generate_prompt_for_generating_source_code_with_rag(user_input, examples_cod
     return prompt
 
 def generate_request_for_generating_source_code_with_rag(user_input, examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature):    
-    print('Inside generate_request_for_generating_source_code_with_rag\n\n')
-    
-    
-    
+    print('Inside generate_request_for_generating_source_code_with_rag\n\n')    
     prompt = generate_prompt_for_generating_source_code_with_rag(user_input, examples_code_for_query_augmentation, full_data_path, dataset_attrubute_fullpath_list_result)
     
     print("Prompt: \n", prompt)

@@ -35,14 +35,6 @@ ACL_DIRS/AURA_DATA_VC/OMSNO2_0.1x0.1_200501_SPv3.csv
 # Ignore generated python code from the experiment
 # **/prompting_techniques/llm_rag_generated_python_scripts/
 
-
-# ignore vtk data
-# **/vtk_data/
-
-# ignore vtk examples
-# **/vtk/examples/
-# **/vtk/vtk_data/
-
 ACL_DIRS/ASF/**
 ACL_DIRS/AURA_DATA_VC/**
 ACL_DIRS/GES_DISC/**
@@ -58,9 +50,32 @@ user_queries/generated_user_sub_queries/**
 user_sub_query_generation_logs/**
 
 # python scripts generation
-prompting_techniques/llm_rag_generated_python_scripts/**
 llm_rag_python_scripts_generation_logs/**
 
+# data files
+fastMri/data_files/**
+MatPlotAgent/data_files/**
+
+# python scripts
+NASA_EOS/llm_rag_generated_python_scripts/non_iterative/**
+NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve/**
+
+MatPlotAgent/llm_rag_generated_python_scripts/non_iterative/**
+MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve/**
+
+fastMri/llm_rag_generated_python_scripts/iterative_error_resolve/**
+fastMri/llm_rag_generated_python_scripts/non_iterative/**
+
 # evaluation files
-prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/**
-prompting_techniques/llm_rag_generated_python_scripts_evaluation_logs/**
+NASA_EOS/evaluation_results/iterative_error_resolve/**
+NASA_EOS/evaluation_results/non_iterative/**
+
+fastMri/evaluation_results/iterative_error_resolve/**
+fastMri/evaluation_results/non_iterative/**
+
+MatPlotAgent/evaluation_results/iterative_error_resolve/**
+MatPlotAgent/evaluation_results/non_iterative/**
+
+
+VTK/**
+proof_of_concepts/**

@@ -221,7 +221,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
         image_found = False
         if dataset_name == 'CLIMATE':
              # collecting and storing png files 
-            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/single_step"    
+            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative"    
     
             subdirectories = [  f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/ASF',
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/AURA_DATA_VC',
@@ -233,14 +233,14 @@ def run_python_script(script_path, output_subdir, dataset_name):
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/NSIDC',
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/PO_DAAC',
                             f'{PROJECT_BASE_DIRECTORY}',
-                            f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/single_step'
+                            f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative'
                         ]
             # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
             new_dir_name = 'iterative_'+output_subdir
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
             # should be updated
             # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-            data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/single_step/generated_image_from_running_evaluation/{new_dir_name}'
+            data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/non_iterative/generated_image_from_running_evaluation/{new_dir_name}'
         
         
             print('Data Directory: \n', data_directory)
@@ -265,7 +265,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
                     print(f'No image found witht the name: {image_data_file}')
         elif dataset_name == 'MATPLOTAGENT':
             new_dir_name = output_subdir
-            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/single_step"    
+            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/non_iterative"    
     
             subdirectories = [      
                         f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/data_files/csv_to_h5_data',
@@ -273,7 +273,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
                         f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/data_files'
             ]
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, 'iterative_'+new_dir_name)
-            data_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/single_step/generated_image_from_running_evaluation/iterative_{new_dir_name}'
+            data_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/non_iterative/generated_image_from_running_evaluation/iterative_{new_dir_name}'
             print('Data Directory: \n', data_directory)
             png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))    
             print('MATPLOTAGENT All PNG files: \n', png_files_from_main_script_dir)
@@ -304,7 +304,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             
         elif dataset_name == 'FASTMRIBRAIN':
             new_dir_name = 'iterative_'+output_subdir
-            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/single_step"    
+            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/non_iterative"    
     
             subdirectories = [  f'{PROJECT_BASE_DIRECTORY}/fastMri/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5',
                             f'{PROJECT_BASE_DIRECTORY}',
@@ -313,7 +313,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
             # should be updated
-            data_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/single_step/generated_image_from_running_evaluation/{new_dir_name}'
+            data_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/non_iterative/generated_image_from_running_evaluation/{new_dir_name}'
     
             print('Data Directory: \n', data_directory)
     
@@ -346,7 +346,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
         
         elif dataset_name == 'VTK' :
             new_dir_name = output_subdir
-            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/single_step"    
+            target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/non_iterative"    
             python_script_dir = os.path.dirname(script_path)
             subdirectories = [   
                             f'{python_script_dir}',
@@ -356,7 +356,7 @@ def run_python_script(script_path, output_subdir, dataset_name):
             # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
             utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, 'iterative_'+new_dir_name)
             # should be updated
-            data_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/single_step/generated_image_from_running_evaluation/iterative_{new_dir_name}'
+            data_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/non_iterative/generated_image_from_running_evaluation/iterative_{new_dir_name}'
             print('Data Directory: \n', data_directory)
     
             png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -1694,7 +1694,7 @@ def evaluation_of_ITERATIVE_CLIMATE_python_scripts_by_checking_generated_image(p
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative"    
+        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve"    
         
         subdirectories = [      f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/ASF',
                                 f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/AURA_DATA_VC',
@@ -1706,12 +1706,12 @@ def evaluation_of_ITERATIVE_CLIMATE_python_scripts_by_checking_generated_image(p
                                 f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/NSIDC',
                                 f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/PO_DAAC',
                                 f'{PROJECT_BASE_DIRECTORY}',
-                                f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative'
+                                f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve'
                             ]
         subdirectories.append(FULL_PYTHON_SCRIPT_DIRECTORY)
         # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
-        data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/iterative/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/iterative_error_resolve/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)        
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))        
         
@@ -1837,17 +1837,17 @@ def evaluation_of_ITERATIVE_MATPLOTAGENT_python_scripts_by_checking_generated_im
                 print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative"    
+        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative_error_resolve"    
         
         subdirectories = [      f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/data_files/csv_to_h5_data',
                                 f'{PROJECT_BASE_DIRECTORY}',
-                                f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/iterative'
+                                f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve'
                             ]
         subdirectories.append(FULL_PYTHON_SCRIPT_DIRECTORY)
         # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
-        data_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative_error_resolve/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))        
@@ -1973,7 +1973,7 @@ def evaluation_of_ITERATIVE_FASTMRIBRAIN_python_scripts_by_checking_generated_im
         
         # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
         
-        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/iterative"    
+        target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/iterative_error_resolve"    
         
         subdirectories = [  f'{PROJECT_BASE_DIRECTORY}/fastMri/data_files/dcm_to_h5_converted_data_files/fastMRI_brain_dcm_to_h5',
                             f'{PROJECT_BASE_DIRECTORY}',
@@ -1984,7 +1984,7 @@ def evaluation_of_ITERATIVE_FASTMRIBRAIN_python_scripts_by_checking_generated_im
         utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name+f'_{iteration}')
         # should be updated
         # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-        data_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/iterative/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
+        data_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/iterative_error_resolve/generated_image_from_running_evaluation/{new_dir_name}'+f'_{iteration}'
         print('Data Directory: \n', data_directory)
         
         png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -2078,7 +2078,7 @@ if __name__ == "__main__":
     if dataset == 'CLIMATE_RAG_IMAGE_WITH_TEMP':
         print(f'Starting evaluation ...')
 
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/single_step'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative'
         list_of_python_scripts_sub_dirs = [
             # done
             "_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_with_corrector",
@@ -2117,7 +2117,7 @@ if __name__ == "__main__":
                 model_name = 'gemma3_27b'
                     
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/single_step/{python_script_dir}'
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/non_iterative/{python_script_dir}'
              
             evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory=llm_generated_python_scripts_ase_directory, 
                                                                              target_dir=target_dir, 
@@ -2125,7 +2125,7 @@ if __name__ == "__main__":
                                                                              model_name=model_name)
     
     elif dataset == 'CLIMATE_RAG_IMAGE':
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/single_step'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative'
         list_of_python_scripts_sub_dirs = [
             # done
             "devstral_24b_python_scripts_with_rag_multi_agents_and_sub_query_decomposition_with_errors_without_corrector", #0
@@ -2203,14 +2203,14 @@ if __name__ == "__main__":
                 model_name = 'qwen3_32b'
                 
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/single_step/{python_script_dir}' 
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/non_iterative/{python_script_dir}' 
             evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
     
     # MATPLOTAGENT DATASETS
     elif dataset == 'MATPLOTAGENT_RAG_IMAGE':
         print('Evaluating python scripts from the MATPLOTAGENT_RAG_IMAGE ...')
                     
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/single_step'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/non_iterative'
         
         list_of_python_scripts_sub_dirs = [
             "deepseek_r1_32b_matplotagent_python_scripts_with_rag_with_corrector", #0
@@ -2288,11 +2288,11 @@ if __name__ == "__main__":
                 model_name = 'qwen3_32b'
                 
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/single_step/{python_script_dir}' 
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/non_iterative/{python_script_dir}' 
             evaluation_of_MATPLOTAGENT_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
     
     elif dataset == 'FASTMRIBRAIN_RAG_IMAGE':                    
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/single_step'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/non_iterative'
         
         list_of_python_scripts_sub_dirs = [
             "deepseek_r1_32b_fastmribrain_python_scripts_with_rag_with_corrector", #0
@@ -2367,11 +2367,11 @@ if __name__ == "__main__":
             # elif python_script_dir.startswith('qwen3_32b'):
             #     model_name = 'qwen3_32b'                
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/single_step/{python_script_dir}' 
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/non_iterative/{python_script_dir}' 
             evaluation_of_FASTMRIBRAIN_python_scripts_by_checking_generated_image(llm_generated_python_scripts_ase_directory, target_dir, python_script_dir, model_name)
 
     elif dataset == 'VTK_RAG_IMAGE':                    
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/llm_rag_generated_python_scripts/single_step'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/llm_rag_generated_python_scripts/non_iterative'
         
         list_of_python_scripts_sub_dirs = [
             # "deepseek_r1_70b_vtk_python_scripts_without_rag_without_corrector",
@@ -2405,7 +2405,7 @@ if __name__ == "__main__":
             # elif python_script_dir.startswith('qwen3_32b'):
             #     model_name = 'qwen3_32b'                
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/single_step{python_script_dir}' 
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/non_iterative{python_script_dir}' 
             # , , , , , program_execution_base_directory
             evaluation_of_VTK_python_scripts_by_checking_generated_image(
                 llm_generated_python_scripts_ase_directory=llm_generated_python_scripts_ase_directory, 
@@ -2414,7 +2414,7 @@ if __name__ == "__main__":
     elif dataset == 'ITERATIVE_ERROR_RESOLVE_VTK_RAG_IMAGE':                    
         
 
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/llm_rag_generated_python_scripts/iterative'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/VTK/llm_rag_generated_python_scripts/iterative_error_resolve'
         
         list_of_python_scripts_sub_dirs = [
             # "devstral_24b_vtk_iterative_python_scripts_without_rag_without_corrector"
@@ -2444,7 +2444,7 @@ if __name__ == "__main__":
             elif python_script_dir.startswith('devstral_24b'):
                 model_name = 'devstral_24b'             
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/iterative/{python_script_dir}'
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/VTK/evaluation_results/iterative_error_resolve/{python_script_dir}'
             # , , , , , 
             evaluation_of_ITERATIVE_VTK_python_scripts_by_checking_generated_image(
                 llm_generated_python_scripts_ase_directory=llm_generated_python_scripts_ase_directory, 
@@ -2456,7 +2456,7 @@ if __name__ == "__main__":
 
     if dataset == 'ITERATIVE_CLIMATE_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector", #0#
@@ -2514,7 +2514,7 @@ if __name__ == "__main__":
             model_name = 'qwen3_32b'
                 
             
-        target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/iterative/{python_script_dir}' 
+        target_dir =f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/iterative_error_resolve/{python_script_dir}' 
         evaluation_of_ITERATIVE_CLIMATE_python_scripts_by_checking_generated_image(
             python_script_parent_directory=llm_generated_python_scripts_ase_directory, 
             target_dir=target_dir, 
@@ -2522,7 +2522,7 @@ if __name__ == "__main__":
     
     if dataset == 'ITERATIVE_MATPLOTAGENT_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/iterative'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
@@ -2556,7 +2556,7 @@ if __name__ == "__main__":
                 model_name = 'qwen3_32b'
                 
             # target directory to store results
-            target_dir = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative/{python_script_dir}' 
+            target_dir = f'{PROJECT_BASE_DIRECTORY}/MatPlotAgent/evaluation_results/iterative_error_resolve/{python_script_dir}' 
             evaluation_of_ITERATIVE_MATPLOTAGENT_python_scripts_by_checking_generated_image(
                 python_script_parent_directory=llm_generated_python_scripts_ase_directory, target_dir=target_dir, 
                 python_script_dir=python_script_dir, model_name=model_name)
@@ -2564,7 +2564,7 @@ if __name__ == "__main__":
     # -------------------------------ITERATIVE_FASTMRIBRAIN_RAG_IMAGE -------------------------------
     if dataset == 'ITERATIVE_FASTMRIBRAIN_RAG_IMAGE':
                     
-        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/iterative'
+        llm_generated_python_scripts_ase_directory = f'{PROJECT_BASE_DIRECTORY}/fastMri/llm_rag_generated_python_scripts/iterative_error_resolve'
         
         list_of_python_scripts_sub_dirs = [
             "devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
@@ -2598,7 +2598,7 @@ if __name__ == "__main__":
                 model_name = 'qwen3_32b'
                 
             
-            target_dir =f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/iterative/{python_script_dir}'
+            target_dir =f'{PROJECT_BASE_DIRECTORY}/fastMri/evaluation_results/iterative_error_resolve/{python_script_dir}'
             # target_dir, python_script_dir, model_name 
             evaluation_of_ITERATIVE_FASTMRIBRAIN_python_scripts_by_checking_generated_image(python_script_parent_directory=llm_generated_python_scripts_ase_directory, 
                                                                                             target_dir=target_dir, 
