@@ -2,36 +2,6 @@ import os
 import pandas as pd
 import h5py
 
-"""
-# Define the base directory where folders 76 to 100 are located
-base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test/plot_generation/csv_to_h5_data'
-
-# Initialize a list to store file paths and their data
-file_paths = []
-data_frames = []
-
-# Loop through folders 76 to 100
-for folder_number in range(76, 101):
-    h5_file_path = os.path.join(base_directory, f"{folder_number}_h5_data.h5")
-    
-    # Check if the HDF5 file exists, then add path and read data
-    if os.path.isfile(h5_file_path):
-        file_paths.append(h5_file_path)  # Store file path
-        df = pd.read_hdf(h5_file_path, key='data')  # Read data
-        data_frames.append(df)  # Store DataFrame
-        print(f"\nRead data from: {h5_file_path}")
-    else:
-        print(f"HDF5 file {h5_file_path} does not exist.")
-
-# Display the paths and optionally the data
-for path in file_paths:
-    print("HDF5 file paths:", path)
-# Uncomment the following line to print data if needed
-# print("Data:", data_frames)
-
-"""
-
-
 
 # Define the base directory where folders 76 to 100 are located
 # base_directory = '/Users/apukumarchakroborti/gsu_research/llam_test/plot_generation/csv_to_h5_data'
@@ -82,27 +52,6 @@ for folder_number in range(76, 101):
         except Exception as e:
             print(f"Error reading HDF5 file: {e}")
 
-
-        """
-        with h5py.File(h5_file_path, 'r') as h5_file:
-            print('Read successfull')
-            # Iterate through all datasets within the HDF5 file
-            for dataset_name in h5_file.keys():
-                print('Dataset name: ', dataset_name)
-                print()
-                # dataset_contents[(h5_file_path, dataset_name)] = h5_file[dataset_name][:]
-                print(f"Read dataset '{dataset_name}' from {h5_file_path}")
-        """
     else:
         print(f"HDF5 file {h5_file_path} does not exist.")
     
-    # break
-
-# Display the paths and optionally the data
-# print("HDF5 file paths:", file_paths)
-# Uncomment the following line to print data if needed
-# print("Dataset contents:", dataset_contents)
-
-
-# for path in dataset_paths:
-#     print(path)

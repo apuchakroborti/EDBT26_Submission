@@ -169,7 +169,6 @@ def generate_request_for_generating_source_code_with_error_msg_and_SO_iterative_
 # currently being used, Date: Jan 29, 2025
 def generate_request_for_generating_source_code_with_zero_shot_CoT_best_success_with_memory(user_input, data_structure_information, full_data_path, attribute_present):
     print('Inside generate_request_for_generating_source_code_with_zero_shot_CoT_best_success\n')
-    # prompt = "Generate the python code and add the code inside <<< >>> based on the description below:\n"
     prompt = "Generate the python code and return only the python code based on the description below:\n"
     prompt+=user_input 
     prompt+= "\n#Follow the instructions step by step:"
@@ -178,13 +177,7 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_best_success_
     
     # this is for asking LLM to collect information from the memory
     prompt+= "\nDo not set or access any dataset by assumption, set datasets paths only from the memory reference of named PATHS information such as dataset paths, available attributes and shapes.\n"
-    # prompt+= "\nDo not set or access any dataset by assumption, set datasets paths only from the below available new line separated datasets and attributes added using a tab space in the following line:\n"
-    # prompt+=data_structure_information
-    # if attribute_present:
-        # prompt+= "\nWhile reading attribute follow the convention below:\n"
-        # prompt+= "file[data_set_path_name].attrs[attribute_name]"
-
-    # prompt+= "\nwhile accessing datasets all time use full paths added as examples above"
+  
     prompt+= "\nif this python script needs any type of plotting, graph labeling, give them related names from prompt"
     prompt+= "\nAt the end, save the output plot file to the same directory as FULL_DATA_PATH with .png extention"
 
@@ -395,20 +388,11 @@ def generate_prompt_for_generating_source_code_zero_shot_with_corrector_simple_r
 def generate_prompt_for_generating_source_code_with_zero_shot_CoT_with_corrector_step_by_step(user_input, data_structure_information, full_data_path, attribute_present):    
     prompt = "Generate the python code and add the code inside <<< >>> based on the description below description=: \n"+user_input+"\n"
     prompt+= " At first gather the requirements based on the description, dependant data and information, and FULL_DATA_PATHS, at the end use the required information to generate the code step by step\n"
-    # s+= "#Generate python codes step by step:\n"
-    # s+= "#1 load all datasets related to the plotting mentioned in the description"
-    # s+= "#2 then use the data variables to the graphs"
-    # s+= "At first create a separate python function with parameters required for the plotting, then from the main function access required datasets and call the function from main function\n"
-    # s+= "#task one\n read the data file and access the datasets mentioned in the description \n"
-    # s+= "Do the data slicing based on the shapes of the datasets mentioned at the end of evey datasets inside () in the following line\n "
-    # s+= "Do the data slicing based on the shapes of the datasets mentioned at the end of evey datasets inside () in the following line\n "
-    # s+= "Split data_paths_information by ### and index 0 are the datasets paths, index 1 is the shape of the datasets, and at the end optional index 2 contains attributes present in the datasets \n "
-
+  
     prompt+= "do import the library h5py as this program needs to read HDF5, .hdf5, .h5, .H5, .he5, or .HE5 data\n"
     prompt+= "set the input data file path from FULL_DATA_PATH="+full_data_path+"\n"
     if attribute_present:
         prompt+= "Do not set or access any dataset by assumption, "
-        # s+= "set datasets paths only from the below available new line separated datasets and attributes added using a tab space in the following line, data_paths_information=:\n"
         prompt+= "set datasets paths only from the below available new line separated datasets correct paths information from the given exact data file below:\n"
         prompt+= data_structure_information+"\n"
         # this line is added to separate the attributes
@@ -452,17 +436,11 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_with_correcto
     # s = "Generate the python code and add the code inside ```python ``` based on the description below description=: \n"+user_input+"\n"
     s = "Generate the python code and add the code inside <<< >>> based on the description below description=: \n"+user_input+"\n"
     s+= "#Follow the instructions step by step:\n"
-    # s+= "At first create a separate python function with parameters required for the plotting, then from the main function access required datasets and call the function from main function\n"
-    # s+= "#task one\n read the data file and access the datasets mentioned in the description \n"
-    # s+= "Do the data slicing based on the shapes of the datasets mentioned at the end of evey datasets inside () in the following line\n "
-    # s+= "Do the data slicing based on the shapes of the datasets mentioned at the end of evey datasets inside () in the following line\n "
-    # s+= "Split data_paths_information by ### and index 0 are the datasets paths, index 1 is the shape of the datasets, and at the end optional index 2 contains attributes present in the datasets \n "
-
+    
     s+= "do import the library h5py as this program needs to read HDF5, .hdf5, .h5, .H5, .he5, or .HE5 data\n"
     s+= "set the input data file path from FULL_DATA_PATH="+full_data_path+"\n"
     if attribute_present:
         s+= "Do not set or access any dataset by assumption, "
-        # s+= "set datasets paths only from the below available new line separated datasets and attributes added using a tab space in the following line, data_paths_information=:\n"
         s+= "set datasets paths only from the below available new line separated datasets paths information below:\n"
         s+= data_structure_information+"\n"
         # this line is added to separate the attributes
@@ -524,7 +502,6 @@ def generate_request_for_generating_source_code_with_zero_shot_CoT_without_corre
     s+= "set the input data file path from FULL_DATA_PATH="+full_data_path+"\n"
     
     # resolving errors related to using path varibales in accessing data
-    # s+= "\n while accessing datasets all time use full paths added as examples above"
     
     # this is for resolving errors related colorbar labeling and accessing string data from the datasets
     s+= "\n if this python script needs any type of plotting, graph labeling, give them related names from the user description"
@@ -583,10 +560,6 @@ def generate_request_for_generating_source_code_with_data_structure(sample, data
     s +=  "\nRead the data from the following directory, this path such as data_path or FILE_NAME or INPUT_FILE or FILE should be used this following path: \n"+ full_data_path
 
     s+= "\ndo import h5py library if the program needs to read data with extensions HDF5, hdf5, h5, H5, he5, and HE5."
-    # s +=  "\nAlso Please use the following dataset paths to set the paths correctly: \n"+dataset_information
-    # s += "\nWhile reading groups and dataset information from data this hierarchical structure should be analyzed to set the paths: \n"+data_structure_information
-    # + "\n Make sure the input file can be specified as a command line parameter by importing and utilizing the sys module."
-    # to reduce the input path list
     s += "\nWhile reading groups and dataset information from data this hierarchical structure should be analyzed to set the paths, the list inside curly brace are dataset attributes: \n"+data_structure_information
 
     print("Prompt: \n", s )
@@ -607,22 +580,13 @@ def generate_request_for_generating_source_code_with_data_rule_base_reasoning(us
     s +=" and attribute paths from the ndata_set_attribute_information by match which one you required, also import the library h5py for the FULL_DATA_PATH with extensions HDF5, hdf5, h5, H5, he5, and HE5 "
     s+='\nAlso while reading attribute follow the convention mentioned in the ATTRBITE_READ section such as file[path of the specific dataset].attrs[name of the attribute], if any attribute path not found no path should be assumed, just find alternative way\n'
     # current working
-    # s+='\nAlso while reading attribute follow the convention mentioned in the ATTRBITE_READ section, if any attribute path not found no path should be assumed, just find alternative way\n'
-    # s+="\nMoreover, Don't read any dataset and attribute which not required for the plotting\n"
     s+="\nALso, while setting dataset and attributes first first verify if it is present in the ndata_set_attribute_information\n"
     s+='\n The output plot file should be the same as FULL_DATA_PATH just with png extentions\n'
 
     s +="\nDESCRIPTION=\n"+user_input
-    # s +='\n Add this data directory path below to run the above code. '
     s +=  "\nFULL_DATA_PATH= \n"+ full_data_path
     s+="\ndata_set_attribute_information= \n"+data_structure_information
 
-    # s+= "\ndo import h5py library if the program needs to read data with extensions HDF5, hdf5, h5, H5, he5, and HE5."
-    # s +=  "\nAlso Please use the following dataset paths to set the paths correctly: \n"+dataset_information
-    # s += "\nWhile reading groups and dataset information from data this hierarchical structure should be analyzed to set the paths: \n"+data_structure_information
-    # + "\n Make sure the input file can be specified as a command line parameter by importing and utilizing the sys module."
-    # to reduce the input path list
-    # s += "\nWhile reading groups and dataset information from data this hierarchical structure should be analyzed to set the paths, the list inside curly brace are dataset attributes: \n"+data_structure_information
     s+='\nATTRIBUTE_READ=\n'+'file[data_set_path_name].attrs[attribute_name]'
 
 
@@ -647,11 +611,6 @@ def generate_request_for_generating_source_code_with_data_structure_debugging_an
     s+="Use the following data paths to correct the code where it read or access group or dataset or attributes: \n"
     s+=full_data_path
 
-    # s = "Generate the python code based on the following description: \n"+sample
-    # s +=  "\nRead the data from the following directory, this path should be used while reading data: \n"+ full_data_path
-    # s +=  "\nAlso Please use the following dataset paths to set the paths correctly: \n"+dataset_information
-    # s += "\nWhile reading groups and dataset information from data this hierarchical structure should be analyzed to set the paths: \n"+data_structure_information
-    # + "\n Make sure the input file can be specified as a command line parameter by importing and utilizing the sys module."
     print("\n\nRepair Prompt: \n", s )
     
     data = {
@@ -670,8 +629,6 @@ def generate_request_for_generating_source_code_with_data_structure_debugging_an
 # latest means 8b
 def generate_request_for_extracting_datasets_from_description(sample, model="llama3:latest"):
     
-    # s = "Find the group and dataset names on the following description: \n" + sample + "\n Make sure response should under <datasets><full path of datasets mentioned in the description></datasets>"
-    # s = "Please create a list of groups and dataset paths from the following description and retrun in a json array format, the json variable name should be datasets: \n" + sample
     s = "Please create a list of all groups, dataset, and attributes with full paths from the following description and retrun in a json array format, the json variable name should be datasets, don't send response without json format and should be wrap indise ```json\n```: \n" + sample
 
 
@@ -686,15 +643,9 @@ def generate_request_for_extracting_datasets_from_description(sample, model="lla
     }
     return data
 
-# def generate_request_for_generating_source_code(sample, model="llama3:70b"):
-# latest means 8b
-# possible models: llama3:70b, llama3:latest/8b, deepseek-coder-v2
 def generate_request_for_extracting_datasets_and_attributes_from_description(sample, model):
     
-    # s = "Find the group and dataset names on the following description: \n" + sample + "\n Make sure response should under <datasets><full path of datasets mentioned in the description></datasets>"
-    # s = "Please create a list of groups and dataset paths from the following description and retrun in a json array format, the json variable name should be datasets: \n" + sample
     s = "Please create a list of all dataset and attributes with full paths from the following description and retrun in a json array format, the json variable name should be datasets, don't send response without json format and should be wrap indise ```json\n```: \n" + sample
-    # print("\n\nPrompt forgenerate_request_for_extracting_datasets_and_attributes_from_description: \n", s)
     print("\nHuman like generated input text: \n", sample)
     
     data = {
@@ -860,25 +811,8 @@ def get_group_dataset_and_attribute_name(user_input_content, model, URL):
         extract_list_data_from_llm_response = utils.extract_unique_strings(datasets_from_user_response_json['datasets'])
         print("\nLLMRequester.get_group_and_dataser_name: after extract_unique_strings: \n", extract_list_data_from_llm_response)        
         
-        # extract_list_data_from_llm_response = utils.convert_response_into_json_path_list(datasets_from_user_response['response'])
         # print("LLMRequester.get_group_and_dataser_name:extract_list_data_from_llm_response: \n", extract_list_data_from_llm_response)
-
-
-        # load as a json
-        # extract_list_data_from_llm_response = utils.get_list_from_json(extract_list_data_from_llm_response)
-        # print("LLMRequester.get_group_and_dataser_name: After get_list_from_json: \n", extract_list_data_from_llm_response)
-
-        #make flatten
-        """
-        if utils.check_datasets_object(extract_list_data_from_llm_response) is True:
-            print("LLMRequester.get_group_and_dataser_name: datasets is a dicttionary")
-            extract_list_data_from_llm_response = utils.flatten_datasets_to_list(extract_list_data_from_llm_response)
-            print("\nLLMRequester.get_group_and_dataser_name:After flatten: extract_list_data_from_llm_response: \n", extract_list_data_from_llm_response) 
-        """
-        
-        # extract_list_data_from_llm_response = utils.flatten_datasets_to_list(extract_list_data_from_llm_response)
-        # print("LLMRequester.get_group_and_dataser_name: After flatten_datasets_to_list: \n", extract_list_data_from_llm_response)
-
+       
         return extract_list_data_from_llm_response
     except Exception as e:
         print("Exception occurred at LLMRequester.get_group_and_dataser_name, message: ", e)
@@ -904,25 +838,6 @@ def get_dataset_and_attribute_name(user_input_content, model, URL):
         extract_list_data_from_llm_response = utils.extract_unique_strings(datasets_from_user_response_json['datasets'])
         print("\nLLMRequester.get_dataset_and_attribute_name: after extract_unique_strings: \n", extract_list_data_from_llm_response)        
         
-        # extract_list_data_from_llm_response = utils.convert_response_into_json_path_list(datasets_from_user_response['response'])
-        # print("LLMRequester.get_group_and_dataser_name:extract_list_data_from_llm_response: \n", extract_list_data_from_llm_response)
-
-
-        # load as a json
-        # extract_list_data_from_llm_response = utils.get_list_from_json(extract_list_data_from_llm_response)
-        # print("LLMRequester.get_group_and_dataser_name: After get_list_from_json: \n", extract_list_data_from_llm_response)
-
-        #make flatten
-        """
-        if utils.check_datasets_object(extract_list_data_from_llm_response) is True:
-            print("LLMRequester.get_group_and_dataser_name: datasets is a dicttionary")
-            extract_list_data_from_llm_response = utils.flatten_datasets_to_list(extract_list_data_from_llm_response)
-            print("\nLLMRequester.get_group_and_dataser_name:After flatten: extract_list_data_from_llm_response: \n", extract_list_data_from_llm_response) 
-        """
-        
-        # extract_list_data_from_llm_response = utils.flatten_datasets_to_list(extract_list_data_from_llm_response)
-        # print("LLMRequester.get_group_and_dataser_name: After flatten_datasets_to_list: \n", extract_list_data_from_llm_response)
-
         return extract_list_data_from_llm_response
     except Exception as e:
         print("Exception occurred at LLMRequester.get_group_and_dataser_name, message: ", e)
@@ -994,10 +909,7 @@ def generate_code_and_save_with_data_information(user_input_file_path, dataset_i
 
 
 def generate_code_and_save_with_data_structure_information(user_input_file_path, dataset_information, data_structure_information, full_data_path, target_dir, URL, old_ext='.txt'):
-    # print("user_input_file_path: ", user_input_file_path)
-    # print("dataset_information: ", dataset_information)
-    # print("full_data_path: ", full_data_path)
-
+  
 
     """
     Reads all files with the specified old extension from the source directory, changes the file extension,
@@ -1057,15 +969,7 @@ def generate_code_and_save_with_data_structure_information_with_repair(user_inpu
             os.makedirs(target_dir)
             
         # Change the extension
-        base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
-        # print("base_name = os.path.splitext(user_input_file_path)[0]: ", base_name)
-                
-        # generate code and save
-        # with open(user_input_file_path, 'r') as f:
-        #     description = f.read()
-        
-        # source_code_gen = generate_request_for_generating_source_code_with_data(description, dataset_information, full_data_path, "llama3:latest")
-        # source_code_gen = generate_request_for_generating_source_code_with_data_structure(description, dataset_information, data_structure_information, full_data_path, model)
+        base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension  
         source_code_gen = generate_request_for_generating_source_code_with_data_structure(description, dataset_information, data_structure_information, full_data_path, model)
 
         source_code_gen = json.dumps(source_code_gen).encode("utf-8")
@@ -1080,13 +984,6 @@ def generate_code_and_save_with_data_structure_information_with_repair(user_inpu
         
         if response_code is not None:
             
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
             # print("\n\nSecond Generated code: \n", regen_response_code)
             regen_response_code = response_code
             if regen_response_code is not None:
@@ -1113,9 +1010,6 @@ def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, 
         base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
         # print("base_name = os.path.splitext(user_input_file_path)[0]: ", base_name)
                  
-        # source_code_gen = generate_request_for_generating_source_code_with_data(description, dataset_information, full_data_path, "llama3:latest")
-        # source_code_gen = generate_request_for_generating_source_code_with_data_structure(description, dataset_information, data_structure_information, full_data_path, model)
-        # source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(description, dataset_information, data_structure_information, full_data_path, model)
         source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(user_input_description, data_structure_information, full_data_path, model)
 
         source_code_gen = json.dumps(source_code_gen).encode("utf-8")
@@ -1130,13 +1024,6 @@ def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, 
         
         if response_code is not None:
             
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
             # print("\n\nSecond Generated code: \n", regen_response_code)
             regen_response_code = response_code
             if regen_response_code is not None:
@@ -1150,40 +1037,20 @@ def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, 
 # def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
 def generate_code_and_save_with_data_zero_shot_CoT(user_input_file_path, user_input_description, data_structure_information, full_data_path, target_dir, attribute_present, model, is_memory, URL, dataset, old_ext='.txt'):
     try:
-        # print("user_input_file_path: ", user_input_file_path)
-        # print("dataset_information: ", dataset_information)
-        # print("full_data_path: ", full_data_path)
-
-
+     
         # Create the target directory if it doesn't exist
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
             
         # Change the extension
         base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
-        # print("base_name = os.path.splitext(user_input_file_path)[0]: ", base_name)
-                 
-        # source_code_gen = generate_request_for_generating_source_code_with_data(description, dataset_information, full_data_path, "llama3:latest")
-        # source_code_gen = generate_request_for_generating_source_code_with_data_structure(description, dataset_information, data_structure_information, full_data_path, model)
-        # source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(description, dataset_information, data_structure_information, full_data_path, model)
-        # source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(user_input_description, data_structure_information, full_data_path, model)
-        # function definition def generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector(user_input, data_structure_information, full_data_path, attribute_present, model):
-
-        # prompt with zero shot
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # updated specific error resolving prompt
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector_resolve_specific_error(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # ask LLM to do task step by step
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
         # this is currently being used for generating final code without LLM memory
         source_code_gen = ''
         
         # with corrector
         if is_memory==False:
-            source_code_gen = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
+            # user_input, data_structure_information, full_data_path, attribute_present, model, python_script, error_message
+            source_code_gen = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model, python_script='', error_message='')
         
         # with memory
         else:
@@ -1206,14 +1073,6 @@ def generate_code_and_save_with_data_zero_shot_CoT(user_input_file_path, user_in
         
         if response_code is not None:
             
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
-            # print("\n\nSecond Generated code: \n", regen_response_code)
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
@@ -1224,12 +1083,10 @@ def generate_code_and_save_with_data_zero_shot_CoT(user_input_file_path, user_in
 # created on Feb 13, 2025
 # to resolve error iteratively
 # def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
-def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_input_file_path, user_input_description, data_structure_information, full_data_path, target_dir, attribute_present, model, is_memory, python_script, error_message, iteration, URL, old_ext='.txt'):
+def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_input_file_path, user_input_description, data_structure_information, full_data_path, target_dir, attribute_present, model, is_memory, python_script, error_message, iteration, URL):
     try:
         # print("user_input_file_path: ", user_input_file_path)
-        # print("dataset_information: ", dataset_information)
-        # print("full_data_path: ", full_data_path)
-
+      
         # Create the target directory if it doesn't exist
         if not os.path.exists(target_dir):
             os.makedirs(target_dir)
@@ -1237,21 +1094,6 @@ def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_
         # Change the extension
         base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
         # print("base_name = os.path.splitext(user_input_file_path)[0]: ", base_name)
-                 
-        # source_code_gen = generate_request_for_generating_source_code_with_data(description, dataset_information, full_data_path, "llama3:latest")
-        # source_code_gen = generate_request_for_generating_source_code_with_data_structure(description, dataset_information, data_structure_information, full_data_path, model)
-        # source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(description, dataset_information, data_structure_information, full_data_path, model)
-        # source_code_gen = generate_request_for_generating_source_code_with_data_rule_base_reasoning(user_input_description, data_structure_information, full_data_path, model)
-        # function definition def generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector(user_input, data_structure_information, full_data_path, attribute_present, model):
-
-        # prompt with zero shot
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # updated specific error resolving prompt
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector_resolve_specific_error(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # ask LLM to do task step by step
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
         
         # this is currently being used for generating final code without LLM memory
         source_code_gen = ''
@@ -1264,7 +1106,7 @@ def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_
         elif len(python_script) <= 0 and is_memory==False:
             print('LLMRequester:: with corrector code generation ...')
             # default with corrector code generation
-            source_code_gen = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
+            source_code_gen = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model, python_script='', error_message='' )
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
@@ -1289,13 +1131,6 @@ def generate_code_and_save_with_data_zero_shot_CoT_iterative_error_resolve(user_
         
         if response_code is not None:
             
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
             # print("\n\nSecond Generated code: \n", regen_response_code)
 
             regen_response_code = response_code
@@ -1329,30 +1164,17 @@ def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file
             
         # Change the extension
         base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
-        # print("base_name = os.path.splitext(user_input_file_path)[0]: ", base_name)
                  
         # this is currently being used for generating final code without LLM memory
         source_code_gen = ''
-        # with corrector function only
-        # if is_memory==True:
-            # print('LLMRequester:: with memory code generation ...')
-            # print('')
-            # currently under development with LLM memory                                                                    user_input,             data_structure_information, full_data_path, attribute_present, model
-            # source_code_gen = generate_request_for_generating_source_code_using_LLM_memory_with_zero_shot_CoT_with_corrector(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        # elif len(python_script) <= 0 and is_memory==False:
         
         if len(python_script) <= 0:
             print('LLMRequester:: with corrector code generation ...')
-            # default with corrector code generation
-            # old
-            # source_code_gen_request = generate_request_for_generating_source_code_separate_prompt_method_with_zero_shot_CoT_with_corrector_step_by_step(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-            # examples_for_query_augmentation = 'Need to fill later'
             #                                                                              user_input,             examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result
             source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
-            # source_code_gen_request = generate_request_for_generating_source_code_using_LLM_memory_with_zero_shot_CoT_with_corrector_iterative_error_resolve(user_input_description, data_structure_information, full_data_path, attribute_present, model, python_script, error_message)
             source_code_gen_request = generate_request_for_generating_source_code_with_SO_corrector_iterative_error_resolve(dataset_attrubute_fullpath_list_result, full_data_path, model, python_script, error_message, examples_for_query_augmentation)
         
         prompt = source_code_gen_request['prompt']
@@ -1362,15 +1184,10 @@ def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file
         
         llm_gen_source_code_response = requests.post(URL, data=source_code_gen_request)
 
-        # llm_gen_source_code= {'response': 'test'}
-        #print(llm_gen_source_code)
         llm_gen_source_code_response  = llm_gen_source_code_response.json()
         print('Raw output: \n', llm_gen_source_code_response)
          
          
-        # if len(python_script)> 0 and len(error_message) > 0:
-        #     print('Iterative resolving error steps, generated code: ')
-        
         response_code = utils.extract_python_code_from_response(llm_gen_source_code_response['response'])
         print("\n\nFirst Generated code: \n", response_code)
         
@@ -1405,7 +1222,7 @@ def generate_code_and_save_code_with_RAG_iterative_error_resolve(user_input_file
 
 # created on Jul 06, 2025
 # to resolve error iteratively
-def generate_code_and_save_code_MATPLOTAGENT_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation):
+def generate_code_and_save_code_MATPLOTAGENT_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation, temperature):
     try:
         print('LLMRequester::Inside generate_code_and_save_code_with_RAG_iterative_error_resolve ...')
         print("user_input_file_path: ", user_input_file_path)
@@ -1425,7 +1242,7 @@ def generate_code_and_save_code_MATPLOTAGENT_RAG_iterative_error_resolve(user_in
         if len(python_script) <= 0:
             print('LLMRequester:: with corrector code generation ...')
             #                                                                              user_input,             examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result
-            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result)
+            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
@@ -1519,10 +1336,7 @@ def generate_code_and_save_code_VTK_RAG_iterative_error_resolve(user_input_file_
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                # response_code+="\nprint(\"Success_and_End_of_Script!\")"
-                # for time recording
-                # utils.save_file(output_file_path, response_code)
-
+          
                 utils.save_file(output_file_path, prompt+'\n\n'+response_code)
 
                 # lets save the iterative generated code
@@ -1545,7 +1359,7 @@ def generate_code_and_save_code_VTK_RAG_iterative_error_resolve(user_input_file_
 
 # created on Jul 06, 2025
 # to resolve error iteratively
-def generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation):
+def generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(user_input_file_path, user_input_description, dataset_attrubute_fullpath_list_result, full_data_path, target_dir, model, python_script, error_message, iteration, URL, examples_for_query_augmentation, temperature):
     try:
         print('LLMRequester::Inside generate_code_and_save_code_with_RAG_iterative_error_resolve ...')
         print("user_input_file_path: ", user_input_file_path)
@@ -1565,7 +1379,7 @@ def generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(user_in
         if len(python_script) <= 0:
             print('LLMRequester:: with corrector code generation ...')
             #                                                                              user_input,             examples_code_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result
-            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result)
+            source_code_gen_request = generate_request_for_generating_source_code_with_rag(user_input_description, examples_for_query_augmentation, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
         else:
             # with corrector iterative code generation
             print('LLMRequester:: with corrector Iterative error resolvinging ...')
@@ -1613,12 +1427,9 @@ def generate_code_and_save_code_FASTMRIBRAIN_RAG_iterative_error_resolve(user_in
         return 'None', 'None'
 
 # def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
-def generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, URL, dataset, dataset_attrubute_fullpath_list_result, old_ext='.txt'):
+def generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, URL, dataset, dataset_attrubute_fullpath_list_result):
     try:
-        # print("user_input_file_path: ", user_input_file_path)
-        # print("dataset_information: ", dataset_information)
-        # print("full_data_path: ", full_data_path)
-
+     
         # Create the target directory if it doesn't exist
         print('Target directory: \n', target_dir)
         if not os.path.exists(target_dir):
@@ -1637,22 +1448,12 @@ def generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user
         else:
             source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_separate_method_step_by_step(user_input_description, full_data_path, model)
 
-        # prompt with zero shot
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # updated specific error resolving prompt
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_with_corrector_resolve_specific_error(user_input_description, data_structure_information, full_data_path, attribute_present, model)
-        
-        # ask LLM to do task step by step
-        # source_code_gen = generate_request_for_generating_source_code_with_zero_shot_CoT_without_corrector_step_by_step(user_input_description, full_data_path, model)
         
         prompt = source_code_gen['prompt']
         prompt='"""'+prompt+'"""'
 
         source_code_gen = json.dumps(source_code_gen).encode("utf-8")
         llm_gen_source_code = requests.post(URL, data=source_code_gen)
-        # llm_gen_source_code= {'response': 'test'}
-        #print(llm_gen_source_code)
         llm_gen_source_code  = llm_gen_source_code.json()
         print('Raw output: \n',llm_gen_source_code)
         # 
@@ -1662,19 +1463,10 @@ def generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user
         
         if response_code is not None:
             
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
-            # print("\n\nSecond Generated code: \n", regen_response_code)
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                # response_code+="\nprint(\"Success_and_End_of_Script!\")\n"
-
+  
                 utils.save_file(output_file_path, prompt+'\n\n'+response_code)
                 if dataset=='ITERATIVE_ERROR_RESOLVE_CLIMATE':
                     # this is for saving all of the generated code for each step
@@ -1686,9 +1478,10 @@ def generate_code_and_save_without_data_zero_shot_CoT(user_input_file_path, user
                 return output_file_path, response_code
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_without_data_zero_shot_CoT, message: ", e)
+        return None, None
 
 # def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
-def generate_code_and_save_without_data_and_rag_and_SO(user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, URL, dataset, dataset_attrubute_fullpath_list_result, query_augmentation):
+def generate_code_and_save_without_data_and_rag_and_SO(user_input_file_path, user_input_description, full_data_path, target_dir, model, python_script, error_message, iteration, URL, dataset, dataset_attrubute_fullpath_list_result, query_augmentation, temperature):
     try:
         print("LLRequestor :: generate_code_and_save_without_data_and_rag_and_SO --> user_input_file_path: ", user_input_file_path)
         print("LLRequestor :: generate_code_and_save_without_data_and_rag_and_SO --> full_data_path: ", full_data_path)
@@ -1703,9 +1496,10 @@ def generate_code_and_save_without_data_and_rag_and_SO(user_input_file_path, use
         base_name = os.path.splitext(os.path.basename(user_input_file_path))[0]  # Get the base file name without extension
                  
         # current without corrector
+        source_code_gen_request = {}
         if len(python_script)<=0:
-            source_code_gen_request = generate_request_for_generating_source_code_without_rag(user_input_description, full_data_path, model, dataset_attrubute_fullpath_list_result)
-            source_code_gen_request = generate_prompt_for_generating_source_code_with_rag
+            source_code_gen_request = generate_request_for_generating_source_code_without_rag(user_input_description, full_data_path, model, dataset_attrubute_fullpath_list_result, temperature)
+            
         else:            
             # this is for the iterative error resolving
             # parameters:                                                                                                     data_structure_information, full_data_path, model, generated_python_script, error_message, query_augmentation
@@ -1725,13 +1519,10 @@ def generate_code_and_save_without_data_and_rag_and_SO(user_input_file_path, use
         
         
         if response_code is not None:
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
-            # print("\n\nSecond Generated code: \n", regen_response_code)
             regen_response_code = response_code
             if regen_response_code is not None:
                 output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                # response_code+="\nprint(\"Success_and_End_of_Script!\")\n"
-
+    
                 utils.save_file(output_file_path, prompt+'\n\n'+response_code)
                 if dataset=='ITERATIVE_ERROR_RESOLVE_CLIMATE':
                     # this is for saving all of the generated code for each step
@@ -1746,7 +1537,6 @@ def generate_code_and_save_without_data_and_rag_and_SO(user_input_file_path, use
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_without_data_and_rag_and_SO, message: ", e)
 
-# def generate_code_and_save_with_data_rule_based_reasoning(user_input_file_path, description, dataset_information, data_structure_information, full_data_path, target_dir, model, old_ext='.txt'):
 #                                                                            user_input_file_full_path, user_input_content, output_dir+'/'+output_subdir, model)
 def zero_shot_CoT_generate_request_for_generating_intent_attribute_condition(user_input_file_full_path, user_input_content, target_dir, model, URL, old_ext='.txt'):
     try:
@@ -1781,24 +1571,10 @@ def zero_shot_CoT_generate_request_for_generating_intent_attribute_condition(use
         
         return response_code
         
-        """
-        if response_code is not None:
-            
-            # regen_source_code = generate_request_for_generating_source_code_with_data_structure_debugging_and_reset_paths(response_code, data_structure_information, model)
-            # regen_source_code = json.dumps(regen_source_code).encode("utf-8")
-            # regen_source_code = requests.post(URL, data=regen_source_code)
-            
-            # regen_source_code  = regen_source_code.json()
-            
-            # regen_response_code = utils.extract_python_code_from_response(regen_source_code['response'])
-            # print("\n\nSecond Generated code: \n", regen_response_code)
-            regen_response_code = response_code
-            if regen_response_code is not None:
-                output_file_path = os.path.join(target_dir, f'{base_name}.py')
-                utils.save_file(output_file_path, prompt+'\n\n'+response_code)
-        """
+      
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_without_data_zero_shot_CoT, message: ", e)
+        return None
 
 
 # May 17, 2025
@@ -1943,6 +1719,7 @@ def generate_code_and_save_with_rag(user_input_file_path, user_input_description
         return output_file_path, response_code        
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_with_rag, message: ", e)
+        return None, None
 
 
 def generate_code_and_save_without_rag(user_input_file_path, user_input_description, full_data_path, target_dir, model, URL, dataset_attrubute_fullpath_list_result, temperature):
@@ -1981,6 +1758,7 @@ def generate_code_and_save_without_rag(user_input_file_path, user_input_descript
         return output_file_path, response_code
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_with_rag, message: ", e)
+        return None, None
 
 
 # created on February 26, 2025
@@ -2115,6 +1893,7 @@ def generate_code_and_save_VTK_related_python_scripts_without_rag(user_input_fil
         return 'None', 'None'
     except Exception as e:
         print("Exception occurred at LLMRequest.generate_code_and_save_VTK_related_python_scripts_without_rag, message: ", e)
+        return None, None
 
 
 
@@ -2190,7 +1969,6 @@ def generate_request_for_VTK_related_user_query_generation(user_input_file_full_
 
 # June 24, 2025
 def get_prompt_template_of_VTK_related_expert_user_queries_based_on_python_scripts(python_script, model):
-    # v4
     query_template = f"Describe the following Python script in a clear, human-written, step-by-step style."
     query_template+= "The description must include:\n"
     query_template+= "  - The exact names of the Python libraries to be imported\n"
@@ -2199,40 +1977,6 @@ def get_prompt_template_of_VTK_related_expert_user_queries_based_on_python_scrip
     query_template+= "  - A breakdown of what each step does\n"
     query_template+= "Do not include any explanations, comments, or the original code. Return only the description, written like human documentation for someone who needs to reproduce the same script later.\n"
     query_template+= f"\n   Python Script:\n{python_script}\n"
-    
-    # v3
-    # query_template = f"Describe the following Python script in a natural, human-written style. The description should be detailed enough so someone could recreate the script later." 
-    # query_template+= " Only return the description — do not include explanations, comments, or the original code."
-    # query_template+= f"\n   Python Script:\n{python_script}\n"
-
-
-    # v2
-    # query_template = f"You are a Python expert and technical analyst. Based on the Python script provided, generate a comprehensive and structured description of what the script does. "
-    # query_template+= "Do not include or reproduce any code, but describe the functionality and logic in detail using appropriate technical terminology when necessary.\n"
-
-    # query_template+= "Your description should include:\n"
-    # query_template+= "  - The overall purpose and functionality of the script.\n"
-    # query_template+= "  - A breakdown of all major components such as modules used, functions defined, and data structures employed.\n"
-    # query_template+= "  - Any data processing, file handling, or API interaction involved.\n"
-    # query_template+= "  - Control flow mechanisms like loops, conditionals, and exception handling.\n"
-    # query_template+= "  - Any specific algorithmic steps or data transformations.\n"
-    # query_template+= "  - Observations about efficiency, modularity, or coding practices.\n"
-    # query_template+= f"\n   Python Script:\n{python_script}\n"
-
-    # query_template+= "\nMake sure your output is suitable for a developer or technical reviewer who wants to fully understand the intent and structure of the code without seeing the code itself."
-
-    # v1
-    # query_template = f"You are an expert Python developer and software analyst. A Python script will be provided below. Your task is to analyze and describe the script in comprehensive detail.\n"
-    # query_template+= "  For the given script:\n"
-    # query_template+= "  1. Explain the purpose of the script.\n"
-    # query_template+= "  2. Describe all functions, classes, and key blocks of logic.\n"
-    # query_template+= "  3. Interpret the flow of data and any important dependencies or modules.\n"
-    # query_template+= "  4. List key variables and their roles.\n"
-    # query_template+= "  5. Mention edge cases the script handles, and potential limitations.\n"
-    # query_template+= "  6. Suggest any performance, readability, or design improvements if applicable.\n"
-    # query_template+= f"\n   Python Script:\n{python_script}\n"
-    # query_template+= f"\nProvide a precise and expert-level breakdown based on the code above.\n"
-        
       
     print("Prompt: \n", query_template)
     

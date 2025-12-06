@@ -1,5 +1,18 @@
 import os
 import re
+import json
+from collections import defaultdict
+# testing string fuzzy matching library
+from rapidfuzz import process
+import shutil
+from pathlib import Path
+import os
+import glob
+import time
+import csv
+
+
+PROJECT_BASE_DIRECTORY = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
 def extract_substring(text, start_delim, end_delim):
     start_idx = text.find(start_delim)
     if start_idx == -1:
@@ -12,9 +25,6 @@ def extract_substring(text, start_delim, end_delim):
     
     return text[start_idx:end_idx]
 
-
-
-import json
 
 def get_list_from_json(group_and_dataset_list_json_data):
     try:
@@ -40,14 +50,6 @@ def make_list_comma_separated_item(data_list):
     return comma_separated
 
 
-
-"""# Example slash-separated list of paths
-slash_separated_list = [
-    "/group1/subgroup1/dataset1",
-    "/group2/subgroup2/dataset2",
-    "/group3/subgroup3/dataset3"
-]"""
-
 # Function to split the paths and combine individual items into a list
 def split_and_combine(slash_separated_list):
     combined_list = []
@@ -63,13 +65,7 @@ def split_and_combine(slash_separated_list):
         return combined_list
     except Exception as e:
         print(f"Exception occurred while split_and_combine: message: {e}") 
-"""# Example usage
-result = split_and_combine(slash_separated_list)
 
-# Print the result
-print(result)"""
-
-import re
 
 # updated function to extract python code from model response
 def extract_python_code(text):
@@ -153,20 +149,9 @@ def get_base_filename(filename):
 def extract_xml_from_llm_response(datasets_response_as_xml_string):
     print(datasets_response_as_xml_string)
     start_delim_1 = "```\n"
-    # start_delim_2 = "```\n"
-    # start_delim_3 = "```\n"
     end_delim = "```"
 
-    # start_delim_1 = "\n<datasets>\n"
-    # start_delim_2 = "```\n"
-    # start_delim_3 = "```\n"
-    # end_delim = "```"
-    # end_delim = "\n</datasets>\n"
-
-
     result_1 = extract_substring(datasets_response_as_xml_string['response'], start_delim_1, end_delim)
-    # result_2 = extract_substring(datasets_response_as_xml_string['response'], start_delim_2, end_delim)
-    # result_3 = extract_substring(datasets_response_as_xml_string['response'], start_delim_3, end_delim)
     if result_1:
         return result_1
     else:
@@ -237,12 +222,6 @@ def extract_values_from_json_unknown_objects(obj):
     
     return values
 
-# Extracting all values from the dataset
-# result = extract_values(dataset)
-
-# Output the result
-# print(result)
-
 
 import re
 def get_datasets_using_regex_from_text(text_contains_datasets):
@@ -270,17 +249,6 @@ def get_datasets_using_regex_from_text(text_contains_datasets):
         return []
 
 
-import json
-
-"""# Example data
-input_4 = {
-    'datasets': [
-        {
-            'name': 'aerosol_optical_thickness_550_ocean',
-            'path': 'DeepBlue-SeaWiFS-1.0_L3_20100101_v004-20130604T131317Z.h5'
-        }
-    ]
-}"""
 
 # get_datasets_using_regex_from_text(str(input_4))
 
@@ -321,135 +289,6 @@ def check_datasets_object(input_data):
     except Exception as e:
         print("Exception occurred at Utils.check_datasets_object, message: ", e)
         return False  
-
-"""
-def check_datasets_object(input_data):
-    print("\n\nInside Utils.check_datasets_object: .....")
-    print("Utils.check_datasets_object, input_data: ", input_data)
-    # Ensure input_data is a dictionary (if it's a JSON string, convert it)
-    try:
-        if isinstance(input_data, str):
-            try:
-                input_data = json.loads(input_data)
-            except json.JSONDecodeError as e:
-                print(f"Error decoding JSON: {e}")
-                return False
-
-        # Check if 'datasets' key exists in the input dictionary
-        if isinstance(input_data, dict) and "datasets" in input_data:
-            datasets = input_data["datasets"]
-            
-            # Case 1: 'datasets' is a list of dictionaries
-            if isinstance(datasets, list) and all(isinstance(dataset, dict) for dataset in datasets):
-                for dataset in datasets:
-                    if 'name' not in dataset or 'path' not in dataset:
-                        print("A dictionary in 'datasets' is missing 'name' or 'path'.")
-                        return False
-                print("'datasets' is a valid list of dictionaries.")
-                return True
-
-            # Case 2: 'datasets' is a list of strings
-            elif isinstance(datasets, list) and all(isinstance(dataset, str) for dataset in datasets):
-                print("'datasets' is a valid list of strings.")
-                return True
-
-            # If the list contains mixed types
-            else:
-                print("'datasets' contains mixed types or invalid data.")
-                return False
-        else:
-            print("'datasets' key is missing or input is not a valid dictionary.")
-            return False
-    except Exception as e:
-        print("Exception occurred at Utils.check_datasets_object, message: ", e)  
-"""    
-
-
-"""
-def check_datasets_object(input_data):
-    print("\n\nInside Utils.check_datasets_object: .....")
-    # Check if 'datasets' key exists in the input dictionary
-    try:
-        if "datasets" in input_data:
-            datasets = input_data["datasets"]
-            
-            # Case 1: 'datasets' is a list of dictionaries
-            if all(isinstance(dataset, dict) for dataset in datasets):
-                for dataset in datasets:
-                    if 'name' not in dataset or 'path' not in dataset:
-                        print("A dictionary in 'datasets' is missing 'name' or 'path'.")
-                        return False
-                print("'datasets' is a valid list of dictionaries.")
-                return True
-
-            # Case 2: 'datasets' is a list of strings
-            elif all(isinstance(dataset, str) for dataset in datasets):
-                print("'datasets' is a valid list of strings.")
-                return True
-
-            # If the list contains mixed types
-            else:
-                print("'datasets' contains mixed types.")
-                return False
-        else:
-            print("'datasets' key is missing.")
-            return False
-    except Exception as e:
-        print("Exception occurred at Utils.check_datasets_object, message: ", e)
-"""
-
-"""
-def check_datasets_object(input_data):
-    print("\n\nInside Utils.check_datasets_object: .....")
-    # Check if 'datasets' key exists in the input dictionary
-    try:
-        if "datasets" in input_data:
-            datasets = input_data["datasets"]
-            
-            # Check if 'datasets' is a list
-            if isinstance(datasets, list):
-                # Check if each item in the list is a dictionary
-                for dataset in datasets:
-                    if not isinstance(dataset, dict):
-                        print("An item in 'datasets' is not a dictionary.")
-                        return False
-                # If all checks passed
-                print("'datasets' is a list of dictionaries.")
-                return True
-            else:
-                print("'datasets' is not a list.")
-                return False
-        else:
-            print("'datasets' key is missing.")
-            return False
-    except Exception as e:
-        print("Exception occurred at Utils.check_datasets_object, message: ", e)
-
-"""
-
-"""# Example input
-input_data = {
-  "datasets": [
-    {
-      "name": "SalesDataQ1",
-      "path": "/data/sales_data/q1"
-    },
-    {
-      "name": "CustomerProfiles",
-      "path": "/data/customer_profiles/"
-    },
-    {
-      "name": "MarketResearchReport",
-      "path": "/research/market_research/report.csv"
-    }
-  ]
-}"""
-
-# Call the function to check the input
-# result = check_datasets_object(input_data)
-
-# Output the result
-# print("Result:", result)
 
 
 
@@ -498,13 +337,6 @@ def replace_string(original_string, old_substring, new_substring):
         return original_string
     # return original_string.replace(old_substring, new_substring)
 
-# Example usage:
-# input_string = "Hello, World! World is beautiful."
-# result = replace_string(input_string, "World", "Earth")
-# print(result)  # Output: Hello, Earth! Earth is beautiful.
-
-
-
 def remove_redundant_paths(paths_list):
     # Sort paths by length (longer paths first, so we can remove shorter ones if they are subsets)
     paths_list.sort(key=len, reverse=True)
@@ -523,34 +355,6 @@ def remove_redundant_paths(paths_list):
     
     return result
 
-"""
-# Input list of paths
-paths_list = [
-    'HDFEOS', 'HDFEOS/ADDITIONAL', 'HDFEOS/ADDITIONAL/FILE_ATTRIBUTES', 'HDFEOS/ZAS', 
-    'HDFEOS/ZAS/HIRDLS', 'HDFEOS/ZAS/HIRDLS/Data Fields', 'HDFEOS/ZAS/HIRDLS/Data Fields/Day', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/Latitude', 'HDFEOS/ZAS/HIRDLS/Data Fields/LocalSolarTimeAscending', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/LocalSolarTimeDescending', 'HDFEOS/ZAS/HIRDLS/Data Fields/Month', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/NO2Ascending', 'HDFEOS/ZAS/HIRDLS/Data Fields/NO2AscendingCovariance', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/NO2AscendingDataCount', 'HDFEOS/ZAS/HIRDLS/Data Fields/NO2AscendingPrecision', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/NO2Descending', 'HDFEOS/ZAS/HIRDLS/Data Fields/NO2DescendingCovariance', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/NO2DescendingDataCount', 'HDFEOS/ZAS/HIRDLS/Data Fields/NO2DescendingPrecision', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/Pressure', 'HDFEOS/ZAS/HIRDLS/Data Fields/SolarZenithAngleAscending', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/SolarZenithAngleDescending', 'HDFEOS/ZAS/HIRDLS/Data Fields/Time', 
-    'HDFEOS/ZAS/HIRDLS/Data Fields/Year', 'HDFEOS/ZAS/HIRDLS/nCoeffs', 'HDFEOS/ZAS/HIRDLS/nLats', 
-    'HDFEOS/ZAS/HIRDLS/nLevels', 'HDFEOS/ZAS/HIRDLS/nTimes', 'HDFEOS INFORMATION', 
-    'HDFEOS INFORMATION/StructMetadata.0', 'HDFEOS INFORMATION/coremetadata.0', 
-    'HDFEOS/ZAS/HIRDLS/nCoeffs/NAME', 'HDFEOS/ZAS/HIRDLS/Data Fields/Day/Units'
-]
-
-# Get the non-redundant paths
-result = remove_redundant_paths(paths_list)
-
-# Print the results
-print("\n".join(result))
-"""
-
-
-from collections import defaultdict
 
 # Function to extract base paths and their rightmost components
 def extract_paths_with_attributes(paths_list):
@@ -575,64 +379,6 @@ def extract_paths_with_attributes(paths_list):
     output_list = [f"{base_path}: {{{', '.join(attributes)}}}" for base_path, attributes in base_paths.items()]
 
     return output_list
-"""
-# Input list of paths
-paths_list = [
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/OrbitGeodeticAngle',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/LineOfSightAngle',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/SolarZenithAngle',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/LocalSolarTime',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/ChunkNumber',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/OrbitGeodeticAngle',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/Longitude',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/Pressure',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/LineOfSightAngle',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/SolarZenithAngle',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/Latitude',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/LocalSolarTime',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/L2gpPrecision',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/AscDescMode',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/Convergence',
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields/Time',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/ChunkNumber',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/L2gpValue',
-    'HDFEOS/SWATHS/BrO/Data Fields/AscDescMode/Title',
-    'HDFEOS/SWATHS/BrO/Data Fields/AscDescMode/Units',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/Longitude',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/Pressure',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/Latitude',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/Quality',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields/Status',
-    'HDFEOS/SWATHS/BrO/Data Fields/L2gpPrecision',
-    'HDFEOS/SWATHS/BrO/Data Fields/Convergence',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields/Time',
-    'HDFEOS/SWATHS/BrO/Data Fields/L2gpValue',
-    'HDFEOS/SWATHS/BrO/Data Fields/Quality',
-    'HDFEOS/SWATHS/BrO-APriori/nTimesTotal',
-    'HDFEOS/SWATHS/BrO/Data Fields/Status',
-    'HDFEOS/SWATHS/BrO-APriori/nLevels',
-    'HDFEOS/SWATHS/BrO-APriori/nTimes',
-    'HDFEOS/SWATHS/BrO/nTimesTotal',
-    'HDFEOS/SWATHS/BrO/nLevels',
-    'HDFEOS/SWATHS/BrO/nTimes'
-]
-
-# Get the base paths with their rightmost components
-output = extract_paths_with_attributes(paths_list)
-
-# Print the output list
-print(output)
-
-Output:
-[
-    'HDFEOS/SWATHS/BrO-APriori/Geolocation Fields: {OrbitGeodeticAngle, LineOfSightAngle, SolarZenithAngle, LocalSolarTime, ChunkNumber, Longitude, Pressure, Latitude, Time}',
-    'HDFEOS/SWATHS/BrO-APriori/Data Fields: {L2gpPrecision, AscDescMode, Convergence, L2gpValue, Quality, Status}',
-    'HDFEOS/SWATHS/BrO/Geolocation Fields: {OrbitGeodeticAngle, LineOfSightAngle, SolarZenithAngle, LocalSolarTime, ChunkNumber, Longitude, Pressure, Latitude, Time}',
-    'HDFEOS/SWATHS/BrO/Data Fields: {AscDescMode/Title, AscDescMode/Units, L2gpPrecision, Convergence, L2gpValue, Quality, Status}',
-    'HDFEOS/SWATHS/BrO-APriori: {nTimesTotal, nLevels, nTimes}',
-    'HDFEOS/SWATHS/BrO: {nTimesTotal, nLevels, nTimes}'
-]
-"""
 
 def split_and_extend_paths(paths_list):
     new_list = []
@@ -653,22 +399,6 @@ def split_and_extend_paths(paths_list):
     # Return the new extended list
     return new_list
 
-"""
-# Input list of paths
-paths_list = ['/gt1l', 'full_path', '/gt1l/segment_lat', 'segment_lon', 'group', 
-              'segment_geoid', 'attributes', '/gt1l/segment_geoid', 
-              '/gt1l/segment_lon', 'segment_lat', 'dataset']
-
-# Get the new list
-result = split_and_extend_paths(paths_list)
-
-# Print the resulting list
-print(result)
-"""
-
-
-import re
-
 # Remove non-letter characters and convert to lowercase
 def normalize(s):
         return re.sub(r'[^a-zA-Z0-9]', '', s).lower()
@@ -677,31 +407,9 @@ def match_strings(str1, str2):
     # Normalize both strings and compare
     return normalize(str1) == normalize(str2)
 
-"""
-# Example usage
-str1 = "fill_value"
-str2 = "_FillValue"
-
-if match_strings(str1, str2):
-    print(f"'{str1}' and '{str2}' match.")
-else:
-    print(f"'{str1}' and '{str2}' do not match.")
-"""
-
-import re
-
-
-# Define the text you want to tokenize
-# text = "We need to read data from the dataset. After accessing the paths, we will plot a graph. Attribute extraction is required."
-
-import re
-
 # Define the list of keywords
 priority_words = ['read data', 'dataset', 'paths', 'plot', 'graph', 'access', 'path', 'attribute', 'group', 'from source']
 
-# Define the text you want to tokenize
-# text = """We need to read data from the dataset. 
-# After accessing the paths, we will plot a graph. Attribute extraction is required."""
 
 # Function to prioritize tokenization based on keywords
 def tokenize_with_priority(text, priority_words):
@@ -725,12 +433,6 @@ def tokenize_with_priority(text, priority_words):
     unique_tokens = list(set([tok for tok in final_tokens if tok.strip() and tok != '\n']))
 
     return unique_tokens
-
-# Tokenize the text
-# tokens = tokenize_with_priority(text, priority_words)
-
-# Print the tokenized result
-# print(tokens)
 
 
 def tokenize_with_space_and_sort_reversed(text):
@@ -760,9 +462,7 @@ def make_dictionary_of_score(tokens, real_datasets):
                 else:
                     whole_score_paths_dic[dataset]=1
 
-    # Sample dictionary
-    # my_dict = {'a': 10, 'b': 5, 'c': 20, 'd': 15, 'e': 25, 'f': 8, 'g': 3}
-
+  
     # Sorting the dictionary by value in descending order and getting the top 5
     if whole_score_paths_dic is not None:
         whole_score_paths_dic = dict(sorted(whole_score_paths_dic.items(), key=lambda item: item[1], reverse=True))
@@ -808,14 +508,6 @@ def extend_list_by_making_paths_into_single_words(combined_paths, result=None):
     return list(result)
 
 
-
-# testing string fuzzy matching library
-from rapidfuzz import process
-
-# Sample lists of strings
-# list1 = ['apple', 'orange', 'banana', 'grape']
-# list2 = ['apple', 'berry', 'banana', 'pineapple', 'grapefruit']
-
 # Function to find the most common strings between two lists based on similarity
 def find_common_strings(list1, list2, threshold=80):
     common_strings = []
@@ -844,12 +536,6 @@ def find_common_strings(list1, list2, threshold=80):
     
     return common_strings, all_matching_output, common_strings_by_extract, all_matching_output_by_extract
 
-# Find the common strings
-# common_strings = find_common_strings(list1, list2)
-
-# Output the results
-# print("Common strings based on similarity:", common_strings)
- 
 
 #  decision maker about the final list of datasets
 def decision_maker_about_the_final_list_of_datasets(exact_matched_datasets, exact_matched_datasets_by_name, exact_matched_group_subgroups, exact_matched_group_subgroups_by_name, rapid_fuzz_best_matched_output):
@@ -911,8 +597,6 @@ def decision_maker_about_the_final_list_of_datasets(exact_matched_datasets, exac
         return list(final_set)
     else:
         return list(rapid_fuzz_best_matched_output)
-    
-
 
 
 def generate_2grams(text):
@@ -923,14 +607,6 @@ def generate_2grams(text):
     bigrams = [" ".join(words[i:i+2]) for i in range(len(words) - 1)]
     
     return bigrams
-
-# Example usage
-# input_text = "This is an example of a 2-gram tokenizer."
-# print(generate_2grams(input_text))
-
-
-
-
 
 # this is for replacing incorrect datasets and attributes names from user input directly
 # created 03 Nov 2024
@@ -966,33 +642,12 @@ def replace_user_input_attributes_with_origial_attributes(sequential_tokens, ori
                     break
             
             if monogram_match_flag==False:
-                # Concatenate with the next token if no single token match
-                # if i+1 == len(sequential_tokens) - 1:
-                    # result.append(sequential_tokens[i] + " " + sequential_tokens[i + 1])
                 result.append(sequential_tokens[i])
                 i+=1
-                # result.append(sequential_tokens[i + 1])
-                    # result.append(sequential_tokens[i])
-                    # i += 2
-                # else:
-                    # result.append(sequential_tokens[i])
-        
-        # i += 1
-    
-    # return " ".join(result)
+     
     # print('\n------------result-----------------:\n', result)
     return reconstruct_text_by_keeping_the_spaces(result)
 
-# Example usage
-# tokens = ["apple", "pie", "is", "delicious", "apple"]
-# match_list = ["apple pie", "delicious"]
-# print(merge_tokens(tokens, match_list))
-
-
-# split user input into tokens based on space,
-# To split the text by spaces first, and then by additional punctuation characters (', ", ., ,, ?, (, ), :, ;, !, -, <, >, /), 
-# you can extend the regular expression pattern to include these symbols as well:
-import re
 
 def split_text_based_on_space_and_punctuations(text):
     # Step 1: Split by spaces
@@ -1011,11 +666,6 @@ def split_text_based_on_space_and_punctuations(text):
         result.extend([token for token in tokens if token])  # Remove any empty tokens
 
     return result
-
-# Example usage
-# text = 'Hello "world"! How are you today? Let\'s split (properly) by - punctuation.'
-# print(split_text(text))
-
 
 
 # reconstruct the text by removing spaces 
@@ -1045,69 +695,7 @@ def reconstruct_text_by_keeping_the_spaces(tokens):
             text += " " + token
 
     return text.strip()
-    """for i, token in enumerate(tokens):
-        # Handle cases for extensions
-        if i > 0 and tokens[i - 1] == '.' and (tokens[i - 1] + token) in extensions:
-            text += token  # Append without space
-        elif token in {".", ":", ",", ";", "?"}:
-            # If token is punctuation that requires spacing afterward
-            text += token + " "
-        elif i == 0 or tokens[i - 1] in punctuation or tokens[i - 1] == ".":
-            # If first word or after punctuation
-            text += token
-        else:
-            text += " " + token
-
-    return text.strip()"""
-
-# Example usage
-# tokens = ['Hello', '.', 'This', 'is', 'a', 'file', '.', 'txt', 'Check', 'out', 'the', 'graph', ':', 'it', 'is', 'interesting', '?']
-# print(reconstruct_text(tokens))
-
-
-"""def reconstruct_text_by_keeping_the_spaces(tokens):
-    text = ""
-    punctuation = {"'", '"', ".", ",", "?", "(", ")", ":", ";", "!", "-", "<", ">", "/"}
-    extensions = {".HDF5", ".hdf5", ".HE5", ".he5", ".H5", ".h5"}  # Add more extensions as needed
-    
-    for i, token in enumerate(tokens):
-        # Check if the token is a file extension
-        if i > 0 and tokens[i - 1] == '.':
-            if (tokens[i - 1] + token) in extensions:
-                text += token  # Append extension without extra space
-            else:
-                text = text + token+' '
-        elif i == 0 or token in punctuation or tokens[i - 1] in punctuation:
-            text += token
-        else:
-            text += " " + token
-            
-    return text"""
-
-# Example usage
-# tokens = ['file', '.', 'txt', 'and', 'image', '.', 'jpg', '!', 'Are', 'you', 'sure', '?']
-# print(reconstruct_text(tokens))
-
-import re
-
-"""def tokenize_and_replace(text, match_list):
-    
-    punctuations = set(". , ; : ? ! ( ) ' \" < > -".split())
-    path_separator = "/"
-
-    start = 0
-    end = start 
-    result = ''
-    while start < len(text):
-        if text[end]=='.':
-            
-
-        if text[end] in punctuations:"""
-
-
-
-
-
+   
 def tokenize_and_replace(text, match_list):
     
     word_scoring = {
@@ -1176,10 +764,6 @@ def tokenize_and_replace(text, match_list):
                 if normalize(single_token)==normalize(dataset_attribute):
                     # print(f'single token matching: {single_token} == {dataset_attribute}')
                     res=''.join(result)
-                    # print(f'Current result: {res}')
-                # elif single_token in match_list:
-                # replace_index = match_list.index(single_token)
-                # result.append(match_list[replace_index])
                     result.append(dataset_attribute)
                     start = end
                     # start = end+len(single_token)
@@ -1241,11 +825,6 @@ def tokenize_and_replace_with_Levenshtein(text, match_list):
         # Check and replace double token if it exists in match list
         double_token_match_found = False
         for dataset_attribute in match_list:
-            # related to edit distance calculations
-            # word_scoring['bigram'] = double_token
-            # word_scoring['bigram'] = double_token
-
-
             if normalize(double_token)==normalize(dataset_attribute):
                 print(f'double token matching: {double_token}== {dataset_attribute}')
                 # replace_index = match_list.index(double_token)
@@ -1258,20 +837,12 @@ def tokenize_and_replace_with_Levenshtein(text, match_list):
                 double_token_match_found=True
                 break
        
-        
-        
-       
-        
         single_token_match_found = False
         if not double_token_match_found:
             for dataset_attribute in match_list:
                 if normalize(single_token)==normalize(dataset_attribute):
                     print(f'single token matching: {single_token} == {dataset_attribute}')
-                    # res=''.join(result)
-                    # print(f'Current result: {res}')
-                # elif single_token in match_list:
-                # replace_index = match_list.index(single_token)
-                # result.append(match_list[replace_index])
+   
                     result.append(dataset_attribute)
                     start = end
                     # start = end+len(single_token)
@@ -1370,190 +941,9 @@ def get_attribute_name_condition_condition_value(user_intent):
     return attribute_name, condition, condition_value
 
 
-
-"""
-# Next code suggested by 
-
-import re
-
-def replace_tokens(text, match_list):
-    # Tokenize text based on punctuation and spaces but keep punctuation in the text
-    tokens = re.findall(r'\S+|\s+|[.,;:?!()\'"<>-]|/', text)
-    
-    i = 0
-    while i < len(tokens):
-        # Process double tokens (two-word phrases)
-        if i < len(tokens) - 2 and tokens[i+1] == " ":
-            double_token = tokens[i] + " " + tokens[i+2]
-            if double_token in match_list:
-                replace_index = match_list.index(double_token)
-                tokens[i] = match_list[replace_index]
-                tokens[i+1] = ""
-                tokens[i+2] = ""
-                i += 3
-                continue
-        
-        # Process single tokens
-        single_token = tokens[i]
-        if single_token in match_list:
-            replace_index = match_list.index(single_token)
-            tokens[i] = match_list[replace_index]
-        
-        i += 1
-
-    # Reconstruct the text with replacements
-    replaced_text = ''.join(tokens)
-    return replaced_text
-
-# Example usage
-text = "This is a test text, with paths/ and punctuation! Check for words."
-match_list = [
-    "exam content",  # Replacement for "test text"
-    "quiz",          # Replacement for "test"
-    "symbols"        # Replacement for "punctuation"
-]
-
-# Run the function
-replaced_text = replace_tokens(text, match_list)
-print(replaced_text)
-
-
-"""
-
-
-# Example text and matching list
-# text = "This is a test text, with paths/ and punctuation! Check for words."
-# match_list = [
-    # "exam content",  # replacement for "test text"
-    # "quiz",          # replacement for "test"
-    # "symbols"        # replacement for "punctuation"
-# ]
-
-# Run the function
-# replaced_text = tokenize_and_replace(text, match_list)
-# print(replaced_text)
-
-
-
-"""
-def tokenize_and_process(text):
-    single_tokens = []
-    double_tokens = []
-
-    # Define punctuation and symbols to check
-    punctuations = set(". , ; : ? ! ( ) ' \" < > -".split())
-    path_separator = "/"
-
-    # Initialize pointers
-    start = 0
-    while start < len(text):
-        # Skip whitespace
-        while start < len(text) and text[start].isspace():
-            start += 1
-        if start >= len(text):
-            break
-        
-        # Single word or punctuation token
-        end = start
-        if text[start] in punctuations or text[start] == path_separator:
-            single_tokens.append(text[start])
-            start += 1
-            continue
-        else:
-            while end < len(text) and text[end] not in punctuations and text[end] != path_separator and not text[end].isspace():
-                end += 1
-            
-            token = text[start:end]
-            single_tokens.append(token)
-            
-            # Check for double word tokens
-            next_start = end
-            while next_start < len(text) and text[next_start].isspace():
-                next_start += 1
-            next_end = next_start
-            while next_end < len(text) and text[next_end] not in punctuations and text[next_end] != path_separator and not text[next_end].isspace():
-                next_end += 1
-            
-            if next_start < len(text):
-                double_token = f"{token} {text[next_start:next_end]}"
-                double_tokens.append(double_token)
-        
-        # Skip to next segment
-        start = end
-
-    return single_tokens, double_tokens
-"""
-# Example text
-# text = "This is a test text, with /paths/ and punctuation! Check for words."
-
-# Process tokens
-# single_tokens, double_tokens = tokenize_and_process(text)
-
-# print("Single Tokens:", single_tokens)
-# print("Double Tokens:", double_tokens)
-
-
-"""
-import re
-
-def tokenize_and_process(text):
-    single_tokens = []
-    double_tokens = []
-    
-    # Define punctuation and symbols to check
-    punctuations = set(". , ; : ? ! ( ) ' \" < > -".split())
-    path_separator = "/"
-
-    # Initialize pointers
-    start = 0
-    while start < len(text):
-        # Find the next word or punctuation
-        end = start
-        while end < len(text) and text[end] not in punctuations and text[end] != path_separator:
-            end += 1
-
-        # Single word token
-        token = text[start:end].strip()
-        if token:
-            single_tokens.append(token)
-        
-        # Double word token
-        if end + 1 < len(text):
-            next_end = end + 1
-            while next_end < len(text) and text[next_end] not in punctuations and text[next_end] != path_separator:
-                next_end += 1
-            double_token = f"{token} {text[end+1:next_end].strip()}"
-            double_tokens.append(double_token)
-
-        # Replace operations on specific tokens
-        if token in ["replace_this_word", "other_word"]:  # Specify tokens to replace
-            text = text.replace(token, "replacement_word")
-        if double_token in ["double_word_example"]:
-            text = text.replace(double_token, "replacement_double_word")
-        
-        # Skip to next word or punctuation
-        start = end + 1
-
-    return single_tokens, double_tokens, text
-"""
-
-# Example text
-# text = "This is a test text, with /paths/ and punctuation! Check for words."
-
-# Process tokens and updated text
-# single_tokens, double_tokens, updated_text = tokenize_and_process(text)
-
-# print("Single Tokens:", single_tokens)
-# print("Double Tokens:", double_tokens)
-# print("Updated Text:", updated_text)
-
-
-import shutil
-from pathlib import Path
-
-def collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir):
+def collect_and_store_png(source_dirs, new_dir_name, data_dir):
     # Ensure base_path is absolute
-    base_path = Path(base_path).resolve()
+    base_path = Path(PROJECT_BASE_DIRECTORY).resolve()
     print(f'base path: {base_path}')
 
     # Create unique directory (append _v2, _v3, etc. if it already exists)
@@ -1609,11 +999,6 @@ def collect_and_store_png_without_data_dir(source_dirs, target_dir_base_path, ne
     except Exception as e:
         print('Exception occurred while collecting and transferging png files!')
 
-
-
-import os
-import glob
-
 def remove_success_message(directory):
     directory = os.path.abspath(directory)  # Ensure absolute path
     python_files = glob.glob(os.path.join(directory, "*.py"))  # Find all .py files
@@ -1633,14 +1018,7 @@ def remove_success_message(directory):
         else:
             print(f"No change: {file}")
 
-# Example usage
-remove_success_message("/path/to/your/directory")  # Replace with your directory path
 
-import os
-import shutil
-
-import os
-import shutil
 
 def move_files_by_extension(source_dir, target_dir, extensions):
     """
@@ -1716,37 +1094,11 @@ def extract_key_lines_from_chained_exceptions(error_message):
         return errors, last_line_of_error
     except Exception as e:
         print(f'Exception ocurred while parsing error message, message: {e}')
-        errors+=f'Details: Python Script Execution Failed\n'
+        errors=f'Details: Python Script Execution Failed\n'
         errors+=f'Cause: No meaningful exception mesage is found!'
         return errors, 'None'
 
-
-import time
-import csv
-import os
-
 def track_and_log_runtimes(output_csv, llm_model_name, runtime_corrector, runtime_rag, runtime_llm):
-    # Track runtimes
-    # start_corrector = time.time()
-    # corrector()
-    # end_corrector = time.time()
-
-    # start_rag = time.time()
-    # rag()
-    # end_rag = time.time()
-
-    # start_llm = time.time()
-    # llm_model()
-    # end_llm = time.time()
-
-    # # Calculate durations in seconds
-    # runtime_corrector = round(end_corrector - start_corrector, 4)
-    # runtime_rag = round(end_rag - start_rag, 4)
-    # runtime_llm = round(end_llm - start_llm, 4)
-
-    # # Example model name (can be changed)
-    # llm_model_name = "gpt-4o"
-
     # Check if the file exists
     file_exists = os.path.isfile(output_csv)
 
@@ -1758,11 +1110,6 @@ def track_and_log_runtimes(output_csv, llm_model_name, runtime_corrector, runtim
         writer.writerow([llm_model_name, runtime_corrector, runtime_rag, runtime_llm])
 
     print(f"Runtime recorded in '{output_csv}'.")
-
-# Example usage:
-# track_and_log_runtimes("results_log.csv")
-
-import os
 
 def rename_iteration_files(directory, iteration):
     """
@@ -1784,10 +1131,6 @@ def rename_iteration_files(directory, iteration):
             os.rename(old_path, new_path)
             print(f"Renamed: {filename} → {new_filename}")
 
-# Example usage:
-# rename_iteration_files("/path/to/your/scripts", 5)
-
-import os
 
 def extract_python_scripts_from_log(log_file_path, output_dir):
     """
@@ -1844,8 +1187,6 @@ def extract_python_scripts_from_log(log_file_path, output_dir):
 
         idx += 1
 
-import os
-import shutil
 
 def copy_python_files(source_dir, target_dir):
     """
@@ -1977,12 +1318,9 @@ def find_the_missed_base_image():
 
         return results
 
-    # Example usage:
-    # dir1 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
-    # dir2 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/evaluation_by_clip_algorithm/climate_base_images"
-
-    dir2 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
-    dir1 = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/evaluation_by_clip_algorithm/climate_base_images"
+    
+    dir2 = f"{PROJECT_BASE_DIRECTORY}/user_queries/generated_user_queries/deepseek_r1_70b_generated_expert_queries_from_human_expert_queries_final_manually_corrected"
+    dir1 = f"{PROJECT_BASE_DIRECTORY}/evaluation_by_clip_algorithm/climate_base_images"
 
     results = match_files(dir1, dir2)
 
@@ -1993,163 +1331,4 @@ def find_the_missed_base_image():
 
 if __name__ == '__main__':
     
-    find_the_missed_base_image()
-    
-    
-    # #increasing the script name
-    # exisiting_climate_python_script_dir_list_base_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
-    # exisiting_climate_python_script_dir_list = [
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_without_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_without_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_errors_with_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_errors_without_corrector",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector"
-    # ]
-    
-    # for python_script_dir in exisiting_climate_python_script_dir_list:
-    #     for index in range(5, -1, -1):
-    #         print(f'Current_index: {index}')
-    #         rename_iteration_files(exisiting_climate_python_script_dir_list_base_dir+'/'+python_script_dir, index)
-
-
-    # fastmribrain iterative log files
-    # climate_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/iterative_python_code_generation_logs'
-    # climate_python_script_dir_list = [
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_without_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_without_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_errors_with_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_with_errors_without_corrector.log",
-    #     "devstral_24b_climate_iterative_error_resolve_python_scripts_without_rag_without_corrector.log"
-    # ]
-    # climate_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output'
-
-    # for log_file_path in climate_python_script_dir_list:
-    #     output_dir = log_file_path.replace('.log', '')
-    #     # output_dir = output_dir.replace('__', '_')
-    #     # remove_python_files_with_suffix(climate_source_common_directory+'/'+output_dir)
-    #     # extract_python_scripts_from_log_for_climate(climate_source_common_directory+'/'+log_file_path, climate_source_common_directory+'/'+output_dir)
-
-    #     # remove_python_files_with_suffix(climate_target_dir+'/'+output_dir)
-    #     copy_python_files(climate_source_common_directory+'/'+output_dir, climate_target_dir+'/'+output_dir)
-
-
-
-    # matplotagent_iterative_python_scripts_directory = [
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_with_rag_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts/devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector"
-    # ]
-    # fastmribrain_iterative_python_scripts_directory = [
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_with_rag_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_with_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_with_errors_without_corrector",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts/devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector"
-    # ]
-    # for python_script_dir in fastmribrain_iterative_python_scripts_directory:
-    #     for index in range(5, -1, -1):
-    #         print(f'Current_index: {index}')
-    #         rename_iteration_files(python_script_dir, index)
-    
-    
-    # this block is for extracting first generated python script from the log files, remove previous one and save
-    # # matplotagent iterative log files
-    # matplotagent_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/iterative_python_scripts_generation_logs'
-    # matplotagent_python_script_dir_list = [
-    # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_with_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_with_errors_without_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_with_rag_without_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_with_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_with_errors_without_corrector.log",
-    # "devstral_24b_matplotagent_iterative_python_scripts_without_rag_without_corrector.log"
-    # ]
-    # # log_file_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
-    # # output_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
-    # matplotagent_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/matplot_agent_data/plot_generation/llm_rag_generated_python_scripts'
-    # for log_file_path in matplotagent_python_script_dir_list:
-    #     output_dir = log_file_path.replace('.log', '')
-    #     remove_python_files_with_suffix(matplotagent_source_common_directory+'/'+output_dir)
-    #     extract_python_scripts_from_log(matplotagent_source_common_directory+'/'+log_file_path, matplotagent_source_common_directory+'/'+output_dir)
-        
-    #     remove_python_files_with_suffix(matplotagent_target_dir+'/'+output_dir)
-    #     copy_python_files(matplotagent_source_common_directory+'/'+output_dir, matplotagent_target_dir+'/'+output_dir)
-        
-    
-    
-
-    # # fastmribrain iterative log files
-    # fastmribrain_source_common_directory = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/iterative_python_scripts_generation_logs'
-    # fastmribrain_python_script_dir_list = [
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__with_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__with_errors_with_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__with_errors_without_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_with_rag__without_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag__with_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag__with_errors_with_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag__with_errors_without_corrector.log",
-    #     "devstral_24b_fastmribrain_iterative_python_scripts_without_rag_without_corrector.log"
-    # ]
-    # # log_file_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/logs/devstral_24b_vtk_iterative_python_scripts_generation_from_vtk_related_user_queries_simple_queries.log'
-    # # output_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector_ite_0'
-    # fastmribrain_target_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/mri_nyu_data/llm_rag_generated_python_scripts'
-
-    # for log_file_path in fastmribrain_python_script_dir_list:
-    #     output_dir = log_file_path.replace('.log', '')
-    #     output_dir = output_dir.replace('__', '_')
-    #     remove_python_files_with_suffix(fastmribrain_source_common_directory+'/'+output_dir)
-    #     extract_python_scripts_from_log(fastmribrain_source_common_directory+'/'+log_file_path, fastmribrain_source_common_directory+'/'+output_dir)
-
-    #     remove_python_files_with_suffix(fastmribrain_target_dir+'/'+output_dir)
-    #     copy_python_files(fastmribrain_source_common_directory+'/'+output_dir, fastmribrain_target_dir+'/'+output_dir)
-
-
-    # reading los files, searching verision 0 python code and dave
-    # renaming files from iteration to iteration+1
-    # python_script_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_with_errors_without_corrector'
-    # python_script_dir = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/vtk_python_scripts_experiment/llm_rag_generated_python_scripts/devstral_24b_vtk_iterative_python_scripts_without_rag_without_corrector'
-    # for index in range(5, 0, -1):
-    #     print(f'Current_index: {index}')
-    #     rename_iteration_files(python_script_dir, index)
-    # rename_iteration_files(python_script_dir, 0)
-    # end
-    # for the fastmribrain
-    
-
-   
-    
-    # directory_list =[
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/deepseek_r1_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/llama3_70b_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query",
-    #     "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/python-script-output/magicoder_without_corrector_expert_level_queries_human_error_insertions_remove_image_from_query"
-    # ]
-
-    # for directory in directory_list:
-    #     remove_success_message(directory)
-    # # output_subdir = 'llama3_70b_with_corrector_with_memory_expert_level_queries_human_error_insertions_remove_image_from_query'
-    # output_subdir = 'Mixed'
-    # data_dir = 'ACL_DIRS'  # Replace with your common directory path        
-    #     # Replace with your predefined subdirectory names
-    # subdirectories = [' ', 'NSIDC', ' ', 'PO_DAAC', ' ', 'ASF', 'GES_DISC', 'GHRC', 'ICESat_2', 'LAADS', 'LaRC', 'LP_DAAC',  'Ocen_Biology', 'AURA_DATA_VC', '../prompting_techniques/zero_shot_sci_data_prompting/']
-    #  # collect all images and store them into a new directory
-    # # Example usage
-    # source_dirs = subdirectories  # List of source directories
-    # base_path = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"  # Base path for new directory
-    # new_dir_name=output_subdir
-    # # data_dir = 'ACL_DIRS'
-    # collect_and_store_png(source_dirs, base_path, new_dir_name, data_dir)
+    find_the_missed_base_image()   

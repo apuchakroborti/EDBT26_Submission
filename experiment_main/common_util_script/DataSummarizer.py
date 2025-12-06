@@ -1,7 +1,9 @@
 import h5py
 import json
-
 from . import Utils as utils
+
+import difflib  # For finding close matches
+
 # created on Jan 29, 2025
 def describe_dynamic_shape(shape):
     num_dims = len(shape)
@@ -11,21 +13,6 @@ def describe_dynamic_shape(shape):
         description += f"\tDimension {i+1}: {dim} elements\n"
 
     return description.strip()
-
-# Example Usage
-# shapes = [
-#     (1000, 512),      # Typical embedding matrix
-#     (256, 256, 3),    # Could be an image, but we treat it generically
-#     (10, 5, 20),      # Some 3D dataset
-#     (64, 64, 64),     # 3D volume
-#     (100,),           # 1D array
-#     (4, 3, 2, 6),     # Higher-dimensional tensor
-# ]
-
-# for shape in shapes:
-#     print(describe_dynamic_shape(shape))
-#     print("-" * 40)
-
 
 
 # created on Jan 29, 2025
@@ -50,8 +37,6 @@ def collect_all_paths_to_store_memory(file_path):
                     attributes = ", ".join(node.attrs)
                     dataset_attribute_list+="\n\tAttributes: "+attributes
                 dataset_attribute_list+='\n'
-
-            
 
         # Start traversal from the root group
         f.visititems(collect_structure)
@@ -276,17 +261,6 @@ def list_all_attribute_paths(file_path):
     return attribute_paths
 
 
-# Example usage
-# file_path = 'your_file.h5'  # Replace with your HDF5, H5, HE5 file path
-
-# Get the list of all attribute paths
-# attribute_path_list = list_all_attribute_paths(file_path)
-
-# Print each path
-# for path in attribute_path_list:
-    # print(path)
-
-import json
 
 def list_filtered_attribute_paths(file_path, dataset_names):
     attribute_paths = []
@@ -321,26 +295,6 @@ def list_filtered_attribute_paths(file_path, dataset_names):
     return attribute_paths
 
 
-"""# Example usage
-file_path = 'your_file.h5'  # Replace with your HDF5, H5, HE5 file path
-
-# List of dataset names to filter (case-insensitive)
-dataset_names_to_filter = ['dataset1', 'dataset2']  # Add your dataset names here
-
-# Get the list of all filtered attribute paths
-filtered_attribute_path_list = list_filtered_attribute_paths(file_path, dataset_names_to_filter)
-
-# Print each path
-for path in filtered_attribute_path_list:
-    print(path)
-
-# Optionally, convert the path list to JSON format
-attribute_path_list_json = json.dumps(filtered_attribute_path_list, indent=4)
-print(attribute_path_list_json)"""
-
-
-import difflib  # For finding close matches
-
 def verify_and_correct_paths(hdf5_file_path, paths_to_check):
     # Open the HDF5 file in read mode
     with h5py.File(hdf5_file_path, 'r') as hdf_file:
@@ -370,26 +324,6 @@ def verify_and_correct_paths(hdf5_file_path, paths_to_check):
                     verified_paths[path] = 'Invalid, no close match found'
         
         return verified_paths
-
-"""
-# Example usage
-hdf5_file_path = 'your_file.h5'
-paths_to_check = [
-    '/data/temperature',
-    '/data/pressure',
-    '/group1/subgroup1/dataset'
-]
-
-result = verify_and_correct_paths(hdf5_file_path, paths_to_check)
-
-# Print the verification result
-for path, status in result.items():
-    print(f"Path: {path} - Status: {status}")
-"""
-
-
-import h5py
-import difflib
 
 def verify_and_correct_paths_v2(hdf5_file_path, paths_to_check):
     with h5py.File(hdf5_file_path, 'r') as hdf_file:
@@ -437,26 +371,8 @@ def verify_and_correct_paths_v2(hdf5_file_path, paths_to_check):
 
         return verified_paths
 
-# Example usage
-"""
-
-hdf5_file_path = 'your_file.h5'
-paths_to_check = [
-    '/data/temperature',   # Test with valid or invalid dataset names
-    '/data/pressure',      # Test with dataset names not present but matching attributes
-    '/group1/subgroup1/dataset'
-]
-
-result = verify_and_correct_paths(hdf5_file_path, paths_to_check)
-
-# Print the verification result
-for path, status in result.items():
-    print(f"Path: {path} - Status: {status}")
-    
-"""
 
 
-import h5py
 
 def match_rightmost_paths(hdf5_file_path, paths_to_check):
     try:
@@ -521,20 +437,6 @@ def match_rightmost_paths(hdf5_file_path, paths_to_check):
         print("\nException occurred while matching right most, error message: ", e)
         # return paths_to_check
         return []
-
-# Example usage
-# hdf5_file_path = 'your_file.h5'
-# paths_to_check = [
-#     '/Sigma0_Data/cell_sigma0_hh_fore',  # Test valid dataset
-#     '/SomeGroup/nonexistent',            # Test invalid path
-#     'cell_sigma0_hh_fore',               # Rightmost component matching
-#     'pressure'                           # Rightmost attribute matching
-# ]
-
-# result = match_rightmost_paths(hdf5_file_path, paths_to_check)
-
-# # Print the corrected paths list
-# print(result)
 
 def match_rightmost_paths_only_dataset_match(hdf5_file_path, paths_to_check):
     try:
@@ -664,76 +566,12 @@ def match_dataset_and_get_full_path_with_attribute(hdf5_file_path, dataset_paths
             print(f"\n\nmatching_dataset_path_attributes, size: {len(matching_dataset_path_attributes_dic)}: \n", matching_dataset_path_attributes_dic)
             
             return matching_dataset_paths, matching_dataset_path_attributes_dic
-
-            """ corrected_paths = []
-
-            def match_rightmost(path, paths_list):
-                # print("\n\nPath: \n", path)
-                # print("\n\nPath List: \n", paths_list)
-
-                # Function to match the rightmost parts of a path with the dataset/attribute paths.
-                components = path.split('/')
-                for i in range(len(components)):
-                    partial_path = '/'.join(components[i:])
-                    # matches = [p for p in paths_list if p.endswith(partial_path)]
-                    matches = [p for p in paths_list if (partial_path in p and len(path)>0)]
-                    # print("\n\n:Matches \n", matches)
-
-                    if matches:
-                        # return matches[0]
-                        return matches
-                    
-                return None
-
-            # Loop through the paths to check
-            for path in paths_to_check:
-                # First, check if the exact path is valid
-                if path in all_paths:
-                    corrected_paths.append(path)  # Valid dataset path
-                else:
-                    # Try to match dataset names by rightmost components
-                    dataset_match = match_rightmost(path, all_paths)
-
-                    if dataset_match:
-                        # corrected_paths.append(dataset_match)
-                        # corrected_paths = corrected_paths + dataset_match
-                        if isinstance(corrected_paths, str):
-                            corrected_paths.append(dataset_match)  # Append if it's a string
-                        elif isinstance(corrected_paths, list):
-                                corrected_paths.extend(dataset_match)
-                    else:
-                        # Now, try to match attributes in a similar way
-                        attribute_match = None
-                        for attr_path in attribute_paths:
-                            for attr in attribute_names[attr_path]:
-                                if attr.lower() == path.split('/')[-1].lower():
-                                    attribute_match = f'{attr_path}/{attr}'
-                                    break
-                            if attribute_match:
-                                break
-
-                        if attribute_match:
-                            # corrected_paths.append(attribute_match)
-                            # corrected_paths = corrected_paths + attribute_match
-                            if isinstance(attribute_match, str):
-                                corrected_paths.append(attribute_match)  # Append if it's a string
-                            elif isinstance(attribute_match, list):
-                                corrected_paths.extend(attribute_match)
-                        else:
-                            # No match found, append the original path
-                            print('No match found')
-                            # corrected_paths.append(path)"""
-
             # return corrected_paths
     except Exception as e:
         print("\nException occurred while matching right most, error message: ", e)
         # return paths_to_check
         return []
 
-
-
-# To find the exact groups and attributes from the input file and dataset-attribute list:
-import h5py
 
 def extract_real_groups_and_attributes(h5file_path, paths_to_check):
     groups = set()
@@ -781,34 +619,6 @@ def extract_real_groups_and_attributes(h5file_path, paths_to_check):
 
     return list(real_groups), list(real_attributes)
 
-
-"""
-# Example usage
-h5file_path = 'your_hdf5_file.h5'  # Replace with your actual HDF5 file path
-
-# List of HDF5 paths to check
-paths_to_check = [
-    "/group1/subgroup1/dataset1",
-    "/group1/subgroup2",
-    "/group2/subgroup1/attribute1",
-    "/group2/dataset3",
-    "/group1/subgroup1/attribute2"
-]
-
-# Extract real matching groups and attributes from the HDF5 file
-real_groups, real_attributes = extract_real_groups_and_attributes(h5file_path, paths_to_check)
-
-# Output the results
-print("Real Groups:")
-print(real_groups)
-
-print("\nReal Attributes/Datasets:")
-print(real_attributes)
-"""
-
-
-# import h5py
-
 def collect_datasets_with_attributes(hdf5_file):
     try:
         datasets_with_attributes = {}
@@ -838,14 +648,7 @@ def print_datasets_with_attributes(datasets_with_attributes):
             print("No attributes")
         print()  # Blank line for separation
 
-"""
-# Example usage
-hdf5_file = 'example.h5'  # Provide your HDF5 file path
-datasets_with_attributes = collect_datasets_with_attributes(hdf5_file)
-print_datasets_with_attributes(datasets_with_attributes)
-"""
 
-import h5py
 # paths_to_check = single_word_group_dataset_attribute_list
 def extract_real_datasets_and_attributes(h5file_path, paths_to_check):
     groups_with_path = set()
@@ -900,25 +703,11 @@ def extract_real_datasets_and_attributes(h5file_path, paths_to_check):
                 # real_attribute_set.add(attribute)
                 real_attribute_set.add(attributes_without_parent_path[index])
 
-    # real_datasets = [path for path in paths_to_check if any(utils.normalize(path) in utils.normalize(dataset) for dataset in datasets)]
-    # real_attributes = [path for path in paths_to_check if any(utils.normalize(path) in utils.normalize(attribute) for attribute in attributes)]
-    
-    # print(f"\n\n Real Datasets, size: {len(real_datasets)}: \n", real_datasets)
-    # print(f"\n\n Real Attributes, size: {len(real_attributes)}: \n", real_attributes)
-
-    # Ensure attributes are distinct from datasets
-    # real_attributes = list(set(real_attributes).difference(real_datasets))
     real_attributes = list(set(real_attribute_set).difference(real_dataset_set))
     # print(f"\n\n After filtering Real Attributes, size: {len(real_attributes)}: \n", real_attributes)
 
     return real_groups, list(real_dataset_set), real_attributes
 
-"""
-# Example usage
-h5file_path = 'example.h5'  # Path to your HDF5 file
-paths_to_check = ['dataset1', 'attribute1', 'group1']  # List of paths you want to check
-real_datasets, real_attributes = extract_real_datasets_and_attributes(h5file_path, paths_to_check)
-"""
 
 # created on 30 Sep 2024 at 3:26 AM
 def extract_exact_datasets_from_input_generated_by_llm(h5file_path, paths_to_check):
@@ -959,25 +748,6 @@ def format_datasets_and_attributes(data_dict):
     
     return text
 
-"""# Example usage:
-data = {
-    'dataset1': ['attribute1', 'attribute2', 'attribute3'],
-    'dataset2': ['attributeA', 'attributeB'],
-    'dataset3': []  # No attributes
-}
-
-formatted_text = format_datasets_and_attributes(data)
-print(formatted_text)"""
-
-"""
-if attributes not present then the below examples should be added:
-# The projection is GEO, so we can construct the lat/lon arrays ourselves.
-    scaleX = 360.0 / data.shape[1]
-    scaleY = 180.0 / data.shape[0]
-    longitude = np.arange(data.shape[1]) * scaleX - 180 + scaleX/2
-    latitude = np.arange(data.shape[0]) * scaleY - 90 + scaleY/2
-"""
-
 
 def format_datasets_and_attributes_and_add_example_prompt_if_latitude_longtitude_not_present(data_dict):
     text = ""
@@ -1009,9 +779,7 @@ def format_datasets_and_attributes_and_add_example_prompt_if_latitude_longtitude
         text+='scaleY = 180.0 / data.shape[0]\n'
         text+='longitude = np.arange(data.shape[1]) * scaleX - 180 + scaleX/2\n'
         text+='latitude = np.arange(data.shape[0]) * scaleY - 90 + scaleY/2'
-
-        
-    
+          
     return text
 
 
@@ -1243,16 +1011,7 @@ def match_exact_dataset_full_partial_match_upto_bigram(hdf5_file_path, monogram_
 
             # print("done")
             filter_possible_dataset_paths = set()
-            """
-            if len(exact_matched_datasets_by_name)>0 and len(exact_matched_group_subgroups)>0:
-                for dataset_by in exact_matched_datasets_by_name:
-                    for group_subgroup in exact_matched_group_subgroups:
-                        if dataset_by.startswith(group_subgroup):
-                           filter_possible_dataset_paths.add(dataset_by)
-            elif len(exact_matched_datasets_by_name)>0:
-                for dataset_by in exact_matched_datasets_by_name:
-                    exact_matched_datasets.add(dataset_by)
-            """
+            
 
             # exact_matched_datasets = list(exact_matched_datasets)
             # exact_matched_datasets.extend(list(filter_possible_dataset_paths))
@@ -1397,7 +1156,6 @@ def format_datasets_from_final_set_and_latitude_longitude_list_without_latitude_
     return text
 
 # formatting datasets and attributes
-# format dataset (atribute1, attribute2, etc)
 def format_datasets_from_final_dataset_list(data_file_path, final_dataset_list):
     # text = "Datasets: "
     text = ''
@@ -1419,25 +1177,13 @@ def format_datasets_from_final_dataset_list(data_file_path, final_dataset_list):
                     text += "\t" + ", ".join(data.attrs) +"\n"
                     # text += ", ".join(data.attrs) +"\n"
                     attribute_present = True
-                # else:
-                    # text+=', '
-            # text = text[0: len(text)-2]
-            # print("Result: \n", text)
-            # Add the available attributes at the end
-            """
-            if attribute_present:
-                text+='\n'
-                text+='The available attributes are below, attributes_list=:\n'
-                text+= ", ".join(attributes) +"\n"
-            """
-            
-            # slicing related information extraction such as if multiple datasets present and reshaping required
-            # find_slicing_data_information(dataset_shape_map)
+             
             
             
             return text, attribute_present
     except Exception as e:
         print("Exception occurred in the format_datasets_from_final_dataset_list, error: ", e)
+        return None, None
     
     
 # find the slicing data
@@ -1453,8 +1199,7 @@ def find_slicing_data_information(dataset_with_shapes):
         print('Only one dataset')
         return dataset_shape_map
     
-    # all_same_length = False
-    # Sample dictionary with string keys and tuple values
+
 
 
     # Step 1: Get the first tuple to use as a reference
@@ -1468,40 +1213,7 @@ def find_slicing_data_information(dataset_with_shapes):
         print('All datasets are the same size')
         return dataset_shape_map
     
-    """ # Print result
-    if all_same:
-        print("All tuples have the same information.")
-    else:
-        print("Tuples contain different information.")
-
-    # for key, value in dataset_shape_map.items():
-
-
-
-    # Step 1: Find the minimum length of tuples in the dictionary
-    tuple_lengths = [len(t) for t in dataset_with_shapes.values()]
-    min_length = min(tuple_lengths)
-
-    # Step 2: Create a new dictionary to store slicing information
-    sliced_data = {}
-    slicing_info = {}
-
-    for key, value in dataset_with_shapes.items():
-        # Slice the tuple to the minimum length
-        sliced_tuple = value[:min_length]
-        sliced_data[key] = sliced_tuple
-        
-        # Record the slicing information
-        slicing_info[key] = f"[0:{min_length}]"
-
-    # Print the sliced data and slicing information
-    print("Sliced data with uniform tuple length:")
-    for k, v in sliced_data.items():
-        print(f"{k}: {v}")
-
-    print("\nSlicing information:")
-    for k, v in slicing_info.items():
-        print(f"{k}: {v}")"""
+   
 
 
 
@@ -1642,15 +1354,7 @@ def find_latitudes_and_longditudes_based_on_final_dataset(data_file_path, final_
     except Exception as e:
         print("Exception")
     
-        """    
-        if attribute_latitude_present==False and attribute_longditude_present==False:
-        text+="\n"+text_containing_latitude_longtitude
-        text+='\n'+'The projection is GEO, so we can construct the lat/lon arrays ourselves.\n'
-        text+='scaleX = 360.0 / data.shape[1]\n'
-        text+='scaleY = 180.0 / data.shape[0]\n'
-        text+='longitude = np.arange(data.shape[1]) * scaleX - 180 + scaleX/2\n'
-        text+='latitude = np.arange(data.shape[0]) * scaleY - 90 + scaleY/2'
-        """
+      
 
     return latitude_list, longditude_list
 
@@ -1888,6 +1592,7 @@ def summarize_hdf5_print_dataset_paths_attribute_and_attribute_from_groups(file_
         return datasets_attributes
     except Exception as e:
         print(f"Error reading HDF5 file: {e}")
+        return None
 
 
 

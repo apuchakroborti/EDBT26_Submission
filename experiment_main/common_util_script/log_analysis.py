@@ -1,6 +1,7 @@
 import os
 import re
 import csv
+PROJECT_BASE_DIRECTORY = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
 
 def analyze_log_and_save_to_csv(log_file_path, output_csv_path):
     with open(log_file_path, 'r') as f:
@@ -74,8 +75,8 @@ def analyze_log_and_save_to_csv(log_file_path, output_csv_path):
                 'note': info.get('note', '')
             })
 
-    print(f"✅ Analysis complete. CSV saved to: {output_csv_path}")
+    print(f"Analysis complete. CSV saved to: {output_csv_path}")
 
-log_file_path = '/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/iteration_python_code_evaluation_logs/devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector.log'
-output_csv_path = f'/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data/prompting_techniques/zero_shot_sci_data_prompting/log_analysis_results/{os.path.basename(log_file_path)}.csv'
+log_file_path = f'{PROJECT_BASE_DIRECTORY}/prompting_techniques/iteration_python_code_evaluation_logs/devstral_24b_climate_iterative_error_resolve_python_scripts_with_rag_with_errors_with_corrector.log'
+output_csv_path = f'{PROJECT_BASE_DIRECTORY}/prompting_techniques/zero_shot_sci_data_prompting/log_analysis_results/{os.path.basename(log_file_path)}.csv'
 analyze_log_and_save_to_csv(log_file_path, output_csv_path)
