@@ -1,6 +1,6 @@
 # Ignore virtual environment directory
-venv/
-# *.log
+venv
+*.log
 
 *.tar.xz
 # Ignore HDF5 files
