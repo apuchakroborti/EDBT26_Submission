@@ -68,11 +68,11 @@ if __name__ == '__main__':
         PROJECT_BASE_DIRECTORY = "/home/achakroborti1/llam_test/ai_lab2_llm_for_scientific_data/ai_lab2_llm_for_scientific_data"
 
         climate_list_dirs = [
-                f"{PROJECT_BASE_DIRECTORY}/prompting_techniques/llm_rag_generated_python_scripts",
-                f"{PROJECT_BASE_DIRECTORY}/llm_rag_python_scripts_generation_logs",
+                f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative",
+                f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/python_scripts_generation_logs/non_iterative",
                 f"{PROJECT_BASE_DIRECTORY}/user_queries/generated_user_sub_queries",
                 f"{PROJECT_BASE_DIRECTORY}/user_sub_query_generation_logs",
-                f"{PROJECT_BASE_DIRECTORY}/prompting_techniques/zero_shot_sci_data_prompting/tracking_file"
+                f"{PROJECT_BASE_DIRECTORY}/experiment_main/tracking_file"
         ]
 
         matplotagent_list_dirs = [

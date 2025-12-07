@@ -104,14 +104,22 @@ ollama run gemma3:27b
 
 ## 4. Generate Sub-Queries from User Queries
 
-### NASA EOS
+### NASA EOS (Single Temperature)
 
 ```bash
-bash ./running_experiments_scripts/NASA_EOS/run_screens_deepseek_r1_sub_query.sh
-bash ./running_experiments_scripts/NASA_EOS/run_screens_devstral_sub_query.sh
-bash ./running_experiments_scripts/NASA_EOS/run_screens_gemma3_sub_query.sh
-bash ./running_experiments_scripts/NASA_EOS/run_screens_llama3_sub_query.sh
-bash ./running_experiments_scripts/NASA_EOS/run_screens_magicoder_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/single_temperature/non_iterative/run_screens_deepseek_r1_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/single_temperature/non_iterative/run_screens_devstral_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/single_temperature/non_iterative/run_screens_gemma3_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/single_temperature/non_iterative/run_screens_llama3_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/single_temperature/non_iterative/run_screens_magicoder_sub_query.sh
+```
+### NASA EOS (Multiple Temperature)
+```bash
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/multiple_temperature/non_iterative/run_screens_deepseek_r1_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/multiple_temperature/non_iterative/run_screens_devstral_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/multiple_temperature/non_iterative/run_screens_gemma3_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/multiple_temperature/non_iterative/run_screens_llama3_sub_query.sh
+bash ./running_experiments_scripts/NASA_EOS/sub_query_generation/multiple_temperature/non_iterative/run_screens_magicoder_sub_query.sh
 ```
 
 ### MatPlotAgent
@@ -136,14 +144,24 @@ bash ./running_experiments_scripts/fastmribrain/run_screens_llama3_fastmribrain_
 
 ## 5. Generate Python Scripts
 
-### NASA EOS (Single Iteration)
+### NASA EOS (Single Iteration) (Multiple Temperature)
 
 ```bash
-bash ./running_experiments_scripts/NASA_EOS/run_screens_deepseek_r1.sh            
-bash ./running_experiments_scripts/NASA_EOS/run_screens_devstral.sh            
-bash ./running_experiments_scripts/NASA_EOS/run_screens_gemma3.sh            
-bash ./running_experiments_scripts/NASA_EOS/run_screens_llama3.sh            
-bash ./running_experiments_scripts/NASA_EOS/run_screens_magicoder.sh 
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/multiple_temperature/non_iterative/run_screens_deepseek_r1.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/multiple_temperature/non_iterative/run_screens_devstral.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/multiple_temperature/non_iterative/run_screens_gemma3.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/multiple_temperature/non_iterative/run_screens_llama3.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/multiple_temperature/non_iterative/run_screens_magicoder.sh 
+```
+
+### NASA EOS (Single Iteration) (Single Temperature)
+
+```bash
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/single_temperature/non_iterative/run_screens_deepseek_r1.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/single_temperature/non_iterative/run_screens_devstral.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/single_temperature/non_iterative/run_screens_gemma3.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/single_temperature/non_iterative/run_screens_llama3.sh            
+bash ./running_experiments_scripts/NASA_EOS/python_scripts_generation/single_temperature/non_iterative/run_screens_magicoder.sh 
 ```
 
 ### NASA EOS (Iterative Error Resolution)

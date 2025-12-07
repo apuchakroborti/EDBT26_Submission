@@ -970,20 +970,20 @@ def collect_and_store_png(source_dirs, new_dir_name, data_dir):
     print("PNG collection and transfer complete!")
 
 
-def collect_and_store_png_without_data_dir(source_dirs, target_dir_base_path, new_dir_name):
+def collect_and_store_png_without_data_dir(source_dirs, target_dir_parent_path, new_dir_name):
     try:
         # Ensure base_path is absolute
-        target_dir_base_path = Path(target_dir_base_path).resolve()
-        print(f'base path: {target_dir_base_path}')
+        target_dir_parent_path = Path(target_dir_parent_path).resolve()
+        print(f'base path: {target_dir_parent_path}')
 
         # Create unique directory (append _v2, _v3, etc. if it already exists)
-        target_dir = target_dir_base_path/ 'generated_image_from_running_evaluation' / new_dir_name
-        print(f'target dir: {target_dir}')
+        collected_images_target_dir = target_dir_parent_path/ 'generated_image_from_running_evaluation' / new_dir_name
+        print(f'target dir: {collected_images_target_dir}')
 
     
-        target_dir.mkdir(parents=True, exist_ok=True)
+        collected_images_target_dir.mkdir(parents=True, exist_ok=True)
 
-        print(f"Saving PNG files to: {target_dir}")
+        print(f"Saving PNG files to: {collected_images_target_dir}")
 
         # Collect and copy PNG files
         for directory in source_dirs:
@@ -992,8 +992,8 @@ def collect_and_store_png_without_data_dir(source_dirs, target_dir_base_path, ne
             print("Directory: ", directory)
             
             for png_file in directory.glob("*.png"):  # Search for PNG files
-                print(f'Moving file {png_file} to {target_dir / png_file.name}')
-                shutil.move(png_file, target_dir / png_file.name)  # Copy to target
+                print(f'Moving file {png_file} to {collected_images_target_dir / png_file.name}')
+                shutil.move(png_file, collected_images_target_dir / png_file.name)  # Copy to target
 
         print("PNG collection and transfer complete!")
     except Exception as e:

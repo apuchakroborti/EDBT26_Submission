@@ -1082,8 +1082,7 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(llm_generat
         except Exception as e:
             print(f'Error while pre executing scripts:{py_script} Error: {e}\n\n')
     
-    # script_execution_base_path = "/Users/apukumarchakroborti/gsu_research/llam_test"
-    target_dir_base_path = f"{PROJECT_BASE_DIRECTORY}/prompting_techniques/zero_shot_sci_data_prompting/error_categorization_evaluation_result/llm_generated_code_with_rag"    
+    target_dir_parent_path = f"{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/non_iterative"    
     
     subdirectories = [      f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/ASF',
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/AURA_DATA_VC',
@@ -1095,13 +1094,11 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(llm_generat
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/NSIDC',
                             f'{PROJECT_BASE_DIRECTORY}/ACL_DIRS/PO_DAAC',
                             f'{PROJECT_BASE_DIRECTORY}',
-                            f'{PROJECT_BASE_DIRECTORY}/prompting_techniques/zero_shot_sci_data_prompting'
+                            f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/llm_rag_generated_python_scripts/non_iterative'
                         ]
-    # source_dirs, script_execution_base_path, target_dir_base_path, new_dir_name
-    utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
-    # should be updated
-    # data_directory = f'/Users/apukumarchakroborti/gsu_research/adm_research_spring_2025/llms_generated_python_scripts/error_categorization_report/generated_image_from_running_evaluation/{new_dir_name}'
-    data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/generated_image_from_running_evaluation/{new_dir_name}'
+
+    utils.collect_and_store_png_without_data_dir(source_dirs=subdirectories, target_dir_parent_path=target_dir_parent_path, new_dir_name=new_dir_name)
+    data_directory = f'{PROJECT_BASE_DIRECTORY}/NASA_EOS/evaluation_results/non_iterative/generated_image_from_running_evaluation/{new_dir_name}'
     print('Data Directory: \n', data_directory)
     
     png_files_from_main_script_dir = glob.glob(os.path.join(data_directory, "*.png"))
@@ -1149,7 +1146,7 @@ def evaluation_of_CLIMATE_python_scripts_by_checking_generated_image(llm_generat
                 csv_map['Other_Errors_Count'] = csv_map['Other_Errors_Count'] + 1
     # out of for loop
     save_errors_to_csv_with_default_report_file_name(csv_map, target_dir)
-    utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_base_path, new_dir_name)
+    utils.collect_and_store_png_without_data_dir(subdirectories, target_dir_parent_path, new_dir_name)
 
 
 def evaluation_of_MATPLOTAGENT_python_scripts_by_checking_generated_image(common_base_directory, target_dir, python_script_dir, model_name):

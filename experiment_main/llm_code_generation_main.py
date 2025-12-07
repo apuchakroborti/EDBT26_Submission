@@ -12,7 +12,7 @@ from common_util_script import DataSummarizer as dataSummarizer
 from common_util_script import LLMRequester as llmRequester
 from common_util_script import Utils as utils
 import tracking as tracking
-import experiment_main.data_disambiguator as corrector
+import data_disambiguator as corrector
 
 from common_util_script import ArgumentParser as argumentParsar
 

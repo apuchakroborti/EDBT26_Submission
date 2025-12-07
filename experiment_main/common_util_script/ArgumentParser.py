@@ -2,7 +2,7 @@ import argparse
 
 def parse_argument(parser):
     print('Inside argument parsar function ...')
-    allowed_model_list = ["gpt-oss:20b", "qwen3-coder:30b", "deepseek-r1:32b", "devstral:24b", "gemma3:27b"]
+    allowed_model_list = ["gpt-oss:20b", "qwen3-coder:30b", "deepseek-r1:32b", "devstral:24b", "gemma3:27b", "llama3:70b", "magicoder"]
     
     # Add arguments
     
@@ -11,6 +11,7 @@ def parse_argument(parser):
         choices=["http://ai-lab2.dyn.gsu.edu:8081/api/generate", "http://localhost:11434/api/generate", 
                  "http://10.51.197.174:8080/api/generate", "http://10.51.197.174:11434/api/generate", "http://ai-lab2.dyn.gsu.edu:11434/api/generate"],
         required=False,
+        default= "http://localhost:11434/api/generate",
         help="URL of the server"
     )
     

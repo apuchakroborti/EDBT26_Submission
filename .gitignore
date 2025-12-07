@@ -59,22 +59,25 @@ MatPlotAgent/data_files/**
 # python scripts
 NASA_EOS/llm_rag_generated_python_scripts/non_iterative/**
 NASA_EOS/llm_rag_generated_python_scripts/iterative_error_resolve/**
-
-MatPlotAgent/llm_rag_generated_python_scripts/non_iterative/**
-MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve/**
-
-fastMri/llm_rag_generated_python_scripts/iterative_error_resolve/**
-fastMri/llm_rag_generated_python_scripts/non_iterative/**
-
 # evaluation files
 NASA_EOS/evaluation_results/iterative_error_resolve/**
 NASA_EOS/evaluation_results/non_iterative/**
+# logs
+NASA_EOS/python_scripts_generation_logs/**
 
-fastMri/evaluation_results/iterative_error_resolve/**
-fastMri/evaluation_results/non_iterative/**
-
+# python scripts
+MatPlotAgent/llm_rag_generated_python_scripts/non_iterative/**
+MatPlotAgent/llm_rag_generated_python_scripts/iterative_error_resolve/**
+# evaluation files
 MatPlotAgent/evaluation_results/iterative_error_resolve/**
 MatPlotAgent/evaluation_results/non_iterative/**
+
+# python scripts
+fastMri/llm_rag_generated_python_scripts/iterative_error_resolve/**
+fastMri/llm_rag_generated_python_scripts/non_iterative/**
+# evaluation files
+fastMri/evaluation_results/iterative_error_resolve/**
+fastMri/evaluation_results/non_iterative/**
 
 
 VTK/**
